@@ -193,7 +193,7 @@ html {
 }
 
 body {
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family:'Open Sans', Arial, sans-serif;
   font-size: 17px;
   background-color: #ccc;
   overflow-x: hidden;
@@ -271,14 +271,18 @@ p, address {
 }
 
 .tm-site-title {
-  font-size: 2.2rem;
-  font-weight: 400;
+font-family: 'ONE-Mobile-POP';
+   font-weight: lighter;
+   font-style: normal;
+  font-size: 4.5rem;
   margin-bottom: 5px;
 }
 
 .tm-site-description {
-  font-size: 1.1rem;
-  font-weight: 400;
+  font-size: 2.0rem;
+  font-family: 'omyu_pretty';
+    font-weight: normal;
+    font-style: normal;
 }
 
 .tm-nav {
@@ -292,6 +296,8 @@ p, address {
 }
 
 .tm-nav-li {
+	font-family:'omyu_pretty';
+	font-size:1.2rem;
   list-style: none;
   display: block;
   margin-bottom: 0;
@@ -323,7 +329,8 @@ p, address {
 }
 
 .tm-section-title {
-  font-size: 2rem;
+	font-family: 'omyu_pretty';
+  font-size: 2.5rem;
   font-weight: 400;
   margin-bottom: 30px;
 }
@@ -395,9 +402,10 @@ p, address {
 }
 
 .tm-gallery-title {
+	font-family:'omyu_pretty';
   font-size: 1.3rem;
   font-weight: 400;
-  color: #1A6692;
+  color: #ff8080;
   margin-bottom: 15px;
 }
 
@@ -406,8 +414,9 @@ p, address {
 }
 
 .tm-gallery-price {
+	font-family:'omyu_pretty';
   font-size: 1.25rem;
-  color: #2F956D;
+  color: #eec94f;
   margin-bottom: 60px;
 }
 
@@ -419,23 +428,25 @@ p, address {
 .tm-paging-item {
   list-style: none;
   display: inline-block;
-  border: 1px solid #2F956D;
+  border: 1px solid #eec94f;
   margin: 7px;
 }
 
 .tm-paging-link {
-  padding: 10px 30px;
+font-family: 'omyu_pretty';
+font-size:1.3rem;
+  padding: 15px 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: #2F956D;
+  color: #eec94f;
   background-color: transparent;
 }
 
 .tm-paging-link.active,
 .tm-paging-link:hover {
-  background-color: #2F956D;
+  background-color: #eec94f;
   color: white;
 }
 

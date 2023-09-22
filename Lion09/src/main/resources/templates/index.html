@@ -1,50 +1,52 @@
-<!DOCTYPE html>
-<html>
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Simple House Template</title>
-	<link href="css/templatemo-style.css" rel="stylesheet" />
-</head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>사자고</title>
+<link href="css/templatemo-style.css" rel="stylesheet" />
+
 <style>
-@font-face {
-    font-family: 'ONE-Mobile-POP';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'omyu_pretty';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
+	@font-face {
+		font-family: 'ONE-Mobile-POP';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+			format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	
+	@font-face {
+		font-family: 'omyu_pretty';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+			format('woff2');
+		font-weight: normal;
+		font-style: normal;
+	}
 </style>
-<body> 
+</head>
 
+<body>
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+	
 	<div class="container">
-	<!-- Top box -->
+		<!-- Top box -->
 		<!-- Logo & Site Name -->
-		<div class="placeholder">
-			<div class="parallax-window" data-parallax="scroll" data-image-src="img/bg.jpg">
+		<div class="placeholder">	
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
 				<div class="tm-header">
 					<div class="row tm-header-inner">
 						<div class="col-md-6 col-12">
 							<div class="tm-site-text-box">
 								<h1 class="tm-site-title">사자고</h1>
-								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>	
+								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>
 							</div>
 						</div>
-						<nav class="col-md-6 col-12 tm-nav">
-							<ul class="tm-nav-ul">
-								<li class="tm-nav-li"><a href="http://localhost:8080/index.html" class="tm-nav-link active">Home</a></li>
-								<li class="tm-nav-li"><a href="http://localhost:8080/about.html" class="tm-nav-link">About</a></li>
-								<li class="tm-nav-li"><a href="http://localhost:8080/contact.html" class="tm-nav-link">Contact</a></li>
-							</ul>
-						</nav>	
+
 					</div>
 				</div>
 			</div>
@@ -52,17 +54,124 @@
 
 		<main>
 			<header class="row tm-welcome-section">
-				<h2 class="col-12 text-center tm-section-title">공동구매 인기매물</h2>
+				<h2 class="col-12 text-center tm-section-title">공동구매 인기매물 TOP5</h2>
 			</header>
 			
-			<div class="tm-paging-links">
-				<nav>
-					<ul>
-						<li class="tm-paging-item"><a href="#" class="tm-paging-link active">공동구매</a></li>
-						<li class="tm-paging-item"><a href="#" class="tm-paging-link">만나서 거래</a></li>
-					</ul>
-				</nav>
-			</div>
+			<!-- Gallery -->
+			<div class="row tm-gallery">
+				<!-- gallery page 1 -->
+				<div id="tm-gallery-page-pizza" class="tm-gallery-page">
+					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
+						<figure>
+							<img src="img/gallery/01.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
+							<figcaption>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
+							</figcaption>
+						</figure>
+					</article>
+					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
+						<figure>
+							<img src="img/gallery/02.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
+							<figcaption>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
+							</figcaption>
+						</figure>
+					</article>
+					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
+						<figure>
+							<img src="img/gallery/03.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
+							<figcaption>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
+							</figcaption>
+						</figure>
+					</article>
+					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
+						<figure>
+							<img src="img/gallery/03.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
+							<figcaption>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
+							</figcaption>
+						</figure>
+					</article>
+					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
+						<figure>
+							<img src="img/gallery/03.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
+							<figcaption>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
+							</figcaption>
+						</figure>
+					</article>
+				</div>
+				<div style="text-align: right; padding-right: 40px; margin-top: 40px;">
+      			<a href="/hot_articles" data-url="/hot_articles" id="hot-articles-more"
+      				style="font-family: omyu_pretty; font-size: 14pt; color: black; text-decoration: none;"><b>인기매물 더 보기▶</b></a>
+    			</div>
+				<!-- gallery page 1 -->
+			<br/><br/><br/>
+			<header class="row tm-welcome-section">
+				<h2 class="col-12 text-center tm-section-title">만나서 거래 인기매물 TOP5</h2>
+			</header>
+			
 
 			<!-- Gallery -->
 			<div class="row tm-gallery">
@@ -70,247 +179,163 @@
 				<div id="tm-gallery-page-pizza" class="tm-gallery-page">
 					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
 						<figure>
-							<img src="img/gallery/01.jpg" alt="Image" class="img-fluid tm-gallery-img" />
+							<img src="img/gallery/01.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
 							<figcaption>
 								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
-								<p class="tm-gallery-description"></p>
 								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
 							</figcaption>
 						</figure>
 					</article>
 					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
 						<figure>
-							<img src="img/gallery/02.jpg" alt="Image" class="img-fluid tm-gallery-img" />
+							<img src="img/gallery/02.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
 							<figcaption>
-								<h4 class="tm-gallery-title">Aliquam sagittis</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$65 / $70</p>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
 							</figcaption>
 						</figure>
 					</article>
 					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
 						<figure>
-							<img src="img/gallery/03.jpg" alt="Image" class="img-fluid tm-gallery-img" />
+							<img src="img/gallery/03.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
 							<figcaption>
-								<h4 class="tm-gallery-title">Sed varius turpis</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$30.50</p>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
 							</figcaption>
 						</figure>
 					</article>
 					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
 						<figure>
-							<img src="img/gallery/04.jpg" alt="Image" class="img-fluid tm-gallery-img" />
+							<img src="img/gallery/03.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
 							<figcaption>
-								<h4 class="tm-gallery-title">Aliquam sagittis</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$25.50</p>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
 							</figcaption>
 						</figure>
 					</article>
 					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
 						<figure>
-							<img src="img/gallery/05.jpg" alt="Image" class="img-fluid tm-gallery-img" />
+							<img src="img/gallery/03.jpg" alt="Image"
+								class="img-fluid tm-gallery-img" />
 							<figcaption>
-								<h4 class="tm-gallery-title">Maecenas eget justo</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$80.25</p>
+								<h4 class="tm-gallery-title">Fusce dictum finibus</h4>
+								<p class="tm-gallery-price">$45 / $55</p>
+								<p class="tm-gallery-description">충남 천안시 서북구</p>
+							      <div class="tm-gallery-description">
+							          <span>
+							            관심 6
+							          </span>
+							        ∙
+							        <span>
+							            모집현황 (2/7)
+							          </span>
+							      </div>
 							</figcaption>
 						</figure>
 					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/06.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Quisque et felis eros</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$20 / $40 / $60</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/07.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Sed ultricies dui</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$94</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/08.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Donec porta consequat</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$15</p>
-							</figcaption>
-						</figure>
-					</article>
-				</div> <!-- gallery page 1 -->
-				
-				<!-- gallery page 2 -->
-				<div id="tm-gallery-page-salad" class="tm-gallery-page hidden">
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/04.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Salad Menu One</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$25</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/03.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Second Title Salad</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$30</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/05.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Third Salad Item</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$45</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/01.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Superior Salad</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$50</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/08.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Sed ultricies dui</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$55 / $60</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/07.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Maecenas eget justo</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$75</p>
-							</figcaption>
-						</figure>
-					</article>
-				</div> <!-- gallery page 2 -->
-				
-				<!-- gallery page 3 -->
-				<div id="tm-gallery-page-noodle" class="tm-gallery-page hidden">
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/08.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Noodle One</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$12.50</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/07.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Noodle Second</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$15.50</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/06.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Third Soft Noodle</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$20.50</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/05.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Aliquam sagittis</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$30.25</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/04.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Maecenas eget justo</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$35.50</p>
-							</figcaption>
-						</figure>
-					</article>
-					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
-						<figure>
-							<img src="img/gallery/03.jpg" alt="Image" class="img-fluid tm-gallery-img" />
-							<figcaption>
-								<h4 class="tm-gallery-title">Quisque et felis eros</h4>
-								<p class="tm-gallery-description"></p>
-								<p class="tm-gallery-price">$40.50</p>
-							</figcaption>
-						</figure>
-					</article>
-
-				</div> <!-- gallery page 3 -->
+				</div>
+				<!-- gallery page 1 -->
 			</div>
-			<div class="tm-section tm-container-inner">
-				<div class="row">
-					<div class="col-md-6">
-						<figure class="tm-description-figure">
-							<img src="img/img-01.jpg" alt="Image" class="img-fluid" />
-						</figure>
-					</div>
-					<div class="col-md-6">
-						<div class="tm-description-box"> 
-							<h4 class="tm-gallery-title">Maecenas nulla neque</h4>
-							<p class="tm-gallery-description"></p>
-							<a href="about.html" class="tm-btn tm-btn-default tm-right">Read More</a>
-						</div>
-					</div>
+			<div style="text-align: right; padding-right: 40px;">
+      			<a href="/hot_articles" data-url="/hot_articles" id="hot-articles-more"
+      				style="font-family: omyu_pretty; font-size: 14pt; color: black; text-decoration: none;"><b>인기매물 더 보기▶</b></a>
+    		</div>
+		</main>
+		
+		<br/><br/>
+		<hr class="hr-solid" />
+		<!-- footer 자리 -->
+		<footer th:fragment="footer" class="tm-footer text-center">
+			<div style="float: left;">
+			
+				<p>
+					<b>사자고</b>
+				</p>
+				<br/>
+				<p>
+					<b>사업자등록번호</b> 202-30-92017
+				</p>
+				<p>
+					<b>이메일</b> help@liongg.co.kr
+				</p>
+				<p>
+					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+				</p>
+				<p>
+					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+						href="https://templatemo.com">TemplateMo</a>
+				</p>
+			</div>
+			<div style="float: right;">
+				<div>
+					<div id="map" style="width:400px; height:200px; margin: auto;"></div>
 				</div>
 			</div>
-		</main>
-
-		<footer class="tm-footer text-center">
-			<p>Copyright &copy; 2020 Simple House 
-            
-            | Design: <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
 		</footer>
 	</div>
+	
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
+	<script>
+			var container = document.getElementById('map');
+			var options = {
+				center: new kakao.maps.LatLng(37.49886, 127.03170),
+				level: 2
+			};
+	
+			var map = new kakao.maps.Map(container, options);
+	</script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/parallax.min.js"></script>
 	<script>
-		$(document).ready(function(){
+		$(document).ready(function() {
 			// Handle click on paging links
-			$('.tm-paging-link').click(function(e){
+			$('.tm-paging-link').click(function(e) {
 				e.preventDefault();
-				
+
 				var page = $(this).text().toLowerCase();
 				$('.tm-gallery-page').addClass('hidden');
 				$('#tm-gallery-page-' + page).removeClass('hidden');

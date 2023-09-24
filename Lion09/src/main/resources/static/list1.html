@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>게시판 리스트1</title>
+    <link href="css/templatemo-style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="css/all.min.css" rel="stylesheet" />
+	<link href="css/list1.css" rel="stylesheet" />
+	
+	
+</head>
+<style>
+@font-face {
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
+
+
+
+
+<body> 
+
+
+
+	<div class="container">
+	<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll" data-image-src="img/bg.jpg">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+							<div class="header__title">
+								<img src="img/lion.png"><h1 class="tm-site-title">게시판</h1> </div>
+								<h6 class="tm-site-description">공동구매</h6>	
+							</div>
+						</div>
+						<nav class="col-md-6 col-12 tm-nav">
+							<ul class="tm-nav-ul">
+								<li class="tm-nav-li"><a href="http://localhost:8080/index.html" class="tm-nav-link active">Home</a></li>
+								<li class="tm-nav-li"><a href="http://localhost:8080/about.html" class="tm-nav-link">About</a></li>
+								<li class="tm-nav-li"><a href="http://localhost:8080/contact.html" class="tm-nav-link">Contact</a></li>
+							</ul>
+						</nav>	
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<main>
+			<div class="row">
+        <div class="card card-margin search-form">
+            <div class="card-body p-0">
+                <form id="search-form">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row no-gutters">
+                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                    <label for="search-type" hidden>검색 유형</label>
+                                    <select class="form-control" id="search-type" name="searchType">
+                                        <option>제목</option>
+                                        <option>내용</option>
+                                        <option>id</option>
+                                        <option>닉네임</option>                                      
+                                    </select>
+                                </div>
+                                <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+                                    <label for="search-value" hidden>검색어</label>
+                                    <input type="text" placeholder="검색" class="form-control" id="search-value"
+                                           name="searchValue">
+                                </div>
+
+                                <div class="col-lg-1 col-md-3 col-sm-12 p-0">
+                                    <button type="submit" class="btn btn-base" >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round"
+                                             class="feather feather-search" >
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<div class="tm-paging-links" align="center">
+<nav>
+	<ul>
+<li class="tm-paging-item"><a href="#" class="tm-paging-link">전체보기</a></li>
+<li class="tm-paging-item"><a href="#" class="tm-paging-link">신선식품</a></li>
+<li class="tm-paging-item"><a href="#" class="tm-paging-link">가공식품</a></li>
+<li class="tm-paging-item"><a href="#" class="tm-paging-link">의류/신발</a></li>
+<li class="tm-paging-item"><a href="#" class="tm-paging-link">생활/주방</a></li>
+<li class="tm-paging-item"><a href="#" class="tm-paging-link">스포츠/레저</a></li>
+<li class="tm-paging-item"><a href="#" class="tm-paging-link">도서</a></li>
+<li class="tm-paging-item"><a href="#" class="tm-paging-link">기타물품</a></li>
+</ul></nav>
+</div>
+
+                <div id="slider-wrap">
+    <ul id="slider">
+        <li>
+            <div>
+                <h3>D-1</h3>
+                <span>마감임박 #1</span>
+            </div>
+            <img src="https://i.ytimg.com/vi/0BdlwVBmmhM/maxresdefault.jpg">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-2</h3>
+                <span>마감임박 #2</span>
+            </div>
+            <img src="https://cdn.wadiz.kr/ft/images/green001/2020/0813/20200813112227666_64.gif">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-3</h3>
+                <span>마감임박 #3</span>
+            </div>
+            <img src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1135026_16045410254419205.jpg">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-4</h3>
+                <span>마감임박 #4</span>
+            </div>
+            <img src="https://t1.daumcdn.net/cfile/tistory/2207573D58CFDE2704">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-5</h3>
+                <span>마감임박 #5</span>
+            </div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-yVNBtJ7wE1ZptgUx5fmNIBNmk2K8IoDFA70ztTGNQBq3G90qpL2YEr4DRtx-HpJOKgs&usqp=CAU">
+        </li>
+    </ul>
+
+    <div class="slider-btns" id="next"><span>▶</span></div>
+    <div class="slider-btns" id="previous"><span>◀</span></div>
+
+    <div id="slider-pagination-wrap">
+        <ul>
+        </ul>
+    </div>
+</div>
+
+			<div class="tm-container-inner tm-persons">
+        <div>
+            <h1 class="top_title">공구 참여</h1>
+            
+           
+                           
+            <div class="content_4_wrap">
+                <div class="item_row">
+                    <div class="item">
+                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/2e3462bb439e276d12b809c12f515a5ee4ed128aa4799ca88879a79de0df7c79.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
+                        <h2 class="item_name">위닉스제습기</h2>
+                        <h2 class="item_cost">50,000원</h2>
+                        <h1 class="item_place">서울 성동구 행당동</h1>
+                        <div class="like_chating">
+                            <span class="like">관심 15</span>
+                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                            <span class="chat">채팅 48</span>
+                        </div>
+                    </div>
+                     <div class="item">
+                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/8c895d09679a822fc66fc85d9171a4c93af08f25b69c66b245e6dda3d3334702.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
+                        <h2 class="item_name">LG 43인치 UHDtv 팝니다.</h2>
+                        <h2 class="item_cost">250,000원</h2>
+                        <h1 class="item_place">경기도 안양시 만안구 안양동</h1>
+                        <div class="like_chating">
+                            <span class="like">관심 28</span>
+                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                            <span class="chat">채팅 64</span>
+                        </div>
+                    </div>
+                     <div class="item">
+                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/c2bbbad3e6b2b451aac966c26938a4ef8db909109c61876a2c614d204a888529.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
+                        <h2 class="item_name">lg 레드로 tv</h2>
+                        <h2 class="item_cost">50,000원</h2>
+                        <h1 class="item_place">광주 남구 임암동</h1>
+                        <div class="like_chating">
+                            <span class="like">관심 21</span>
+                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                            <span class="chat">채팅 28</span>
+                        </div>
+                    </div>
+                     <div class="item">
+                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/7c0a3c3645abc9f767d9b437449edff4d0e1aa472b1483c45b26d01d93c3965d.jpg?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
+                        <h2 class="item_name">아이폰14pro</h2>
+                        <h2 class="item_cost">100,000원</h2>
+                        <h1 class="item_place">충남 아산시 배방음</h1>
+                        <div class="like_chating">
+                            <span class="like">관심 12</span>
+                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                            <span class="chat">채팅 36</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item_row">
+                    <div class="item">
+                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/e71e173af178d80d5c134dbcbe9dd032dd76410552d83e7e7770a6f1594ff18f.jpg?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
+                        <h2 class="item_name">이사가느라 가전 팔아요~! 골라...</h2>
+                        <h2 class="item_cost">99원</h2>
+                        <h1 class="item_place">광주 북구 신용동</h1>
+                        <div class="like_chating">
+                            <span class="like">관심 28</span>
+                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                            <span class="chat">채팅 20</span>
+                        </div>
+                    </div>
+                     <div class="item">
+                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/d7e2b2bc48a4a3baf62001316228f72a948dcdead02b5a2f665ea188676fe44e.jpg?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
+                        <h2 class="item_name">발뮤다 더 토스터, 더 오븐레인지...</h2>
+                        <h2 class="item_cost">100,000원</h2>
+                        <h1 class="item_place">경기도 성남시 분당구 이매동</h1>
+                        <div class="like_chating">
+                            <span class="like">관심 33</span>
+                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                            <span class="chat">채팅 31</span>
+                        </div>
+                    </div>
+                     <div class="item">
+                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/e7d0c5184c3271677158ba9ddea950c23f1d8d545ad678d2e809a4efef69bef2.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
+                        <h2 class="item_name">캠핑테이블</h2>
+                        <h2 class="item_cost">10,000원</h2>
+                        <h1 class="item_place">경기도 부천시 중동</h1>
+                        <div class="like_chating">
+                            <span class="like">관심 14</span>
+                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                            <span class="chat">채팅 15</span>
+                        </div>
+                    </div>
+                     <div class="item">
+                        <img src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/669441b3e3d3df4baba0b3b4b2c305de8b2225c8d2e2ee35eb7dfb700922b17c.webp?q=82&s=300x300&t=crop" style="border-radius: 12px; width:200px">
+                        <h2 class="item_name">메세타 화목난로</h2>
+                        <h2 class="item_cost">30,000원</h2>
+                        <h1 class="item_place">강원도 원주시 단계동</h1>
+                        <div class="like_chating">
+                            <span class="like">관심 19</span>
+                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                            <span class="chat">채팅 36</span>
+                        </div>
+                    </div>
+                </div>
+                
+
+     
+                
+            </div>
+            <div class="tm-container-inner tm-persons">
+        <div>
+            <h1 class="top_title">오늘의 인기 검색어</h1>
+
+            <div class="tag_container">
+                <span class="tag active" data-index="0">채소</span>
+                <span class="tag" data-index="1">과일 견과 쌀</span>
+                <span class="tag" data-index="2">수산 해산 건어물</span>
+                <span class="tag" data-index="3">정육 계란</span>
+                <span class="tag" data-index="4">국 반찬 메인요리</span>
+                <span class="tag" data-index="5">샐러드 간편식</span>
+                <span class="tag" data-index="6">면 양념 오일</span>
+                <span class="tag" data-index="7">생수 음료 우유 커피</span>
+                <span class="tag" data-index="8">간식 과자 떡</span>
+                <span class="tag" data-index="9">베이커리 치즈 델리</span>
+                <span class="tag" data-index="10">건강식품</span>
+                <span class="tag" data-index="11">생활용품 리빙 캠핑</span>
+                <span class="tag" data-index="12">스킨케어 메이크업</span>
+                <span class="tag" data-index="13">헤어 바디 구강</span>
+                <span class="tag" data-index="14">주방용품</span>
+                <span class="tag" data-index="15">가전제품</span>
+                <span class="tag" data-index="16">베이비 키즈</span>
+                <span class="tag" data-index="17">반려동물</span>
+            </div>
+                <hr style="color:#495057">
+       	</div>
+	</div>
+
+
+
+		
+		
+
+		<footer class="tm-footer text-center">
+			<p>Copyright &copy; 2023 Simple House 
+            
+            | Design: <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
+		</footer>
+	</div>
+	<script src="js/list.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/parallax.min.js"></script>
+</body>
+</html>

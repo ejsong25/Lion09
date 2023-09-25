@@ -18,6 +18,7 @@ a, button { transition: all 0.3s ease; }
 html {
   box-sizing: border-box;
   -ms-overflow-style: scrollbar;
+  
 }
 
 hr {
@@ -295,6 +296,10 @@ font-family: 'ONE-Mobile-POP';
 
 .tm-nav {
   text-align: right;
+  z-index: 9999;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .tm-nav-ul {

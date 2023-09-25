@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+ 	<link rel="stylesheet" href="css/carrot_market.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>글 정보</title>
+    <link rel="stylesheet" href="/css/list.css">
+    <link href="css/templatemo-style.css" rel="stylesheet" />
+    <link href="css/all.min.css" rel="stylesheet" />
+    <link href="css/detail.css" rel="stylesheet" />
+   
+    
+    
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+
+	
+</head>
+
+<style>
+@font-face {
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
+
+
+
+
+<body> 
+
+
+
+	<div class="container">
+	<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">	
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">글 정보</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+    <div class="content-box">
+      <div class="container1 column">
+        <div class="post-box">
+
+            <img src="/img/pic2.PNG" alt="" class="block-box">
+            <div class="flex-box between info-button-box">
+              <div class="user-info">
+                <h6>주주주</h6>
+                <p>강남구 역삼동</p>
+              </div>
+              
+                <div class="flex-box button-box">
+                    <button class="grey">수정하기</button>
+                 
+                  <button class="orange">채팅보기</button>
+                </div>
+                <div class="button-box">
+                    <button class="orange">채팅하기</button>
+                </div>
+            </div>
+            <hr class="line">
+            <div class="post-info-box">
+              <div class="flex-box between">
+                <h3>아이폰 12 미니 64GB 팔아요</h3>
+                <h3>500,000원</h3>
+              </div>
+              <p>
+아이폰 12 미니 64GB 팔아요
+배터리 성능 최대치 78% 입니다
+잔기스 심한건 6개 있습니다 사진에 있어요
+언어는 한국어로 바꿔서 드려요
+액정에 금간건 없어요
+장소는 노원 양지근린공원 입니다</p>
+              <div class="location-views-box flex-box between">
+                <p>희망 거래장소 </p>
+                <p>조회수</p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+		
+		
+      
+
+
+		<footer class="tm-footer text-center">
+			<p>Copyright &copy; 2020 Simple House 
+            
+            | Design: <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
+		</footer>
+		 </div>
+	
+	<script src="js/list.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/parallax.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// Handle click on paging links
+			$('.tm-paging-link').click(function(e){
+				e.preventDefault();
+				
+				var page = $(this).text().toLowerCase();
+				$('.tm-gallery-page').addClass('hidden');
+				$('#tm-gallery-page-' + page).removeClass('hidden');
+				$('.tm-paging-link').removeClass('active');
+				$(this).addClass("active");
+			});
+		});
+	</script>
+</body>
+</html>

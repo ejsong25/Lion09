@@ -1,0 +1,33 @@
+.tm-paging-links1 {
+  text-align: left;
+  margin-bottom: 40px;
+}
+.tm-paging-item1 {
+  list-style: none;
+  display: inline-block;
+  border: 1px solid #eec94f;
+  margin: 7px;
+  border-radius: 10px;
+}
+
+.tm-paging-link1 {
+font-family: 'omyu_pretty';
+font-size:1.3rem;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: #eec94f;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+.tm-paging-link1.active,
+.tm-paging-link1:hover {
+  background-color: #eec94f;
+  color: white;
+}
+
+
+
+

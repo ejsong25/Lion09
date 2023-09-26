@@ -1,0 +1,129 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>고객센터</title>
+<link href="css/all.min.css" rel="stylesheet" />
+<link href="css/templatemo-style.css" rel="stylesheet" />
+
+<style>
+	@font-face {
+		font-family: 'ONE-Mobile-POP';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+			format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	
+	@font-face {
+		font-family: 'omyu_pretty';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+			format('woff2');
+		font-weight: normal;
+		font-style: normal;
+	}
+</style>
+</head>
+
+<body>
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+
+	<div class="container">
+	<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<main>
+			<div class="tm-container-inner-2 tm-info-section">
+				<div class="row">
+					<!-- FAQ -->
+					<div class="col-12 tm-faq2">
+						<h3 class="text-center tm-section-title2">문의 등록이 완료 되었습니다.</h3>
+						<div class="tm-qna_ok">
+							문의하신 내용에는 최대한 빨리 답변드리겠습니다. 조금만 기다려주세요 :)							
+						</div>	
+					</div>
+				</div>
+			</div>
+		</main>
+		<br/><br/><br/>
+		<hr class="hr-solid"/>
+		<footer th:fragment="footer" class="tm-footer text-center">
+			<div style="float: left;">
+			
+				<p>
+					<b>사자고</b>
+				</p>
+				<br/>
+				<p>
+					<b>사업자등록번호</b> 202-30-92017
+				</p>
+				<p>
+					<b>이메일</b> help@liongg.co.kr
+				</p>
+				<p>
+					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+				</p>
+				<p>
+					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+						href="https://templatemo.com">TemplateMo</a>
+				</p>
+			</div>
+			<div style="float: right;">
+				<div>
+					<div id="map" style="width:400px; height:200px; margin: auto;"></div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
+	<script>
+			var container = document.getElementById('map');
+			var options = {
+				center: new kakao.maps.LatLng(37.49886, 127.03170),
+				level: 2
+			};
+	
+			var map = new kakao.maps.Map(container, options);
+	</script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/parallax.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			var acc = document.getElementsByClassName("accordion");
+			var i;
+			
+			for (i = 0; i < acc.length; i++) {
+			  acc[i].addEventListener("click", function() {
+			    this.classList.toggle("active");
+			    var panel = this.nextElementSibling;
+			    if (panel.style.maxHeight) {
+			      panel.style.maxHeight = null;
+			    } else {
+			      panel.style.maxHeight = panel.scrollHeight + "px";
+			    }
+			  });
+			}	
+		});
+	</script>
+</body>
+</html>

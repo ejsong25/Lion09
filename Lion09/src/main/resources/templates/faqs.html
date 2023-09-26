@@ -1,0 +1,165 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>고객센터</title>
+<link href="css/all.min.css" rel="stylesheet" />
+<link href="css/templatemo-style.css" rel="stylesheet" />
+
+<style>
+	@font-face {
+		font-family: 'ONE-Mobile-POP';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+			format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	
+	@font-face {
+		font-family: 'omyu_pretty';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+			format('woff2');
+		font-weight: normal;
+		font-style: normal;
+	}
+</style>
+</head>
+
+<body>
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+
+	<div class="container">
+	<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<main>
+			<div class="tm-container-inner-2 tm-info-section">
+				<div class="row">
+					<!-- FAQ -->
+					<div class="col-12 tm-faq">
+					
+						<h2 class="text-center tm-section-title">자주 묻는 질문(FAQ)</h2>
+						<div class="tm-accordion">
+							<button class="accordion">1. 프로필 사진과 닉네임을 변경하고 싶어요.</button>
+							<div class="panel">
+							  <p>[마이 페이지 > 프로필 사진 또는 닉네임 변경 > 프로필 수정 클릭]<br/>
+								[마이 페이지] 에서 사진과 닉네임을 자유롭게 변경할 수 있어요.</p>
+							</div>
+							<button class="accordion">2. 상품 상세설명, 이렇게 쓰면 반응이 좋아요.</button>
+							<div class="panel">
+							  <p>상세 설명에는 믿고 구매해도 된다는 신뢰를 주는 게 중요해요. 어떻게 작성할 지 막막하다면, 아래의 내용을 포함해 작성해 보세요.<br/><br/>
+								상품을 소개한다면? (필수)<br/>
+								상품이 필요한 이유는 무엇인가요? (필수)<br/>
+								기존 구매자의 후기가 있다면 소개해 주세요.
+							  </p>
+							</div>
+							<button class="accordion">3. 탈퇴는 어떻게 하나요?</button>
+							<div class="panel">
+							  <p>[마이 페이지 > 탈퇴하기] 에서 탈퇴할 수 있어요.<br/>
+								탈퇴하면 모든 게시글과 채팅 내용, 에너지 게이지, 관심, 활동정보가 삭제되고 복구할 수 없으니 신중하게 탈퇴해주세요.<br/><br/>
+								LionPay 잔액이 남아있다면 회원 계좌로 환불해주셔야 합니다. 잔액이 남아있음에도 불구하고 탈퇴를 원하시는 경우 별도의 환불 절차가 없음을 양해 부탁드립니다.</p>
+							</div>
+							
+							<button class="accordion">4. 대화 상대방의 연락처를 알려주세요.</button>
+							<div class="panel">
+								<p>개인정보보호법에 의해 사용자의 연락처는 개인에게 알려줄 수 없어요.<br/>
+									대화 당사자끼리 직접 연락처를 교환해주시길 바랍니다.
+								</p>
+							</div>
+							<div>
+							<table>
+								<tr>
+									<th style="text-align: left; font-size: 19pt;">도움이 필요하신가요?</th>
+									<th style="align-items: right;">
+										<button class="faqBtn" onclick="javascript:location.href='/qna';">문의하기</button>
+									</th>
+								</tr>
+							</table>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</main>
+		<br/><br/>
+		<hr class="hr-solid"/>
+		<footer th:fragment="footer" class="tm-footer text-center">
+			<div style="float: left;">
+			
+				<p>
+					<b>사자고</b>
+				</p>
+				<br/>
+				<p>
+					<b>사업자등록번호</b> 202-30-92017
+				</p>
+				<p>
+					<b>이메일</b> help@liongg.co.kr
+				</p>
+				<p>
+					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+				</p>
+				<p>
+					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+						href="https://templatemo.com">TemplateMo</a>
+				</p>
+			</div>
+			<div style="float: right;">
+				<div>
+					<div id="map" style="width:400px; height:200px; margin: auto;"></div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
+	<script>
+			var container = document.getElementById('map');
+			var options = {
+				center: new kakao.maps.LatLng(37.49886, 127.03170),
+				level: 2
+			};
+	
+			var map = new kakao.maps.Map(container, options);
+	</script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/parallax.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			var acc = document.getElementsByClassName("accordion");
+			var i;
+			
+			for (i = 0; i < acc.length; i++) {
+			  acc[i].addEventListener("click", function() {
+			    this.classList.toggle("active");
+			    var panel = this.nextElementSibling;
+			    if (panel.style.maxHeight) {
+			      panel.style.maxHeight = null;
+			    } else {
+			      panel.style.maxHeight = panel.scrollHeight + "px";
+			    }
+			  });
+			}	
+		});
+	</script>
+</body>
+</html>

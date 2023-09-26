@@ -30,6 +30,57 @@ hr {
 	border-top: 1px solid #c0c0c0;
 }
 
+th{
+	font-family: 'omyu_pretty';
+	font-size:1.4rem;
+	width: 50%;
+}
+
+.faqBtn {
+	width: 70px;
+    padding: 10px 20px;
+    color: #eec94f;
+    position: relative;
+    background-color: #ffffff;
+   	border: 3px solid #eec94f;
+    display: inline-block;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+	font-family: 'omyu_pretty';
+	font-size: 17pt;
+}
+
+.faqBtn:hover {
+	color: #ffffff;
+    background: #eec94f;
+}
+
+.qnaBtn {
+	width: 70px;
+    padding: 10px 20px;
+    color: #eec94f;
+    position: relative;
+    background-color: #ffffff;
+   	border: 3px solid #eec94f;
+    display: inline-block;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+	font-family: 'omyu_pretty';
+	font-size: 17pt;
+	float: right;
+}
+
+.qnaBtn:hover {
+	color: #ffffff;
+    background: #eec94f;
+}
+
+
+
 *,
 *::before,
 *::after {
@@ -53,6 +104,24 @@ hr {
 	
   margin-left: -15px;
   margin-right: -15px;
+}
+
+.row1 {
+	
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.row2 {
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+table{
+  margin-top: 50px;
+  width: 120%;
 }
 
 .col-lg-3,
@@ -302,6 +371,7 @@ font-family: 'ONE-Mobile-POP';
   transform: translateX(-50%);
 }
 
+
 .tm-nav-ul {
   width:100%;
   list-style-type: none;
@@ -361,9 +431,59 @@ font-family: 'ONE-Mobile-POP';
   max-width: 655px;
 }
 
+.tm-qna{
+	width: 100%;
+	margin-bottom: 40px;
+	border: 1px solid #d0d0d0;
+	border-radius: 0.8rem;
+	padding-left: 20px;
+	font-family: 'omyu_pretty';
+    font-size: 1.3rem;
+}
+
+.tm-qna_ok{
+	width: 100%;
+	margin-bottom: 40px;
+	font-family: 'omyu_pretty';
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.tm-faq input{
+	height: 60px;
+}
+
+.tm-faq2 input{
+	height: 60px;
+}
+
+.tm-faq2 textarea{
+	padding-top: 20px;
+}
+
+.tm-qna input{
+	height: 60px;
+	text-align: left;
+	margin: 0 auto;
+}
+
 .tm-section-title {
 	font-family: 'omyu_pretty';
   font-size: 2.5rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.tm-section-title1 {
+	font-family: 'omyu_pretty';
+  font-size: 2.5rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.tm-section-title2 {
+	font-family: 'omyu_pretty';
+  font-size: 2.3rem;
   font-weight: 400;
   margin-bottom: 30px;
 }
@@ -460,6 +580,7 @@ font-family: 'ONE-Mobile-POP';
   display: inline-block;
   border: 1px solid #eec94f;
   margin: 7px;
+  border-radius: 15px;
 }
 
 .tm-paging-link {
@@ -472,6 +593,7 @@ font-size:1.3rem;
   text-decoration: none;
   color: #eec94f;
   background-color: transparent;
+  border-radius: 0.7rem;
 }
 
 .tm-paging-link.active,
@@ -511,6 +633,8 @@ font-size:1.3rem;
 }
 
 .tm-footer {
+  font-family: 'omyu_pretty';
+  font-size: 1.2rem;
   padding: 20px 120px;
   height: 200px;
 }
@@ -689,6 +813,7 @@ font-size:1.3rem;
 }
 
 .form-control {
+  margin-top: 10px;
   display: block;
   width: 100%;
   padding: 0.375rem 0.75rem;
@@ -809,36 +934,46 @@ address {
 }
 
 .tm-faq {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.tm-faq2 {
   max-width: 650px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px;
 }
 
 .tm-accordion {
-  padding-top: 40px;
+	justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center;
 }
 
 /* https://www.w3schools.com/howto/howto_js_accordion.asp */
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-  font-size: 1.2rem;
-  font-family: 'Open Sans', Helevetica, Arial, sans-serif;
+  font-size: 1.6rem;
+  font-family: 'omyu_pretty','Open Sans', Helevetica, Arial, sans-serif;
   color: #999;
   background-color: transparent;
   border: 1px solid #d0d0d0;
-  margin-bottom: 17px;
-  margin-top: 17px;
+  margin-bottom: 20px;
+  margin-top: 10px;
   cursor: pointer;
-  padding: 10px 20px 6px;
-  width: 100%;
+  padding: 20px 33px 6px;
+  width: 90%;
   text-align: left;
   outline: none;
   transition: 0.4s;
+  border-radius: 0.3rem;
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .accordion.active, .accordion:hover {
-  color: #09C;
+  color: #eec94f;
 }
 
 @keyframes changeIcon {
@@ -890,5 +1025,7 @@ address {
 }
 
 .panel p {
+  font-size: 1.3rem;
+  font-family: 'omyu_pretty';
   padding: 5px 20px 30px;
 }

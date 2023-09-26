@@ -150,6 +150,7 @@
 }
 
 .search-form button svg {
+  margin-top: 7px;
   width: 30px;
   height: 50px;
 }
@@ -219,12 +220,14 @@
 }
 
 #slider-wrap ul#slider li>div h3 {
-    font-size: 36px;
+	font-family: 'omyu_pretty';
+    font-size: 50px;
     text-transform: uppercase;
 }
 
 #slider-wrap ul#slider li>div span {
-    font-size: 21px;
+	font-family: 'omyu_pretty';
+    font-size: 26px;
 }
 
 #slider-wrap ul#slider li img {
@@ -284,10 +287,11 @@
 	height: 300px;
 	flex-grow: 0;
   flex-basis: auto;
-	margin: auto;
+	margin: 45px;
 }
  
 .item_row{
+	font-family: 'omyu_pretty';
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 50px;
@@ -296,16 +300,19 @@
 .item_name{
 	margin-top: 10px;
 	font-weight: 400;
+	font-size: 1.3rem;
 }
  
 .item_cost{
 	margin-top: 10px;
 	font-weight: 700;
+	font-size: 1.2rem;
 }
 .item_place{
 	font-weight: 400;
 	font-size: smaller;
 	margin-top: 10px;
+	font-size: 1rem;
 }
  
 .like_chating{
@@ -369,19 +376,30 @@
 }
 
 .top_title{
+	font-family: 'omyu_pretty';
 	font-size: 2.5rem;
-	font-weight: 600;
-	margin-top: 130px;
+	font-weight: 500;
+	margin-top: 100px;
 	text-align: center;
-	margin-bottom: 50px;
+	margin-bottom: 70px;
 }
 
 .top_title1{
+	font-family: 'omyu_pretty';
 	font-size: 2.5rem;
-	font-weight: 600;
-	margin-top: 90px;
+	font-weight: 500;
+	margin-top: 120px;
 	text-align: center;
-	margin-bottom: 80px;
+	margin-bottom: 40px;
+}
+
+.top_title2{
+	font-family: 'omyu_pretty';
+	font-size: 2.5rem;
+	font-weight: 500;
+	margin-top: 120px;
+	text-align: center;
+	margin-bottom: 40px;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -412,6 +430,8 @@ body {
 }
 
 .tag_container{
+	font-family: 'omyu_pretty';
+	font-size:1.1rem;
     max-width: 1120px;
     display: flex;
     flex-wrap: wrap;
@@ -445,10 +465,13 @@ body {
     max-width: 1000px;
     display: flex;
     justify-content: center;
-   
+    margin-bottom: 50px;
+    padding-right: 40px;
 }
 
 .item_desc{
+	font-family: 'omyu_pretty';
+	font-size:1.2rem;
     position:relative;
     left:8px;
 }
@@ -761,44 +784,6 @@ font-family: 'ONE-Mobile-POP';
   font-family: 'omyu_pretty';
     font-weight: normal;
     font-style: normal;
-}
-
-.tm-nav {
-  text-align: right;
-  margin-top: 30px;
-}
-
-.tm-nav-ul {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.tm-nav-li {
-	font-family:'omyu_pretty';
-	font-size:1.2rem;
-  list-style: none;
-  display: block;
-  margin-bottom: 0;
-  padding-right: 25px;
-  padding-left: 25px;
-}
-
-@media (max-width: 991px) {
-  .tm-nav-li {
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-}
-
-.tm-nav-link {
-  color: white;
-  text-decoration: none;
-  padding-bottom: 10px;
-}
-
-.tm-nav-link.active,
-.tm-nav-link:hover {
-  border-bottom: 1px solid white;
 }
 
 .tm-welcome-section {

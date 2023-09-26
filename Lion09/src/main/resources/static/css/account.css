@@ -8,6 +8,7 @@
 }
 
 .modal {
+	font-family:'omyu_pretty';
     position: fixed;
     top: 0;
     left: 0;
@@ -49,6 +50,15 @@
     transition: all 0.35s linear;
 }
 
+.modal-open-btn{
+	font-family:'omyu_pretty';
+	border: 0;
+	background-color: #ffffff;
+	text-decoration: underline;
+	float: right;
+	padding-right: 300px;
+}
+
 .modal-header {
     min-height: 16px;
     padding: 15px;
@@ -56,6 +66,7 @@
 }
 
 .modal-header>.modal-title {
+	font-family:'omyu_pretty';
     margin: 0;
     font-size: 18px;
     font-weight: 500;
@@ -126,4 +137,11 @@
     .modal-content {
         width: 85%;
     }
+}
+
+.login h3{
+	font-family: 'omyu_pretty';
+	font-size: 15pt;
+	padding-top: 14px;
+	padding-bottom: 20px;
 }

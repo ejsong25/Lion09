@@ -1,0 +1,176 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>MyPage</title>
+<link href="css/account.css" rel="stylesheet" />
+<link href="css/myPage.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<style>
+@font-face {
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
+
+</head>
+<body>
+
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+
+	<div class="container" style="position: relative;">
+		<!-- Top box -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div style="display: flex;">
+
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<h3 class="w3-bar-item">Menu</h3>
+				<a href="#" class="w3-bar-item w3-button">LionPay</a> <a href="#"
+					class="w3-bar-item w3-button">관심상품</a> <a href="#"
+					class="w3-bar-item w3-button">거래내역</a> <a href="#"
+					class="w3-bar-item w3-button">계정/정보</a>
+			</div>
+
+			<!-- Page Content -->
+			<div style="width: 100%;">
+				<header>
+					<div align="center">
+						<h2 class="col-12 text-center tm-section-title">계정/정보관리</h2>
+					</div>
+				</header>
+
+				<div style="margin-left: 40%;">
+					<div class="login">
+						<h3>
+							이메일 <input type="text" class="form-control" name="이메일"
+								style="border-radius: 5px; width: 40%;">
+						</h3>
+						<h3>
+							비밀번호 <input type="text" class="form-control" name="비밀번호"
+								style="border-radius: 5px; width: 40%;">
+						</h3>
+						<h3>
+							휴대폰 번호 <input type="text" class="form-control" name="휴대폰 번호"
+								style="border-radius: 5px; width: 40%;">
+						</h3>
+
+					</div>
+
+
+					<br />
+					<br />
+					<br />
+					<button class="modal-open-btn">서비스 이용약관</button>
+
+					<div class="modal">
+						<div class="modal-overlay"></div>
+						<div class="modal-content">
+							<div class="modal-header">
+								<button class="modal-close-x"></button>
+								<h4 class="modal-title">서비스 이용약관</h4>
+							</div>
+							<div class="modal-body">개인정보를 제공받는 자의 개인정보 보유 및 이용기간 회원 가입
+								기간 동안 정보를 저장합니다. 단, 관계 법령의 규정에 의하여 일정 기간 보존이 필요한 경우에는 해당 기간만큼 보관
+								후 삭제합니다. 이력 확인 및 분쟁조정(타인에 의한 정보 변경 등)을 위해 변경 전 본인확인 정보는 1년간 보관 후
+								파기합니다. 사자고 회원은 위 개인정보 제공 동의를 거부할 권리가 있으나, 위 개인정보 제공 동의 거부 시
+								LIONPAY 를 이용한 이용자 간 거래 및 상품 구매가 불가능합니다. 그 밖의 내용은 사자고 개인정보 처리방침을
+								따릅니다.</div>
+							<div class="modal-footer">
+								<button class="modal-close-btn">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="margin-left: 30%;">
+					<br />
+					<br />
+					<button class="profileBtn">정보 수정</button>
+					<br />
+					
+				</div>
+
+
+				<div align="center" style="margin-top: 100px;"></div>
+
+			</div>
+		</div>
+		<br />
+		<br />
+		<hr class="hr-solid" />
+		<!-- footer 자리 -->
+		<footer class="tm-footer text-center">
+			<div style="float: left;">
+				<p>
+					<b>사자고</b>
+				</p>
+				<br />
+				<p>
+					<b>사업자등록번호</b> 202-30-92017
+				</p>
+				<p>
+					<b>이메일</b> help@liongg.co.kr
+				</p>
+				<p>
+					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+				</p>
+				<p>
+					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+						href="https://templatemo.com">TemplateMo</a>
+				</p>
+			</div>
+			<div style="float: right;">
+				<div>
+					<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
+	<script>
+			var container = document.getElementById('map');
+			var options = {
+				center: new kakao.maps.LatLng(37.49886, 127.03170),
+				level: 2
+			};
+	
+			var map = new kakao.maps.Map(container, options);
+	</script>
+	<script src="js/account.js"></script>
+</body>
+</html>

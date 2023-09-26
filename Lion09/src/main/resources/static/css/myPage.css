@@ -118,7 +118,7 @@
 }
 
 .payBtn {
-	width: 100%;
+	width:100%;
 	border-style: hidden;
 	background-color: #ffffff;
 }
@@ -157,7 +157,19 @@
 	transition: visibility 0s, opacity 0.5s ease;
 }
 
+.sidebar {
+	font-family:'omyu_pretty';
+	font-size: 1.3rem;
+	width: 180px;
+	padding-left: 2%;
+	background-color: #F1F1F1;
+}
 
+.sidebar h3{
+	font-family:'omyu_pretty';
+	font-size: 1.8rem;
+	font-weight: bold;
+}
 
 
 

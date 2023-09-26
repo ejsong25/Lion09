@@ -30,8 +30,24 @@ public class LionController {
 	public String list1() {
 		return "list1";
 	}
+	
 	@GetMapping("/list2")
 	public String list2() {
 		return "list2";
+	}
+	
+	@GetMapping("/wishList")
+	public String wishList() {
+		return "wishList";
+	}
+	
+	@GetMapping("/account")
+	public String account() {
+		return "account";
+	}
+	
+	@GetMapping("/LionPay")
+	public String LionPay() {
+		return "LionPay";
 	}
 }

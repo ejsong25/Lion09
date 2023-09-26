@@ -1,0 +1,213 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>LionPay</title>
+<link href="css/myPage.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<style>
+@font-face {
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
+
+<script type="text/javascript">
+	//전역 변수로 초기 값 0을 설정합니다.
+	let totalAmount = 0;
+
+	function count(type) {
+		// 결과를 표시할 element
+		const resultElement = document.getElementById('result');
+
+		// 더하기/빼기
+		if (type === '100000') {
+			totalAmount += 100000;
+		} else if (type === '50000') {
+			totalAmount += 50000;
+		} else if (type === '10000') {
+			totalAmount += 10000;
+		}
+
+		// 결과 포맷팅 및 출력
+		resultElement.innerText = totalAmount.toLocaleString();
+	}
+</script>
+
+</head>
+<body>
+
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+
+	<div class="container" style="position: relative;">
+		<!-- Top box -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div style="display: flex;">
+
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<h3 class="w3-bar-item">Menu</h3>
+				<a href="#" class="w3-bar-item w3-button">LionPay</a> <a href="#"
+					class="w3-bar-item w3-button">관심상품</a> <a href="#"
+					class="w3-bar-item w3-button">거래내역</a> <a href="#"
+					class="w3-bar-item w3-button">계정/정보</a>
+			</div>
+
+			<!-- Page Content -->
+			<div style="width: 100%;">
+				<header>
+					<div align="center">
+						<h2 class="col-12 text-center tm-section-title">LionPay</h2>
+					</div>
+				</header>
+
+				<div align="center">
+
+					<table id="LionPayTable">
+						<tr style="height: 140px;">
+							<td colspan="2">
+								<div
+									style="display: flex; align-items: center; padding-left: 30px; padding-right: 30px;">
+									<div style="flex: 1;">LionMoney</div>
+									<div>
+										<button class="profileImgBtn"
+											style="margin: 0px; width: 100px;" onclick="div_hide();">pay비밀번호</button>
+									</div>
+								</div>
+								<div style="margin-top: 20px; padding-left: 30px;">0원</div>
+							</td>
+						</tr>
+					</table>
+
+
+				</div>
+
+				<div align="center" style="margin-top: 50px;">
+
+					<h3 style="font-family: 'omyu_pretty'; font-size: 30px;">계좌 정보</h3>
+
+					<table id="LionPayTable" border="1"
+						style="background-color: #ffffff; border-color: #444444; color: #444444; height: 20px;">
+						<tr>
+							<td style="padding-left: 20px; width: 150px;">은행</td>
+							<td style="padding-left: 20px;"><input
+								style="border-style: hidden; width: 310px;" type="text"
+								placeholder="계좌번호"></td>
+						</tr>
+					</table>
+					<input class="profileImgBtn" type="button" value="변경"
+						style="width: 200px; font-size: 27px;">
+				</div>
+
+				<div align="center" style="margin-top: 50px;">
+					<h3 style="font-family: 'omyu_pretty'; font-size: 30px;">충전</h3>
+					<table id="LionPayTable" border="1"
+						style="background-color: #ffffff; border-color: #444444; color: #444444">
+						<tr>
+							<td id="result" colspan="3" style="padding-left: 20px;">0</td>
+						</tr>
+						<tr>
+							<td style="padding: 0px;"><button class="payBtn"
+									onclick='count("100000")'>+10만원</button></td>
+							<td style="padding: 0px;"><button class="payBtn"
+									onclick='count("50000")'>+5만원</button></td>
+							<td style="padding: 0px;"><button class="payBtn"
+									onclick='count("10000")'>+1만원</button></td>
+						</tr>
+					</table>
+					<input class="profileImgBtn" type="button" value="충전"
+						style="width: 200px; font-size: 27px;">
+				</div>
+
+				<div style="margin-top: 60px; margin-left: 17%; margin-right: 17%">
+					<div
+						style="display: flex; align-items: center; justify-content: space-between;">
+						<div style="font-family: 'omyu_pretty'; font-size: 25px;">최근
+							이용내역</div>
+						<div style="font-family: 'omyu_pretty'; font-size: 18px;">전체보기▶</div>
+					</div>
+				</div>
+
+				<div style="height: 500px;"></div>
+
+			</div>
+		</div>
+		<br /> <br />
+		<hr class="hr-solid" />
+		<!-- footer 자리 -->
+		<footer class="tm-footer text-center">
+			<div style="float: left;">
+				<p>
+					<b>사자고</b>
+				</p>
+				<br />
+				<p>
+					<b>사업자등록번호</b> 202-30-92017
+				</p>
+				<p>
+					<b>이메일</b> help@liongg.co.kr
+				</p>
+				<p>
+					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+				</p>
+				<p>
+					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+						href="https://templatemo.com">TemplateMo</a>
+				</p>
+			</div>
+			<div style="float: right;">
+				<div>
+					<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
+	<script>
+		var container = document.getElementById('map');
+		var options = {
+			center : new kakao.maps.LatLng(37.49886, 127.03170),
+			level : 2
+		};
+
+		var map = new kakao.maps.Map(container, options);
+	</script>
+
+</body>
+</html>

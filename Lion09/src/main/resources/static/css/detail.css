@@ -99,3 +99,253 @@ button:hover{
 .line{
 	width: 100%;
 }
+
+body {
+  margin: 0px;
+  background-color: rgba(255, 138, 61, 0.15);
+}
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+  margin: 0px;
+  padding: 10px 50px;
+  background-color: #ffffff;
+}
+.header__main {
+  display: flex;
+  align-items: center;
+}
+.header__title {
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #ff8a3d;
+  border: none;
+}
+.header__title img {
+  width: 50px;
+  height: 50px;
+  animation: carrot-logo-dance 2s ease-in-out infinite;
+}
+
+@keyframes carrot-logo-dance {
+  0% {
+    transform: rotateY(0);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+.total__search {
+  position: relative;
+  margin-top: 5px;
+  margin-left: 25px;
+}
+.search {
+  width: 400px;
+  height: 40px;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+}
+.search i {
+  opacity: 0.3;
+}
+.sub_search {
+  position: absolute;
+  top: 50px;
+}
+.sub_search span:first-child {
+  font-size: 14px;
+  font-weight: bold;
+}
+.sub_search span:nth-child(2) {
+  font-size: 13px;
+}
+.sub_search span:last-child {
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.5;
+}
+
+.download {
+  margin-left: 150px;
+  font-weight: bold;
+}
+.chat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+  width: 120px;
+  height: 40px;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+.chat span:first-child {
+  font-weight: bold;
+  margin-right: 5px;
+}
+.chat span:last-child {
+  font-size: 15px;
+  color: #ff8a3d;
+  font-weight: bold;
+}
+
+.main__contents {
+  display: flex;
+  justify-content: center;
+}
+
+.contents {
+  background-color: white;
+  margin: 50px 0px;
+  width: 750px;
+  height: 850px;
+  border-radius: 10px;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  padding: 30px 40px;
+}
+.contents__title span {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.content__line {
+  margin: 25px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.content__img img {
+  width: 200px;
+  height: 160px;
+  border-radius: 10px;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5px;
+}
+
+.content__span span:first-child {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+.content__span span:nth-child(2) {
+  font-size: 15px;
+  font-weight: bold;
+  opacity: 0.6;
+}
+.content__price_like {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+.price_span {
+  color: #ff8a3d;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 100px;
+}
+.content__price_like i {
+  color: #ff8a3d;
+  margin-right: 5px;
+}
+
+h1{
+	font-size: 30px;
+}
+
+
+/* 진행바 */
+.progress {
+	width: 25%;
+	height: 50px;
+	position: absolute;
+}
+
+.progressBar {
+	border: 1px;
+	width: 100%; 
+	height: 20px;
+	-webkit-appearance: none;
+	border: 2px solid orange;
+    border-radius: 10px;
+}
+
+::-webkit-progress-bar {
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+}
+
+::-webkit-progress-value {
+  background-color: orange;
+  border-radius: 10px;
+}
+
+.progress-number {
+	position: relative;
+	left: 40%;
+	font-family: 'omyu_pretty'; 
+}
+
+.progress-number::before {
+	content: "";
+	position: absolute;
+	top: -10px;
+	transform: translateX(-50%);
+	border-top: 5px solid #eec94f;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+}
+
+.progress-number::after {
+	content: attr(aria-valuenow);
+	position: absolute;
+	top: -10px;
+	transform: translate(-50%, -100%);
+	padding: 4px 10px;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 300;
+	background-color: #eec94f;
+	border-radius: 3px;
+}
+
+/*  참여인원 progress bar */
+.progress1 {
+    height: 50px;
+    width: 50%;
+    accent-color: rgb(91, 91, 91);
+    margin-left: 48%;
+}
+.submitButtons {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+}
+.joinButton {
+    margin-top: 30px;
+    color: white;
+    background-color: orange;
+    font-size: 20px;
+    font-weight: 900;
+    width: 300px;
+    height: 50px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    margin-left: 120%;
+    border: none;
+}
+.joinButton:hover{
+    background-color: rgb(255, 112, 18);
+}

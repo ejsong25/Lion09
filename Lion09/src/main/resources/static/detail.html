@@ -6,14 +6,15 @@
  	<link rel="stylesheet" href="css/carrot_market.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
     <title>글 정보</title>
     <link rel="stylesheet" href="/css/list.css">
     <link href="css/templatemo-style.css" rel="stylesheet" />
     <link href="css/all.min.css" rel="stylesheet" />
     <link href="css/detail.css" rel="stylesheet" />
-   
-    
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
@@ -62,16 +63,45 @@
 			</div>
 		</div>
 
-    <div class="content-box">
+    <div>
+	 	<div class="user-info"><br/>
+	        <div class="header__title">
+	             <h1>&nbsp;맛있는 간식 특별한 간식</h1>
+	        </div>
+              </div><br/>
+              
+              
+              
+            <div style="float: left;">
+	          <p style="font-size: 20px;">&nbsp;나는야 김치부침개</p>
+              <p>&nbsp;&nbsp;강남구 역삼동</p>
+	        </div>
+	        
+	          <div class="header__title" style="margin-left: 58%;">
+                <img src="img/lion.png">
+            </div>
+
+	              
+	              	    <!-- 에너지 게이지 프로세스바 -->        
+		   <div style="margin-left: 58%; margin-top: 20px;position: static;">
+		       <h4 style="font-family: 'omyu_pretty'; font-size: 20pt;">에너지 게이지</h4>
+		          <b style="font-family: 'omyu_pretty'; font-size: 15pt;">50%</b>    		
+		      <div class="progress" style="margin-top: 20px;">
+				  <div class="progress-number" aria-valuenow="첫에너지 40%"></div>
+				   <progress class="progressBar" value="50" min="0" max="100"></progress>
+			  </div>
+	       </div>
+              
+              
+             
+              
       <div class="container1 column">
         <div class="post-box">
 
+		
             <img src="/img/pic2.PNG" alt="" class="block-box">
             <div class="flex-box between info-button-box">
-              <div class="user-info">
-                <h6>주주주</h6>
-                <p>강남구 역삼동</p>
-              </div>
+             
               
                 <div class="flex-box button-box">
                     <button class="grey">수정하기</button>
@@ -81,6 +111,8 @@
                 <div class="button-box">
                     <button class="orange">채팅하기</button>
                 </div>
+                
+
             </div>
             <hr class="line">
             <div class="post-info-box">
@@ -96,23 +128,39 @@
 액정에 금간건 없어요
 장소는 노원 양지근린공원 입니다</p>
               <div class="location-views-box flex-box between">
-                <p>희망 거래장소 </p>
-                <p>조회수</p>
+                  <span style="font-size: 15px;">조회수 : 10</span>
+                  <span style="color: red; font-size: 15px; margin-right: 80%;">관심 : 16</span>
+                 <!-- 하트 -->
+                <i class="bi-heart" style="font-size:2rem; color: red; cursor: pointer;"></i>
+            
+                
               </div>
+              
+               
             </div>
+           
         </div>
       </div>
     </div>
 
 
 
-
-
-
-
-		
-		
-      
+			<!-- 참여인원 프로세스바 -->
+            <div class="productProgress">
+                <progress class="progress1"  value="30" min="0" max="100"></progress>
+               <!--  <div style="display: inline;font-size: 30px; font-weight: 500;"><p style ="text-align: right; margin:0px">{{post.participants}} / {{post.recruit_num}}명</p></div> -->
+            </div>
+            
+            
+            <div class="submitButtons">
+                <!-- <form action = "{% url 'share:join' post.id %}" method="post">
+                    
+                    <button class="joinButton" value="disjoin">Disjoin</button>
+                </form> -->
+                <form action = "{% url 'share:join' post.id %}" method="post"> 
+                    <button class="joinButton" value="join">참여하기</button>
+                </form>
+            </div>
 
 
 		<footer class="tm-footer text-center">
@@ -125,6 +173,9 @@
 	<script src="js/list.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/parallax.min.js"></script>
+	
+	
+	<!-- 버튼 스크립트 -->
 	<script>
 		$(document).ready(function(){
 			// Handle click on paging links
@@ -139,5 +190,24 @@
 			});
 		});
 	</script>
+	
+	<!-- 위시 하트 스크립트 -->
+    <script>
+
+       var i = 0;
+       $('i').on('click',function(){
+           if(i==0){
+               $(this).attr('class','bi-heart-fill');
+               i++;
+           }else if(i==1){
+               $(this).attr('class','bi-heart');
+               i--;
+           }
+
+       });
+
+   </script>
+	
+	
 </body>
 </html>

@@ -1,0 +1,129 @@
+@charset "UTF-8";
+
+
+.modal-open {
+    overflow: hidden;
+    
+   
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 999;
+    -webkit-transition: all 0.35s linear;
+    -o-transition: all 0.35s linear;
+    transition: all 0.35s linear;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    width: 70%;
+    margin: 0 auto;
+    border-radius: 6px;
+    -webkit-transition: all 0.35s linear;
+    -o-transition: all 0.35s linear;
+    transition: all 0.35s linear;
+}
+
+.modal-header {
+    min-height: 16px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header>.modal-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.modal-header>.modal-close-x {
+    margin-top: -2px;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+    color: #000;
+    
+}
+
+.modal-body {
+    position: relative;
+    padding: 15px;
+}
+
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.modal-footer>.modal-close-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+
+}
+
+.modal-footer>.modal-close-btn:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    text-decoration: none;
+}
+
+.modal-active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-active .modal-content {
+    margin: 10% auto;
+}
+
+@media (max-width: 1023px) {
+    .modal-content {
+        width: 85%;
+    }
+}
+
+@media (max-width: 767px) {
+    .modal-content {
+        width: 85%;
+    }
+}

@@ -11,13 +11,17 @@ public class UserController {
 	
 	@GetMapping("/login")
 	public String login() {
-		return "login";
+		return "login_form";
 	}
-	
 	
 	@GetMapping("/signup")
 	public String signup() {
-		return "signup";
+		return "signup_form";
+	}
+	
+	@PostMapping("/signup")
+	public String singup(MemberForm form) {
+		Member member = new Member();
 	}
 	
 	

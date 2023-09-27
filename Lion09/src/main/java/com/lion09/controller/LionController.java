@@ -50,4 +50,9 @@ public class LionController {
 	public String LionPay() {
 		return "LionPay";
 	}
+	
+	@GetMapping("/myPage")
+	public String myPage() {
+		return "myPage";
+	}
 }

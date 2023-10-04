@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-<title>signup</title>
-<link href="/css/all.min.css" rel="stylesheet" />
-<link href="/css/templatemo-style.css" rel="stylesheet" />
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>signup</title>
+	<link href="/css/all.min.css" rel="stylesheet" />
+	<link href="/css/templatemo-style.css" rel="stylesheet" />
+	<style>
+		@font-face {
+			font-family: 'ONE-Mobile-POP';
+			src:
+				url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+				format('woff');
+			font-weight: normal;
+			font-style: normal;
+		}
+		
+		@font-face {
+			font-family: 'omyu_pretty';
+			src:
+				url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+				format('woff2');
+			font-weight: normal;
+			font-style: normal;
+		}
+	</style>
 </head>
-<style>
-@font-face {
-	font-family: 'ONE-Mobile-POP';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'omyu_pretty';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
-		format('woff2');
-	font-weight: normal;
-	font-style: normal;
-}
-</style>
 
 <body>
 	<!-- 네비바 자리 -->
@@ -56,39 +56,53 @@
 			<header class="row tm-welcome-section">
 				<h2 class="col-12 text-center tm-section-title">회원가입</h2>
 			</header>
-
+				
 			<div class="tm-container-inner-2 tm-contact-section" align="center">
 				<div class="col-md-6">
-					<form action=""  method="POST" class="tm-contact-form">
+				
+					<form action="/user/signup"  method="POST" class="tm-contact-form"
+					th:object = "${memberForm}">
 					
 						<div class="form-group">
-							<input type="text" id="userId" class="form-control"
+							<input type="text" th:field="*{userId}" class="form-control"
 								placeholder="아이디" required="" />
+							<p th:if="${#fields.hasErrors('userId')}"
+								th:errors="*{userId}">Incorrect</p>
 						</div>
-
-						<div class="form-group">
-							<input type="password" id="password1" class="form-control"
+							
+						<div class="form-group">	
+							<input type="password" th:field="*{userPwd1}" class="form-control"
 								placeholder="비밀번호" required="" />
+							<p th:if="${#fields.hasErrors('userPwd1')}"
+								th:errors="*{userPwd1}">Incorrect</p>
 						</div>
-
-						<div class="form-group">
-							<input type="password" id="password2" class="form-control"
+							
+						<div class="form-group">	
+							<input type="password" th:field="*{userPwd2}" class="form-control"
 								placeholder="비밀번호 확인" required="" />
+							<p th:if="${#fields.hasErrors('userPwd2')}"
+								th:errors="*{userPwd2}">Incorrect</p>
 						</div>
-
+							
 						<div class="form-group">
-							<input type="text" id="userName" class="form-control"
+							<input type="text" th:field="*{userName}" class="form-control"
 								placeholder="사용자 이름" required="" />
+							<p th:if="${#fields.hasErrors('userName')}"
+								th:errors="*{userName}">Incorrect</p>
 						</div>
-
-						<div class="form-group">
-							<input type="email" id="email" class="form-control"
+							
+						<div class="form-group">	
+							<input type="email" th:field="*{email}" class="form-control"
 								placeholder="이메일" required="" />
+							<p th:if="${#fields.hasErrors('email')}"
+								th:errors="*{email}">Incorrect</p>
 						</div>
-
-						<div class="form-group">
-							<input type="text" id="nickName" class="form-control"
+							
+						<div class="form-group">	
+							<input type="text" th:field="*{nickName}" class="form-control"
 								placeholder="닉네임" required="" />
+							<p th:if="${#fields.hasErrors('nickName')}"
+								th:errors="*{nickName}">Incorrect</p>
 						</div>
 
 						<div class="form-group tm-d-flex">
@@ -97,6 +111,7 @@
 									회원가입
 								</button>
 							</div>
+							
 							  <!-- 회원가입과 아이디/비밀번호 찾기 영역 -->
 							<div style="padding-top: 20px; display: flex; justify-content: space-between;">
 								<div align="left">
@@ -109,8 +124,6 @@
 						</div>
 					</form>
 				</div>
-
-
 			</div>
 
 		</main>

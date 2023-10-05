@@ -47,13 +47,4 @@ public class LionController {
 		return "account";
 	}
 	
-	@GetMapping("/LionPay")
-	public String LionPay() {
-		return "LionPay";
-	}
-	
-	@GetMapping("/myPage")
-	public String myPage() {
-		return "myPage";
-	}
 }

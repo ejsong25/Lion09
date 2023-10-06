@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lion09.mypage.MyPageMapper">
+
+<select id="selectData" resultType="com.lion09.mypage.MyPageDTO">
+	select userId,nickName,energy from test where userId='111'
+</select>
+
+<update id="updateData" parameterType="com.lion09.mypage.MyPageDTO">
+	update test set nickName=#{nickName} where userId='111'
+</update>
+
+</mapper>

@@ -6,11 +6,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.lion09.mypage.MyPageMapper">
 
 <select id="selectData" resultType="com.lion09.mypage.MyPageDTO">
-	select userId,nickName,energy from test where userId='111'
+	select userId,nickName,energy,profileImgName from test where userId='111'
 </select>
 
 <update id="updateData" parameterType="com.lion09.mypage.MyPageDTO">
 	update test set nickName=#{nickName} where userId='111'
+</update>
+
+<update id="imgUpdate" parameterType="com.lion09.mypage.MyPageDTO">
+	update test set profileImgName=#{profileImgName} where userId='111'
 </update>
 
 </mapper>

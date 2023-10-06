@@ -9,4 +9,7 @@ public class MyPageDTO {
 	private String nickName;
 	private int energy;
 	
+	//프로필 사진
+	private String profileImgName;
+	
 }

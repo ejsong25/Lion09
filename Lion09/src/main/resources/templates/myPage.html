@@ -33,13 +33,25 @@
 </style>
 
 <script type="text/javascript">
-
+	
 	function sendIt() {
 		
 		f = document.myForm;
 		
+		alert('프로필 정보가 수정되었습니다');
+		
 		f.action="/mypage_update.action";
 		f.submit();
+	}
+	
+	function test() {
+	    f = document.myForm;
+
+	    alert('프로필 정보가 수정되었습니다');
+
+	    f.action = "/mypageImg_update.action";
+	    f.submit();
+
 	}
 	
 </script>
@@ -72,7 +84,7 @@
 			<!-- Sidebar -->
 			<div class="sidebar">
 				<h3 class="w3-bar-item">Menu</h3>
-				<a href="#" class="w3-bar-item w3-button">LionPay</a> <a href="#"
+				<a href="/LionPay" class="w3-bar-item w3-button">LionPay</a> <a href="#"
 					class="w3-bar-item w3-button">관심상품</a> <a href="#"
 					class="w3-bar-item w3-button">거래내역</a> <a href="#"
 					class="w3-bar-item w3-button">계정/정보</a>
@@ -85,7 +97,8 @@
 						<h2 class="col-12 text-center tm-section-title">마이페이지</h2>
 
 						<div class="profileBox">
-							<img class="profileImg" id="profileImage" src="img/lion.png">  
+							<img class="profileImg" id="profileImage" 
+								th:src="@{'/img/mypage/' + ${dto.profileImgName} + '?_=' + ${#dates.createNow().getTime()}}" >  
 						</div>
 					</div>
 				</header>
@@ -93,8 +106,8 @@
 				<form action="" method="post" name="myForm"
 					 enctype="multipart/form-data">
 					<div align="center">
-						<br/><input type="file" name="file"><br/>
-						<input type="button" class="profileImgBtn" value="사진변경">
+						<br/><input type="file" name="mypageFilename"><br/>
+						<input type="button" class="profileImgBtn" value="사진변경" onclick="test();">
 					</div>
 					
 					<div style="margin-left: 27%;">

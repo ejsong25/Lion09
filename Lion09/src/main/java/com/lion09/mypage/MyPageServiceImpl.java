@@ -2,6 +2,7 @@ package com.lion09.mypage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class MyPageServiceImpl implements MyPageService {
@@ -17,6 +18,11 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public void updateData(MyPageDTO dto) throws Exception {
 		mypageMapper.updateData(dto);
+	}
+
+	@Override
+	public void imgUpdate(MyPageDTO dto) throws Exception {
+		mypageMapper.imgUpdate(dto);
 	}
 
 	

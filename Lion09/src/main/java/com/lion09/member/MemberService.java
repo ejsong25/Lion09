@@ -1,4 +1,4 @@
-package com.lion09.user;
+package com.lion09.member;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,17 +13,21 @@ public class MemberService {
 	
 	//회원가입
 	@Transactional
-	public Member join(MemberForm form) {
-		Member member = new Member();
-		member.setUserId(form.getUserId());
-		member.setUserPwd(form.getUserPwd1());
-		member.setUserName(form.getUserName());
-		member.setEmail(form.getEmail());
-		member.setNickName(form.getNickName());
-		
+	public String join(Member member) {
 		memberRepository.save(member);
 		
-		return member;
+		return member.getUserId();
+	}
+	
+	public Member getUser(String userId) throws Exception {
+		Member findMember = memberRepository.findOne(userId);
+		
+		if(findMember != null) {
+			return findMember;
+		}else {
+			throw new Exception("User Not Found");
+		}
+		
 	}
 	
 }

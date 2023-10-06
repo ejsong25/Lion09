@@ -1,4 +1,4 @@
-package com.lion09.user;
+package com.lion09.member;
 
 import javax.persistence.EntityManager;
 

@@ -1,14 +1,20 @@
 package com.lion09.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
+import com.lion09.SessionConst;
+import com.lion09.member.Member;
 
 @Controller
 public class LionController {
 	
-	@RequestMapping("/")
-	public String main() {
+	@GetMapping("/")
+	public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
+		model.addAttribute("loginMember", loginMember);
 		return "index";
 	}
 	

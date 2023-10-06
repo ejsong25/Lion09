@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
     <title>login</title>
     <link href="/css/all.min.css" rel="stylesheet"/>
 	<link href="/css/templatemo-style.css" rel="stylesheet"/>
@@ -54,13 +54,13 @@
 
 			<div class="tm-container-inner-2 tm-contact-section" align="center">
 					<div class="col-md-6">
-						<form action="" method="POST" class="tm-contact-form">
+						<form action="/login" method="POST" class="tm-contact-form" th:object="${loginForm}">
 					        <div class="form-group">
-					          <input type="text" name="id" class="form-control" placeholder="Id" required="" />
+					          <input type="text" th:field="*{userId}" class="form-control" placeholder="Id" required="" />
 					        </div>
 					        
 					        <div class="form-group">
-					          <input type="password" name="pwd" class="form-control" placeholder="Password" required="" />
+					          <input type="password" th:field="*{userPwd}" class="form-control" placeholder="Password" required="" />
 					        </div>
 					       
 					        <div class="form-group tm-d-flex">
@@ -72,7 +72,7 @@
 				             <!-- 회원가입과 아이디/비밀번호 찾기 영역 -->
 							<div style="padding-top: 20px; display: flex; justify-content: space-between;">
 								<div align="left">
-									<a href="#">회원가입</a>
+									<a href="/user/signup">회원가입</a>
 								</div>
 								<div align="right">
 									<a href="#">아이디/비밀번호 찾기</a>

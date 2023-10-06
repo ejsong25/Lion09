@@ -1,4 +1,4 @@
-package com.lion09.user;
+package com.lion09.member;
 
 import javax.validation.Valid;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,24 +17,16 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class MemberController {
-	
 	private final MemberService memberService;
-	
-	@GetMapping("/login")
-	public String login() {
-		return "login_form";
-	}
 	
 	//회원가입
 	@GetMapping("/signup")
-	public String createMemberForm(Model model) { //데이터 들고 view
-		model.addAttribute("memberForm", new MemberForm());
+	public String createMemberForm(@ModelAttribute(name = "memberForm") MemberForm form) { //데이터 들고 view
 		return "signup_form";
 	}
 
 	@PostMapping("/signup") //넘어온 데이터 검증
 	public String signup(@Valid MemberForm form, BindingResult result) {
-		
 		if(result.hasErrors()) {
 			return "signup_form";
 		}
@@ -46,7 +39,15 @@ public class MemberController {
 		}
 		
 		try {
-			memberService.join(form);
+			Member member = new Member();
+			member.setUserId(form.getUserId());
+			member.setUserPwd(form.getUserPwd1());
+			member.setUserName(form.getUserName());
+			member.setEmail(form.getEmail());
+			member.setNickName(form.getNickName());
+			
+			memberService.join(member);
+			
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			result.rejectValue("signupFailed", "이미 등록된 사용자입니다");

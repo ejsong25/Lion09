@@ -9,5 +9,7 @@ public interface MyPageService {
 	public void updateData(MyPageDTO dto) throws Exception;
 
 	public void imgUpdate(MyPageDTO dto) throws Exception;
+
+	public void imgDefault(MyPageDTO dto) throws Exception;
 	
 }

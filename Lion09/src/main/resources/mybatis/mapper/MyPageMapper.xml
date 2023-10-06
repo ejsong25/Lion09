@@ -17,4 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update test set profileImgName=#{profileImgName} where userId='111'
 </update>
 
+<update id="imgDefault" parameterType="com.lion09.mypage.MyPageDTO">
+	update test set profileImgName='lion.png' where userId='111'
+</update>
+
 </mapper>

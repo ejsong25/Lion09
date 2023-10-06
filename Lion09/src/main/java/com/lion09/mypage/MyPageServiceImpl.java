@@ -25,6 +25,11 @@ public class MyPageServiceImpl implements MyPageService {
 		mypageMapper.imgUpdate(dto);
 	}
 
+	@Override
+	public void imgDefault(MyPageDTO dto) throws Exception {
+		mypageMapper.imgDefault(dto);
+	}
+
 	
 	
 }

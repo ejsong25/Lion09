@@ -25,6 +25,7 @@ public class MyPageController {
 	@Qualifier("myPageServiceImpl")
 	private MyPageService mypageService;
 
+	//mypage 불러오기
 	@GetMapping(value = "/myPage")
 	public ModelAndView myPage() throws Exception {
 
@@ -38,8 +39,7 @@ public class MyPageController {
 		return mav;
 	}
 	
-	//	@RequestMapping(value = "/updated_ok.action", 
-	//			method = {RequestMethod.GET,RequestMethod.POST})
+	//닉네임 업데이트
 	@PostMapping(value = "/mypage_update.action")
 	public ModelAndView mypage_update(MyPageDTO dto) throws Exception {
 
@@ -52,15 +52,67 @@ public class MyPageController {
 		return mav;
 
 	}
+	
+	//기본 프로필 사진으로 변경
+	@PostMapping(value = "/mypageImg_default.action")
+	public ModelAndView imgDefault() throws Exception {
+		
+		MyPageDTO dto = mypageService.selectData();
+		
+		//삭제할 파일 이름 추출
+		String beforeFilename = dto.getProfileImgName();
 
+		//삭제할 파일 경로
+		String delete_pate = "C:\\git-lion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
+
+		//기본 프로필 이미지가 아닐 경우 삭제
+		if(beforeFilename!="lion.png") {
+			String filePathToDelete = delete_pate + beforeFilename;
+			File fileToDelete = new File(filePathToDelete);
+			
+			if (fileToDelete.exists()) {
+				fileToDelete.delete();  
+			} 
+		}
+		
+		//기본 이미지 lion.png로 변경
+		mypageService.imgDefault(dto);
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/myPage");
+
+		return mav;
+		
+	}
+
+	//프로필 사진 업데이트
 	@PostMapping("/mypageImg_update.action")
-	public ModelAndView imageInsert(
-			@RequestParam("mypageFilename") MultipartFile mFile,MyPageDTO dto) throws Exception {
+	public ModelAndView imageUpdated(
+			@RequestParam("mypageFilename") MultipartFile mFile) throws Exception {
 
 		//프로필 사진들 모아두는 폴더
 		String upload_path = "/"; 
 
-		//파일 이름 추출
+		MyPageDTO dto = mypageService.selectData();
+		
+		//삭제할 파일 이름 추출
+		String beforeFilename = dto.getProfileImgName();
+
+		//삭제할 파일 경로
+		String delete_pate = "C:\\git-lion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
+
+		//기본 프로필 이미지가 아닐 경우 삭제
+		if(!beforeFilename.equals("lion.png")) {
+			String filePathToDelete = delete_pate + beforeFilename;
+			File fileToDelete = new File(filePathToDelete);
+			
+			if (fileToDelete.exists()) {
+				fileToDelete.delete();  
+			} 
+		}
+		
+		//바꿀 파일 이름 추출
 		String originalFilename = mFile.getOriginalFilename();
 
 		//확장자 추출
@@ -80,20 +132,19 @@ public class MyPageController {
 		ModelAndView mav = new ModelAndView();
 		
 		//2.5초 후에 리다이렉트할 URL 설정
-        String redirectUrl = "/myPage"; // 수정 필요
+        String redirectUrl = "/myPage";
 
         //RedirectView를 사용하여 리다이렉션 설정
         RedirectView redirectView = new RedirectView(redirectUrl, true);
 
-        //2.5초 대기
+        //3.5초 대기 후 리다이렉트
         try {
-            Thread.sleep(2500);
+            Thread.sleep(3500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
         mav.setView(redirectView);
-		
 
 		return mav;
 

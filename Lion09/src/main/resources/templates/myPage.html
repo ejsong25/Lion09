@@ -34,24 +34,60 @@
 
 <script type="text/javascript">
 	
-	function sendIt() {
+	function nickName_update() {
 		
 		f = document.myForm;
 		
-		alert('프로필 정보가 수정되었습니다');
+		alert('닉네임이 수정되었습니다');
 		
 		f.action="/mypage_update.action";
 		f.submit();
 	}
 	
-	function test() {
+	function profileImg_update() {
+		
+		//파일을 선택하는 input 요소 가져오기
+	    var fileInput = document.querySelector('input[name="mypageFilename"]');
+	    
+	    //파일이 선택되었는지 여부 확인
+	    if (fileInput.files.length === 0) {
+	        alert('변경하실 이미지 파일을 선택해주세요.');
+	        return; // 파일이 선택되지 않았을 때 form을 제출하지 않고 함수 종료
+	    }
+	    
+		//선택한 파일의 이름 가져오기
+	    var fileName = fileInput.files[0].name;
+
+	    //허용된 파일 확장자 목록 정의
+	    var allowedExtensions = ['.png', '.jpeg', '.jpg'];
+
+	    //선택한 파일의 확장자 추출
+	    var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+	    //허용된 확장자 목록에 있는지 확인
+	    if (allowedExtensions.indexOf(fileExtension) === -1) {
+	        alert('png 또는 jpg,jpeg 형식의 파일만 업로드할 수 있습니다.');
+	        return; //허용되지 않은 확장자일 때 form을 제출하지 않고 함수 종료
+	    }
+		
 	    f = document.myForm;
 
-	    alert('프로필 정보가 수정되었습니다');
+	    alert('프로필 이미지가 수정되었습니다');
 
 	    f.action = "/mypageImg_update.action";
 	    f.submit();
 
+	}
+	
+	function profileImg_defalut() {
+		
+		f = document.myForm;
+		
+		alert('기본 프로필 이미지로 수정되었습니다');
+		
+		f.action="/mypageImg_default.action";
+		f.submit();
+	
 	}
 	
 </script>
@@ -107,7 +143,8 @@
 					 enctype="multipart/form-data">
 					<div align="center">
 						<br/><input type="file" name="mypageFilename"><br/>
-						<input type="button" class="profileImgBtn" value="사진변경" onclick="test();">
+						<input type="button" class="profileImgBtn" value="사진변경" onclick="profileImg_update();">
+						<input type="button" class="profileImgBtn" value="사진삭제" onclick="profileImg_defalut();">
 					</div>
 					
 					<div style="margin-left: 27%;">
@@ -119,7 +156,7 @@
 						</div>
 						<br />
 						<br />
-						<input type="button" class="profileBtn" value="프로필 수정" onclick="sendIt();"/>
+						<input type="button" class="profileBtn" value="닉네임 수정" onclick="nickName_update();"/>
 						<br />
 						<br />
 						<br />

@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -10,6 +11,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="css/templatemo-style.css" rel="stylesheet" />
+
 <style>
 @font-face {
 	font-family: 'ONE-Mobile-POP';
@@ -29,6 +31,18 @@
 	font-style: normal;
 }
 </style>
+
+<script type="text/javascript">
+
+	function sendIt() {
+		
+		f = document.myForm;
+		
+		f.action="/mypage_update.action";
+		f.submit();
+	}
+	
+</script>
 
 </head>
 <body>
@@ -71,37 +85,42 @@
 						<h2 class="col-12 text-center tm-section-title">마이페이지</h2>
 
 						<div class="profileBox">
-							<img class="profileImg" src="img/lion.png">
+							<img class="profileImg" id="profileImage" src="img/lion.png">  
 						</div>
 					</div>
 				</header>
-
-				<div align="center">
-					<input type="button" class="profileImgBtn" value="업로드">
-				</div>
-
-				<div style="margin-left: 27%;">
-					<div>
-						<h3
-							style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">닉네임</h3>
-						<input type="text" value="닉네임"
-							style="font-family: 'omyu_pretty'; font-size: 17pt; width: 60%;">
+				
+				<form action="" method="post" name="myForm"
+					 enctype="multipart/form-data">
+					<div align="center">
+						<br/><input type="file" name="file"><br/>
+						<input type="button" class="profileImgBtn" value="사진변경">
 					</div>
-					<br />
-					<br />
-					<button class="profileBtn">프로필 수정</button>
-					<br />
-					<br />
-					<br />
-
-				</div>
+					
+					<div style="margin-left: 27%;">
+						<div>
+							<h3
+								style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">닉네임</h3>
+							<input type="text" name="nickName" th:value="${dto.nickName}"
+								style="font-family: 'omyu_pretty'; font-size: 17pt; width: 60%;"/>
+						</div>
+						<br />
+						<br />
+						<input type="button" class="profileBtn" value="프로필 수정" onclick="sendIt();"/>
+						<br />
+						<br />
+						<br />
+	
+					</div>
+				</form>
+				
 				<div style="margin-left: 28%; margin-top: 20px;">
 					<h4 style="font-family: 'omyu_pretty'; font-size: 20pt;">에너지
 						게이지</h4>
-					<b style="font-family: 'omyu_pretty'; font-size: 15pt;">50%</b>
+					<b style="font-family: 'omyu_pretty'; font-size: 15pt;">[[${dto.energy}]]%</b>
 					<div class="progress" style="margin-top: 20px;">
 						<div class="progress-number" aria-valuenow="첫 에너지 40%"></div>
-						<progress class="progressBar" value="50" min="0" max="100"></progress>
+						<progress class="progressBar" th:value="${dto.energy}" min="0" max="100"></progress>
 
 					</div>
 				</div>

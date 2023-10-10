@@ -36,6 +36,119 @@ th{
 	width: 50%;
 }
 
+#modal{
+	display : none;
+	z-index : 1;
+	background-color: rgba(0,0,0,.3);
+	position:fixed;
+	left:0;
+	top: 0;
+	width:100%;
+	height:200%;
+	text-align: center;
+	
+}
+#modal #content{
+	width:500px;
+	margin:100px auto;
+	padding:20px;
+	position: relative;
+	background-color:#fff;
+	height: 200px;
+    overflow-y: auto; /* 내용이 모달보다 길 경우 스크롤 표시 */
+    border-radius: 0.5rem;
+}
+
+#nextModal{
+	display : none;
+	z-index : 1;
+	background-color: rgba(0,0,0,.3);
+	position:fixed;
+	left:0;
+	top: 0;
+	width:100%;
+	height:200%;
+	text-align: center;
+	
+}
+
+#nextModal #content{
+	width:500px;
+	margin:100px auto;
+	padding:20px;
+	position: relative;
+	background-color:#fff;
+	height: 200px;
+    overflow-y: auto; /* 내용이 모달보다 길 경우 스크롤 표시 */
+    border-radius: 0.5rem;
+}
+
+*{margin:0; padding:0;}
+.certify{text-align: center;padding: 0 1rem;}
+.certify input ~ input {margin-left: .6rem;}
+.certify input {
+	padding: .7rem .7rem;
+	width: 2rem;
+	height: 2rem;
+	line-height: 2rem;
+	font-size: 3.5rem;
+	font-weight: 700;
+	text-align: center;
+	background-color: #f0f1f4;
+	border: none;
+	border-radius: 0.4rem;
+}
+
+#modal .close{
+	position:absolute;
+	top:7px;
+	right:7px;	
+	font-size:20px;
+	border:0;
+	background-color: #fff;
+	z-index: 999;
+	width: 20px;
+}
+
+#modal.close:hover,
+#modal.close:focus {
+  color : #000;
+  text-decoration: none;
+  cursor :pointer;
+}
+
+#modal #content label {
+	color : #000;
+    display: block; /* label 요소를 블록 요소로 표시하도록 설정 */
+    margin-bottom: 10px;
+    padding-top: 40px;
+}
+
+#nextModal .close{
+	position:absolute;
+	top:7px;
+	right:7px;	
+	font-size:20px;
+	border:0;
+	background-color: #fff;
+	z-index: 999;
+	width: 20px;
+}
+
+#nextModal.close:hover,
+#nextModal.close:focus {
+  color : #000;
+  text-decoration: none;
+  cursor :pointer;
+}
+
+#nextModal #content label {
+	color : #000;
+    display: block; /* label 요소를 블록 요소로 표시하도록 설정 */
+    margin-bottom: 10px;
+    padding-top: 40px;
+}
+
 .faqBtn {
 	width: 70px;
     padding: 10px 20px;

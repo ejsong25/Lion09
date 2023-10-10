@@ -10,6 +10,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="css/templatemo-style.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <style>
 @font-face {
 	font-family: 'ONE-Mobile-POP';
@@ -30,30 +32,123 @@
 }
 </style>
 
-<script type="text/javascript">
-	//전역 변수로 초기 값 0을 설정합니다.
-	let totalAmount = 0;
-
-	function count(type) {
-		// 결과를 표시할 element
-		const resultElement = document.getElementById('result');
-
-		// 더하기/빼기
-		if (type === '100000') {
-			totalAmount += 100000;
-		} else if (type === '50000') {
-			totalAmount += 50000;
-		} else if (type === '10000') {
-			totalAmount += 10000;
-		}
-
-		// 결과 포맷팅 및 출력
-		resultElement.innerText = totalAmount.toLocaleString();
-	}
-</script>
 
 </head>
 <body>
+<script type="text/javascript">
+
+let totalAmount = 0;
+let currentBalance = 0;
+
+function count(type) {
+    // 결과를 표시할 element
+    const resultElement = document.getElementById('result');
+
+    if (type === '100000') {
+        totalAmount += 100000;
+    } else if (type === '50000') {
+        totalAmount += 50000;
+    } else if (type === '10000') {
+        totalAmount += 10000;
+    }
+
+    // 결과 포맷팅 및 출력
+    resultElement.innerText = totalAmount.toLocaleString();
+
+    // 금액 업데이트
+    addAmount(parseInt(type));
+}
+
+// 금액 추가
+function addAmount(amount) {
+    currentBalance += parseInt(amount);
+    document.getElementById('result').textContent = currentBalance.toLocaleString() + '원';
+}
+
+function cash() {
+    const rechargeAmount = totalAmount;
+
+    // 잔액 업데이트 요청
+    $.ajax({
+        type: 'POST',
+        url: '/payCharge.action',
+        data: { rechargeAmount: rechargeAmount },
+        success: function(response) {
+            
+            // totalAmount 초기화
+            totalAmount = 0;
+
+            // 결과 업데이트
+            document.getElementById('result').textContent = currentBalance.toLocaleString() + '원';
+            
+         	// 리다이렉트 수행
+            window.location.href = '/LionPay';
+         	
+         	alert( currentBalance.toLocaleString() + '원 ' + '충전이 완료되었습니다.')
+        },
+        error: function() {
+            alert('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+    });
+    
+}
+
+function changeAcc() {
+	
+	f = document.myForm;
+	
+	alert('계좌 정보가 수정되었습니다.');
+	
+	f.action="/updateAcc_ok.action";
+	f.submit();
+}
+
+function resetAcc() {
+	
+	f = document.myForm;
+	
+	alert('계좌 정보가 삭제되었습니다.');
+	
+	f.action="/resetAcc_ok.action";
+	f.submit();
+}
+
+function changePwd() {
+    const newPwd1 = document.getElementById('newPwd1').value;
+    const newPwd2 = document.getElementById('newPwd2').value;
+    const newPwd3 = document.getElementById('newPwd3').value;
+    const newPwd4 = document.getElementById('newPwd4').value;
+    const newPwd5 = document.getElementById('newPwd5').value;
+    const newPwd6 = document.getElementById('newPwd6').value;
+
+    const newPwd = newPwd1 + newPwd2 + newPwd3 + newPwd4 + newPwd5 + newPwd6;
+
+    $.ajax({
+        type: 'POST',
+        url: '/updatePwdData_ok.action',
+        data: { payPwd: newPwd }, // 업데이트할 데이터
+        success: function(response) {
+            document.getElementById('newPwd1').value = '';
+            document.getElementById('newPwd2').value = '';
+            document.getElementById('newPwd3').value = '';
+            document.getElementById('newPwd4').value = '';
+            document.getElementById('newPwd5').value = '';
+            document.getElementById('newPwd6').value = '';
+
+            alert('PAY비밀번호가 변경되었습니다.');
+            
+            window.location.href = '/LionPay';
+        },
+        error: function() {
+        	alert('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+    });
+}
+
+
+
+
+</script>
 
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
@@ -82,10 +177,10 @@
 			<!-- Sidebar -->
 			<div class="sidebar">
 				<h3 class="w3-bar-item">Menu</h3>
-				<a href="#" class="w3-bar-item w3-button">LionPay</a> <a href="#"
-					class="w3-bar-item w3-button">관심상품</a> <a href="#"
-					class="w3-bar-item w3-button">거래내역</a> <a href="#"
-					class="w3-bar-item w3-button">계정/정보</a>
+				<a href="/LionPay" class="w3-bar-item w3-button">LionPay</a>
+				<a href="#" class="w3-bar-item w3-button">관심상품</a>
+				<a href="#" class="w3-bar-item w3-button">거래내역</a>
+				<a href="#" class="w3-bar-item w3-button">계정/정보</a>
 			</div>
 
 			<!-- Page Content -->
@@ -105,18 +200,65 @@
 									style="display: flex; align-items: center; padding-left: 30px; padding-right: 30px;">
 									<div style="flex: 1;">LionMoney</div>
 									<div>
-										<button class="profileImgBtn"
-											style="margin: 0px; width: 100px;" onclick="div_hide();">pay비밀번호</button>
+										<button class="profileImgBtn" id="btnOpen"
+											style="margin: 0px; width: 100px;">pay비밀번호</button>
 									</div>
+									<input type="hidden" id="payPwd" th:value="${dto.payPwd}" />
+									<div id="modal">
+										<div id='content'>
+											<input type='button' value='x' class="close" id='btnClose'/>
+											<label>현재 PAY비밀번호를 입력하세요.</label><br/>
+											<div class="certify">
+										        <input type="password" id="payPwd1"
+										        	maxlength="1" min="0" max="9" onlyNumber>
+										        <input type="password" id="payPwd2"
+										        	maxlength="1" min="0" max="9" onlyNumber>
+										        <input type="password" id="payPwd3"
+										        	maxlength="1" min="0" max="9" onlyNumber>
+										        <input type="password" id="payPwd4"
+										        	maxlength="1" min="0" max="9" onlyNumber>
+										        <input type="password" id="payPwd5"
+										        	maxlength="1" min="0" max="9" onlyNumber>
+										        <input type="password" id="payPwd6"
+										        	maxlength="1" min="0" max="9" onlyNumber>
+										    </div>
+										    <input class="profileImgBtn" type='button' id='btnCheck' value='확인'/><br/>
+										</div>
+									</div>
+									<form action="" method="post" name="myForm">
+									<input type="hidden" name="newPwd" id="newPwd" value="">
+									<div id='nextModal' style="display: none;">
+										<div id='content'>
+										<input type='button' value='x' class="close" id='btnClose'/>
+											<label>새로 사용할 PAY비밀번호를 입력하세요.</label><br/>
+											<div class="certify">
+												<input type="password" id="newPwd1"
+											      maxlength="1" min="0" max="9" onlyNumber>
+												<input type="password" id="newPwd2"
+												  maxlength="1" min="0" max="9" onlyNumber>
+												<input type="password" id="newPwd3"
+												  maxlength="1" min="0" max="9" onlyNumber>
+												<input type="password" id="newPwd4"
+												  maxlength="1" min="0" max="9" onlyNumber>
+												<input type="password" id="newPwd5"
+												  maxlength="1" min="0" max="9" onlyNumber>
+												<input type="password" id="newPwd6"
+												  maxlength="1" min="0" max="9" onlyNumber>
+											</div>
+											<input class="profileImgBtn" type='button' onclick='changePwd();' value='변경' /><br/>
+										</div>
+									</div>
+									</form>
 								</div>
-								<div style="margin-top: 20px; padding-left: 30px;">0원</div>
+								<div style="margin-top: 20px; padding-left: 30px;">[[${dto.balance}]]원</div>
 							</td>
 						</tr>
 					</table>
 
 
 				</div>
-
+				
+				<form action="" method="post" name="myForm">
 				<div align="center" style="margin-top: 50px;">
 
 					<h3 style="font-family: 'omyu_pretty'; font-size: 30px;">계좌 정보</h3>
@@ -124,22 +266,34 @@
 					<table id="LionPayTable" border="1"
 						style="background-color: #ffffff; border-color: #444444; color: #444444; height: 20px;">
 						<tr>
-							<td style="padding-left: 20px; width: 150px;">은행</td>
+							<td>
+								<select style="width: 115px;" name="accountName">
+									<option value="" disabled selected>은행선택</option>
+									<option th:each="bank : ${bankList}" th:text="${bank}" 
+										th:value="${bank}" th:selected="${bank == dto.accountName}">
+									</option>
+								</select>
+							</td>
 							<td style="padding-left: 20px;"><input
 								style="border-style: hidden; width: 310px;" type="text"
-								placeholder="계좌번호"></td>
+								placeholder="계좌번호" name="accountNum" th:value="${dto.accountNum}"></td>
 						</tr>
 					</table>
 					<input class="profileImgBtn" type="button" value="변경"
-						style="width: 200px; font-size: 27px;">
+						style="margin-right: 20px; width: 130px; font-size: 27px;" onclick="changeAcc();">
+					<input class="profileImgBtn" type="button" value="삭제"
+						style="width: 130px; font-size: 27px;" onclick="resetAcc();">
 				</div>
+				</form>
 
 				<div align="center" style="margin-top: 50px;">
 					<h3 style="font-family: 'omyu_pretty'; font-size: 30px;">충전</h3>
 					<table id="LionPayTable" border="1"
 						style="background-color: #ffffff; border-color: #444444; color: #444444">
 						<tr>
+						
 							<td id="result" colspan="3" style="padding-left: 20px;">0</td>
+							
 						</tr>
 						<tr>
 							<td style="padding: 0px;"><button class="payBtn"
@@ -150,8 +304,13 @@
 									onclick='count("10000")'>+1만원</button></td>
 						</tr>
 					</table>
-					<input class="profileImgBtn" type="button" value="충전"
-						style="width: 200px; font-size: 27px;">
+					
+					<input type="hidden" id="userId" th:value="${dto.userId}" />
+					<input type="hidden" id="balance" th:value="${dto.balance}" />
+					<input type="hidden" id="rechargeAmount" th:value="${dto.rechargeAmount}" />
+					
+					<input class="profileImgBtn" type="button" value="충전" 
+						style="width: 200px; font-size: 27px;" onclick="cash();">
 				</div>
 
 				<div style="margin-top: 60px; margin-left: 17%; margin-right: 17%">
@@ -208,6 +367,63 @@
 
 		var map = new kakao.maps.Map(container, options);
 	</script>
+	<script type="text/javascript">
+	  var btnOpen = document.getElementById('btnOpen');
+	  var btnCheck = document.getElementById('btnCheck');
+	  var btnClose = document.getElementById('btnClose');
+	  var modal = document.getElementById('modal');
+	  var nextModal = document.getElementById('nextModal');
 
+	  btnCheck.disabled = true;
+	  
+	  // "pay비밀번호" 버튼 클릭 시 모달 창 열기
+	  btnOpen.addEventListener('click', function() {
+	    modal.style.display = 'block';
+	  });
+
+	  // "x" 버튼 클릭 시 모달 창 닫기
+	  btnClose.addEventListener('click', function() {
+	    modal.style.display = 'none';
+	    
+	    document.getElementById('payPwd1').value = '';
+	    document.getElementById('payPwd2').value = '';
+	    document.getElementById('payPwd3').value = '';
+	    document.getElementById('payPwd4').value = '';
+	    document.getElementById('payPwd5').value = '';
+	    document.getElementById('payPwd6').value = '';
+	  });
+
+	  // 확인 버튼 클릭 시 모달 창
+	  $(document).ready(function() {
+	   $("#btnCheck").click(function() {
+		    var dtoPwd = $("#payPwd").val();
+		    var enteredPwd = "";
+
+		    enteredPwd += $("#payPwd1").val();
+		    enteredPwd += $("#payPwd2").val();
+		    enteredPwd += $("#payPwd3").val();
+		    enteredPwd += $("#payPwd4").val();
+		    enteredPwd += $("#payPwd5").val();
+		    enteredPwd += $("#payPwd6").val();
+
+		    if (enteredPwd === dtoPwd) {
+		        alert('비밀번호가 일치합니다.');
+		        $("#modal").css("display", "none");
+		        $("#nextModal").css("display", "block");
+		        
+		    } else {
+		        alert('비밀번호가 일치하지 않습니다.');
+		        
+		        document.getElementById('payPwd1').value = '';
+			    document.getElementById('payPwd2').value = '';
+			    document.getElementById('payPwd3').value = '';
+			    document.getElementById('payPwd4').value = '';
+			    document.getElementById('payPwd5').value = '';
+			    document.getElementById('payPwd6').value = '';
+		    }
+		});
+	  });
+	</script>
+	<script src="js/payPwd.js"></script>
 </body>
 </html>

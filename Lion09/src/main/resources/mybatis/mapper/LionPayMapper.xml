@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lion09.pay.LionPayMapper">
+
+<update id="updateBalData" parameterType="com.lion09.pay.LionPayDTO">
+    update lionPay set balance = balance + #{rechargeAmount} where userId = 'test1'
+</update>
+
+<update id="updateAccData" parameterType="com.lion09.pay.LionPayDTO">
+	update lionPay set accountNum=#{accountNum},accountName=#{accountName}
+	where userId='test1'
+</update>
+
+<update id="updatePwdData" parameterType="String">
+	update lionPay set payPwd=#{payPwd} where userId='test1'
+</update>
+
+<update id="resetAccData" parameterType="com.lion09.pay.LionPayDTO">
+	update lionPay set accountNum=null, accountName=null where userId='test1'
+</update>
+
+<!-- 하나의 데이터 -->
+<select id="getReadData" parameterType="String" resultType="com.lion09.pay.LionPayDTO">
+	select userId,accountNum,accountName,payPwd,balance from lionPay where userId='test1'
+</select>
+
+</mapper>

@@ -131,9 +131,9 @@ public class MyPageController {
 
 		ModelAndView mav = new ModelAndView();
 		
-		//2.5초 후에 리다이렉트할 URL 설정
+		//3.5초 후에 리다이렉트할 URL 설정
         String redirectUrl = "/myPage";
-
+        
         //RedirectView를 사용하여 리다이렉션 설정
         RedirectView redirectView = new RedirectView(redirectUrl, true);
 
@@ -143,6 +143,12 @@ public class MyPageController {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+
+//        if (!mFile.isEmpty()) {
+//        	// 파일이 업로드되지 않았거나 비어있는 경우
+//        	mav.setViewName("redirect:/myPage"); // 에러 페이지로 리다이렉트
+//        	return mav;
+//        }
 
         mav.setView(redirectView);
 

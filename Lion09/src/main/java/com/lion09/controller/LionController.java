@@ -33,10 +33,10 @@ public class LionController {
 		return "qna_ok";
 	}
 	
-	@GetMapping("/list1")
-	public String list1() {
-		return "list1";
-	}
+//	@GetMapping("/list1")
+//	public String list1() {
+//		return "list1";
+//	}
 	
 	@GetMapping("/list2")
 	public String list2() {

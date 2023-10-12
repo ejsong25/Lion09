@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
+"Http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lion09.board.PostMapper">
+
+<select id="maxPostId" resultType="int">
+	select nvl(max(postId),0) from post
+</select>
+
+
+<insert id="insertData" parameterType="com.lion09.board.Post">
+	insert into post (postId,nickName,title,status,productsPrice,hitCount,contents,
+	created,deadLine,chooseFile,postLikeCount,recruitment,type,categoryId,myAddr,userId,
+	likeDate) values (#{postId},#{nickName},#{title},#{status},#{productsPrice},0,
+	#{contents},sysdate,sysdate,#{chooseFile},0,#{recruitment},#{type},#{categoryId},
+	#{myAddr},#{userId},sysdate)
+</insert>
+
+<select id="getLists" parameterType="hashMap"
+ resultType="com.lion09.board.Post">
+	 select * from (
+	 select rownum rnum, data.* from (
+	 select postId,nickName,title,status,productsPrice,hitCount,
+	 contents,to_char(created,'YYYY-MM-DD'),to_char(deadLine,'YYYY-MM-DD'),
+	 chooseFile,postLikeCount,recruitment,type,
+	 categoryId,myAddr,userId,to_char(likeDate,'YYYY-MM-DD')
+	 from post 
+	 order by postId desc) data)
+ <![CDATA[
+ 	where rnum>=#{start} and rnum<=#{end}
+ ]]>
+ </select>
+ 
+
+
+<select id="getDataCount" parameterType="map" resultType="int">
+	select nvl(count(*),0) from post
+	
+</select>
+
+
+<select id="getReadData" parameterType="int"
+	resultType="com.lion09.board.Post">
+	select postId,nickName,title,status,productsPrice,hitCount,contents,
+	created,deadLine,chooseFile,postLikeCount,recruitment,type,categoryId,myAddr,userId,
+	likeDate from post where postId=#{postId}	
+</select>
+
+<update id="updateHitCount" parameterType="int">
+	update post set hitCount=hitCount+1 where postId=#{postId}
+</update>
+
+
+
+</mapper>

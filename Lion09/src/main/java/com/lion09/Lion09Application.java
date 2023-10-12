@@ -16,6 +16,7 @@ import com.lion09.Lion09Application;
 @SpringBootApplication
 @MapperScan("com.lion09.mypage")
 @MapperScan("com.lion09.pay")
+@MapperScan("com.lion09.board")
 public class Lion09Application {
 
 	@Autowired

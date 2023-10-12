@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 <link rel="stylesheet" href="writePhoto.css">
+
 </head>
 
 <style>
@@ -43,6 +44,8 @@
 
 
 <body style="padding-top: 5rem;">
+
+	
    	<div class="container">
 	<!-- Top box -->
 		<!-- Logo & Site Name -->
@@ -61,23 +64,21 @@
 		</div>	
 	</div>
         <main role="main" class="container">
-            <form name="form" method="POST" action="/bulletin_wr01"><br/>
-            
+                     
+            <form action="/write.action" method="post" name="myForm1" enctype="multipart/form-data">
              <div class="tm-paging-links1">
 					<nav>
 						<ul>
-							<li class="tm-paging-item1"><a href="#" class="tm-paging-link1 active">공동구매</a></li>
+							<li class="tm-paging-item1"><a href="#" class="tm-paging-link1 active" onchange="">공동구매</a></li>
 							<li class="tm-paging-item1"><a href="#" class="tm-paging-link1">만나서 거래</a></li>
 						</ul>
 					</nav>
 				</div>
+				
+				 <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
             
-               <div class="form-group form-price"></div>
-                    <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
-                 
-                  
-                    <div class="form-group form-price"></div>
-                    <select class="form-control" name="category"  style="border-radius:5px; width:100%; padding:5px;">
+	      		 <div class="form-group form-price"></div>
+                    <select class="form-control" name="categoryId" id="categoryId"  style="border-radius:5px; width:100%; padding:5px;">
 	                   <option value="">카테고리 선택</option>
 	                   <option value="1">신선식품</option>
 	                   <option value="2">가공식품</option>
@@ -91,38 +92,32 @@
 	               
 	              <br/>
 	              
-	             <div class="form-group form-price">
-	                <input type="number" class="form-control" id="productsPrice" min="0" step="1000" placeholder="가격을 입력해주세요. (￦)" style="border-radius:5px;width:99%;"/>
+	               <div class="form-group form-price">
+	                <input type="number" class="form-control" name="productsPrice" min="0" step="1000" placeholder="가격을 입력해주세요. (￦)"
+					style="border-radius:5px;width:99%;" value=""  onchange="productsPriceChange();"/>
 	             </div>
 	             <div class="form-group form-price">
-	                <input type="number" class="form-control" id="recruitment" min="2" step="1" placeholder="모집인원을 입력해주세요. (명)" style="border-radius:5px;width:99%;"/>
+	                <input type="number" class="form-control" name="recruitment" min="2" step="1" placeholder="모집인원을 입력해주세요. (명)" 
+	                style="border-radius:5px;width:99%;" value="" onchange="recruitmentChange();"/>
 	             </div>
-	            
-	      		 
-	      		
-           
-<!-- 			    <form action="/upload" method="post" enctype="multipart/form-data">
-				    <span style="font-size: 5em; color: #8993a4;">
-					  <i class="fas fa-camera"></i>
-					</span>
-			    
-			         <input type="file" multiple="multiple" name="files" accept="image/jpg,image/png,image/jpeg,image/gif"/>
-				</form> -->
+	             
+	        	<input type="text" class="form-control" name="myAddr" id="myAddr" placeholder="위치를 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
+	             
 			        
-			        
-			        
-			                  
+         
 				<div class="container" style="width: 98%;">
 					<div class="image-upload" id="image-upload">
-				
-				    <form method="post" enctype="multipart/form-data">
+					
+
 				        <div class="button">
 				          <span style="font-size: 5em; color: #8993a4;" id="chooseFile">
 							  <i class="fas fa-camera"></i>
 						  </span>
 				         </div>
+
 				        <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-				    </form>
+
+				  
 				
 				      <div class="fileContainer">
 				          <div class="fileInput">
@@ -138,13 +133,12 @@
 				    <div class="image-show" id="image-show"></div>
 				</div>
            
-        
+         
 				 <br/><br/>
 
-                 	
-                <div class="pt-1">
+  <div class="pt-1">
                     <textarea id="summernote" name="contents"></textarea>
-                </div>  
+                </div> 
 	                  
 
                 <script>
@@ -160,10 +154,15 @@
                   
                   <br/><br/>               
                 <div class="pt-1 text-right">
-                    <button class="btn btn btn-success" type="submit" style="width:10%; padding:5px;">작성완료</button>
+                    <button class="btn btn btn-success" type="submit" style="width:10%; padding:5px;" onclick="javascript:location.href='list1.action';">작성취소</button>
+                    <button class="btn btn btn-success" type="reset" style="width:10%; padding:5px;" onclick="document.myForm.title.focus();">다시작성</button>
+                    <button class="btn btn btn-success" type="submit" style="width:10%; padding:5px;" onclick="sendIt();">작성완료</button>
+
+
                     <br/><br/>
                 </div>    
-            </form>
+           
+           </form>
         </main>   
 
 <script src="js/jquery.min.js"></script>
@@ -184,7 +183,141 @@
 			});
 		});
 	</script>
+	
+	
 
+
+<script type="text/javascript">
+
+const sendIt = () => { // HTML 5 버전 , 화살표 함수
+		
+	//파일을 선택하는 input 요소 가져오기
+    var fileInput = document.querySelector('input[name="chooseFile"]');
     
+    //파일이 선택되었는지 여부 확인
+    if (fileInput.files.length === 0) {
+        alert('파일을 선택해주세요.');
+        return; // 파일이 선택되지 않았을 때 form을 제출하지 않고 함수 종료
+    }
+    
+	//선택한 파일의 이름 가져오기
+    var fileName = fileInput.files[0].name;
+
+    //허용된 파일 확장자 목록 정의
+    var allowedExtensions = ['.png', '.jpeg', '.jpg'];
+
+    //선택한 파일의 확장자 추출
+    var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+    //허용된 확장자 목록에 있는지 확인
+    if (allowedExtensions.indexOf(fileExtension) === -1) {
+        alert('png 또는 jpg,jpeg 형식의 파일만 업로드할 수 있습니다.');
+        return; //허용되지 않은 확장자일 때 form을 제출하지 않고 함수 종료
+    }
+	
+
+
+	
+    	f = document.myForm1;
+		
+			str = f.title.value;
+			str = str.trim();
+			if(!str){
+				alert("\n제목을 입력하세요.");
+				f.title.focus();
+				return;
+			}
+			f.title.value = str;
+		
+		
+
+			str = f.categoryId.value;
+			if(!isValidCategoryId(f.categoryId.value)){
+				alert("\n카테고리를 선택하세요.");
+				f.categoryId.focus();
+				return;
+			}
+			f.categoryId.value = str;
+		
+		
+			str = f.productsPrice.value;
+			if(!isValidProductsPrice(f.productsPrice.value)){
+				alert("\n가격을 입력해주세요.");
+				f.productsPrice.focus();
+				return;
+			}
+			f.productsPrice.value = str;
+		
+		
+		
+			str = f.recruitment.value;
+			if(!isValidRecruitment(f.recruitment.value)){
+				alert("\n모집인원을 선택해주세요.");
+				f.recruitment.focus();
+				return;
+			}
+			f.recruitment.value = str;
+		
+		
+			str = f.chooseFile.value;
+			if(!isValidChooseFile(f.chooseFile.value)){
+				alert("\n사진을 첨부해주세요.");				
+				return;
+			}
+			f.chooseFile.value = str;
+		
+			str = f.myAddr.value;
+			str = str.trim();
+			if(!str){
+				alert("\n위치를 입력하세요.");
+				f.myAddr.focus();
+				return;
+			}
+			f.myAddr.value = str;			
+			
+			str = f.contents.value;
+			str = str.trim();
+			if(!str){
+				alert("\n내용을 입력하세요.");
+				f.contents.focus();
+				return;
+			}
+			f.contents.value = str;
+		
+			
+
+			
+		
+		f.action = "/write.action";
+		f.submit(); 
+		
+	}
+
+</script>
+
+	
+		
+	
+    <script type="text/javascript">
+    function productsPriceChange(){
+        var productsPrice = document.getElementById('productsPrice').value;
+        
+    }
+    
+    function recruitmentChange(){
+    	var recruitment = document.getElementById('recruitment').value;
+    }    
+
+    function typeClick(){
+    	var type = document.getElementById('type').value;
+    } 
+    
+	
+    
+    </script>
+    
+    
+
+
     </body>
 </html>

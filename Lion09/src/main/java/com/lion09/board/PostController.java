@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lion09.board.PostUtil;
+import com.lion09.mypage.MyPageDTO;
+import com.lion09.mypage.MyPageService;
 import com.lion09.board.Post;
 import com.lion09.board.PostService;
 
@@ -48,13 +50,19 @@ public class PostController {
 	}
 	
 	
+	@Autowired
+	@Qualifier("myPageServiceImpl")
+	private MyPageService mypageService;
 	
 	@GetMapping("/write.action")
 	public ModelAndView write() throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
 		
+		MyPageDTO dto = mypageService.selectData();
+		
 		mav.setViewName("/write"); 
+		mav.addObject("dto",dto);
 		
 		return mav;
 	}
@@ -62,52 +70,48 @@ public class PostController {
 	@PostMapping(value = "/write.action")
 	public ModelAndView write_ok(@RequestPart("chooseFile") MultipartFile cFile,HttpServletRequest request) 
 			throws Exception {
-	    ModelAndView mav = new ModelAndView();
-	    
-	    Post dto = new Post();
-	    dto.setTitle(request.getParameter("title"));
-	    dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
-	    dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
-	    dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));	    
-	    dto.setContents(request.getParameter("contents"));
-	    dto.setMyAddr(request.getParameter("myAddr"));
+		ModelAndView mav = new ModelAndView();
 
-	    
-	    
-	    
-	    
-	        if (!cFile.isEmpty()) {
-	            // 파일을 저장할 디렉토리 경로 설정
-	            String fileDir = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
-	            
-	            // 업로드한 파일의 원래 파일 이름 가져오기
-	            String originalFilename = cFile.getOriginalFilename();
-	            
-	            // 파일 확장자 추출
-	            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-	            
-	            // 서버에 저장할 새 파일명 생성 (파일명 중복 방지를 위해 현재 시간을 이용)
-	            String newFilename = System.currentTimeMillis() + fileExtension;
-	            
-	            // 파일을 서버에 저장
-	            File newFile = new File(fileDir, newFilename);
-	            cFile.transferTo(newFile);
-	            
-	            // 데이터베이스에 파일 경로 저장
-	            String fullPath = newFilename;
-	           
-	           dto.setChooseFile(fullPath);
-	        }
-	        
-	        // 데이터베이스에 데이터 추가
-	        int maxPostId = postService.maxPostId();
-	        dto.setPostId(maxPostId + 1);
-	        postService.insertData(dto);
-	        
-	        mav.setViewName("redirect:/write.action");
+		Post dto = new Post();
+		dto.setTitle(request.getParameter("title"));
+		dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
+		dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
+		dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));	    
+		dto.setContents(request.getParameter("contents"));
+		dto.setMyAddr(request.getParameter("myAddress"));
 
-	    
-	    return mav;
+		if (!cFile.isEmpty()) {
+			// 파일을 저장할 디렉토리 경로 설정
+			String fileDir = "C:\\git-lion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+
+			// 업로드한 파일의 원래 파일 이름 가져오기
+			String originalFilename = cFile.getOriginalFilename();
+
+			// 파일 확장자 추출
+			String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+			// 서버에 저장할 새 파일명 생성 (파일명 중복 방지를 위해 현재 시간을 이용)
+			String newFilename = System.currentTimeMillis() + fileExtension;
+
+			// 파일을 서버에 저장
+			File newFile = new File(fileDir, newFilename);
+			cFile.transferTo(newFile);
+
+			// 데이터베이스에 파일 경로 저장
+			String fullPath = newFilename;
+
+			dto.setChooseFile(fullPath);
+		}
+
+		// 데이터베이스에 데이터 추가
+		int maxPostId = postService.maxPostId();
+		dto.setPostId(maxPostId + 1);
+		postService.insertData(dto);
+
+		mav.setViewName("redirect:/write.action");
+
+
+		return mav;
 	}
 	
 	@GetMapping("/list1")

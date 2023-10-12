@@ -77,7 +77,10 @@ public class PostController {
 		dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
 		dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
 		dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));	    
-		dto.setContents(request.getParameter("contents"));
+
+		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
+		dto.setContents(plainText);
+		
 		dto.setMyAddr(request.getParameter("myAddress"));
 
 		if (!cFile.isEmpty()) {
@@ -108,8 +111,7 @@ public class PostController {
 		dto.setPostId(maxPostId + 1);
 		postService.insertData(dto);
 
-		mav.setViewName("redirect:/write.action");
-
+		mav.setViewName("redirect:/list1");
 
 		return mav;
 	}

@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>MyPage</title>
+<link href="css/myPage.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+
+<style>
+@font-face {
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
+
+<script type="text/javascript">
+	
+	function nickName_update() {
+		
+		f = document.myForm;
+		
+		alert('프로필 수정이 완료되었습니다.');
+		
+		f.action="/mypage_update.action";
+		f.submit();
+	}
+	
+	function profileImg_update() {
+		
+		//파일을 선택하는 input 요소 가져오기
+	    var fileInput = document.querySelector('input[name="mypageFilename"]');
+	    
+	    //파일이 선택되었는지 여부 확인
+	    if (fileInput.files.length === 0) {
+	        alert('변경하실 이미지 파일을 선택해주세요.');
+	        return; // 파일이 선택되지 않았을 때 form을 제출하지 않고 함수 종료
+	    }
+	    
+		//선택한 파일의 이름 가져오기
+	    var fileName = fileInput.files[0].name;
+
+	    //허용된 파일 확장자 목록 정의
+	    var allowedExtensions = ['.png', '.jpeg', '.jpg'];
+
+	    //선택한 파일의 확장자 추출
+	    var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+	    //허용된 확장자 목록에 있는지 확인
+	    if (allowedExtensions.indexOf(fileExtension) === -1) {
+	        alert('png 또는 jpg,jpeg 형식의 파일만 업로드할 수 있습니다.');
+	        return; //허용되지 않은 확장자일 때 form을 제출하지 않고 함수 종료
+	    }
+		
+	    f = document.myForm;
+
+	    alert('프로필 이미지가 수정되었습니다');
+
+	    f.action = "/mypageImg_update.action";
+	    f.submit();
+
+	}
+	
+	function profileImg_defalut() {
+		
+		f = document.myForm;
+		
+		alert('기본 프로필 이미지로 수정되었습니다');
+		
+		f.action="/mypageImg_default.action";
+		f.submit();
+	
+	}
+	
+	/* 동네인증 도로명주소 팝업창 */
+	window.onload = function(){
+	    document.getElementById("myAddress").addEventListener("click", function(){ //주소입력칸을 클릭하면
+	        //카카오 지도 발생
+	        new daum.Postcode({
+	            oncomplete: function(data) { //선택시 입력값 세팅
+	                document.getElementById("myAddress").value = data.bname; // 주소 넣기
+	            }
+	        }).open();
+	    });
+	}
+	
+
+	function searchAddress() {
+
+		//입력칸에서 도로명주소 추출
+		var address = document.getElementById("myAddress").value;
+
+		var geocoder = new kakao.maps.services.Geocoder();
+
+		//주소로 위도와 경도를 검색
+		geocoder.addressSearch(address, function(result, status) {
+			if (status === kakao.maps.services.Status.OK) {
+				//검색 결과가 OK인 경우, 첫 번째 결과를 사용
+				var latitude = result[0].y;
+				var longitude = result[0].x;
+
+				//위도와 경도를 입력란에 삽입
+				document.getElementById("myLatitude").value = latitude;
+				document.getElementById("myLongitude").value = longitude;
+
+				alert('동네인증이 완료되었습니다.')
+
+			} else {
+				alert("주소를 찾을 수 없습니다.");
+			}
+		});
+		
+		
+</script>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164&libraries=services"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+
+
+
+</script>
+
+</head>
+<body>
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+	<div class="container">
+		<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 만나서 거래</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div style="display: flex;">
+
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<h3 class="w3-bar-item">Menu</h3>
+				<a href="/LionPay" class="w3-bar-item w3-button">LionPay</a> <a href="#"
+					class="w3-bar-item w3-button">관심상품</a> <a href="#"
+					class="w3-bar-item w3-button">거래내역</a> <a href="#"
+					class="w3-bar-item w3-button">계정/정보</a>
+			</div>
+
+			<!-- Page Content -->
+			<div style="width: 100%;">
+				<header>
+					
+				</header>
+				
+				
+				<form action="" method="post" name="myForm"
+					 enctype="multipart/form-data">
+					
+					
+					
+					<div style="margin-left: 27%;">
+						<div>
+							<h3
+								style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">내 동네</h3>
+							<input type="text" id="myAddress" name="myAddress" th:value="${dto.myAddress}" readonly/>
+							<input type="button" value="동네인증" onclick="searchAddress();">
+							<div>
+								<input type="hidden" name="myLatitude" id="myLatitude" th:value="${dto.myLatitude}"/>
+								<input type="hidden" name="myLongitude" id="myLongitude" th:value="${dto.myLongitude}"/>
+							</div> 
+							
+							
+							<!-- 동네 범위설정 -->
+							<div class="slidecontainer">
+							    <input type="range" min="1" max="5" th:value="${dto.myRange}" 
+							    class="slider" id="myRange" name="myRange">
+							    <p><span id="sliderValue"></span>km</p>
+								<input type="button" value="조회" onclick="findAddress();">
+							</div>
+							
+							 <script>
+							   	var slider = document.getElementById("myRange");
+							    var output = document.getElementById("sliderValue");
+							    
+							    output.innerHTML = slider.value;
+
+							    slider.oninput = function() {
+							        output.innerHTML = this.value;
+							    }
+							    
+							    function findAddress() {
+									f = document.myForm;
+									
+									alert('주소반경변경');
+									
+									f.action="/updateRange.action";
+									f.submit();
+								
+								}
+						        
+						    </script>
+							
+							<tr th:each="dto:${findList}">
+							
+								<td th:text="${dto.myAddress}"></td>
+								
+							</tr>
+							<!-- 동네 범위설정 -->
+							
+							<h3
+							    style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">닉네임</h3>
+							<input type="text" name="nickName" th:value="${dto.nickName}"
+							    style="font-family: 'omyu_pretty'; font-size: 17pt; width: 60%;"/>
+							</div>
+							<br />
+							<br />
+							<input type="button" class="profileBtn" value="프로필 수정" onclick="nickName_update();"/>
+							<br />
+							<br />
+							<br />
+	
+					</div>
+				</form>
+				
+				<div align="center" style="margin-top: 100px;"></div>
+
+			</div>
+		</div>
+		<hr class="hr-solid" />
+		<!-- footer 자리 -->
+		<footer class="tm-footer text-center">
+			<div style="float: left;">
+
+				<p>
+					<b>사자고</b>
+				</p>
+				<br />
+				<p>
+					<b>사업자등록번호</b> 202-30-92017
+				</p>
+				<p>
+					<b>이메일</b> help@liongg.co.kr
+				</p>
+				<p>
+					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+				</p>
+				<p>
+					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+						href="https://templatemo.com">TemplateMo</a>
+				</p>
+			</div>
+			<div style="float: right;">
+				<div>
+					<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+
+	<script>
+			var container = document.getElementById('map');
+			var options = {
+				center: new kakao.maps.LatLng(37.49886, 127.03170),
+				level: 2
+			};
+	
+			var map = new kakao.maps.Map(container, options);
+	</script>
+
+</body>
+</html>

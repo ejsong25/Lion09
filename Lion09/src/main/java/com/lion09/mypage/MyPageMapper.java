@@ -1,5 +1,7 @@
 package com.lion09.mypage;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,5 +15,11 @@ public interface MyPageMapper {
 	public void imgUpdate(MyPageDTO dto) throws Exception;
 
 	public void imgDefault(MyPageDTO dto) throws Exception;
+	
+	public List<MyPageDTO> findLocationsNearby(MyPageDTO dto) throws Exception;
+	
+	public void updateRange(MyPageDTO dto) throws Exception;
+
+	
 	
 }

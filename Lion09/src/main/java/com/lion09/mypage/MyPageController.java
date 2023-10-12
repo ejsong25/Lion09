@@ -1,6 +1,7 @@
 package com.lion09.mypage;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +40,7 @@ public class MyPageController {
 		return mav;
 	}
 	
-	//닉네임 업데이트
+	//프로필 업데이트
 	@PostMapping(value = "/mypage_update.action")
 	public ModelAndView mypage_update(MyPageDTO dto) throws Exception {
 
@@ -155,6 +156,43 @@ public class MyPageController {
 		return mav;
 
 	}
+	
+	//주소 반경
+	@RequestMapping(value = "/myPage2", 
+			method = {RequestMethod.POST,RequestMethod.GET})
+//	@GetMapping(value = "/myPage2")
+	public ModelAndView myPage2(HttpServletRequest request) throws Exception {
 
+		ModelAndView mav = new ModelAndView();
 
+		mav.setViewName("myPage2");
+
+		MyPageDTO dto = mypageService.selectData();
+		
+		List<MyPageDTO> findList = mypageService.findLocationsNearby(dto);
+		
+		mav.addObject("dto",dto);
+		mav.addObject("findList",findList);
+
+		return mav;
+	}
+
+	//프로필 업데이트
+	@PostMapping(value = "/updateRange.action")
+	public ModelAndView updateRange(MyPageDTO dto) throws Exception {
+
+		mypageService.updateRange(dto);
+		System.out.println(dto.getMyRange());
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/myPage2");
+
+		return mav;
+
+	}
+
+	
+	
+	
 }

@@ -1,5 +1,7 @@
 package com.lion09.mypage;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,16 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public void imgDefault(MyPageDTO dto) throws Exception {
 		mypageMapper.imgDefault(dto);
+	}
+
+	@Override
+	public List<MyPageDTO> findLocationsNearby(MyPageDTO dto) throws Exception {
+		return mypageMapper.findLocationsNearby(dto);
+	}
+
+	@Override
+	public void updateRange(MyPageDTO dto) throws Exception {
+		mypageMapper.updateRange(dto);
 	}
 
 	

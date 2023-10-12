@@ -6,13 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.lion09.mypage.MyPageMapper">
 
 <select id="selectData" resultType="com.lion09.mypage.MyPageDTO">
-	select userId,nickName,energy,profileImgName,address,latitude,longitude
+	select userId,nickName,energy,profileImgName,myAddress,myLatitude,myLongitude,myRange
 	from test where userId='111'
 </select>
 
 <update id="updateData" parameterType="com.lion09.mypage.MyPageDTO">
-	update test set nickName=#{nickName},address=#{address},latitude=#{latitude},
-	longitude=#{longitude} where userId='111'
+	update test set nickName=#{nickName},myAddress=#{myAddress},myLatitude=#{myLatitude},
+	myLongitude=#{myLongitude} where userId='111'
 </update>
 
 <update id="imgUpdate" parameterType="com.lion09.mypage.MyPageDTO">
@@ -21,6 +21,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <update id="imgDefault" parameterType="com.lion09.mypage.MyPageDTO">
 	update test set profileImgName='lion.png' where userId='111'
+</update>
+
+<select id="findLocationsNearby" parameterType="com.lion09.mypage.MyPageDTO" resultType="com.lion09.mypage.MyPageDTO">
+    <![CDATA[
+  	select distinct myAddress
+	from test
+	where
+	6371*2*asin(
+	    sqrt(
+	        power(sin((radians(myLatitude)-radians((select myLatitude from test where userid='111')))/2),2)+
+	        cos(radians((select myLatitude from test where userid='111')))*cos(radians(myLatitude))*
+	        power(sin((radians(myLongitude)-radians((select myLongitude from test where userid ='111')))/2),2)
+	    )
+	)<=#{myRange}
+    ]]>
+</select>
+
+<update id="updateRange" parameterType="com.lion09.mypage.MyPageDTO">
+	update test set myRange=#{myRange} where userId='111'
 </update>
 
 </mapper>

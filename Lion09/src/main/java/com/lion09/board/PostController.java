@@ -49,26 +49,26 @@ public class PostController {
 		
 	}
 	
-	
 	@Autowired
 	@Qualifier("myPageServiceImpl")
 	private MyPageService mypageService;
 	
+	//글쓰기 페이지 불러오기
 	@GetMapping("/write.action")
 	public ModelAndView write() throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/write"); 
 		
 		MyPageDTO dto = mypageService.selectData();
 		
-		mav.setViewName("/write"); 
 		mav.addObject("dto",dto);
 		
 		return mav;
 	}
 	
-	@PostMapping(value = "/write.action")
-	public ModelAndView write_ok(@RequestPart("chooseFile") MultipartFile cFile,HttpServletRequest request) 
+	@PostMapping(value = "/write_ok.action")
+	public ModelAndView write_ok(@RequestPart("chooseFilename") MultipartFile cFile,HttpServletRequest request) 
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
 
@@ -104,14 +104,28 @@ public class PostController {
 			String fullPath = newFilename;
 
 			dto.setChooseFile(fullPath);
+			
+			// 데이터베이스에 데이터 추가
+			int maxPostId = postService.maxPostId();
+			dto.setPostId(maxPostId + 1);
+			postService.insertData(dto);
+
+			mav.setViewName("redirect:/list1");
+			
+		}else {//사진입력을 안했을 경우(무조건 postLion.jpg 입력)
+			
+			String newFilename = "postLion.jpg";
+			
+			dto.setChooseFile(newFilename);
+			
+			// 데이터베이스에 데이터 추가
+			int maxPostId = postService.maxPostId();
+			dto.setPostId(maxPostId + 1);
+			postService.insertData(dto);
+
+			mav.setViewName("redirect:/list1");
+			
 		}
-
-		// 데이터베이스에 데이터 추가
-		int maxPostId = postService.maxPostId();
-		dto.setPostId(maxPostId + 1);
-		postService.insertData(dto);
-
-		mav.setViewName("redirect:/list1");
 
 		return mav;
 	}

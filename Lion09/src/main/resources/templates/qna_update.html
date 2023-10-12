@@ -8,16 +8,34 @@
 <link href="css/all.min.css" rel="stylesheet" />
 <link href="css/templatemo-style.css" rel="stylesheet" />
 
+	<script type="text/javascript">
 
+	function sendIt(){
+	 var   f = document.myForm;
 
-<style>
-.card{border-radius: 0.8rem; 
-font-family: 'omyu_pretty'; 
-font-size: 1.3rem;						
-border: 1px solid #d0d0d0; margin-bottom: 40px;
-}
-</style>
+	    str = f.subject.value;
+	    str = str.trim();
+	    if (!str) {
+	        alert("\n제목을 입력하세요.");
+	        f.subject.focus();
+	        return;
+	    }
+	    f.subject.value = str;
 
+	    str = f.content.value;
+	    str = str.trim();
+	    if (!str) {
+	        alert("\n내용을 입력하세요.");
+	        f.content.focus();
+	        return;
+	    }
+	    f.content.value = str;
+
+	    f.action = "/qna_update_ok";
+	    f.submit();
+	}
+
+	</script>
 <style>
 	@font-face {
 		font-family: 'ONE-Mobile-POP';
@@ -53,8 +71,8 @@ border: 1px solid #d0d0d0; margin-bottom: 40px;
 					<div class="row tm-header-inner">
 						<div class="col-md-6 col-12">
 							<div class="tm-site-text-box">
-								<h1 class="tm-site-title">Q&A 게시판</h1>
-								<h6 class="tm-site-description">나만의 문의함</h6>
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>	
 							</div>
 						</div>
 					</div>
@@ -69,18 +87,22 @@ border: 1px solid #d0d0d0; margin-bottom: 40px;
 					<div class="col-12 tm-faq2">
 					
 						<h2 class="text-center tm-section-title">문의하기(Q&A)</h2>
+						<form action="/qna_update_ok" method="post" name="myForm">
 						<div>
-							<h2 class="tm-site-description" th:text="${dto.subject}" >제목</h2><br/>
-							<div class="card" style="width: 700px; height: 300px;" th:text="${dto.content}">내용자리 입니다 </div>
-							<button style="margin-right: 50%;" class="qnaBtn" th:onclick="@{|location.href='/qna_update?num=${dto.num}&${params}'|}">수정하기</button>
-							<button style="margin-right: -40%;" class="qnaBtn" th:onclick="@{|location.href='/qna_delete?num=${dto.num}&${params}'|}">삭제하기</button>
+							<input type="text" class="tm-qna" name="subject" th:value="${dto.subject }"/>
+							<input type="text" class="tm-qna" name="content" style="width: 650px; height: 100px;" th:value="${dto.content}"> 
 							
+							<input type="hidden" name="num" th:value="${dto.num }"/>
+							<input type="hidden" name="pageNum" th:value="${pageNum }"/>
+								
+							<input type="button" class="qnaBtn" style="width: 70px; height: 25px;" value="수정완료" onclick="sendIt();">	
+							<button class="qnaBtn" th:onclick="@{|location.href='/qna_list?${params }';|}">수정취소</button>
 							<br/><br/><br/><br/>
+							</form>
 							<div style="font-family: 'omyu_pretty';">
 								<b>[안내 사항]</b>
 								<br/><br/>
 								<b>고객센터 운영시간 10:00 ~ 18:00</b><br/>
-								답변에는 시간이 소요됩니다. 조금만 기다려주세요 :)<br/>
 								문의 내용을 자세하게 남겨주시면 빠른 답변에 도움이 됩니다.<br/>
 								산업안전보건법에 따라 고객응대 근로자 보호조치를 하고 있으며, 모든 문의는 기록으로 남습니다.
 							</div>
@@ -131,8 +153,6 @@ border: 1px solid #d0d0d0; margin-bottom: 40px;
 	</script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/parallax.min.js"></script>
-	
-	
 	<script>
 		$(document).ready(function(){
 			var acc = document.getElementsByClassName("accordion");
@@ -151,5 +171,6 @@ border: 1px solid #d0d0d0; margin-bottom: 40px;
 			}	
 		});
 	</script>
+
 </body>
 </html>

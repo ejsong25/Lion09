@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-<title>만나서 거래</title>
+<title>나만의 문의함</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link href="css/all.min.css" rel="stylesheet" />
 <link href="css/list.css" rel="stylesheet" />
@@ -13,7 +13,17 @@
 <link href="css/qna.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script type="text/javascript">
 
+	function sendIt() {
+		
+		var f = document.searchForm;
+		
+		f.action = "/qna_list.action";
+		f.submit();
+	}
+
+</script>
 
 </head>
 
@@ -58,7 +68,7 @@
 						<div class="col-md-6 col-12">
 							<div class="tm-site-text-box">
 								<h1 class="tm-site-title">Q&A 게시판</h1>
-								<h6 class="tm-site-description">믿을만한 이웃 간 만나서 거래</h6>
+								<h6 class="tm-site-description">나만의 문의함</h6>
 							</div>
 						</div>
 					</div>
@@ -67,81 +77,48 @@
 		</div>
 
 
-		<div class="row1" style="margin-bottom: -10px;">
-			<div class="card card-margin search-form">
-				<div class="card-body p-0">
-					<form id="search-form">
-							<div class="col-lg-3 col-md-3 col-sm-12 p-0" style="float: left;">
-								<label for="search-type" hidden>검색 유형</label> <select
-									class="form-control" id="search-type" name="searchType">
-									<option>제목</option>
-									<option>내용</option>
-									<option>id</option>
-								</select>
-							</div>
-							<div class="col-lg-8 col-md-61 col-sm-12 p-0" style="float: left;">
-								<label for="search-value" hidden>검색어</label> <input type="text"
-									placeholder="검색" class="form-control" id="search-value"
-									name="searchValue">
-							</div>
 
-							<div class="col-lg-1 col-md-3 col-sm-12 p-0" style="float: right;">
-								<button type="submit" class="listbtn" style="width: 50px; height: 55px;border: none;background-color: white;">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-										viewBox="4 8 24 24" fill="none" stroke="currentColor"
-										stroke-width="2" stroke-linecap="round"
-										stroke-linejoin="round" class="feather feather-search">
-                                            <circle cx="15" cy="15"
-											r="10"></circle>
-                                            <line x1="30" y1="30"
-											x2="22" y2="22"></line>
-                                        </svg>
-								</button>
-						</div>
-						
-						
-						
-					</form>
-				</div>
-			</div>
-		</div>
 		<div>
-					<br />
-					<br />
-					<button class="profileBtn">글쓰기</button>
-					<br />
+					<br/>
+					<br/>
+					<button class="profileBtn" onclick="javascript:location.href='/qna';">문의하기</button>
+					<br/>
 					
 				</div>
 
 		<table>
     <tr>
-        <th>번호</th>
-        <th>제목</th>
-        <th>글쓴이</th>
-        <th>일시</th>
-        <th>조회수</th>
+        <th class="num">번호</th>
+        <th class="subject">제목</th>
+        <th class="userId">아이디</th>
+        <th class="created">일시</th>
+        <th class="hitCount">조회수</th>
     </tr>
-    <tr>
-        <td class="center">1</td>
-        <td class="left">게시글 1 입니다.</td>
-        <td class="center">김준석</td>
-        <td class="center">2022-05-18</td>
-        <td class="center">15</td>   
+    
+    <tbody id="lists">
+    <tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}">
+    
+        <td class="center" th:text="${dto.num}">번호</td>
+        <td class="left" >  <a th:href="@{${detailUrl}} + 
+						'&num=' + @{${dto.num}}" th:text="${dto.subject}"> 제목</a></td> 
+        <td class="center" th:text="${dto.userId }">아이디</td>
+        <td class="center" th:text="${dto.created }">일시</td>
+        <td class="center" th:text="${dto.hitCount }">조회수</td> 
     </tr>
-    <tr>
-        <td class="center">2</td>
-        <td class="left">게시글 2 입니다.</td>
-        <td class="center">김준석</td>
-        <td class="center">2022-05-18</td>
-        <td class="center">15</td>   
-    </tr>
-    <tr>
-        <td class="center">3</td>
-        <td class="left">게시글 3 입니다.</td>
-        <td class="center">김준석</td>
-        <td class="center">2022-05-18</td>
-        <td class="center">15</td>   
-    </tr>
+
+		<tr th:if="${#lists.size(dataCount)}>0"
+			th:each="dataCount:${dataCount}">
+			
+			<td colspan="5" id="footer">
+				<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
+			</td>
+			</tr>	
+				<tr th:if="${#lists.size(dataCount)}<0">					
+					<td colspan="5" >
+							등록된 게시물이 없습니다.		
+					</td>
+				</tr>
+	</tbody>
 </table>
 	
 
@@ -210,21 +187,6 @@
 			});
 		});
 	</script>
-	<!--관심 하트  -->
-		<script>
 
-        var i = 0;
-        $('i').on('click',function(){
-            if(i==0){
-                $(this).attr('class','bi-heart-fill');
-                i++;
-            }else if(i==1){
-                $(this).attr('class','bi-heart');
-                i--;
-            }
-
-        });
-
-    </script>
 </body>
 </html>

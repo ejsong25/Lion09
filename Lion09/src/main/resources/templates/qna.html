@@ -8,6 +8,34 @@
 <link href="css/all.min.css" rel="stylesheet" />
 <link href="css/templatemo-style.css" rel="stylesheet" />
 
+<script type="text/javascript">
+
+	function sendIt(){
+	 var   f = document.myForm;
+
+	    str = f.subject.value;
+	    str = str.trim();
+	    if (!str) {
+	        alert("\n제목을 입력하세요.");
+	        f.subject.focus();
+	        return;
+	    }
+	    f.subject.value = str;
+
+	    str = f.content.value;
+	    str = str.trim();
+	    if (!str) {
+	        alert("\n내용을 입력하세요.");
+	        f.content.focus();
+	        return;
+	    }
+	    f.content.value = str;
+
+	    f.action = "/qna";
+	    f.submit();
+	}
+
+	</script>
 <style>
 	@font-face {
 		font-family: 'ONE-Mobile-POP';
@@ -59,13 +87,14 @@
 					<div class="col-12 tm-faq2">
 					
 						<h2 class="text-center tm-section-title">문의하기(Q&A)</h2>
+						<form action="" method="post" name="myForm">
 						<div>
-							<input type="text" class="tm-qna" placeholder="제목을 입력해주세요."/>
-							<br/><textarea rows="10" cols="20" class="tm-qna" placeholder="문의하실 내용을 기재해주세요."></textarea>
-							<input type="text" style="border-radius: 0.8rem; font-family: 'omyu_pretty'; font-size: 1.3rem;
-							border: 1px solid #d0d0d0; margin-bottom: 40px;" placeholder="비밀번호를 입력해주세요."/>
-							<button class="qnaBtn" onclick="javascript:location.href='/qna_ok';">문의하기</button>
+							<input type="text" class="tm-qna" name="subject" placeholder="제목을 입력해주세요."/>
+							<br/><textarea rows="10" cols="20" class="tm-qna" name="content" placeholder="문의하실 내용을 기재해주세요."></textarea>
+
+							<input type="button" class="qnaBtn" style="width: 60px; height: 40px;" value="문의하기" onclick="sendIt();">
 							<br/><br/><br/><br/>
+							</form>
 							<div style="font-family: 'omyu_pretty';">
 								<b>[안내 사항]</b>
 								<br/><br/>
@@ -138,5 +167,6 @@
 			}	
 		});
 	</script>
+
 </body>
 </html>

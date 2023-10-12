@@ -23,15 +23,15 @@ public class LionController {
 		return "faqs";
 	}
 	
-	@GetMapping("/qna")
-	public String qna() {
-		return "qna";
-	}
-	
-	@GetMapping("/qna_ok")
-	public String qna_ok() {
-		return "qna_ok";
-	}
+//	@GetMapping("/qna")
+//	public String qna() {
+//		return "qna";
+//	}
+//	
+//	@GetMapping("/qna_ok")
+//	public String qna_ok() {
+//		return "qna_ok";
+//	}
 	
 //	@GetMapping("/list1")
 //	public String list1() {

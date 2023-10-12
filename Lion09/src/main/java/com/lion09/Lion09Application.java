@@ -17,6 +17,7 @@ import com.lion09.Lion09Application;
 @MapperScan("com.lion09.mypage")
 @MapperScan("com.lion09.pay")
 @MapperScan("com.lion09.board")
+@MapperScan("com.lion09.qaboard")
 public class Lion09Application {
 
 	@Autowired

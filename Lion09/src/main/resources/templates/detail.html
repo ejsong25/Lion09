@@ -66,15 +66,15 @@
     <div>
 	 	<div class="user-info"><br/>
 	        <div class="header__title">
-	             <h1>&nbsp;맛있는 간식 특별한 간식</h1>
+	             <h1>&nbsp;[[${dto.title }]]</h1>
 	        </div>
               </div><br/>
               
               
               
             <div style="float: left;">
-	          <p style="font-size: 20px;">&nbsp;나는야 김치부침개</p>
-              <p>&nbsp;&nbsp;강남구 역삼동</p>
+	          <p style="font-size: 20px;" th:text="${dto.nickName}">&nbsp;&nbsp;${dto.nickName}</p>
+              <p th:text="${dto.myAddr}">&nbsp;&nbsp;${dto.myAddr}</p>
 	        </div>
 	        
 	          <div class="header__title" style="margin-left: 58%;">
@@ -117,16 +117,10 @@
             <hr class="line">
             <div class="post-info-box">
               <div class="flex-box between">
-                <h3>아이폰 12 미니 64GB 팔아요</h3>
-                <h3>500,000원</h3>
+                <h3 th:text="${dto.title}">제목</h3>
+                <h3 th:text="${dto.productsPrice}">가격(원)</h3>
               </div>
-              <p>
-아이폰 12 미니 64GB 팔아요
-배터리 성능 최대치 78% 입니다
-잔기스 심한건 6개 있습니다 사진에 있어요
-언어는 한국어로 바꿔서 드려요
-액정에 금간건 없어요
-장소는 노원 양지근린공원 입니다</p>
+              <p th:text="${dto.contents}">내용이지롱</p>
               <div class="location-views-box flex-box between">
                   <span style="font-size: 15px;">조회수 : 10</span>
                   <span style="color: red; font-size: 15px; margin-right: 80%;">관심 : 16</span>
@@ -161,7 +155,7 @@
                     <button class="joinButton" value="join">참여하기</button>
                 </form>
             </div>
-
+<br/><br/>
 
 		<footer class="tm-footer text-center">
 			<p>Copyright &copy; 2020 Simple House 

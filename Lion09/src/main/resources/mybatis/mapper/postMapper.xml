@@ -9,13 +9,10 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(max(postId),0) from post
 </select>
 
-
 <insert id="insertData" parameterType="com.lion09.board.Post">
-	insert into post (postId,nickName,title,status,productsPrice,hitCount,contents,
-	created,deadLine,chooseFile,postLikeCount,recruitment,type,categoryId,myAddr,userId,
-	likeDate) values (#{postId},#{nickName},#{title},#{status},#{productsPrice},0,
-	#{contents},sysdate,sysdate,#{chooseFile},0,#{recruitment},#{type},#{categoryId},
-	#{myAddr},#{userId},sysdate)
+    insert into post (postId, nickName, title, status, productsPrice, hitCount, contents,
+    created, deadLine, chooseFile, postLikeCount, recruitment, type, categoryId, myAddr, userId, likeDate)
+    values (#{postId}, #{nickName}, #{title}, #{status}, #{productsPrice}, 0, #{contents}, current_timestamp, current_timestamp, #{chooseFile}, 0, #{recruitment}, #{type}, #{categoryId}, #{myAddr}, #{userId}, current_timestamp)
 </insert>
 
 <select id="getLists" parameterType="hashMap"

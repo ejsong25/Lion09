@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.lion09.SessionConst;
+import com.lion09.SessionInfo;
 import com.lion09.member.Member;
 
 @Controller
 public class LionController {
 	
 	@GetMapping("/")
-	public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model) {
-		model.addAttribute("loginMember", loginMember);
+	public String home() {
 		return "index";
 	}
 	

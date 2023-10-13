@@ -1,5 +1,7 @@
 package com.lion09.login;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.lion09.SessionConst;
+import com.lion09.SessionInfo;
 import com.lion09.member.Member;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -42,8 +47,15 @@ public class LoginController {
 		
 		//로그인 성공 - 세션 생성
 		HttpSession session = request.getSession();
+		
 		//정보 담기
-		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+		SessionInfo memberSession = new SessionInfo();
+		memberSession.setUserId(loginMember.getUserId());
+		memberSession.setNickName(loginMember.getNickName());
+		
+		session.setAttribute(SessionConst.LOGIN_MEMBER, memberSession);
+		log.info("lastAccessedTime={}", new Date(session.getLastAccessedTime()));
+		
 		return "redirect:/";
 	}
 	

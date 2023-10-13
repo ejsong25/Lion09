@@ -19,6 +19,7 @@ public class MemberService {
 		return member.getUserId();
 	}
 	
+	
 	public Member getUser(String userId) throws Exception {
 		Member findMember = memberRepository.findOne(userId);
 		

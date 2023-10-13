@@ -44,7 +44,6 @@ public class LoginController {
 		HttpSession session = request.getSession();
 		//정보 담기
 		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-		
 		return "redirect:/";
 	}
 	

@@ -3,6 +3,7 @@ package com.lion09.member;
 import javax.validation.Valid;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
+import com.lion09.SessionConst;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,6 +62,20 @@ public class MemberController {
 			result.rejectValue("signupFailed", e.getMessage());
 			return "signup_form";
 		}
+		
+		return "redirect:/";
+	}
+	
+	@GetMapping("/update")
+	public String createUpdateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) Member loginMember, Model model) {
+		model.addAttribute("loginMember", loginMember);
+		return "account";
+	}
+	
+	@PostMapping("/update")
+	public String update(@Valid MemberUpdateForm form, BindingResult result) {
+		if(result.hasErrors())
+			return "account"; 
 		
 		return "redirect:/";
 	}

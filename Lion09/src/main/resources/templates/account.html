@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>MyPage</title>
-<link href="css/account.css" rel="stylesheet" />
-<link href="css/myPage.css" rel="stylesheet" />
+<link href="/css/account.css" rel="stylesheet" />
+<link href="/css/myPage.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="css/templatemo-style.css" rel="stylesheet" />
+<link href="/css/templatemo-style.css" rel="stylesheet" />
 <style>
 @font-face {
 	font-family: 'ONE-Mobile-POP';
@@ -41,7 +41,7 @@
 		<!-- Top box -->
 		<div class="placeholder">
 			<div class="parallax-window" data-parallax="scroll">
-				<img src="img/bg.jpeg" style="width: 100%;">
+				<img src="/img/bg.jpeg" style="width: 100%;">
 				<div class="tm-header">
 					<div class="row tm-header-inner">
 						<div class="col-md-6 col-12">
@@ -74,19 +74,20 @@
 						<h2 class="col-12 text-center tm-section-title">계정/정보관리</h2>
 					</div>
 				</header>
-
+				
+				<form action="/user/update" method="post" th:object="${loginMember}">
 				<div style="margin-left: 40%;">
 					<div class="login">
 						<h3>
-							이메일 <input type="text" class="form-control" name="이메일"
+							이메일 <input type="email" class="form-control" th:field="*{email}"
 								style="border-radius: 5px; width: 40%;">
 						</h3>
 						<h3>
-							비밀번호 <input type="text" class="form-control" name="비밀번호"
+							비밀번호 <input type="password" class="form-control" th:field="*{userPwd}"
 								style="border-radius: 5px; width: 40%;">
 						</h3>
 						<h3>
-							휴대폰 번호 <input type="text" class="form-control" name="휴대폰 번호"
+							비밀번호 확인 <input type="password" class="form-control" name="userPwd1"
 								style="border-radius: 5px; width: 40%;">
 						</h3>
 
@@ -120,11 +121,11 @@
 				<div style="margin-left: 30%;">
 					<br />
 					<br />
-					<button class="profileBtn">정보 수정</button>
+					<button type="submit" class="profileBtn">정보 수정</button>
 					<br />
 					
 				</div>
-
+				</form>
 
 				<div align="center" style="margin-top: 100px;"></div>
 

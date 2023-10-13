@@ -22,15 +22,15 @@
 			<li class="tm-nav-li-left"><a href="/faqs"
 				class="tm-nav-link">고객센터</a></li>
 				
-			<li class="tm-nav-li-right" th:if="${loginMember == null}"><a href="/user/signup"
+			<li class="tm-nav-li-right" th:if="${session.loginMember == null}"><a href="/user/signup"
 				class="tm-nav-link">회원가입</a></li>
-			<li class="tm-nav-li-right" th:if="${loginMember == null}"><a href="/login"
+			<li class="tm-nav-li-right" th:if="${session.loginMember == null}"><a href="/login"
 				class="tm-nav-link">로그인</a></li>
 				
 			<li class="tm-nav-li-right"><a href="/myPage"
-				class="tm-nav-link" th:if="${loginMember != null}">마이페이지</a></li>
+				class="tm-nav-link" th:if="${session.loginMember != null}">마이페이지</a></li>
 			<li class="tm-nav-li-right"><a href="/logout"
-				class="tm-nav-link" th:if="${loginMember != null}">로그아웃</a></li>
+				class="tm-nav-link" th:if="${session.loginMember != null}">로그아웃</a></li>
 		</ul>
 	</nav>
 	

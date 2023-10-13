@@ -13,6 +13,9 @@ public class PostServiceImpl implements PostService{
 	@Autowired
 	private PostMapper postMapper; //의존성 주입
 	
+	//좋아요 메퍼
+	@Autowired
+	private PostLikeMapper postlikeMapper;
 
 	
 	@Override
@@ -45,6 +48,28 @@ public class PostServiceImpl implements PostService{
 	public Post getReadData(int postId) throws Exception {
 		return postMapper.getReadData(postId);
 	}
+
+	@Override
+	public void insertPostlike(PostLikeDTO likedto) throws Exception {
+		postlikeMapper.insertPostlike(likedto);
+	}
+
+	@Override
+	public PostLikeDTO getPostlike() throws Exception {
+		return postlikeMapper.getPostlike();
+	}
+
+	@Override
+	public void deletePostlike(PostLikeDTO likedto) throws Exception {
+		postlikeMapper.deletePostlike(likedto);
+	}
+
+	@Override
+	public int findPostlikeState() throws Exception {
+		return postlikeMapper.findPostlikeState();
+	}
+
+
 	
 	
 	

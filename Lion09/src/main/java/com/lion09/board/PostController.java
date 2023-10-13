@@ -211,8 +211,21 @@ public class PostController {
 		String param = "pageNum=" + pageNum;
 	
 		
-		
 		ModelAndView mav = new ModelAndView();
+		
+
+		
+		//좋아요 부분
+		int likeState = postService.findPostlikeState();
+		
+		PostLikeDTO likedto = new PostLikeDTO();
+		
+		likedto.setLikeState(likeState);
+		
+		mav.addObject("likedto",likedto);
+		
+		
+		
 		
 		mav.addObject("dto",dto);
 		mav.addObject("params",param);
@@ -224,6 +237,33 @@ public class PostController {
 		
 	}
 	
+	//좋아요 관심목록에 추가
+	@PostMapping(value = "/insertLike.action")
+	public ModelAndView insertLike(PostLikeDTO likedto) throws Exception {
+		
+		postService.insertPostlike(likedto);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("redirect:/list1");
+		
+		return mav;
+		
+	}
+	
+	//관심목록에서 삭제
+	@PostMapping(value = "/deleteLike.action")
+	public ModelAndView delteLike(PostLikeDTO likedto) throws Exception {
+		
+		postService.deletePostlike(likedto);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("redirect:/list1");
+		
+		return mav;
+		
+	}
 
 	
 }

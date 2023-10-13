@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.lion09.order.Order;
+import com.lion09.pay.LionPayDTO;
 
 import lombok.Data;
 
@@ -35,4 +38,7 @@ public class Member {
 	private String energy;
 	private int userLike;
 	private String profileImg;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
+	private LionPayDTO lionPay;
 }

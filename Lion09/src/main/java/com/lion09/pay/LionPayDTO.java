@@ -13,7 +13,7 @@ import com.lion09.member.Member;
 
 import lombok.Data;
 
-@Table(name = "lionPay")
+@Table(name = "lion_pay")
 @Entity
 @Data
 public class LionPayDTO {

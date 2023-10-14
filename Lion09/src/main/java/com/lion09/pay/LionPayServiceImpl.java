@@ -13,34 +13,34 @@ public class LionPayServiceImpl implements LionPayService {
 	private LionPayMapper lionPayMapper;
 	
 	@Override
-	public void updateBalData(LionPayDTO dto) throws Exception {
+	public void updateBalData(LionPayDTO dto, String userId) throws Exception {
 		
-		lionPayMapper.updateBalData(dto);
+		lionPayMapper.updateBalData(dto, userId);
 	}
 	
 	@Override
-	public void updateAccData(LionPayDTO dto) throws Exception {
+	public void updateAccData(LionPayDTO dto, String userId) throws Exception {
 		
-		lionPayMapper.updateAccData(dto);
+		lionPayMapper.updateAccData(dto, userId);
 	}
 	
 	@Override
-	public void updatePwdData(String payPwd) throws Exception {
+	public void updatePwdData(String payPwd, String userId) throws Exception {
 		
-		lionPayMapper.updatePwdData(payPwd);
+		lionPayMapper.updatePwdData(payPwd, userId);
 	}
 
 	@Override
-	public void resetAccData(LionPayDTO dto) throws Exception {
+	public void resetAccData(String userId) throws Exception {
 		
-		lionPayMapper.resetAccData(dto);
+		lionPayMapper.resetAccData(userId);
 		
 	}
 	
 	@Override
-	public LionPayDTO getReadData() throws Exception {
+	public LionPayDTO getReadData(String userId) throws Exception {
 		
-		return lionPayMapper.getReadData();
+		return lionPayMapper.getReadData(userId);
 		
 	}
 	

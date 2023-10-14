@@ -17,6 +17,6 @@ public interface LionPayMapper {
 	
 	public void resetAccData(LionPayDTO dto) throws Exception;
 	
-	public LionPayDTO getReadData() throws Exception;
+	public LionPayDTO getReadData(String userId) throws Exception;
 	
 }

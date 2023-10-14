@@ -3,13 +3,18 @@ package com.lion09.pay;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.lion09.SessionConst;
+import com.lion09.SessionInfo;
 
 
 @RestController
@@ -20,14 +25,14 @@ public class LionPayController {
 	private LionPayService lionPayService;
 	
 	@GetMapping(value = "/LionPay")
-	public ModelAndView index() throws Exception{
+	public ModelAndView index(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception{
 		
 		List<String> bankList = lionPayService.getBankList();
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("LionPay");
 		
-		LionPayDTO dto = lionPayService.getReadData();
+		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
 		
 		mav.addObject("dto",dto);
 		mav.addObject("bankList",bankList);
@@ -47,9 +52,9 @@ public class LionPayController {
 
 	
 	@GetMapping(value = "/updateAcc.action")
-	public ModelAndView updateAcc(HttpServletRequest request) throws Exception {
+	public ModelAndView updateAcc(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, HttpServletRequest request) throws Exception {
 		
-	    LionPayDTO dto = lionPayService.getReadData();
+	    LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
 
 	    if (dto == null) {
 	        ModelAndView mav = new ModelAndView("redirect:/LionPay");
@@ -77,9 +82,9 @@ public class LionPayController {
 	}
 	
 	@GetMapping(value = "/resetAcc.action")
-	public ModelAndView resetAccData(HttpServletRequest request) throws Exception{
+	public ModelAndView resetAccData(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, HttpServletRequest request) throws Exception{
 		
-		LionPayDTO dto = lionPayService.getReadData();
+		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
 		
 		if(dto==null) {
 			ModelAndView mav = new ModelAndView();
@@ -109,9 +114,9 @@ public class LionPayController {
 	}
 	
 	@GetMapping(value = "/updatePwdData.action")
-	public ModelAndView updatePwdData(HttpServletRequest request) throws Exception {
+	public ModelAndView updatePwdData(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, HttpServletRequest request) throws Exception {
 		
-	    LionPayDTO dto = lionPayService.getReadData();
+	    LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
 
 	    if (dto == null) {
 	        ModelAndView mav = new ModelAndView("redirect:/LionPay");

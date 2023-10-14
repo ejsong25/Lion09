@@ -38,9 +38,9 @@ public class LionPayServiceImpl implements LionPayService {
 	}
 	
 	@Override
-	public LionPayDTO getReadData() throws Exception {
+	public LionPayDTO getReadData(String userId) throws Exception {
 		
-		return lionPayMapper.getReadData();
+		return lionPayMapper.getReadData(userId);
 		
 	}
 	

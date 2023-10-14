@@ -5,20 +5,20 @@
 <mapper namespace="com.lion09.pay.LionPayMapper">
 
 <update id="updateBalData" parameterType="com.lion09.pay.LionPayDTO">
-    update lionPay set balance = balance + #{rechargeAmount} where userId = 'test1'
+    update lion_pay set balance = balance + #{rechargeAmount} where user_id = #{userId}
 </update>
 
 <update id="updateAccData" parameterType="com.lion09.pay.LionPayDTO">
-	update lionPay set accountNum=#{accountNum},accountName=#{accountName}
-	where userId='test1'
+	update lion_pay set account_num=#{accountNum},account_name=#{accountName}
+	where user_id=#{userId}
 </update>
 
 <update id="updatePwdData" parameterType="String">
-	update lionPay set payPwd=#{payPwd} where userId='test1'
+	update lion_pay set pay_pwd=#{payPwd} where user_id=#{userId}
 </update>
 
 <update id="resetAccData" parameterType="String">
-	update lionPay set accountNum=null, accountName=null where userId='test1'
+	update lion_pay set account_num=null, account_name=null where user_id=#{userId}
 </update>
 
 <!-- 하나의 데이터 -->

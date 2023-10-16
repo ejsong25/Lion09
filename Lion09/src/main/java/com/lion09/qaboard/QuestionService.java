@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface QuestionService {
 	
-	public void insertData(QuestionDTO dto) throws Exception;
+	public void insertData(QuestionDTO dto, String userId) throws Exception;
 	
 	public int maxNum() throws Exception;
 		

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.lion09.SessionConst;
+import com.lion09.SessionInfo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -67,16 +68,19 @@ public class MemberController {
 	}
 	
 	@GetMapping("/update")
-	public String createUpdateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) Member loginMember, Model model) {
+	public String createUpdateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, Model model) throws Exception {
+		Member loginMember = memberService.getUser(sessionInfo.getUserId());
 		model.addAttribute("loginMember", loginMember);
 		return "account";
 	}
 	
 	@PostMapping("/update")
-	public String update(@Valid MemberUpdateForm form, BindingResult result) {
+	public String update(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, @Valid MemberUpdateForm form, BindingResult result) throws Exception {
 		if(result.hasErrors())
 			return "account"; 
-		
+		Member member = memberService.getUser(sessionInfo.getUserId());
+		member.setEmail(form.getEmail());
+		member.setUserPwd(form.getUserPwd());
 		return "redirect:/";
 	}
 	

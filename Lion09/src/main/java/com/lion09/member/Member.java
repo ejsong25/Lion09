@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import com.lion09.board.Post;
 import com.lion09.order.Order;
 import com.lion09.pay.LionPayDTO;
+import com.lion09.qaboard.QuestionDTO;
 
 import lombok.Data;
 
@@ -45,4 +46,7 @@ public class Member {
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
 	private LionPayDTO lionPay;
+	
+	@OneToMany(mappedBy = "member")
+	private List<QuestionDTO> qaboard = new ArrayList<>();
 }

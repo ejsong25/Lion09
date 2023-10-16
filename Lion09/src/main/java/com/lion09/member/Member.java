@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.lion09.board.Post;
 import com.lion09.order.Order;
 import com.lion09.pay.LionPayDTO;
 
@@ -34,6 +35,9 @@ public class Member {
 	//주문 내역
 	@OneToMany(mappedBy = "member")
 	private List<Order> orders = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "member")
+	private List<Post> posts = new ArrayList<>();
 	
 	private String energy;
 	private int userLike;

@@ -5,41 +5,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.lion09.mypage.MyPageMapper">
 
-<select id="selectData" resultType="com.lion09.mypage.MyPageDTO">
-	select userId,nickName,energy,profileImgName,myAddress,myLatitude,myLongitude,myRange
-	from test where userId='111'
+<select id="selectData" resultType="com.lion09.member.Member">
+	select user_id,nick_name,energy,profile_img_name,address,my_latitude,my_longitude,my_range
+	from member where user_id=#{userId}
 </select>
 
-<update id="updateData" parameterType="com.lion09.mypage.MyPageDTO">
-	update test set nickName=#{nickName},myAddress=#{myAddress},myLatitude=#{myLatitude},
-	myLongitude=#{myLongitude} where userId='111'
+<update id="updateData">
+	update member set nick_name=#{dto.nickName},my_address=#{dto.myAddress},my_latitude=#{dto.myLatitude},
+	my_longitude=#{dto.myLongitude} where user_id=#{userId}
 </update>
 
-<update id="imgUpdate" parameterType="com.lion09.mypage.MyPageDTO">
-	update test set profileImgName=#{profileImgName} where userId='111'
+<update id="imgUpdate">
+	update member set profile_img_name=#{p_name} where user_id=#{userId}
 </update>
 
-<update id="imgDefault" parameterType="com.lion09.mypage.MyPageDTO">
-	update test set profileImgName='lion.png' where userId='111'
+<update id="imgDefault" parameterType="String">
+	update member set profile_img_name='lion.png' where user_id=#{userId}
 </update>
 
-<select id="findLocationsNearby" parameterType="com.lion09.mypage.MyPageDTO" resultType="com.lion09.mypage.MyPageDTO">
+<select id="findLocationsNearby" resultType="com.lion09.member.Member">
     <![CDATA[
-  	select distinct myAddress
-	from test
+  	select distinct my_address
+	from member
 	where
 	6371*2*asin(
 	    sqrt(
-	        power(sin((radians(myLatitude)-radians((select myLatitude from test where userid='111')))/2),2)+
-	        cos(radians((select myLatitude from test where userid='111')))*cos(radians(myLatitude))*
-	        power(sin((radians(myLongitude)-radians((select myLongitude from test where userid ='111')))/2),2)
+	        power(sin((radians(my_latitude)-radians((select my_latitude from member where user_id=#{userId})))/2),2)+
+	        cos(radians((select my_latitude from member where user_id=#{userId})))*cos(radians(my_latitude))*
+	        power(sin((radians(my_longitude)-radians((select my_longitude from member where user_id=#{userId})))/2),2)
 	    )
 	)<=#{myRange}
     ]]>
 </select>
 
-<update id="updateRange" parameterType="com.lion09.mypage.MyPageDTO">
-	update test set myRange=#{myRange} where userId='111'
+<update id="updateRange" parameterType="com.lion09.member.Member">
+	update member set my_range=#{myRange} where user_id=#{userId}
 </update>
 
 </mapper>

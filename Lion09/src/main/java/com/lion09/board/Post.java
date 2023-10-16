@@ -1,24 +1,29 @@
 package com.lion09.board;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.lion09.member.Member;
 
 import lombok.Data;
 
 @Data
+@Entity
 public class Post {
-
 	@Id
 	private int postId;
-	
-	@Column(length = 16)
-	private String nickName;
 	
 	@Column(length = 40)
 	private String title;
 	
 	@Column(length = 20)
-	private String status;
+	private String status; 
 	
 	@Column(length = 7)
 	private int productsPrice;
@@ -29,8 +34,8 @@ public class Post {
 	@Column(columnDefinition = "TEXT")
 	private String contents;
 	
-	private String created;
-	private String deadLine;
+	private LocalDateTime created;
+	private LocalDateTime deadLine;
 	
 	@Column(length = 999)
 	private String chooseFile;
@@ -49,13 +54,10 @@ public class Post {
 	
 	@Column(length = 100)
 	private String myAddr;
-	
-	@Column(length = 20)
-	private String userId;
 
-	private String likeDate;
+	private LocalDateTime likeDate;
 
-
-	
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private Member member;
 }

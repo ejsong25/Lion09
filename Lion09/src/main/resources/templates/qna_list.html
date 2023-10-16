@@ -101,7 +101,7 @@
         <td class="center" th:text="${dto.num}">번호</td>
         <td class="left" >  <a th:href="@{${detailUrl}} + 
 						'&num=' + @{${dto.num}}" th:text="${dto.subject}"> 제목</a></td> 
-        <td class="center" th:text="${dto.userId }">아이디</td>
+        <td class="center" th:text="${session.loginMember.userId}">아이디</td>
         <td class="center" th:text="${dto.created }">일시</td>
         <td class="center" th:text="${dto.hitCount }">조회수</td> 
     </tr>

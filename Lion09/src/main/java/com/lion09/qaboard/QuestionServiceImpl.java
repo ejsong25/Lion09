@@ -24,9 +24,9 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public void insertData(QuestionDTO dto) throws Exception {
+	public void insertData(QuestionDTO dto, String userId) throws Exception {
 		
-		questionMapper.insertData(dto);
+		questionMapper.insertData(dto, userId);
 	}
 
 	@Override

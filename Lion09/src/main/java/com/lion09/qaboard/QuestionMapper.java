@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface QuestionMapper {
 	
-	public void insertData(QuestionDTO dto) throws Exception;
+	public void insertData(@Param("dto")QuestionDTO dto, @Param("userId")String userId) throws Exception;
 	public int maxNum() throws Exception;
 	
 	

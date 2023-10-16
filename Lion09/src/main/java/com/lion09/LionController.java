@@ -1,4 +1,4 @@
-package com.lion09.controller;
+package com.lion09;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.lion09.SessionConst;
-import com.lion09.SessionInfo;
 import com.lion09.member.Member;
 
 @Controller

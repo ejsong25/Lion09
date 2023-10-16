@@ -50,6 +50,7 @@ public class MemberController {
 			member.setUserName(form.getUserName());
 			member.setEmail(form.getEmail());
 			member.setNickName(form.getNickName());
+			member.setProfileImgName("lion.png");
 			
 			memberService.join(member);
 			
@@ -64,7 +65,7 @@ public class MemberController {
 			return "signup_form";
 		}
 		
-		return "redirect:/";
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/update")

@@ -202,11 +202,11 @@
 						<div>
 							<h3
 								style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">내 동네</h3>
-							<input type="text" id="address" name="address" th:value="${dto.address}" readonly/>
+							<input type="text" id="address" name="address" th:value="${dto.address?.address}" readonly/>
 							<input type="button" value="동네인증" onclick="searchAddress();">
 							<div>
-								<input type="hidden" name="latitude" id="latitude" th:value="${dto.latitude}"/>
-								<input type="hidden" name="longitude" id="longitude" th:value="${dto.longitude}"/>
+								<input type="hidden" name="latitude" id="latitude" th:value="${dto.address?.myLatitude}"/>
+								<input type="hidden" name="longitude" id="longitude" th:value="${dto.address?.myLongitude}"/>
 							</div> 
 							
 							<h3

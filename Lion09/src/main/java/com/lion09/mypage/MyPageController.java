@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+
+import com.lion09.SessionConst;
+import com.lion09.SessionInfo;
+import com.lion09.member.Member;
 
 @Controller
 public class MyPageController {
@@ -28,12 +33,12 @@ public class MyPageController {
 
 	//mypage 불러오기
 	@GetMapping(value = "/myPage")
-	public ModelAndView myPage() throws Exception {
+	public ModelAndView myPage(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("myPage");
 
-		MyPageDTO dto = mypageService.selectData();
+		Member dto = mypageService.selectData(sessionInfo.getUserId());
 
 		mav.addObject("dto",dto);
 		
@@ -42,9 +47,9 @@ public class MyPageController {
 	
 	//프로필 업데이트
 	@PostMapping(value = "/mypage_update.action")
-	public ModelAndView mypage_update(MyPageDTO dto) throws Exception {
+	public ModelAndView mypage_update(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member dto) throws Exception {
 
-		mypageService.updateData(dto);
+		mypageService.updateData(dto, sessionInfo.getUserId());
 
 		ModelAndView mav = new ModelAndView();
 
@@ -56,9 +61,9 @@ public class MyPageController {
 	
 	//기본 프로필 사진으로 변경
 	@PostMapping(value = "/mypageImg_default.action")
-	public ModelAndView imgDefault() throws Exception {
+	public ModelAndView imgDefault(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 		
-		MyPageDTO dto = mypageService.selectData();
+		Member dto = mypageService.selectData(sessionInfo.getUserId());
 		
 		//삭제할 파일 이름 추출
 		String beforeFilename = dto.getProfileImgName();
@@ -77,7 +82,7 @@ public class MyPageController {
 		}
 		
 		//기본 이미지 lion.png로 변경
-		mypageService.imgDefault(dto);
+		mypageService.imgDefault(sessionInfo.getUserId());
 
 		ModelAndView mav = new ModelAndView();
 
@@ -89,13 +94,13 @@ public class MyPageController {
 
 	//프로필 사진 업데이트
 	@PostMapping("/mypageImg_update.action")
-	public ModelAndView imageUpdated(
+	public ModelAndView imageUpdated(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, 
 			@RequestParam("mypageFilename") MultipartFile mFile) throws Exception {
 
 		//프로필 사진들 모아두는 폴더
 		String upload_path = "/"; 
 
-		MyPageDTO dto = mypageService.selectData();
+		Member dto = mypageService.selectData(sessionInfo.getUserId());
 		
 		//삭제할 파일 이름 추출
 		String beforeFilename = dto.getProfileImgName();
@@ -123,9 +128,9 @@ public class MyPageController {
 	    String newFilename = originalFilename.replace(fileExtension, "_111" + fileExtension);
 
 		//MyPageDTO에 파일 이름 설정
-		dto.setProfileImgName(newFilename);
+//		dto.setProfileImgName(newFilename);
 
-		mypageService.imgUpdate(dto);	
+		mypageService.imgUpdate(newFilename, sessionInfo.getUserId());	
 
 		//경로에 업로드
 		mFile.transferTo(new File(upload_path + newFilename));  
@@ -161,15 +166,15 @@ public class MyPageController {
 	@RequestMapping(value = "/myPage2", 
 			method = {RequestMethod.POST,RequestMethod.GET})
 //	@GetMapping(value = "/myPage2")
-	public ModelAndView myPage2(HttpServletRequest request) throws Exception {
+	public ModelAndView myPage2(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
 
 		mav.setViewName("myPage2");
 
-		MyPageDTO dto = mypageService.selectData();
+		Member dto = mypageService.selectData(sessionInfo.getUserId());
 		
-		List<MyPageDTO> findList = mypageService.findLocationsNearby(dto);
+		List<Member> findList = mypageService.findLocationsNearby(sessionInfo.getUserId());
 		
 		mav.addObject("dto",dto);
 		mav.addObject("findList",findList);
@@ -179,9 +184,9 @@ public class MyPageController {
 
 	//프로필 업데이트
 	@PostMapping(value = "/updateRange.action")
-	public ModelAndView updateRange(MyPageDTO dto) throws Exception {
+	public ModelAndView updateRange(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member dto) throws Exception {
 
-		mypageService.updateRange(dto);
+		mypageService.updateRange(dto.getMyRange(),sessionInfo.getUserId());
 		System.out.println(dto.getMyRange());
 
 		ModelAndView mav = new ModelAndView();

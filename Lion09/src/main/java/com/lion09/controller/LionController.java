@@ -22,22 +22,7 @@ public class LionController {
 	public String faqs() {
 		return "faqs";
 	}
-	
-//	@GetMapping("/qna")
-//	public String qna() {
-//		return "qna";
-//	}
-//	
-//	@GetMapping("/qna_ok")
-//	public String qna_ok() {
-//		return "qna_ok";
-//	}
-	
-//	@GetMapping("/list1")
-//	public String list1() {
-//		return "list1";
-//	}
-	
+
 	@GetMapping("/list2")
 	public String list2() {
 		return "list2";

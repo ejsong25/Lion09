@@ -1,0 +1,300 @@
+@CHARSET "UTF-8";
+
+* {
+	margin:0px;
+	padding:0px;
+}
+
+ul {
+	list-style: none;
+}
+
+.left {
+  text-align: left;
+  width: 300px;
+  padding: 10px 20px;
+}
+
+.center {
+  text-align: right;
+  width: 300px;
+  font-size: 17pt;
+  padding-right: 40px;
+}
+
+.font-color {
+  color: #eec94f; /* 폰트 색상 설정 */
+}
+
+dl {
+    align-items: center;
+    font-family: 'omyu_pretty';
+    font-size: 20pt;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+dd {
+    flex: 1;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+select {
+	font-family: 'omyu_pretty';
+    font-size: 15pt;
+    margin: 0;
+    float: right;
+}
+
+td{
+	border-bottom : 1px solid;
+	border-top : 1px solid;
+}
+
+tr{
+	border: none;
+	border-color: #ffffff;
+}
+
+.horizontal-align {
+	width: 600px;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-top: 50px;
+}
+
+
+#listTable {
+	margin: 0 auto;
+	border-collapse: collapse;
+	width: 600px;
+	height: 50px;
+	color: #ffffff;
+	font-family: 'omyu_pretty';
+	font-size: 15pt;
+	background-color: #ffffff;
+	border-color: #444444;
+	color: #444444;
+	margin-top: 0;
+};
+
+#bbs {
+	width:600px;
+	margin:30px auto;
+	text-align:left;
+}
+
+#bbs_title {
+	width:574px;
+	height:40px;
+	text-align:center;
+	font-weight: normal;
+	line-height:40px;
+	font-size:30pt;
+	margin-bottom:100px;
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+#bbs_subTitle {
+	font-size:10pt;
+	color: #B5B5B5;
+}
+
+#myPage_padding_bottom {
+	height: 3px;
+}
+
+#userInfo_myPage_name {
+	font-size:13pt;
+}
+
+#userInfo_myPage {
+	font-size:10pt;
+}
+
+#bbsCreated_payTop {
+	width:600px;
+	overflow: visible;
+	border: 1px #DBDBDB;
+	text-align:center;
+	font-size: 12pt;
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.bbsCreated_payTop_bottomLine {
+	height:35px;
+	line-height:35px;
+	border-top: 1px solid #DBDBDB;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+
+.bbsCreated_payTop {
+	height:70px;
+	line-height:35px;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+
+#bbsCreated_payTop dt {
+	float:left;
+	height:35px;
+	width:283px;
+	line-height:35px;
+	text-align:left;
+	padding-left:20px;
+	background-color:#EEEEEE;
+}
+
+.bbsCreated_payTop dt:hover {
+  background-color: chocolate;}
+
+#bbsCreated_payTop dd {
+	float:left;
+	height:35px;
+	width:285px;
+	line-height:35px;
+	text-align:left;
+	padding-left:10px;
+}
+
+
+
+#bbsCreated_payTop_footer {
+	width:600px;
+	overflow: visible;
+	clear:both;
+	height:50px;
+	line-height:50px;
+	margin-bottom:20px;
+	text-align:center;
+}
+
+#bbsCreated_cAccountPage {
+	width:600px;
+	overflow: visible;
+	border: 1px #DBDBDB;
+	text-align:center;
+	font-size: 12pt;
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.bbsCreated_cAccountPage_bottomLine {
+	height:35px;
+	line-height:35px;
+	border-top: 1px solid #DBDBDB;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+
+#bbsCreated {
+	width:600px;
+	overflow: visible;
+	border-top:3px solid #DBDBDB;
+	border-bottom:3px solid #DBDBDB;
+	text-align:left;
+	font-size: 12pt;
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.bbsCreated_bottomLine {
+	height:70px;
+	line-height:35px;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+
+.bbsCreated_bottomLine_update {
+	height:70px;
+	line-height:35px;
+	border-bottom:1px solid #DBDBDB;
+	clear:both;
+	text-align:left;
+}
+
+.bbsCreated_noLine {
+	height:35px;
+	line-height:35px;
+	clear:both;
+	text-align:left;
+}
+
+#bbsCreated dt {
+	float:left;
+	height:35px;
+	width:150px;
+	line-height:35px;
+	text-align:left;
+	padding-left:20px;
+	background-color:#EEEEEE;
+}
+#bbsCreated dd {
+	float:left;
+	height:35px;
+	width:285px;
+	line-height:35px;
+	text-align:left;
+	padding-left:10px;
+}
+
+#bbsCreated_content dt {
+	float:left;
+	height:170px;
+	width:80px;
+	text-align:left;
+	padding-left:20px;
+	background-color:#EEEEEE;
+}
+#bbsCreated_content dd {
+	float:left;
+	height:170px;
+	width:440px;
+	line-height:170px;
+	text-align:left;
+	padding-left:10px;
+}
+
+#bbsCreated_footer {
+	width:600px;
+	overflow: visible;
+	clear:both;
+	height:50px;
+	line-height:50px;
+	margin-bottom:20px;
+	text-align:center;
+}
+
+#payUpdated_footer {
+	text-align:center;
+	font-size: 9pt;
+}
+
+.boxTF { 
+	border:1px solid; 
+	height:15px; 
+	margin-top:7px; 
+	padding:2px 2px 2px 2px; 
+	border-color:#666666; 
+	background-color:#ffffff; 
+	font-family:"굴림"; 
+	font-size:9pt; 
+}
+
+.boxTA { 
+	border:1px solid; 
+	height:150px; 
+	margin-top:7px; 
+	padding:2px 2px 2px 2px; 
+	border-color:#666666; 
+	background-color:#ffffff; 
+	font-family:"굴림"; 
+	font-size:9pt; 
+}
+
+

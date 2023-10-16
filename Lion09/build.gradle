@@ -23,7 +23,6 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
@@ -44,6 +43,16 @@ dependencies {
 	
 	implementation 'com.google.code.geocoder-java:geocoder-java:0.16'
 	
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.webjars:sockjs-client:1.5.1'
+	implementation 'org.webjars:stomp-websocket:2.3.4'
+	implementation 'com.google.code.gson:gson:2.9.0'
+	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
+	annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final'
+	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws-messaging'
+   implementation 'org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config'
 }
 
 tasks.named('test') {

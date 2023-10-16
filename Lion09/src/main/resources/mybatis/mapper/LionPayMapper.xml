@@ -4,6 +4,18 @@
 
 <mapper namespace="com.lion09.pay.LionPayMapper">
 
+<insert id="insertLionPay" parameterType="com.lion09.pay.LionPayDTO">
+    INSERT INTO lion_pay (user_id) VALUES (#{userId})
+</insert>
+
+<insert id="insertRecharge" parameterType="com.lion09.pay.ListDTO">
+    INSERT INTO recharge (user_id) VALUES (#{userId})
+</insert>
+
+<update id="updateRechargeAmt" parameterType="int">
+    update lion_pay set rechargeAmount = #{rechargeAmount} where user_id = #{userId}
+</update>
+
 <update id="updateBalData" parameterType="com.lion09.pay.LionPayDTO">
     update lion_pay set balance = balance + #{rechargeAmount} where user_id = #{userId}
 </update>
@@ -17,13 +29,41 @@
 	update lion_pay set pay_pwd=#{payPwd} where user_id=#{userId}
 </update>
 
-<update id="resetAccData" parameterType="String">
+<update id="resetAccData" parameterType="com.lion09.pay.LionPayDTO">
 	update lion_pay set account_num=null, account_name=null where user_id=#{userId}
 </update>
+
+<!-- 전체 데이터 개수 -->
+<select id="getDataCount" parameterType="map" resultType="int">
+	select nvl(count(*),0) from recharge
+</select>
 
 <!-- 하나의 데이터 -->
 <select id="getReadData" parameterType="String" resultType="com.lion09.pay.LionPayDTO">
 	select user_id,account_num,account_name,pay_pwd,balance from lion_pay where user_id=#{userId}
+</select>
+
+<select id="getBalance" parameterType="String" resultType="int">
+    select balance from lion_pay where user_id	=#{userId}
+</select>
+
+<insert id="insertData" parameterType="com.lion09.pay.ListDTO">
+	insert into recharge (user_id,recharge_amount,account_name,date) values (#{userId},#{rechargeAmount},#{accountName},CURRENT_TIMESTAMP)
+</insert>
+
+<select id="getListData" parameterType="com.lion09.pay.ListDTO" resultType="com.lion09.pay.ListDTO">
+	select recharge_amount,account_name,date from recharge where user_id=#{userId} ORDER BY date DESC limit 4
+</select>
+
+<select id="getLists" parameterType="hashMap" resultType="com.lion09.pay.ListDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select recharge_amount,account_name,date
+	from recharge 
+	order by date desc) data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
 </select>
 
 </mapper>

@@ -10,10 +10,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.lion09.Lion09Application;
 
 @SpringBootApplication
+@EnableScheduling
 @MapperScan("com.lion09.mypage")
 @MapperScan("com.lion09.pay")
 @MapperScan("com.lion09.board")

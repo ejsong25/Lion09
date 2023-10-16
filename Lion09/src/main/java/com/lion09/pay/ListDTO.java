@@ -1,5 +1,8 @@
 package com.lion09.pay;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,22 +15,13 @@ import com.lion09.member.Member;
 
 import lombok.Data;
 
-@Table(name = "lion_pay")
+@Table(name = "recharge")
 @Entity
 @Data
-public class LionPayDTO {
-	
-	@Column(nullable = true)
-	private String accountNum;
+public class ListDTO {
 	
 	@Column(nullable = true)
 	private String accountName;
-	
-	@Column(nullable = true)
-	private String payPwd;
-	
-	@Column(nullable = true)
-	private Integer balance;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -38,4 +32,10 @@ public class LionPayDTO {
 	
 	@Column(nullable = true)
 	private Integer rechargeAmount;
+	
+	@Column(nullable = true)
+	private Integer categoryId;
+	
+	@Column(nullable = true)
+	private Timestamp date;
 }

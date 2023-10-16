@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 
 import com.lion09.order.Order;
 import com.lion09.pay.LionPayDTO;
+import com.lion09.pay.ListDTO;
 
 import lombok.Data;
 
@@ -41,4 +42,7 @@ public class Member {
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
 	private LionPayDTO lionPay;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
+	private ListDTO recharge;
 }

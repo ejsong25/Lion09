@@ -1,0 +1,181 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>이용내역</title>
+<link href="css/style_myPage.css" rel="stylesheet" />
+<link href="css/all.min.css" rel="stylesheet" />
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+	@font-face {
+		font-family: 'ONE-Mobile-POP';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+			format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	
+	@font-face {
+		font-family: 'omyu_pretty';
+		src:
+			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+			format('woff2');
+		font-weight: normal;
+		font-style: normal;
+	}
+</style>
+</head>
+
+<script type="text/javascript">
+
+function filter() {
+    var selected = document.getElementById("selected");
+    var selectedValue = selected.value;
+    var table = document.getElementById("listTable");
+    var rows = table.getElementsByTagName("tr");
+
+    for (var i = 0; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName("td");
+        if (cells.length === 3) {
+            var cellText = cells[2].innerText || cells[2].textContent;  // "충전" 글자가 포함된 열을 확인
+
+            if (selectedValue === "전체보기"){
+            	rows[i].style.display = "table-row";
+            	
+            } else if (selectedValue === "충전" && cellText.includes("충전")) {
+                rows[i].style.display = "table-row";
+                
+            } else if (selectedValue === "사용" && cellText.includes("사용")) {
+            	rows[i].style.display = "table-row";
+        	} else {
+                rows[i].style.display = "none";
+            }
+    	}
+	}
+}
+	
+</script>
+
+<body>
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+
+	<div class="container">
+	<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<main>
+			<input type="hidden" id="userId" th:value="${dto.userId}" />
+			<input type="hidden" id="balance" th:value="${dto.balance}" />
+			<input type="hidden" id="rechargeAmount" th:value="${dto.rechargeAmount}" />
+			<input type="hidden" id="accountName" th:value="${dto.accountName}" />
+					
+			<div class="tm-container-inner-2 tm-info-section">
+				<div class="row2">
+					<div class="col-12 tm-faq">
+						<h2 class="text-center tm-section-title1">LIONPAY머니 사용내역</h2>
+						<div class="horizontal-align">
+							<dl style="text-align: center;">
+								<dd>보유금액 [[${dto.balance}]]</dd>
+							<select id="selected" onchange="filter();">
+								<option value="전체보기" selected>전체보기</option>
+								<option value="충전">충전</option>
+								<option value="사용">사용</option>
+							</select>
+							</dl>
+						</div>
+						<div>
+							<table id="listTable" border="1">
+							    <tr th:if="${#lists.size(lists)}>0" th:each="listDto, index:${lists}">
+							        <td class="left">
+								        <span th:text="${listDto.accountName} + ' 계좌'"></span><br/>
+								        <span th:text="${#dates.format(listDto.date, 'yyyy-MM-dd HH:mm:ss')}"></span>
+								    </td>
+							        <td class="center">
+							        	<span th:text="'+ ' + ${listDto.rechargeAmount + '원 충전'}"></span>
+							        </td>
+							        <!-- <td class="center" th:text="'- ' + ${listDto.rechargeAmount + '원 사용'}"></td> -->
+							    </tr>
+							    <table id="listTable" style="border: 0;">
+							    	<tr th:if="${#lists.size(dataCount)}>0"
+										th:each="dataCount:${dataCount}">
+										<td colspan="5" id="footer" style="border: 0; text-align: center;">
+											<a th:utext="${pageIndexList}"></a>
+										</td>
+									</tr>
+									<tr th:if="${#lists.isEmpty(lists)}">
+										<td colspan="5" style="text-align: center;">
+											이용내역이 존재하지 않습니다.
+										</td>
+									</tr>
+							    </table>
+							</table>
+						</div>
+						<button class="backBtn" onclick="javascript:location.href='/LionPay';">뒤로가기</button>	
+					</div>
+				</div>
+			</div>
+		</main>
+		<br/><br/>
+		<hr class="hr-solid"/>
+		<footer th:fragment="footer" class="tm-footer text-center">
+			<div style="float: left;">
+			
+				<p>
+					<b>사자고</b>
+				</p>
+				<br/>
+				<p>
+					<b>사업자등록번호</b> 202-30-92017
+				</p>
+				<p>
+					<b>이메일</b> help@liongg.co.kr
+				</p>
+				<p>
+					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+				</p>
+				<p>
+					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+						href="https://templatemo.com">TemplateMo</a>
+				</p>
+			</div>
+			<div style="float: right;">
+				<div>
+					<div id="map" style="width:400px; height:200px; margin: auto;"></div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
+	<script>
+			var container = document.getElementById('map');
+			var options = {
+				center: new kakao.maps.LatLng(37.49886, 127.03170),
+				level: 2
+			};
+	
+			var map = new kakao.maps.Map(container, options);
+	</script>
+	<script src="js/jquery.min.js"></script>
+</body>
+</html>

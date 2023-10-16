@@ -1,7 +1,13 @@
 package com.lion09.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.lion09.pay.LionPayDTO;
+import com.lion09.pay.LionPayService;
+import com.lion09.pay.ListDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -11,11 +17,27 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
 	private final MemberRepository memberRepository;
 	
+	@Autowired
+	@Qualifier("lionPayServiceImpl")
+	private LionPayService lionPayService;
+	
 	//회원가입
 	@Transactional
-	public String join(Member member) {
+	public String join(Member member) throws Exception {
 		memberRepository.save(member);
 		
+		LionPayDTO dto = new LionPayDTO();
+		dto.setMember(member); // Member와 연결
+		dto.setUserId(member.getUserId()); // userId 설정
+
+		lionPayService.insertLionPay(dto);
+		
+		ListDTO listDto = new ListDTO();
+		listDto.setMember(member); // Member와 연결
+		listDto.setUserId(member.getUserId()); // userId 설정
+
+		lionPayService.insertRecharge(listDto);
+
 		return member.getUserId();
 	}
 	

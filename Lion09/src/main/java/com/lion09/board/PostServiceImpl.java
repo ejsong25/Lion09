@@ -30,13 +30,13 @@ public class PostServiceImpl implements PostService{
 	}
 	
 	@Override
-	public List<Post> getLists(int start,int end) throws Exception {
-		return postMapper.getLists(start,end);
+	public List<Post> getLists(int start,int end, String searchKey,String searchValue) throws Exception {
+		return postMapper.getLists(start,end,searchKey,searchValue);
 	}
 	
 	@Override
-	public int getDataCount() throws Exception {
-		return postMapper.getDataCount();
+	public int getDataCount(String searchKey,String searchValue) throws Exception {
+		return postMapper.getDataCount(searchKey,searchValue);
 	}
 	
 
@@ -68,6 +68,31 @@ public class PostServiceImpl implements PostService{
 	public int findPostlikeState() throws Exception {
 		return postlikeMapper.findPostlikeState();
 	}
+
+	@Override
+	public void updateData(Post dto) throws Exception {
+		postMapper.updateData(dto);
+		
+	}
+
+	@Override
+	public void deleteData(int postId) throws Exception {
+		postMapper.deleteData(postId);
+		
+	}
+
+	@Override
+	public void imgUpdate(Post dto) throws Exception {
+		postMapper.imgUpdate(dto);
+		
+	}
+
+	@Override
+	public void imgDefault(Post dto) throws Exception {
+		postMapper.imgDefault(dto);
+		
+	}
+
 
 
 	

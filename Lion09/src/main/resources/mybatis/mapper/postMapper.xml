@@ -24,6 +24,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	 chooseFile,postLikeCount,recruitment,
 	 categoryId,myAddr,to_char(likeDate,'YYYY-MM-DD')
 	 from post 
+	 where ${searchKey} like '%' || #{searchValue} || '%'
 	 order by postId desc) data)
  <![CDATA[
  	where rnum>=#{start} and rnum<=#{end}
@@ -34,7 +35,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 
 <select id="getDataCount" parameterType="map" resultType="int">
 	select nvl(count(*),0) from post
-	
+	where ${searchKey} like '%' || #{searchValue} || '%'
 </select>
 
 

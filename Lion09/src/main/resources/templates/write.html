@@ -17,111 +17,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>글쓰기</title>  
 
-	<link href="css/templatemo-style.css" rel="stylesheet" />
-	<link href="css/write.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-	
-	<link rel="stylesheet" href="writePhoto.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<link href="css/write.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
-<script type="text/javascript">
-
-	function sendIt() {
-			
-   		f = document.myForm1;
-   		
-   		//내용 검사
-		str = f.categoryId.value;
-		str = str.trim();
-		if(str==0){
-			alert("\n카테고리를 선택하세요.");
-			f.categoryId.focus();
-			return;
-		}
-		f.categoryId.value = str;
-
-   		str = f.title.value;
-		str = str.trim();
-		if(!str){
-			alert("\n제목을 입력하세요.");
-			f.title.focus();
-			return;
-		}
-		f.title.value = str;
-		
-		str = f.productsPrice.value;
-		str = str.trim();
-		if(!str){
-			alert("\n가격을 입력해주세요.");
-			f.productsPrice.focus();
-			return;
-		}
-		f.productsPrice.value = str;
-		
-		str = f.recruitment.value;
-		str = str.trim();
-		if(!str){
-			alert("\n모집인원을 선택해주세요.");
-			f.recruitment.focus();
-			return;
-		}
-		f.recruitment.value = str;
-	
-		str = f.contents.value;
-		str = str.trim();
-		if(!str){
-			alert("\n내용을 입력하세요.");
-			f.contents.focus();
-			return;
-		}
-		f.contents.value = str;
-		
-		
-		//이미지 파일
-		
-		//파일을 선택하는 input 요소 가져오기
-	    var fileInput = document.querySelector('input[name="chooseFilename"]');
-	
-		//이미지파일을 선택했을 경우
-	    if (!fileInput.files.length === 0) {
-			
-	    	//선택한 파일의 이름 가져오기
-		    var fileName = fileInput.files[0].name;
-		
-		    //허용된 파일 확장자 목록 정의
-		    var allowedExtensions = ['.png', '.jpeg', '.jpg'];
-		
-		    //선택한 파일의 확장자 추출
-		    var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-		
-		    //허용된 확장자 목록에 있는지 확인
-		    if (allowedExtensions.indexOf(fileExtension) === -1) {
-		        alert('png 또는 jpg,jpeg 형식의 파일만 업로드할 수 있습니다.');
-		        return; //허용되지 않은 확장자일 때 form을 제출하지 않고 함수 종료
-			   }
-	    }
-		
-	    alert('게시물이 등록되었습니다.')
-	    
-		f.action = "/write_ok.action";
-		f.submit(); 
-		
-	}
-	
-	 function productsPriceChange(){
-	        var productsPrice = document.getElementById('productsPrice').value;
-	        
-	    }
-	    
-	    function recruitmentChange(){
-	    	var recruitment = document.getElementById('recruitment').value;
-	    }    
-
-	    function typeClick(){
-	    	var type = document.getElementById('type').value;
-	    } 
-
-</script>
-
+<link rel="stylesheet" href="writePhoto.css">
 
 </head>
 
@@ -139,11 +39,12 @@
     font-weight: normal;
     font-style: normal;
 }
+
 </style>
 
-<body>
-	<!-- 네비바 자리 -->
-	<div th:replace="layout :: navbar"></div>
+
+<body style="padding-top: 5rem;">
+
 	
    	<div class="container">
 	<!-- Top box -->
@@ -164,94 +65,119 @@
 	</div>
         <main role="main" class="container">
                      
-            <form action="" method="post" name="myForm1" enctype="multipart/form-data">
-             <div class="tm-paging-links1">
-				<nav>
-					<ul>
-						<li class="tm-paging-item1"><a href="#" class="tm-paging-link1 active" onchange="">공동구매</a></li>
-						<li class="tm-paging-item1"><a href="#" class="tm-paging-link1">만나서 거래</a></li>
-					</ul>
-				</nav>
-			</div>
-			
-			<!-- 제목~주소 -->
-            <select class="form-control" name="categoryId" id="categoryId"  style="border-radius:5px; width:100%; padding:5px;">
-                <option value="0">카테고리 선택</option>
-                <option value="1">신선식품</option>
-                <option value="2">가공식품</option>
-                <option value="3">의류/신발</option>
-                <option value="4">뷰티/미용</option>
-                <option value="5">생활/주방</option>
-                <option value="6">스포츠/레저</option>
-                <option value="7">도서</option>
-                <option value="8">기타물품</option>
-            </select>
-   			<div class="form-group form-price"></div>
-	              
-			<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
-			<br/>	
-			
-	        <div class="form-group form-price">
-                <input type="number" class="form-control" name="productsPrice" min="0" step="1000" placeholder="가격을 입력해주세요. (￦)"
-				style="border-radius:5px;width:99%;" value=""  onchange="productsPriceChange();"/>
-	        </div>
-            <div class="form-group form-price">
-                <input type="number" class="form-control" name="recruitment" min="2" max="5" step="1" placeholder="모집인원을 입력해주세요. (명)" 
-                style="border-radius:5px;width:99%;" value="" onchange="recruitmentChange();"/>
-            </div>
-	             
-        	<input type="text" class="form-control" name="myAddress" id="myAddr" th:value="${dto.address}" 
-        		style="border-radius:5px; width:100%; padding:5px;" readonly/>
-        	<!-- 제목~주소 끝 --> 
-        
-        	<!-- 이미지 업로드 -->
-			<div class="container" style="width: 98%;">
+         <form action="/write_ok.action" method="post" name="myForm1" enctype="multipart/form-data">
+              <div class="tm-paging-links1">
+					<nav>
+						<ul>
+							<li class="tm-paging-item1">
+							<a href="#" class="tm-paging-link1 active" onclick="typeClick();">만나서 거래</a>
+							<input type="hidden" name="type" value="만나서거래">
+							</li>
+						</ul>
+					</nav>
+				</div>
 				
-				<div class="image-upload" id="image-upload">
-			        <div class="button">
-			          <span style="font-size: 5em; color: #8993a4;" id="chooseFile" name="chooseFile">
-						  <i class="fas fa-camera"></i>
-					  </span>
-			        </div>
-	
-				    <input type="file" id="chooseFile" name="chooseFilename" accept="image/*" onchange="loadFile(this)">
 				
-			      	<div class="fileContainer">
-			        	<div class="fileInput">
-			              <!-- <p>FILE NAME: </p> -->
-			              <p id="fileName" hidden=""></p>
-			      		</div>
+								<div class="container" style="width: 98%;">
+					<div class="image-upload" id="image-upload">
+					
+
+				        <div class="button">
+				          <span style="font-size: 5em; color: #8993a4;" id="chooseFile">
+							  <i class="fas fa-camera"></i>
+						  </span>
+				         </div>
+
+				        <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)" ><br/>
+				        
+
+				  
+				
+				      <div class="fileContainer">
+				          <div class="fileInput">
+				              <!-- <p>FILE NAME: </p> -->
+				              <p id="fileName"></p>
+				       </div>
 				       <div class="buttonContainer">
 				           <div class="submitButton" id="submitButton">파일확인</div>
+				         <!--   <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+				           <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button> -->
 				       </div>
-			      	</div>
-				</div>
-				    <!-- 파일 미리보기 -->
+				      </div>
+				  </div>
+				    
 				    <div class="image-show" id="image-show"></div>
-			</div>
-			<br/><br/>
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				 <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
+            
+	      		 <div class="form-group form-price"></div>
+                    <select class="form-control" name="categoryId" id="categoryId"  style="border-radius:5px; width:100%; padding:5px;">
+	                   <option value="">카테고리 선택</option>
+	                   <option value="1">신선식품</option>
+	                   <option value="2">가공식품</option>
+	                   <option value="3">의류/신발</option>
+	                   <option value="4">뷰티/미용</option>
+	                   <option value="5">생활/주방</option>
+	                   <option value="6">스포츠/레저</option>
+	                   <option value="7">도서</option>
+	                   <option value="8">기타물품</option>
+	               </select>
+	               
+	              <br/>
+	              
+	               <div class="form-group form-price">
+	                <input type="number" class="form-control" name="productsPrice" min="0" step="1000" placeholder="가격을 입력해주세요. (￦)"
+					style="border-radius:5px;width:99%;" value=""  onchange="productsPriceChange();"/>
+	             </div>
+	             <div class="form-group form-price">
+	                <input type="number" class="form-control" name="recruitment" min="2" step="1" placeholder="모집인원을 입력해주세요. (명)" 
+	                style="border-radius:5px;width:99%;" value="" onchange="recruitmentChange();"/>
+	             </div>
+	             
+	        	<input type="text" class="form-control" name="myAddr" id="myAddr" placeholder="위치를 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
+	             
+			        
+         
 
-			<div class="pt-1">
-            	<textarea id="summernote" name="contents"></textarea>
-            </div> 
+           
+         
+				 <br/><br/>
+
+  <div class="pt-1">
+                    <textarea id="summernote" name="contents"></textarea>
+                </div> 
 	                  
-			<!-- 게시글 작성 -->
-            <script>
-                $('#summernote').summernote({
-                  placeholder: '게시글 내용을 작성해 주세요. (판매금지 물품은 게시가 제한 될 수 있습니다.)<br/><br/> 신뢰할 수 있는 거래를 위해 자세히 적어주세요. <br/><br/> 구매 후 공구하는 경우는 영수증 사진을 필수로 첨부해주세요',
-                  tabsize: 2,
-                  height: 400
-                });
-            </script>      
-            <br/><br/>             
-                                 
-            <div class="pt-1 text-right">
-                <input type="button" class="btn btn btn-success" style="width:10%; padding:5px;" 
-                	onclick="javascript:location.href='list1';" value="작성취소">
-                <input type="button" class="btn btn btn-success" style="width:10%; padding:5px;" 
-                	onclick="sendIt();" value="작성완료">
-                <br/><br/>
-            </div>    
+
+                <script>
+                    $('#summernote').summernote({
+                      placeholder: '게시글 내용을 작성해 주세요. (판매금지 물품은 게시가 제한 될 수 있습니다.)<br/><br/> 신뢰할 수 있는 거래를 위해 자세히 적어주세요. <br/><br/> 구매 후 공구하는 경우는 영수증 사진을 필수로 첨부해주세요',
+                      tabsize: 2,
+                      height: 400
+                    });
+                  </script>      
+                         
+                  
+                  
+                  
+                  <br/><br/>               
+                <div class="pt-1 text-right">
+                    <button class="btn btn btn-success" type="submit" style="width:10%; padding:5px;" onclick="javascript:location.href='list1.action';">작성취소</button>
+                    <button class="btn btn btn-success" type="reset" style="width:10%; padding:5px;" onclick="document.myForm.title.focus();">다시작성</button>
+                    <button class="btn btn btn-success" type="submit" style="width:10%; padding:5px;" onclick="sendIt();">작성완료</button>
+
+
+                    <br/><br/>
+                </div>    
            
            </form>
         </main>   
@@ -259,9 +185,8 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/parallax.min.js"></script>
 <script src="js/writePhoto.js"></script>
-	
 
-	<script>
+<script>
 		$(document).ready(function(){
 			// Handle click on paging links
 			$('.tm-paging-link1').click(function(e){
@@ -276,5 +201,146 @@
 		});
 	</script>
 	
+
+
+
+<script type="text/javascript">
+
+const sendIt = () => { // HTML 5 버전 , 화살표 함수
+		
+	//파일을 선택하는 input 요소 가져오기
+    var fileInput = document.querySelector('input[name="chooseFile"]');
+    
+    //파일이 선택되었는지 여부 확인
+    if (fileInput.files.length === 0) {
+        alert('파일을 선택해주세요.');
+        return; // 파일이 선택되지 않았을 때 form을 제출하지 않고 함수 종료
+    }
+    
+	//선택한 파일의 이름 가져오기
+    var fileName = fileInput.files[0].name;
+
+    //허용된 파일 확장자 목록 정의
+    var allowedExtensions = ['.png', '.jpeg', '.jpg'];
+
+    //선택한 파일의 확장자 추출
+    var fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+
+    //허용된 확장자 목록에 있는지 확인
+    if (allowedExtensions.indexOf(fileExtension) === -1) {
+        alert('png 또는 jpg,jpeg 형식의 파일만 업로드할 수 있습니다.');
+        return; //허용되지 않은 확장자일 때 form을 제출하지 않고 함수 종료
+    }
+	
+
+
+	
+    	f = document.myForm1;
+	
+    	
+			str = f.title.value;
+			str = str.trim();
+			if(!str){
+				alert("\n제목을 입력하세요.");
+				f.title.focus();
+				return;
+			}
+			f.title.value = str;
+		
+		
+
+			str = f.categoryId.value;
+			if(!isValidCategoryId(f.categoryId.value)){
+				alert("\n카테고리를 선택하세요.");
+				f.categoryId.focus();
+				return;
+			}
+			f.categoryId.value = str;
+		
+		
+			str = f.productsPrice.value;
+			if(!isValidProductsPrice(f.productsPrice.value)){
+				alert("\n가격을 입력해주세요.");
+				f.productsPrice.focus();
+				return;
+			}
+			f.productsPrice.value = str;
+		
+		
+		
+			str = f.recruitment.value;
+			if(!isValidRecruitment(f.recruitment.value)){
+				alert("\n모집인원을 선택해주세요.");
+				f.recruitment.focus();
+				return;
+			}
+			f.recruitment.value = str;
+		
+		
+			str = f.chooseFile.value;
+			if(!isValidChooseFile(f.chooseFile.value)){
+				alert("\n사진을 첨부해주세요.");				
+				return;
+			}
+			f.chooseFile.value = str;
+		
+			str = f.myAddr.value;
+			str = str.trim();
+			if(!str){
+				alert("\n위치를 입력하세요.");
+				f.myAddr.focus();
+				return;
+			}
+			f.myAddr.value = str;			
+			
+			str = f.contents.value;
+			str = str.trim();
+			if(!str){
+				alert("\n내용을 입력하세요.");
+				f.contents.focus();
+				return;
+			}
+			f.contents.value = str;
+		
+			
+
+			
+		
+		f.action = "/write_ok.action";
+		f.submit(); 
+		
+	}
+
+</script>
+	
+	
+    <script type="text/javascript">
+    
+    function productsPriceChange(){
+        var productsPrice = document.getElementById('productsPrice').value;
+        
+    }
+    
+    function recruitmentChange(){
+    	var recruitment = document.getElementById('recruitment').value;
+    }    
+
+
+  
+    </script>
+  
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+
     </body>
 </html>

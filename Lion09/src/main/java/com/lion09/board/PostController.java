@@ -24,16 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.lion09.board.PostUtil;
-import com.lion09.member.Member;
 import com.lion09.mypage.MyPageService;
-import com.lion09.SessionConst;
-import com.lion09.SessionInfo;
 import com.lion09.board.Post;
 import com.lion09.board.PostService;
 
@@ -64,14 +60,14 @@ public class PostController {
 	
 	//글쓰기 페이지 불러오기
 	@GetMapping("/write.action")
-	public ModelAndView write(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+	public ModelAndView write() throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/write"); 
 		
-		Member dto = mypageService.selectData(sessionInfo.getUserId());
+		//MyPageDTO dto = mypageService.selectData();
 		
-		mav.addObject("dto",dto);
+		//mav.addObject("dto",dto);
 		
 		return mav;
 	}
@@ -103,6 +99,8 @@ public class PostController {
 	        mav.addObject("errorMessage", "Invalid input for numeric fields.");
 	        return mav;
 	    }
+
+	 
 	    String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
 	    dto.setContents(plainText);
 	    dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
@@ -110,7 +108,7 @@ public class PostController {
 	    try {
 	        if (!cFile.isEmpty()) {
 	            // 파일 업로드를 위한 경로 설정
-	            String uploadDir = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+	            String uploadDir = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 	            
 	            // 업로드한 파일의 원래 파일 이름 가져오기
 	            String originalFilename = cFile.getOriginalFilename();
@@ -381,7 +379,7 @@ public class PostController {
 
 			        dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));
 
-			        dto.setType(request.getParameter("type"));
+			     
 			        String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
 			    	dto.setContents(plainText);
 			    	dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
@@ -431,7 +429,7 @@ public class PostController {
 
 
 			//이미지 사진들 모아두는 폴더
-			String upload_path = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
+			String upload_path = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
 			Post dto = postService.getReadData(postId);
 					
@@ -439,7 +437,7 @@ public class PostController {
 			String beforeFilename = dto.getChooseFile();
 
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//게시글 이미지가 기존의 이미지가 아닐 경우 삭제
 			if(!beforeFilename.equals("lion.png")) {
@@ -519,7 +517,7 @@ public class PostController {
 			
 			
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//기본 사진 이미지가 아닐 경우 삭제		
 			if(beforeFilename.equalsIgnoreCase("lion.png")){
@@ -569,5 +567,12 @@ public class PostController {
 			mav.setViewName("redirect:/list1?" + param);
 			
 			return mav;
+			
+			
+			
 		}
+		
+		
+
+
 }

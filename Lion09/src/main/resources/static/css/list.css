@@ -283,18 +283,19 @@
 
 
 .item{
-	width: 200px;
-	height: 300px;
-	flex-grow: 0;
-  flex-basis: auto;
-	margin: 45px;
+	flex:1;
+	margin: 15px;
+	text-align: center;
+	margin-right: 30px;
 }
  
 .item_row{
 	font-family: 'omyu_pretty';
 	display: flex;
-	flex-direction: row;
-	margin-bottom: 50px;
+	justify-content: flex-start;
+	margin: 15px;
+	flex-wrap: wrap;
+	padding: 55px;
 }
  
 .item_name{
@@ -1350,3 +1351,30 @@ address {
 .panel p {
   padding: 5px 20px 30px;
 }
+
+/* 글쓰기버튼 스타일 */
+.writeButton {
+	box-shadow:inset 0px 1px 0px 0px #fce2c1;
+	background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
+	background-color:#ffc477;
+	border-radius:6px;
+	border:1px solid #eeb44f;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	padding:13px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #cc9f52;
+}
+.writeButton:hover {
+	background:linear-gradient(to bottom, #fb9e25 5%, #ffc477 100%);
+	background-color:#fb9e25;
+}
+.writeButton:active {
+	position:relative;
+	top:1px;
+}
+

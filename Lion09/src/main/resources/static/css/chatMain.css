@@ -1,7 +1,27 @@
+@font-face {
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    
 }
 
 html,body {
@@ -13,10 +33,10 @@ body {
     margin: 0;
     padding: 0;
     font-weight: 400;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'omyu_pretty',"Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1rem;
     line-height: 1.58;
-    color: #333;
+    color: #585449;
     background-color: #f4f4f4;
     height: 100%;
 }
@@ -27,7 +47,7 @@ body:before {
     position: absolute;
     top: 0;
     left: 0;
-    background: #128ff2;
+    background: #eec94f;
     content: "";
     z-index: 0;
 }
@@ -45,7 +65,7 @@ body:before {
 .form-control {
     width: 100%;
     min-height: 38px;
-    font-size: 15px;
+    font-size: 14pt;
     border: 1px solid #c8c8c8;
 }
 
@@ -53,9 +73,30 @@ body:before {
     margin-bottom: 15px;
 }
 
+.btn-group.dropend{
+	
+}
+
+.dropdown-item {
+	font-size: 14pt;
+}
+
+.chat-container .btn-group {
+    position: absolute;
+    bottom: -15px;
+    right: -10px;
+    transform: translate(-50%,-50%);
+}
+
+button#uploadFile {
+	margin-left: 250px;
+    margin-top: -55px;
+}
+
 input {
     padding-left: 10px;
     outline: none;
+    font-size: 13pt;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -69,6 +110,24 @@ h1 {
 
 a {
     color: #128ff2;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #585449;
+    border-color: #585449;
+    font-size: 14pt;
+}
+
+.btn-secondary:hover {
+    background-color: #3d3932;
+    border-color: #3d3932;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+    color: #fff;
+    background-color: #3d3932;
+    border-color: #3d3932;
 }
 
 button {
@@ -93,15 +152,27 @@ button.default {
 }
 
 button.primary {
-    background-color: #128ff2;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
+    background-color: #eec94f;
+    box-shadow: 0 2px 2px 0 #ddb015;
     color: #fff;
 }
 
 button.accent {
-    background-color: #ff4743;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
+    background-color: #eec94f;
+    box-shadow: 0 2px 2px 0 #ddb015;
     color: #fff;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #eec94f;
+    border-color: #eec94f;
+}
+
+.btn-primary:hover {
+	color: #fff;
+    background-color: #ddb015;
+    border-color: #ddb015;
 }
 
 #username-page {
@@ -129,6 +200,7 @@ button.accent {
 }
 
 .username-page-container .username-submit {
+	font-size: 14pt;
     margin-top: 10px;
 }
 
@@ -183,13 +255,14 @@ button.accent {
 
 #chat-page .event-message p {
     color: #777;
-    font-size: 14px;
+    font-size: 14pt;
     word-wrap: break-word;
 }
 
 #chat-page .chat-message {
     padding-left: 68px;
     position: relative;
+    font-size: 15pt;
 }
 
 #chat-page .chat-message i {
@@ -224,6 +297,7 @@ button.accent {
 }
 
 #messageForm .input-group button {
+	font-size: 14pt;
     float: left;
     width: 80px;
     height: 38px;

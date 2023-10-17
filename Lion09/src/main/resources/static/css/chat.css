@@ -1,0 +1,218 @@
+@font-face {
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	font-family: 'omyu_pretty';
+	font-size: 16pt;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 100px;
+}
+
+@media (min-width: 768px){
+	.col-md-6 {
+	    width: 100%;
+	}
+}
+
+table{
+	text-align: center;
+}
+
+h2{
+	margin-top: 0;
+}
+
+a{
+	color: #585449;
+}
+
+a:hover {
+    color: #3d3932;
+}
+
+td span{
+	color: #585449;
+}
+
+.bg-primary {
+    --bs-bg-opacity: 1;
+    background-color: #eec94f!important;
+}
+
+.btn{
+	font-size: 14pt;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #eec94f;
+    border-color: #eec94f;
+}
+
+.btn-info:hover{
+    color: #fff;
+    background-color: #ddb015;
+    border-color: #ddb015;
+}
+
+.btn-check:focus+.btn-primary, .btn-primary:focus {
+    color: #fff;
+    background-color: #ddb015;
+    border-color: #ddb015;
+    box-shadow: 0 0 0 0.25rem #eec94f;
+}
+
+.btn-check:focus+.btn-info, .btn-info:focus {
+    color: #fff;
+    background-color: #ddb015;
+    border-color: #ddb015;
+    box-shadow: 0 0 0 0.25rem #eec94f;
+}
+
+.btn-group-sm>.btn, .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 14pt;
+    border-radius: 0.2rem;
+    background-color: #eec94f;
+    border-color: #eec94f;
+}
+
+.btn-group-sm>.btn, .btn-sm:hover {
+    background-color: #ddb015;
+    border-color: #ddb015;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #eec94f;
+    border-color: #eec94f;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #eec94f;
+    border-color: #eec94f;
+}
+
+.btn-primary:active {
+    color: #fff;
+    background-color: #ddb015;
+    border-color: #ddb015;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #eec94f;
+    border-color: #eec94f;
+}
+
+.btn-secondary {
+	margin-left: 80px;
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.modal-content {
+	margin-top: 100px;
+}
+
+.modal-title{
+	font-size: 16pt;
+}
+.modal-title1{
+	font-size: 20pt;
+}
+
+.modal-body{
+	font-size: 14pt;
+}
+
+.form-control {
+	font-size: 14pt;
+}
+
+.tm-nav {
+  text-align: right;
+  z-index: 9999;
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+
+.tm-nav-ul {
+  width:100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #585449;
+  top: 0;
+}
+
+.tm-nav-li-left {
+  font-family:'omyu_pretty';
+  font-size:1.2rem;
+  list-style: none;
+  display: block;
+  margin-bottom: 0;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  float: left;
+}
+
+.tm-nav-li-right {
+  font-family:'omyu_pretty';
+  font-size:1.2rem;
+  list-style: none;
+  display: block;
+  margin-bottom: 0;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  float: right;
+}
+
+@media (max-width: 991px) {
+  .tm-nav-li {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
+.tm-nav-link {
+  color: white;
+  text-decoration: none;
+  padding-bottom: 10px;
+}
+
+.tm-nav-link.active,
+.tm-nav-link:hover {
+  border-bottom: 1px solid white;
+}

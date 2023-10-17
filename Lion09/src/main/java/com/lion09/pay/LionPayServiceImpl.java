@@ -19,40 +19,40 @@ public class LionPayServiceImpl implements LionPayService {
 	}
 	
 	@Override
-	public void insertRecharge(ListDTO listDto) throws Exception {
-		lionPayMapper.insertRecharge(listDto);
+	public void insertRecharge(String userId) throws Exception {
+		lionPayMapper.insertRecharge(userId);
 		
 	}
 	
 	@Override
-	public void updateRechargeAmt(Integer rechargeAmount, String userId) throws Exception {
-		lionPayMapper.updateRechargeAmt(rechargeAmount, userId);
+	public void updateRechargeAmt(LionPayDTO dto) throws Exception {
+		lionPayMapper.updateRechargeAmt(dto);
 		
 	}
 	
 	@Override
-	public void updateBalData(LionPayDTO dto, String userId) throws Exception {
-		lionPayMapper.updateBalData(dto, userId);
+	public void updateBalData(LionPayDTO dto) throws Exception {
+		lionPayMapper.updateBalData(dto);
 	}
 	
 	@Override
-	public void updateAccData(LionPayDTO dto, String userId) throws Exception {
-		lionPayMapper.updateAccData(dto, userId);
+	public void updateAccData(LionPayDTO dto) throws Exception {
+		lionPayMapper.updateAccData(dto);
 	}
 	
 	@Override
-	public void updatePwdData(String payPwd, String userId) throws Exception {
-		lionPayMapper.updatePwdData(payPwd, userId);
+	public void updatePwdData(LionPayDTO dto) throws Exception {
+		lionPayMapper.updatePwdData(dto);
 	}
 
 	@Override
-	public void resetAccData(LionPayDTO dto, String userId) throws Exception {
-		lionPayMapper.resetAccData(dto, userId);
+	public void resetAccData(LionPayDTO dto) throws Exception {
+		lionPayMapper.resetAccData(dto);
 		
 	}
 	
 	@Override
-	public int getDataCount() throws Exception {
+	public Integer getDataCount() throws Exception {
 		return lionPayMapper.getDataCount();
 	}
 	
@@ -63,24 +63,25 @@ public class LionPayServiceImpl implements LionPayService {
 	}
 	
 	@Override
-	public int getBalance(String userId) throws Exception {
-		return lionPayMapper.getBalance(userId);
-	}
-	
-	@Override
-	public void insertData(ListDTO listDto) throws Exception {
-		lionPayMapper.insertData(listDto);
+	public void insertData(ListDTO listDto,String userId) throws Exception {
+		lionPayMapper.insertData(listDto,userId);
 		
 	}
 	
 	@Override
-	public List<ListDTO> getListData(LionPayDTO dto) throws Exception {
-		return lionPayMapper.getListData(dto);
+	public List<ListDTO> getListData(String userId) throws Exception {
+		return lionPayMapper.getListData(userId);
 	}
 
 	@Override
-	public List<ListDTO> getLists(Integer start, Integer end) throws Exception {
-		return lionPayMapper.getLists(start, end);
+	public List<ListDTO> getLists(Integer start, Integer end, String userId) throws Exception {
+		return lionPayMapper.getLists(start, end, userId);
+	}
+	
+	@Override
+	public Integer maxNum(String userId) throws Exception {
+		
+		return lionPayMapper.maxNum(userId);
 	}
 	
 	@Override

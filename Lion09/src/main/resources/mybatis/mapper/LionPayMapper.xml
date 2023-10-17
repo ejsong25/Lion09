@@ -8,16 +8,16 @@
     INSERT INTO lionPay (userId) VALUES (#{userId})
 </insert>
 
-<insert id="insertRecharge" parameterType="com.lion09.pay.ListDTO">
-    INSERT INTO recharge (userId) VALUES (#{userId})
+<insert id="insertRecharge" parameterType="String">
+    INSERT INTO recharge (num, userId) VALUES (0, #{userId})
 </insert>
 
-<update id="updateRechargeAmt" parameterType="int">
+<update id="updateRechargeAmt" parameterType="com.lion09.pay.LionPayDTO">
     update lionPay set rechargeAmount = #{rechargeAmount} where userId = #{userId}
 </update>
 
 <update id="updateBalData" parameterType="com.lion09.pay.LionPayDTO">
-    update lionPay set balance = balance + #{rechargeAmount} where userId = #{userId}
+    update lionPay set balance = #{balance} where userId = #{userId}
 </update>
 
 <update id="updateAccData" parameterType="com.lion09.pay.LionPayDTO">
@@ -25,7 +25,7 @@
 	where userId=#{userId}
 </update>
 
-<update id="updatePwdData" parameterType="String">
+<update id="updatePwdData" parameterType="com.lion09.pay.LionPayDTO">
 	update lionPay set payPwd=#{payPwd} where userId=#{userId}
 </update>
 
@@ -34,7 +34,7 @@
 </update>
 
 <!-- 전체 데이터 개수 -->
-<select id="getDataCount" parameterType="map" resultType="int">
+<select id="getDataCount" parameterType="map" resultType="Integer">
 	select nvl(count(*),0) from recharge
 </select>
 
@@ -43,27 +43,27 @@
 	select userId,accountNum,accountName,payPwd,balance from lionPay where userId=#{userId}
 </select>
 
-<select id="getBalance" parameterType="String" resultType="int">
-    select balance from lionPay where userId=#{userId}
-</select>
-
-<insert id="insertData" parameterType="com.lion09.pay.ListDTO">
-	insert into recharge (userId,rechargeAmount,accountName,date) values (#{userId},#{rechargeAmount},#{accountName},CURRENT_TIMESTAMP)
+<insert id="insertData">
+	insert into recharge (num, userId,rechargeAmount,accountName,categoryId,date) values (#{dto.num}, #{userId},#{dto.rechargeAmount},#{dto.accountName},#{dto.categoryId},CURRENT_TIMESTAMP)
 </insert>
 
-<select id="getListData" parameterType="com.lion09.pay.ListDTO" resultType="com.lion09.pay.ListDTO">
-	select rechargeAmount,accountName,date from recharge where userId=#{userId} ORDER BY date DESC limit 4
+<select id="getListData" parameterType="String" resultType="com.lion09.pay.ListDTO">
+	select userId,rechargeAmount,accountName,categoryId,date from recharge where userId=#{userId} and num > 0 ORDER BY date DESC limit 4
 </select>
 
 <select id="getLists" parameterType="hashMap" resultType="com.lion09.pay.ListDTO">
 	select * from (
 	select rownum rnum, data.* from(
 	select rechargeAmount,accountName,date
-	from recharge 
+	from recharge where num > 0 and userId = #{userId}
 	order by date desc) data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
+</select>
+
+<select id="maxNum" resultType="Integer">
+	select nvl(max(num),0) from recharge where userId = #{userId}
 </select>
 
 </mapper>

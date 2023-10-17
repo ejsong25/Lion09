@@ -60,10 +60,7 @@ public class Member {
 	//라이온페이
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
 	private LionPayDTO lionPay;
-	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
-	private ListDTO recharge;
-	
+		
 	//문의 내역
 	@OneToMany(mappedBy = "member")
 	private List<QuestionDTO> qaboard = new ArrayList<>();

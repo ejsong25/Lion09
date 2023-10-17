@@ -41,13 +41,13 @@ public class LionPayController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("LionPay");
 		
-		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
-		
-		List<ListDTO> lists = lionPayService.getListData(dto);
+		String userId = sessionInfo.getUserId();
+		LionPayDTO dto = lionPayService.getReadData(userId);
+		List<ListDTO> listDto = lionPayService.getListData(userId);
 		
 		mav.addObject("dto",dto);
 		mav.addObject("bankList",bankList);
-		mav.addObject("lists",lists);
+		mav.addObject("lists",listDto);
 		
 		return mav;
 	}
@@ -57,13 +57,15 @@ public class LionPayController {
 			@Param("start")Integer start,@Param("end")Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,HttpServletRequest request) throws Exception{
 		
+		String userId = sessionInfo.getUserId();
+		
 		int currentPage = 1;
 		int numPerPage = 5;
 		
 		start = (pageNum - 1) * numPerPage + 1;
 		end = pageNum * numPerPage;
 		
-		List<ListDTO> lists = lionPayService.getLists(start, end);
+		List<ListDTO> lists = lionPayService.getLists(start, end, userId);
 		
 		ModelAndView mav = new ModelAndView();
 		int dataCount = lionPayService.getDataCount();
@@ -77,7 +79,7 @@ public class LionPayController {
 		
 		String pageIndexList = PayUtil.pageIndexList(pageNum, totalPage, listUrl);
 		
-		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
+		LionPayDTO dto = lionPayService.getReadData(userId);
 		
 		mav.setViewName("LionPayList");
 		mav.addObject("dto",dto);
@@ -95,16 +97,28 @@ public class LionPayController {
 	    Map<String, Object> response = new HashMap<>();
 
 	    int rechargeAmount = Integer.parseInt(request.getParameter("rechargeAmount"));
+	    String userId = sessionInfo.getUserId();
 	    
-	    LionPayDTO dto1 = lionPayService.getReadData(sessionInfo.getUserId());
+	    //현재 값 - balance, rechargeAmount
+	    LionPayDTO dto1 = lionPayService.getReadData(userId);
 	    
-	    int currentBalance = lionPayService.getBalance(sessionInfo.getUserId());
+	    int currentBalance = dto1.getBalance();
+	    int afterBalance = currentBalance + rechargeAmount;
 
-	    //100만원 이하일때만 충전 가능
-	    if (currentBalance + rechargeAmount <= 1000000) {
-	        lionPayService.updateBalData(dto,sessionInfo.getUserId());//잔액 업데이트
-	        lionPayService.updateRechargeAmt(rechargeAmount,sessionInfo.getUserId());//충전금액 업데이트
-	        lionPayService.insertData(listDto);//기록 저장
+	    //100만원 이하일 때만 충전 가능
+	    if (afterBalance <= 1000000) {
+	    	//입출금 내역
+	    	listDto.setNum(lionPayService.maxNum(userId) + 1);
+	    	listDto.setUserId(userId);
+	    	listDto.setRechargeAmount(rechargeAmount);
+	    	
+	    	dto1.setUserId(userId);
+	    	dto1.setBalance(afterBalance);
+	    	dto1.setRechargeAmount(rechargeAmount);
+	    	
+	        lionPayService.updateBalData(dto1);
+	        lionPayService.updateRechargeAmt(dto1);
+	        lionPayService.insertData(listDto,userId); //기록 저장
 	        
 	        response.put("listDto", listDto);
 	        response.put("canCharge", true); // 충전 가능
@@ -123,7 +137,9 @@ public class LionPayController {
 	public ModelAndView updateAcc_ok(LionPayDTO dto,@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
 			HttpServletRequest request) throws Exception{
 		
-		lionPayService.updateAccData(dto,sessionInfo.getUserId());
+		dto.setUserId(sessionInfo.getUserId());
+		
+		lionPayService.updateAccData(dto);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -138,12 +154,8 @@ public class LionPayController {
 			HttpServletRequest request) throws Exception{
 		
 		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
-		lionPayService.resetAccData(dto,sessionInfo.getUserId());
-		
-		if(dto==null) {
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("redirect:/LionPay");
-		}
+		dto.setUserId(sessionInfo.getUserId());
+		lionPayService.resetAccData(dto);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -156,13 +168,8 @@ public class LionPayController {
 	
 	@GetMapping(value = "/updatePwdData.action")
 	public ModelAndView updatePwdData(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-		
-	    LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
-
-	    if (dto == null) {
-	        ModelAndView mav = new ModelAndView("redirect:/LionPay");
-	        return mav;
-	    }
+		String userId = sessionInfo.getUserId();
+	    LionPayDTO dto = lionPayService.getReadData(userId);
 
 	    ModelAndView mav = new ModelAndView();
 	    mav.setViewName("LionPay");
@@ -173,10 +180,10 @@ public class LionPayController {
 
 	
 	@PostMapping(value = "/updatePwdData_ok.action")
-	public ModelAndView updatePwdData_ok(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, HttpServletRequest request) throws Exception{
+	public ModelAndView updatePwdData_ok(LionPayDTO dto,@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, HttpServletRequest request) throws Exception{
 		
-		String payPwd = request.getParameter("payPwd");
-		lionPayService.updatePwdData(payPwd, sessionInfo.getUserId());
+		dto.setUserId(sessionInfo.getUserId());
+		lionPayService.updatePwdData(dto);
 		
 		ModelAndView mav = new ModelAndView();
 		

@@ -32,11 +32,11 @@ public class MemberService {
 
 		lionPayService.insertLionPay(dto);
 		
-		ListDTO listDto = new ListDTO();
-		listDto.setMember(member); // Member와 연결
-		listDto.setUserId(member.getUserId()); // userId 설정
+//		ListDTO listDto = new ListDTO();
+//		listDto.setMember(member); // Member와 연결
+//		listDto.setUserId(member.getUserId());
 
-		lionPayService.insertRecharge(listDto);
+		lionPayService.insertRecharge(member.getUserId());
 
 		return member.getUserId();
 	}

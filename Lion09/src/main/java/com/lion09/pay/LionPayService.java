@@ -8,29 +8,29 @@ public interface LionPayService {
 	
 	public void insertLionPay(LionPayDTO dto) throws Exception;
 	
-	public void insertRecharge(ListDTO listDto) throws Exception;
+	public void insertRecharge(String userId) throws Exception;
 
-	public void updateRechargeAmt(@Param("rechargeAmount")Integer rechargeAmount, String userId) throws Exception;
+	public void updateRechargeAmt(LionPayDTO dto) throws Exception;
 	
-	public void updateBalData(LionPayDTO dto, String userId) throws Exception;
+	public void updateBalData(LionPayDTO dto) throws Exception;
 	
-	public void updateAccData(LionPayDTO dto, String userId) throws Exception;
+	public void updateAccData(LionPayDTO dto) throws Exception;
 	
-	public void updatePwdData(String payPwd, String userId) throws Exception;
+	public void updatePwdData(LionPayDTO dto) throws Exception;
 	
-	public void resetAccData(LionPayDTO dto, String userId) throws Exception;
+	public void resetAccData(LionPayDTO dto) throws Exception;
 	
 	public LionPayDTO getReadData(String userId) throws Exception;
 	
-	public int getBalance(String userId) throws Exception;
+	public void insertData(ListDTO listDto, String userId) throws Exception;
 	
-	public void insertData(ListDTO listDto) throws Exception;
+	public List<ListDTO> getListData(String userId) throws Exception;
 	
-	public List<ListDTO> getListData(LionPayDTO dto) throws Exception;
+	public List<ListDTO> getLists(@Param("start")Integer start,@Param("end")Integer end, String userId) throws Exception;
 	
-	public List<ListDTO> getLists(@Param("start")Integer start,@Param("end")Integer end) throws Exception;
+	public Integer getDataCount() throws Exception;
 	
-	public int getDataCount() throws Exception;
+	public Integer maxNum(String userId) throws Exception;
 	
 	List<String> getBankList();
 }

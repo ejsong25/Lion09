@@ -1,7 +1,6 @@
 package com.lion09.pay;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,12 +22,11 @@ public class ListDTO {
 	@Column(nullable = true)
 	private String accountName;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
-	private Member member;
+	@Column(nullable = true)
+	private String userId;
 	
 	@Id
-	private String userId;
+	private Integer num;
 	
 	@Column(nullable = true)
 	private Integer rechargeAmount;

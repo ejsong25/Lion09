@@ -92,11 +92,11 @@
 	
 	/* 동네인증 도로명주소 팝업창 */
 	window.onload = function(){
-	    document.getElementById("address").addEventListener("click", function(){ //주소입력칸을 클릭하면
+	    document.getElementById("myAddress").addEventListener("click", function(){ //주소입력칸을 클릭하면
 	        //카카오 지도 발생
 	        new daum.Postcode({
 	            oncomplete: function(data) { //선택시 입력값 세팅
-	                document.getElementById("address").value = data.bname; // 주소 넣기
+	                document.getElementById("myAddress").value = data.bname; // 주소 넣기
 	            }
 	        }).open();
 	    });
@@ -105,8 +105,10 @@
 
 	function searchAddress() {
 
+		f = document.myForm;
+		
 		//입력칸에서 도로명주소 추출
-		var address = document.getElementById("address").value;
+		var address = document.getElementById("myAddress").value;
 
 		var geocoder = new kakao.maps.services.Geocoder();
 
@@ -118,10 +120,13 @@
 				var longitude = result[0].x;
 
 				//위도와 경도를 입력란에 삽입
-				document.getElementById("latitude").value = latitude;
-				document.getElementById("longitude").value = longitude;
+				document.getElementById("myLatitude").value = latitude;
+				document.getElementById("myLongitude").value = longitude;
 
 				alert('동네인증이 완료되었습니다.')
+				
+				f.action="/address_update.action";
+				f.submit();
 
 			} else {
 				alert("주소를 찾을 수 없습니다.");
@@ -202,11 +207,11 @@
 						<div>
 							<h3
 								style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">내 동네</h3>
-							<input type="text" id="address" name="address" th:value="${dto.address?.address}" readonly/>
+							<input type="text" id="myAddress" name="myAddress" th:value="${dto.myAddress}" readonly/>
 							<input type="button" value="동네인증" onclick="searchAddress();">
 							<div>
-								<input type="hidden" name="latitude" id="latitude" th:value="${dto.address?.myLatitude}"/>
-								<input type="hidden" name="longitude" id="longitude" th:value="${dto.address?.myLongitude}"/>
+								<input type="hidden" name="myLatitude" id="myLatitude" th:value="${dto.myLatitude}"/>
+								<input type="hidden" name="myLongitude" id="myLongitude" th:value="${dto.myLongitude}"/>
 							</div> 
 							
 							<h3

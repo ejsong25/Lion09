@@ -5,32 +5,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.lion09.mypage.MyPageMapper">
 
-<select id="selectData" resultType="com.lion09.member.Member">
+<select id="selectData" parameterType="String" resultType="com.lion09.member.Member">
 	select userId,nickName,energy,profileImgName,myAddress,myLatitude,myLongitude,myRange
 	from member where userId=#{userId}
 </select>
 
-<update id="updateData">
-	update member set nickName=#{dto.nickName},myAddress=#{dto.myAddress},myLatitude=#{dto.myLatitude},
-	myLongitude=#{dto.myLongitude} where userId=#{userId}
+<update id="updateData" parameterType="com.lion09.member.Member">
+	update member set nickName=#{nickName} where userId=#{userId}
 </update>
 
-<update id="imgUpdate">
-	update member set profileImgName=#{p_name} where userId=#{userId}
+<update id="updateAddress" parameterType="com.lion09.member.Member">
+	update member set myAddress=#{myAddress},myLatitude=#{myLatitude},
+	myLongitude=#{myLongitude} where userId=#{userId}
+</update>
+
+<update id="imgUpdate" parameterType="com.lion09.member.Member">
+	update member set profileImgName=#{profileImgName} where userId=#{userId}
 </update>
 
 <update id="imgDefault" parameterType="String">
 	update member set profileImgName='lion.png' where userId=#{userId}
 </update>
 
-<select id="findLocationsNearby" resultType="com.lion09.member.Member">
+<select id="findLocationsNearby" parameterType="com.lion09.member.Member" resultType="com.lion09.member.Member">
     <![CDATA[
   	select distinct myAddress
 	from member
 	where
 	6371*2*asin(
 	    sqrt(
-	        power(sin((radians(myLatitude)-radians((select myLatitude from member where user_id=#{userId})))/2),2)+
+	        power(sin((radians(myLatitude)-radians((select myLatitude from member where userId=#{userId})))/2),2)+
 	        cos(radians((select myLatitude from member where userId=#{userId})))*cos(radians(myLatitude))*
 	        power(sin((radians(myLongitude)-radians((select myLongitude from member where userId=#{userId})))/2),2)
 	    )

@@ -45,11 +45,30 @@ public class MyPageController {
 		return mav;
 	}
 	
-	//프로필 업데이트
+	//닉네임 업데이트
 	@PostMapping(value = "/mypage_update.action")
 	public ModelAndView mypage_update(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member dto) throws Exception {
 
-		mypageService.updateData(dto, sessionInfo.getUserId());
+		dto.setUserId(sessionInfo.getUserId());
+		
+		mypageService.updateData(dto);
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/myPage");
+
+		return mav;
+
+	}
+	
+	//주소 업데이트
+	@PostMapping(value = "/address_update.action")
+	public ModelAndView address_update(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member dto) throws Exception {
+
+		dto.setUserId(sessionInfo.getUserId());
+		
+		System.out.println(dto.getMyAddress());
+		mypageService.updateAddress(dto);
 
 		ModelAndView mav = new ModelAndView();
 
@@ -63,13 +82,16 @@ public class MyPageController {
 	@PostMapping(value = "/mypageImg_default.action")
 	public ModelAndView imgDefault(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 		
+		String userId = sessionInfo.getUserId();
+		
 		Member dto = mypageService.selectData(sessionInfo.getUserId());
+		dto.setUserId(userId);
 		
 		//삭제할 파일 이름 추출
 		String beforeFilename = dto.getProfileImgName();
 
 		//삭제할 파일 경로
-		String delete_pate = "C:\\git-lion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
+		String delete_pate = "C:\\git-lion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
 
 		//기본 프로필 이미지가 아닐 경우 삭제
 		if(beforeFilename!="lion.png") {
@@ -95,18 +117,21 @@ public class MyPageController {
 	//프로필 사진 업데이트
 	@PostMapping("/mypageImg_update.action")
 	public ModelAndView imageUpdated(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, 
-			@RequestParam("mypageFilename") MultipartFile mFile) throws Exception {
+			@RequestParam(value = "mypageFilename", required = false)MultipartFile mFile) throws Exception {
 
 		//프로필 사진들 모아두는 폴더
 		String upload_path = "/"; 
 
-		Member dto = mypageService.selectData(sessionInfo.getUserId());
+		String userId = sessionInfo.getUserId();
+		
+		Member dto = mypageService.selectData(userId);
 		
 		//삭제할 파일 이름 추출
+		dto.setUserId(userId);
 		String beforeFilename = dto.getProfileImgName();
-
+		
 		//삭제할 파일 경로
-		String delete_pate = "C:\\git-lion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
+		String delete_pate = "C:\\git-lion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
 
 		//기본 프로필 이미지가 아닐 경우 삭제
 		if(!beforeFilename.equals("lion.png")) {
@@ -125,12 +150,12 @@ public class MyPageController {
 	    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
 		
 	    //새 파일 이름 생성 (현재 시간 대신 "111" 추가)
-	    String newFilename = originalFilename.replace(fileExtension, "_111" + fileExtension);
+	    String newFilename = originalFilename.replace(fileExtension, "_" + userId + fileExtension);
 
 		//MyPageDTO에 파일 이름 설정
-//		dto.setProfileImgName(newFilename);
+		dto.setProfileImgName(newFilename);
 
-		mypageService.imgUpdate(newFilename, sessionInfo.getUserId());	
+		mypageService.imgUpdate(dto);	
 
 		//경로에 업로드
 		mFile.transferTo(new File(upload_path + newFilename));  
@@ -168,17 +193,19 @@ public class MyPageController {
 //	@GetMapping(value = "/myPage2")
 	public ModelAndView myPage2(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
+		String userId = sessionInfo.getUserId();
+	
 		ModelAndView mav = new ModelAndView();
-
 		mav.setViewName("myPage2");
 
-		Member dto = mypageService.selectData(sessionInfo.getUserId());
-		
-		List<Member> findList = mypageService.findLocationsNearby(sessionInfo.getUserId());
-		
+		Member dto = mypageService.selectData(userId);
+		dto.setUserId(userId);
+		System.out.println(dto.getMyRange());//반경확인
+		List<Member> findList = mypageService.findLocationsNearby(dto);
+
 		mav.addObject("dto",dto);
 		mav.addObject("findList",findList);
-
+		
 		return mav;
 	}
 
@@ -186,7 +213,9 @@ public class MyPageController {
 	@PostMapping(value = "/updateRange.action")
 	public ModelAndView updateRange(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member dto) throws Exception {
 
-		mypageService.updateRange(dto.getMyRange(),sessionInfo.getUserId());
+		dto.setUserId(sessionInfo.getUserId());
+		
+		mypageService.updateRange(dto);
 		System.out.println(dto.getMyRange());
 
 		ModelAndView mav = new ModelAndView();

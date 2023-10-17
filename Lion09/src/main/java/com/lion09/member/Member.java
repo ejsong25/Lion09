@@ -38,8 +38,9 @@ public class Member {
 	private int userLike;
 	private int energy;
 	
-	@Embedded
-	private Address address;
+	private String myAddress; //동
+	private String myLatitude; //위도
+	private String myLongitude; //경도
 	
 	//프로필 사진
 	private String profileImgName;

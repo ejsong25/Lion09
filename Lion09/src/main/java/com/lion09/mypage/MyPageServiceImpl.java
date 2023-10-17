@@ -21,13 +21,18 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 
 	@Override
-	public void updateData(@Param("dto")Member dto, @Param("userId")String userId) throws Exception {
-		mypageMapper.updateData(dto, userId);
+	public void updateData(Member dto) throws Exception {
+		mypageMapper.updateData(dto);
 	}
 
 	@Override
-	public void imgUpdate(@Param("p_name") String profileImgName, @Param("userId") String userId) throws Exception {
-		mypageMapper.imgUpdate(profileImgName, userId);
+	public void updateAddress(Member dto) throws Exception {
+		mypageMapper.updateAddress(dto);
+	}
+
+	@Override
+	public void imgUpdate(Member dto) throws Exception {
+		mypageMapper.imgUpdate(dto);
 	}
 
 	@Override
@@ -36,13 +41,13 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 
 	@Override
-	public List<Member> findLocationsNearby(String userId) throws Exception {
-		return mypageMapper.findLocationsNearby(userId);
+	public List<Member> findLocationsNearby(Member dto) throws Exception {
+		return mypageMapper.findLocationsNearby(dto);
 	}
 
 	@Override
-	public void updateRange(int myRange, String userId) throws Exception {
-		mypageMapper.updateRange(myRange, userId);
+	public void updateRange(Member dto) throws Exception {
+		mypageMapper.updateRange(dto);
 	}
 
 	

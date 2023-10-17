@@ -26,12 +26,16 @@ public class Order {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id")
 	private Long id;
+	private LocalDateTime orderDate; //주문 시간
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private Member member;
 	
-	private LocalDateTime orderDate; //주문 시간
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "post_id")
+	private Post post;
+	
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status; //주문 상태[Complete, Canceled, Reserved]	

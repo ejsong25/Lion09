@@ -11,8 +11,8 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 
 <insert id="insertData" parameterType="com.lion09.board.Post">
     insert into post (postId, nickName, title, status, productsPrice, hitCount, contents,
-    created, deadLine, chooseFile, postLikeCount, recruitment, type, categoryId, myAddr, userId, likeDate)
-    values (#{postId}, #{nickName}, #{title}, #{status}, #{productsPrice}, 0, #{contents}, current_timestamp, current_timestamp, #{chooseFile}, 0, #{recruitment}, #{type}, #{categoryId}, #{myAddr}, #{userId}, current_timestamp)
+    created, deadLine, chooseFile, postLikeCount, recruitment, categoryId, myAddr, likeDate)
+    values (#{postId}, #{nickName}, #{title}, #{status}, #{productsPrice}, 0, #{contents}, current_timestamp, current_timestamp, #{chooseFile}, 0, #{recruitment}, #{categoryId}, #{myAddr}, current_timestamp)
 </insert>
 
 <select id="getLists" parameterType="hashMap"
@@ -21,8 +21,8 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	 select rownum rnum, data.* from (
 	 select postId,nickName,title,status,productsPrice,hitCount,
 	 contents,to_char(created,'YYYY-MM-DD'),to_char(deadLine,'YYYY-MM-DD'),
-	 chooseFile,postLikeCount,recruitment,type,
-	 categoryId,myAddr,userId,to_char(likeDate,'YYYY-MM-DD')
+	 chooseFile,postLikeCount,recruitment,
+	 categoryId,myAddr,to_char(likeDate,'YYYY-MM-DD')
 	 from post 
 	 order by postId desc) data)
  <![CDATA[
@@ -41,7 +41,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 <select id="getReadData" parameterType="int"
 	resultType="com.lion09.board.Post">
 	select postId,nickName,title,status,productsPrice,hitCount,contents,
-	created,deadLine,chooseFile,postLikeCount,recruitment,type,categoryId,myAddr,userId,
+	created,deadLine,chooseFile,postLikeCount,recruitment,categoryId,myAddr,
 	likeDate from post where postId=#{postId}	
 </select>
 
@@ -52,7 +52,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 <update id="updateData" parameterType="com.lion09.board.Post">
 	update post set title=#{title},myAddr=#{myAddr},
 	productsPrice=#{productsPrice},contents=#{contents},
-	recruitment=#{recruitment},type=#{type},categoryId=#{categoryId}
+	recruitment=#{recruitment},categoryId=#{categoryId}
 	where postId=#{postId}
 </update>
 

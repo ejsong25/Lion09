@@ -3,10 +3,14 @@ package com.lion09.board;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.naming.directory.SearchResult;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +20,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.lion09.board.PostUtil;
 import com.lion09.member.Member;
@@ -58,10 +64,10 @@ public class PostController {
 	
 	//글쓰기 페이지 불러오기
 	@GetMapping("/write.action")
-	public ModelAndView write(@SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo) throws Exception {
+	public ModelAndView write(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("write"); 
+		mav.setViewName("/write"); 
 		
 		Member dto = mypageService.selectData(sessionInfo.getUserId());
 		
@@ -70,114 +76,174 @@ public class PostController {
 		return mav;
 	}
 	
-	@PostMapping(value = "/write_ok.action")
-	public ModelAndView write_ok(@RequestPart("chooseFilename") MultipartFile cFile,HttpServletRequest request,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) 
-			throws Exception {
-		ModelAndView mav = new ModelAndView();
+	@RequestMapping(value="/write_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView write_ok(@RequestPart("chooseFile") MultipartFile cFile, HttpServletRequest request) {
+	    ModelAndView mav = new ModelAndView();
 
-		Post dto = new Post();
-		//닉네임 설정
-		dto.setTitle(request.getParameter("title"));
-		dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
-		dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
-		dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));	    
+	    Post dto = new Post();
+	    dto.setTitle(request.getParameter("title"));
 
-		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
-		dto.setContents(plainText);
-		
-		dto.setMyAddr(request.getParameter("myAddress"));
+	    try {
+	        // 유효성 검사 및 값 설정
+	        String categoryIdStr = request.getParameter("categoryId");
+	        int categoryId = Integer.parseInt(categoryIdStr);
+	        dto.setCategoryId(categoryId);
 
-		if (!cFile.isEmpty()) {
-			// 파일을 저장할 디렉토리 경로 설정
-			String fileDir = "C:\\git-lion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+	        String productsPriceStr = request.getParameter("productsPrice");
+	        int productsPrice = Integer.parseInt(productsPriceStr);
+	        dto.setProductsPrice(productsPrice);
 
-			// 업로드한 파일의 원래 파일 이름 가져오기
-			String originalFilename = cFile.getOriginalFilename();
+	        String recruitmentStr = request.getParameter("recruitment");
+	        int recruitment = Integer.parseInt(recruitmentStr);
+	        dto.setRecruitment(recruitment);
 
-			// 파일 확장자 추출
-			String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+	    } catch (NumberFormatException e) {
+	        // 숫자로 변환할 수 없는 값이 들어왔을 경우 처리
+	        mav.setViewName("error");
+	        mav.addObject("errorMessage", "Invalid input for numeric fields.");
+	        return mav;
+	    }
+	    String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
+	    dto.setContents(plainText);
+	    dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
+	
+	    try {
+	        if (!cFile.isEmpty()) {
+	            // 파일 업로드를 위한 경로 설정
+	            String uploadDir = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+	            
+	            // 업로드한 파일의 원래 파일 이름 가져오기
+	            String originalFilename = cFile.getOriginalFilename();
 
-			// 서버에 저장할 새 파일명 생성 (파일명 중복 방지를 위해 현재 시간을 이용)
-			String newFilename = System.currentTimeMillis() + fileExtension;
+	    		//확장자 추출
+	    	    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+	    		
+	    	    //새 파일 이름 생성 (현재 시간 대신 "111" 추가)
+	    	    String newFilename = originalFilename.replace(fileExtension, "_111" + fileExtension);
 
-			// 파일을 서버에 저장
-			File newFile = new File(fileDir, newFilename);
-			cFile.transferTo(newFile);
+	            // 파일을 서버에 저장
+	            File newFile = new File(uploadDir, newFilename);
+	            cFile.transferTo(newFile);
 
-			// 데이터베이스에 파일 경로 저장
-			String fullPath = newFilename;
+	            // 데이터베이스에 파일 경로 저장
+	            //String fullPath = uploadDir + newFilename; // 웹 경로로 저장
 
-			dto.setChooseFile(fullPath);
-			
-			// 데이터베이스에 데이터 추가
-			int maxPostId = postService.maxPostId();
-			dto.setPostId(maxPostId + 1);
-			postService.insertData(dto);
+	            dto.setChooseFile(newFilename);
 
-			mav.setViewName("redirect:/list1");
-			
-		}else {//사진입력을 안했을 경우(무조건 postLion.jpg 입력)
-			
-			String newFilename = "postLion.jpg";
-			
-			dto.setChooseFile(newFilename);
-			
-			// 데이터베이스에 데이터 추가
-			int maxPostId = postService.maxPostId();
-			dto.setPostId(maxPostId + 1);
-			postService.insertData(dto);
+	            // 데이터베이스에 데이터 추가
+	            int maxPostId = postService.maxPostId();
+	            dto.setPostId(maxPostId + 1);
+	            postService.insertData(dto);
 
-			mav.setViewName("redirect:/list1");
-			
-		}
+	            mav.setViewName("redirect:/list1");
 
-		return mav;
+	        } else {
+	            // 사진 입력을 안했을 경우(무조건 postLion.jpg 입력)
+	            String newFilename = "lion.png";
+	            dto.setChooseFile(newFilename);
+
+	            // 데이터베이스에 데이터 추가
+	            int maxPostId = postService.maxPostId();
+	            dto.setPostId(maxPostId + 1);
+	            postService.insertData(dto);
+
+	            mav.setViewName("redirect:/list1");
+	        }
+	    } catch (Exception e) {
+	        // 파일 업로드 중 오류 발생할 경우 처리
+	        mav.setViewName("error");
+	        mav.addObject("errorMessage", "Error uploading the file.");
+	    }
+
+	    return mav;
 	}
 	
+	
+			
+	
 	@GetMapping("/list1")
-	public ModelAndView list(
-			@Param("start")Integer start,@Param("end")Integer end,
-			@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
-			Post dto,HttpServletRequest request) throws Exception {	
+	public ModelAndView list(@Param("start") Integer start, @Param("end") Integer end,
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
+			@Param("searchKey") String searchKey,
+			@Param("searchValue") String searchValue, Post dto,
+			HttpServletRequest request) throws Exception {
 		
 		int currentPage = 1;
 		
+		if(pageNum!=null) {
+			
+			currentPage = Integer.parseInt(pageNum);
+						
+		}
+
+		searchKey = request.getParameter("searchKey");
+		searchValue = request.getParameter("searchValue");
+
+		if (searchValue == null || searchValue.isEmpty()) {
+			searchKey = "title";
+			searchValue = "";
+		} else {
+			if (request.getMethod().equalsIgnoreCase("GET")) {
+				searchValue = URLDecoder.decode(searchValue, "UTF-8");
+
+			}
+
+		}
+
 		int numPerPage = 12;
+
+		start = (currentPage - 1) * numPerPage + 1;
+		end = currentPage * numPerPage;
+
+		List<Post> lists = postService.getLists(start, end, searchKey, searchValue);
+
+		String param = "";
+		if (searchValue != null && !searchValue.equals("")) {
+			param = "searchKey=" + searchKey;
+			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+
+		}
+
+		ModelAndView mav = new ModelAndView();
+
+		int dataCount = postService.getDataCount(searchKey, searchValue);
+
+		int totalPage = postUtil.getPageCount(numPerPage, dataCount);
+
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+
+		String listUrl = "/list1";
 		
-	    start = (pageNum - 1) * numPerPage + 1;
-	    end = pageNum * numPerPage;
-	    
-	    List<Post> lists = postService.getLists(start, end);
-	    
-	    ModelAndView mav = new ModelAndView();
+		if(!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+
+		if (!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+
+		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);
+
+		String detailUrl = "/detail?pageNum=" + totalPage;
+
+		if (!param.equals("")) {
+			detailUrl = detailUrl + "&" + param;
+		}
+
+
 		
-	    int dataCount = postService.getDataCount();
-	    
-	    int totalPage = postUtil.getPageCount(numPerPage, dataCount);
 
-	 
-	    if (currentPage > totalPage) {
-	        currentPage = totalPage;
-	    }
-
-
-
-	    String listUrl = "/list1";
-		
-	    String pageIndexList = postUtil.pageIndexList(pageNum, totalPage, listUrl);
-
-	    String detailUrl = "/detail?pageNum=" + totalPage;
-
-	  
 		mav.setViewName("/list1"); 
 		mav.addObject("lists", lists);
 		mav.addObject("dataCount", dataCount);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("detailUrl", detailUrl);
 		
+
 		return mav;
-		
+
 	}
 	
 	
@@ -269,6 +335,239 @@ public class PostController {
 		return mav;
 		
 	}
-
 	
+	
+	//게시글 수정하기
+	
+		@GetMapping("/writeUpdated")
+		public ModelAndView writeUpdated(@RequestParam(name = "postId", defaultValue = "1") int postId,HttpServletRequest request) throws Exception {
+			
+			ModelAndView mav = new ModelAndView();
+		
+			
+			String pageNum = request.getParameter("pageNum");
+			
+			Post dto =  postService.getReadData(postId);
+			
+			String param = "pageNum=" + pageNum;
+			
+			mav.addObject("dto", dto);
+			mav.addObject("params",param);
+			mav.addObject("pageNum", pageNum);
+			mav.setViewName("writeUpdated");
+
+			
+			  return mav;
+		}
+	
+		
+		
+		//게시글 수정하기
+		@Transactional
+		@RequestMapping(value="/writeUpdated_ok", method = {RequestMethod.POST})
+		public ModelAndView writeUpdated_ok(@RequestParam(name = "postId", defaultValue = "1") int postId,HttpServletRequest request) throws Exception {
+			
+			ModelAndView mav = new ModelAndView();
+			
+			Post dto = new Post();
+				
+					dto.setPostId(postId);
+			 	
+			 		dto.setTitle(request.getParameter("title"));
+
+			        dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
+
+			        dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
+
+			        dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));
+
+			        dto.setType(request.getParameter("type"));
+			        String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
+			    	dto.setContents(plainText);
+			    	dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
+
+
+
+			postService.updateData(dto);
+
+			
+			
+		    String pageNum = request.getParameter("pageNum");
+		    String param = "pageNum=" + pageNum;
+			
+
+		    
+
+			mav.setViewName("redirect:/list1?" + param);
+			
+			return mav;
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		//게시글 이미지 업데이트
+		@RequestMapping(value="/chooseFile_update.action", method = {RequestMethod.GET, RequestMethod.POST})
+		public ModelAndView imageUpdated(@RequestParam(name = "postId", defaultValue = "1") int postId,
+				HttpServletRequest request,
+				@RequestPart("chooseFile") MultipartFile cFile) throws Exception {
+			
+			ModelAndView mav = new ModelAndView();
+			
+			//int postId = Integer.parseInt(request.getParameter("postId"));
+			 String postIdString = request.getParameter("postId");
+			 if (postIdString == null || postIdString.isEmpty()) {
+			        mav.addObject("error", "postId가 비어있습니다."); // 오류 메시지 설정
+			        mav.setViewName("error_page"); // 오류 페이지로 리다이렉트 또는 뷰 이름 설정
+			        return mav;
+			    }
+			
+			  try {
+			        postId = Integer.parseInt(postIdString);
+
+
+			//이미지 사진들 모아두는 폴더
+			String upload_path = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
+
+			Post dto = postService.getReadData(postId);
+					
+			//삭제할 파일 이름 추출
+			String beforeFilename = dto.getChooseFile();
+
+			//삭제할 파일 경로
+			String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+
+			//게시글 이미지가 기존의 이미지가 아닐 경우 삭제
+			if(!beforeFilename.equals("lion.png")) {
+				String filePathToDelete = delete_pate + beforeFilename;
+				File fileToDelete = new File(filePathToDelete);
+				
+				if (fileToDelete.exists()) {
+					fileToDelete.delete();  
+				} 
+			}
+		
+
+			//바꿀 파일 이름 추출
+			String originalFilename = cFile.getOriginalFilename();
+
+			//확장자 추출
+		    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+			
+		    //새 파일 이름 생성 (현재 시간 대신 "111" 추가)
+		    String newFilename = originalFilename.replace(fileExtension, "_111" + fileExtension);
+
+			//MyPageDTO에 파일 이름 설정
+			dto.setChooseFile(newFilename);
+
+			postService.imgUpdate(dto);	
+
+			//경로에 업로드
+			cFile.transferTo(new File(upload_path + newFilename));  
+
+		    String pageNum = request.getParameter("pageNum");
+		    String param = "pageNum=" + pageNum +"&" + "postId=" + postId;
+			
+			//리다이렉트할 URL 설정
+	        String redirectUrl = "/writeUpdated?" + param ;
+	        
+	        //RedirectView를 사용하여 리다이렉션 설정
+	        RedirectView redirectView = new RedirectView(redirectUrl, true);
+
+	        //대기 후 리다이렉트
+	        try {
+	            Thread.sleep(3000);
+	        } catch (InterruptedException e) {
+	            Thread.currentThread().interrupt();
+	        }
+
+
+	        mav.setView(redirectView);
+
+			
+			  } catch (NumberFormatException e) {
+			        mav.addObject("error", "postId 파싱 중 오류가 발생했습니다."); // 오류 메시지 설정
+			        mav.setViewName("error_page"); // 오류 페이지로 리다이렉트 또는 뷰 이름 설정
+			    }
+			  return mav;
+		}
+		
+		
+		
+		
+		//이미지파일 삭제
+		//@PostMapping(value = "/chooseFile_delete.action")
+		@RequestMapping(value="/chooseFile_delete.action", method = {RequestMethod.GET, RequestMethod.POST})
+		public ModelAndView imgDefault(HttpServletRequest request) throws Exception {
+			
+			ModelAndView mav = new ModelAndView();
+			
+			int postId = Integer.parseInt(request.getParameter("postId"));
+			
+			String pageNum = request.getParameter("pageNum");
+		    String param = "pageNum=" + pageNum +"&" + "postId=" + postId;
+			
+			
+			Post dto = postService.getReadData(postId);
+			
+			//삭제할 파일 이름 추출
+			String beforeFilename = dto.getChooseFile();
+			
+			
+			//삭제할 파일 경로
+			String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+
+			//기본 사진 이미지가 아닐 경우 삭제		
+			if(beforeFilename.equalsIgnoreCase("lion.png")){
+				mav.setViewName("redirect:/writeUpdated?" + param );
+				return mav;
+			}
+			
+			if(beforeFilename!="lion.png") {
+				String filePathToDelete = delete_pate + beforeFilename;
+				File fileToDelete = new File(filePathToDelete);
+				
+				if (fileToDelete.exists()) {
+					fileToDelete.delete();  
+				} 
+			}
+			//기본 이미지 lion.png로 변경
+			postService.imgDefault(dto);
+
+			mav.setViewName("redirect:/writeUpdated?" + param );
+
+			return mav;
+			
+		}
+		
+		@RequestMapping(value="/deleted_ok.action", method = {RequestMethod.POST,RequestMethod.GET})
+		public ModelAndView deleted_ok(HttpServletRequest request) throws Exception {
+			
+			ModelAndView mav = new ModelAndView();
+
+			Post dto = new Post();
+			
+			int postId = Integer.parseInt(request.getParameter("postId"));
+			String pageNum = request.getParameter("pageNum");
+			
+
+			postService.deleteData(postId);
+			
+			String param = "pageNum=" + pageNum;
+			
+		    // 데이터 업데이트 후 데이터 다시 읽기
+		    Post updatedPost = postService.getReadData(dto.getPostId());
+
+		    // 데이터 확인하기 (로그 또는 콘솔 출력)
+		    System.out.println("Updated Post: " + updatedPost);
+			
+			
+			mav.setViewName("redirect:/list1?" + param);
+			
+			return mav;
+		}
 }

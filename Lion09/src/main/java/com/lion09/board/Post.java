@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import com.lion09.chat.ChatDTO;
 import com.lion09.member.Member;
 import com.lion09.order.Order;
 
@@ -23,8 +25,9 @@ public class Post {
 	@Id
 	private int postId;
 	
+	//작성자
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "nick_name")
+	@JoinColumn(name = "nickName")
 	private Member writer;
 	
 	@Column(length = 40)
@@ -64,14 +67,16 @@ public class Post {
 	private String myAddr;
 
 	private LocalDateTime likeDate;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private Member member; //글 작성자 id
 	
+	//주문 리스트
 	@OneToMany(mappedBy = "post")
 	private List<Order> orders = new ArrayList<>();
 	
+	//관심
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")
+	private PostLike postLike;
+	
 	//채팅
 //	@OneToMany
+//	private List<ChatDTO> chat = new ArrayList<>();
 }

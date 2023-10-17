@@ -6,40 +6,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.lion09.mypage.MyPageMapper">
 
 <select id="selectData" resultType="com.lion09.member.Member">
-	select user_id,nick_name,energy,profile_img_name,address,my_latitude,my_longitude,my_range
-	from member where user_id=#{userId}
+	select userId,nickName,energy,profileImgName,myAddress,myLatitude,myLongitude,myRange
+	from member where userId=#{userId}
 </select>
 
 <update id="updateData">
-	update member set nick_name=#{dto.nickName},my_address=#{dto.myAddress},my_latitude=#{dto.myLatitude},
-	my_longitude=#{dto.myLongitude} where user_id=#{userId}
+	update member set nickName=#{dto.nickName},myAddress=#{dto.myAddress},myLatitude=#{dto.myLatitude},
+	myLongitude=#{dto.myLongitude} where userId=#{userId}
 </update>
 
 <update id="imgUpdate">
-	update member set profile_img_name=#{p_name} where user_id=#{userId}
+	update member set profileImgName=#{p_name} where userId=#{userId}
 </update>
 
 <update id="imgDefault" parameterType="String">
-	update member set profile_img_name='lion.png' where user_id=#{userId}
+	update member set profileImgName='lion.png' where userId=#{userId}
 </update>
 
 <select id="findLocationsNearby" resultType="com.lion09.member.Member">
     <![CDATA[
-  	select distinct my_address
+  	select distinct myAddress
 	from member
 	where
 	6371*2*asin(
 	    sqrt(
-	        power(sin((radians(my_latitude)-radians((select my_latitude from member where user_id=#{userId})))/2),2)+
-	        cos(radians((select my_latitude from member where user_id=#{userId})))*cos(radians(my_latitude))*
-	        power(sin((radians(my_longitude)-radians((select my_longitude from member where user_id=#{userId})))/2),2)
+	        power(sin((radians(myLatitude)-radians((select myLatitude from member where user_id=#{userId})))/2),2)+
+	        cos(radians((select myLatitude from member where userId=#{userId})))*cos(radians(myLatitude))*
+	        power(sin((radians(myLongitude)-radians((select myLongitude from member where userId=#{userId})))/2),2)
 	    )
 	)<=#{myRange}
     ]]>
 </select>
 
 <update id="updateRange" parameterType="com.lion09.member.Member">
-	update member set my_range=#{myRange} where user_id=#{userId}
+	update member set myRange=#{myRange} where userId=#{userId}
 </update>
 
 </mapper>

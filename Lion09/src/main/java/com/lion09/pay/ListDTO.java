@@ -24,7 +24,7 @@ public class ListDTO {
 	private String accountName;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "userId")
 	private Member member;
 	
 	@Id

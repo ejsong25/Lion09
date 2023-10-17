@@ -6,25 +6,25 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.lion09.board.PostMapper">
 
 <select id="maxPostId" resultType="int">
-	select nvl(max(post_id),0) from post
+	select nvl(max(postId),0) from post
 </select>
 
 <insert id="insertData" parameterType="com.lion09.board.Post">
-    insert into post (post_id, title, status, products_price, hit_count, contents,
-    created, deadLine, choose_file, post_like_count, recruitment, type, category_id, my_addr, user_id, like_date)
-    values (#{postId}, #{title}, #{status}, #{productsPrice}, 0, #{contents}, current_timestamp, current_timestamp, #{chooseFile}, 0, #{recruitment}, #{type}, #{categoryId}, #{myAddr}, #{userId}, current_timestamp)
+    insert into post (postId, nickName, title, status, productsPrice, hitCount, contents,
+    created, deadLine, chooseFile, postLikeCount, recruitment, type, categoryId, myAddr, userId, likeDate)
+    values (#{postId}, #{nickName}, #{title}, #{status}, #{productsPrice}, 0, #{contents}, current_timestamp, current_timestamp, #{chooseFile}, 0, #{recruitment}, #{type}, #{categoryId}, #{myAddr}, #{userId}, current_timestamp)
 </insert>
 
 <select id="getLists" parameterType="hashMap"
  resultType="com.lion09.board.Post">
 	 select * from (
 	 select rownum rnum, data.* from (
-	 select post_id,title,status,products_price,hit_count,
-	 contents,to_char(created,'YYYY-MM-DD'),to_char(dead_line,'YYYY-MM-DD'),
-	 choose_file,post_like_count,recruitment,type,
-	 category_id,my_addr,user_id,to_char(like_date,'YYYY-MM-DD')
+	 select postId,nickName,title,status,productsPrice,hitCount,
+	 contents,to_char(created,'YYYY-MM-DD'),to_char(deadLine,'YYYY-MM-DD'),
+	 chooseFile,postLikeCount,recruitment,type,
+	 categoryId,myAddr,userId,to_char(likeDate,'YYYY-MM-DD')
 	 from post 
-	 order by post_id desc) data)
+	 order by postId desc) data)
  <![CDATA[
  	where rnum>=#{start} and rnum<=#{end}
  ]]>
@@ -40,15 +40,37 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 
 <select id="getReadData" parameterType="int"
 	resultType="com.lion09.board.Post">
-	select post_id,title,status,products_price,hit_count,contents,
-	created,dead_line,choose_file,post_like_count,recruitment,type,category_id,my_addr,user_id,
-	like_date from post where post_id=#{postId}	
+	select postId,nickName,title,status,productsPrice,hitCount,contents,
+	created,deadLine,chooseFile,postLikeCount,recruitment,type,categoryId,myAddr,userId,
+	likeDate from post where postId=#{postId}	
 </select>
 
 <update id="updateHitCount" parameterType="int">
-	update post set hit_count=hit_count+1 where post_id=#{postId}
+	update post set hitCount=hitCount+1 where postId=#{postId}
+</update>
+
+<update id="updateData" parameterType="com.lion09.board.Post">
+	update post set title=#{title},myAddr=#{myAddr},
+	productsPrice=#{productsPrice},contents=#{contents},
+	recruitment=#{recruitment},type=#{type},categoryId=#{categoryId}
+	where postId=#{postId}
+</update>
+
+<select id="deleteData" parameterType="int">
+	delete post where postId=#{postId}
+</select>
+
+
+<update id="imgUpdate" parameterType="com.lion09.board.Post">
+	update post set chooseFile=#{chooseFile} where postId=#{postId}
 </update>
 
 
+<update id="imgDefault" parameterType="com.lion09.board.Post">
+	update post set chooseFile='lion.png' where postId=#{postId}
+</update>
 
 </mapper>
+
+
+

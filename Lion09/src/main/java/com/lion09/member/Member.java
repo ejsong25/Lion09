@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.lion09.board.Post;
+import com.lion09.board.PostLike;
 import com.lion09.order.Order;
 import com.lion09.pay.LionPayDTO;
 import com.lion09.pay.ListDTO;
@@ -61,8 +62,11 @@ public class Member {
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "member")
 	private ListDTO recharge;
+	
 	//문의 내역
 	@OneToMany(mappedBy = "member")
 	private List<QuestionDTO> qaboard = new ArrayList<>();
-
+	
+	@OneToMany
+	private List<PostLike> postLike = new ArrayList<>();
 }

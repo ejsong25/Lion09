@@ -12,7 +12,7 @@ import com.lion09.member.Member;
 
 import lombok.Data;
 
-@Table(name = "lion_pay")
+@Table(name = "lionPay")
 @Entity
 @Data
 public class LionPayDTO {
@@ -30,7 +30,7 @@ public class LionPayDTO {
 	private Integer balance;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "userId")
 	private Member member;
 	
 	@Id

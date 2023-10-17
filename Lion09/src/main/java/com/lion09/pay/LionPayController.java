@@ -41,9 +41,8 @@ public class LionPayController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("LionPay");
 		
-		System.out.println(sessionInfo.getUserId());
-		
 		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
+		
 		List<ListDTO> lists = lionPayService.getListData(dto);
 		
 		mav.addObject("dto",dto);

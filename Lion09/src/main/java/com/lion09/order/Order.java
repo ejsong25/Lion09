@@ -24,18 +24,20 @@ import lombok.Data;
 @Table(name = "orders")
 public class Order {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "order_id")
+	@Column(name = "orderId")
 	private Long id;
 	private LocalDateTime orderDate; //주문 시간
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "userId")
 	private Member member;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id")
+	@JoinColumn(name = "postId")
 	private Post post;
 	
+	private int orderPrice;
+	private int count;
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status; //주문 상태[Complete, Canceled, Reserved]	
@@ -44,9 +46,7 @@ public class Order {
 	public static Order createOrder(Member member, Post post) {
 		Order order = new Order();
 		order.setMember(member);
-//		구매 목록 세팅
-//		order.setPost
-		
+		order.setPost(post);
 		order.setStatus(OrderStatus.Reserved);
 		order.setOrderDate(LocalDateTime.now());
 		

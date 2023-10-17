@@ -71,11 +71,13 @@ public class PostController {
 	}
 	
 	@PostMapping(value = "/write_ok.action")
-	public ModelAndView write_ok(@RequestPart("chooseFilename") MultipartFile cFile,HttpServletRequest request) 
+	public ModelAndView write_ok(@RequestPart("chooseFilename") MultipartFile cFile,HttpServletRequest request,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) 
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 		Post dto = new Post();
+		//닉네임 설정
 		dto.setTitle(request.getParameter("title"));
 		dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
 		dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));

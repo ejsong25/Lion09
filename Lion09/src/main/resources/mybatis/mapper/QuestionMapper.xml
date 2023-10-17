@@ -10,15 +10,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select> 
 
 <insert id="insertData">
-	insert into qaboard (num, user_id,subject,content,created,hit_count)
-	values (#{dto.num}, #{userId},#{dto.subject},#{dto.content},sysdate,0)
+	insert into qaboard (num,userId,subject,content,created,hitCount)
+	values (#{dto.num},#{userId},#{dto.subject},#{dto.content},sysdate,0)
 </insert>
 
 <select id="getLists" parameterType="hashMap"
  resultType="com.lion09.qaboard.QuestionDTO">
 	 select * from (
 	 select rownum rnum, data.* from (
-	 select num,user_id,subject,hit_count,
+	 select num,userId,subject,hitCount,
 	 to_char(created,'YYYY-MM-DD') created from qaboard 
 	 order by num desc) data)
  <![CDATA[
@@ -33,12 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <select id="getReadData" parameterType="int"
 	resultType="com.lion09.qaboard.QuestionDTO">
-	select num,user_id,subject,content,created,hit_count
+	select num,userId,subject,content,created,hitCount
 	 from qaboard where num=#{num}	
 </select>
 
 <update id="updateHitCount" parameterType="int">
-	update qaboard set hit_count=hit_count+1 where num=#{num}
+	update qaboard set hitCount=hitCount+1 where num=#{num}
 </update>
 
 <update id="updateData" parameterType="com.lion09.qaboard.QuestionDTO">

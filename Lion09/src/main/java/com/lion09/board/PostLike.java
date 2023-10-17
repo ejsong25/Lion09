@@ -1,5 +1,6 @@
-package com.lion09.qaboard;
+package com.lion09.board;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -7,28 +8,25 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToOne;
 
 import com.lion09.member.Member;
 
 import lombok.Data;
 
-@Data
 @Entity
-@Table(name = "qaboard")
-public class QuestionDTO {
-
+@Data
+public class PostLike implements Serializable{
 	@Id
-	private int num;
-	
-	private String subject;
-	private String content;
-	private LocalDateTime created;
-	private int hitCount;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "postId")
+	private Post post;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "memberId")
 	private Member member;
 	
+	private LocalDateTime likeDate;
 	
+	private int likeState;
 }

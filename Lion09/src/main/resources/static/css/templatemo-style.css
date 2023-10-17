@@ -1156,7 +1156,7 @@ address {
   margin-bottom: 20px;
   margin-top: 10px;
   cursor: pointer;
-  padding: 20px 33px 6px;
+  padding: 20px 33px 20px;
   width: 90%;
   text-align: left;
   outline: none;
@@ -1169,35 +1169,10 @@ address {
   color: #eec94f;
 }
 
-@keyframes changeIcon {
-  0% {
-    content: '\f0d9';
-  }
-  50% {
-    color: white;
-  }
-  100% {
-    content: "\f0d7";
-  }
-}
-
-@keyframes changeIconBack {
-  0% {
-    content: '\f0d7';
-  }
-  50% {
-    color: white;
-  }
-  100% {
-    content: "\f0d9";
-  }
-}
-
 .accordion:after {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   animation: changeIconBack 0.3s linear;
-  content: '\f0d9';
   font-size: 2rem;
   color: #999;
   float: right;
@@ -1206,7 +1181,6 @@ address {
 
 .accordion.active:after {
   animation: changeIcon 0.3s linear;
-  content: '\f0d7';
 }
 
 /* Style the accordion panel. Note: hidden by default */

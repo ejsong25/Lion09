@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lion09.board.PostUtil;
-import com.lion09.mypage.MyPageDTO;
+import com.lion09.member.Member;
 import com.lion09.mypage.MyPageService;
+import com.lion09.SessionConst;
+import com.lion09.SessionInfo;
 import com.lion09.board.Post;
 import com.lion09.board.PostService;
 
@@ -55,12 +58,12 @@ public class PostController {
 	
 	//글쓰기 페이지 불러오기
 	@GetMapping("/write.action")
-	public ModelAndView write() throws Exception {
+	public ModelAndView write(@SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/write"); 
+		mav.setViewName("write"); 
 		
-		MyPageDTO dto = mypageService.selectData();
+		Member dto = mypageService.selectData(sessionInfo.getUserId());
 		
 		mav.addObject("dto",dto);
 		

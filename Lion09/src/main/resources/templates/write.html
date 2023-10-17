@@ -17,11 +17,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>글쓰기</title>  
 
-<link href="css/templatemo-style.css" rel="stylesheet" />
-<link href="css/write.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-
-<link rel="stylesheet" href="writePhoto.css">
+	<link href="css/templatemo-style.css" rel="stylesheet" />
+	<link href="css/write.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+	
+	<link rel="stylesheet" href="writePhoto.css">
 
 <script type="text/javascript">
 
@@ -141,8 +141,10 @@
 }
 </style>
 
-<body style="padding-top: 5rem;">
-
+<body>
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+	
    	<div class="container">
 	<!-- Top box -->
 		<!-- Logo & Site Name -->
@@ -198,7 +200,7 @@
                 style="border-radius:5px;width:99%;" value="" onchange="recruitmentChange();"/>
             </div>
 	             
-        	<input type="text" class="form-control" name="myAddress" id="myAddr" th:value="${dto.myAddress}" 
+        	<input type="text" class="form-control" name="myAddress" id="myAddr" th:value="${dto.address}" 
         		style="border-radius:5px; width:100%; padding:5px;" readonly/>
         	<!-- 제목~주소 끝 --> 
         

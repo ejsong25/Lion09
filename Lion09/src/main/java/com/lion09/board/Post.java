@@ -14,8 +14,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.lion09.chat.ChatDTO;
+import com.lion09.chat.ChatRoomDTO;
 import com.lion09.member.Member;
 import com.lion09.order.Order;
+import com.lion09.pay.LionPayDTO;
 
 import lombok.Data;
 
@@ -77,6 +79,6 @@ public class Post {
 	private PostLike postLike;
 	
 	//채팅
-//	@OneToMany
-//	private List<ChatDTO> chat = new ArrayList<>();
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")
+	private ChatRoomDTO chatRoom;
 }

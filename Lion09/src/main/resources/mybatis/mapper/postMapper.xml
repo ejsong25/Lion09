@@ -10,9 +10,9 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <insert id="insertData" parameterType="com.lion09.board.Post">
-    insert into post (postId,title, productsPrice, hitCount, contents,
+    insert into post (userId,postId,title, productsPrice, hitCount, contents,
     created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile)
-    values (#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile})
+    values (#{userId},#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile})
 </insert>
 
 <select id="getLists" parameterType="hashMap"
@@ -30,12 +30,31 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
  	where rnum>=#{start} and rnum<=#{end}
  ]]>
  </select>
+
+<select id="mygetLists" parameterType="hashMap"
+ resultType="com.lion09.board.Post">
+	 select * from (
+	 select rownum rnum, data.* from (
+	 select postId,nickName,title,status,productsPrice,hitCount,
+	 contents,to_char(created,'YYYY-MM-DD'),to_char(deadLine,'YYYY-MM-DD'),
+	 chooseFile,postLikeCount,recruitment,
+	 categoryId,myAddr,to_char(likeDate,'YYYY-MM-DD')
+	 from post where userId=#{userId}
+	 order by postId desc) data)
+ <![CDATA[
+ 	where rnum>=#{start} and rnum<=#{end}
+ ]]>
+ </select>
  
 
 
 <select id="getDataCount" parameterType="map" resultType="int">
 	select nvl(count(*),0) from post
 	where ${searchKey} like '%' || #{searchValue} || '%'
+</select>
+
+<select id="mygetDataCount" parameterType="map" resultType="int">
+	select nvl(count(*),0) from post where userId=#{userId}
 </select>
 
 

@@ -11,7 +11,11 @@ public interface PostService {
 	
 	public int getDataCount(String searchKey,String searchValue) throws Exception;
 	
+	public int mygetDataCount(String userId) throws Exception;
+	
 	public List<Post> getLists(int start,int end, String searchKey,String searchValue) throws Exception;
+
+	public List<Post> mygetLists(int start,int end,String userId) throws Exception;
 
 	public void updateHitCount(int postId) throws Exception;
 
@@ -34,9 +38,5 @@ public interface PostService {
 	public void deletePostlike(PostLikeDTO likedto) throws Exception;
 	
 	public int findPostlikeState(PostLikeDTO likedto) throws Exception;
-	
-	public void updateLike(int postId) throws Exception;
-
-	public void deleteLike(int postId) throws Exception;
 
 }

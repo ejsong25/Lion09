@@ -34,6 +34,8 @@ public class Post {
 
 	private String nickName;
 	
+	private String userId;
+	
 	@Column(length = 40)
 	private String title;
 	

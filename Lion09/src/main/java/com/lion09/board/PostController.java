@@ -98,6 +98,8 @@ public class PostController {
 		String nickName = Mdto.getNickName();
 		dto.setNickName(nickName);
 		dto.setMyAddr(Mdto.getMyAddress());
+		dto.setUserId(sessionInfo.getUserId());
+	
 		
 		int maxPostId = postService.maxPostId();
 		dto.setPostId(maxPostId + 1);
@@ -109,7 +111,7 @@ public class PostController {
 		
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
-			String uploadDir = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String uploadDir = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			// 업로드한 파일의 원래 파일 이름 가져오기
 			String originalFilename = cFile.getOriginalFilename();
@@ -249,19 +251,23 @@ public class PostController {
 	
 	
 	@GetMapping("/detail")
-	public ModelAndView detail(HttpServletRequest request,PostLikeDTO likedto,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+	public ModelAndView detail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 		
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		String pageNum = request.getParameter("pageNum");
 		
+		
 		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+		
 		
 		String userId = Mdto.getUserId();
 
-		//좋아요
+
+		PostLikeDTO likedto = new PostLikeDTO();
+		
 		likedto.setUserId(userId);
 		likedto.setPostId(postId);
+		
 		
 		int likeState = postService.findPostlikeState(likedto);
 		likedto.setLikeState(likeState);
@@ -286,21 +292,21 @@ public class PostController {
 			
 			return mav;
 		}
-		
+
 		
 		String param = "pageNum=" + pageNum;
+	
 		
 		ModelAndView mav = new ModelAndView();
 		
-		System.out.println(likedto + "후");
+		//좋아요 부분
 
-		
 		mav.addObject("likedto",likedto);
 		
 		mav.addObject("dto",dto);
 		mav.addObject("params",param);
 		mav.addObject("pageNum",pageNum);
-		mav.addObject("likedto",likedto);//좋아요
+
 		
 		mav.setViewName("/detail");
 		
@@ -309,22 +315,14 @@ public class PostController {
 	}
 	
 	
+	
+	
+	
 	//좋아요 관심목록에 추가
 	@PostMapping(value = "/insertLike.action")
-	public ModelAndView insertLike(PostLikeDTO likedto,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto) throws Exception {
-		
-		int postId = dto.getPostId();
-		
-		//좋아요
-		likedto.setUserId(sessionInfo.getUserId());
-		likedto.setPostId(postId);
-		
-		int likeState = postService.findPostlikeState(likedto);
-		likedto.setLikeState(likeState);
+	public ModelAndView insertLike(PostLikeDTO likedto) throws Exception {
 		
 		postService.insertPostlike(likedto);
-		postService.updateLike(postId);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -336,16 +334,9 @@ public class PostController {
 	
 	//관심목록에서 삭제
 	@PostMapping(value = "/deleteLike.action")
-	public ModelAndView delteLike(PostLikeDTO likedto,Post dto,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-		
-		int postId = dto.getPostId();
-		
-		likedto.setUserId(sessionInfo.getUserId());
-		likedto.setPostId(dto.getPostId());
+	public ModelAndView delteLike(PostLikeDTO likedto) throws Exception {
 		
 		postService.deletePostlike(likedto);
-		postService.deleteLike(postId);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -430,7 +421,7 @@ public class PostController {
 
 		    
 
-			mav.setViewName("redirect:/list1?" + param);
+			mav.setViewName("redirect:/myList?" + param);
 			
 			return mav;
 			
@@ -463,7 +454,7 @@ public class PostController {
 
 
 			//이미지 사진들 모아두는 폴더
-			String upload_path = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
+			String upload_path = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
 			Post dto = postService.getReadData(postId);
 					
@@ -471,7 +462,7 @@ public class PostController {
 			String beforeFilename = dto.getChooseFile();
 
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//게시글 이미지가 기존의 이미지가 아닐 경우 삭제
 			if(!beforeFilename.equals("lion.png")) {
@@ -551,7 +542,7 @@ public class PostController {
 			
 			
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//기본 사진 이미지가 아닐 경우 삭제		
 			if(beforeFilename.equalsIgnoreCase("lion.png")){
@@ -594,17 +585,180 @@ public class PostController {
 		    // 데이터 업데이트 후 데이터 다시 읽기
 		    Post updatedPost = postService.getReadData(dto.getPostId());
 
-		    // 데이터 확인하기 (로그 또는 콘솔 출력)
-		    System.out.println("Updated Post: " + updatedPost);
-			
-			
+
 			mav.setViewName("redirect:/list1?" + param);
 			
 			return mav;
-			
-			
+
 			
 		}
+		
+		
+		
+		
+		
+		@GetMapping("/myList")
+		public ModelAndView myList(@Param("start") Integer start, @Param("end") Integer end,
+				@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
+				HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+			
+			
+			
+
+//			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+//			String userId = sessionInfo.getUserId();
+			
+			Post dto = new Post();
+			
+			String userId = sessionInfo.getUserId();
+			//dto.setUserId(userId);
+			
+			System.out.println(userId);
+		
+			int currentPage = 1;
+			
+			if(pageNum!=null) {
+				
+				currentPage = Integer.parseInt(pageNum);
+							
+			}
+
+
+			int numPerPage = 12;
+
+			start = (currentPage - 1) * numPerPage + 1;
+			end = currentPage * numPerPage;
+
+			List<Post> lists = postService.mygetLists(start, end,userId);
+
+			String param = "";
+			
+
+			ModelAndView mav = new ModelAndView();
+
+			int dataCount = postService.mygetDataCount(userId);
+
+			int totalPage = postUtil.getPageCount(numPerPage, dataCount);
+
+			if (currentPage > totalPage) {
+				currentPage = totalPage;
+			}
+
+			String listUrl = "/myList";
+			
+			if(!param.equals("")) {
+				listUrl = listUrl + "?" + param;
+			}
+
+			if (!param.equals("")) {
+				listUrl = listUrl + "?" + param;
+			}
+
+			String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);
+
+			String mydetailUrl = "/mydetail?pageNum=" + totalPage;
+
+			if (!param.equals("")) {
+				mydetailUrl = mydetailUrl + "&" + param;
+			}
+
+
+			
+
+			mav.setViewName("/myList"); 
+			mav.addObject("lists", lists);
+			mav.addObject("dataCount", dataCount);
+			mav.addObject("pageIndexList", pageIndexList);
+			mav.addObject("mydetailUrl", mydetailUrl);
+			
+
+			return mav;
+
+		}
+		
+		
+		
+		
+		@GetMapping("/mydetail")
+		public ModelAndView mydetail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+			
+			int postId = Integer.parseInt(request.getParameter("postId"));
+			String pageNum = request.getParameter("pageNum");
+			
+			
+			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+			
+			
+			String userId = Mdto.getUserId();
+
+
+			PostLikeDTO likedto = new PostLikeDTO();
+			
+			likedto.setUserId(userId);
+			likedto.setPostId(postId);
+			
+			
+			int likeState = postService.findPostlikeState(likedto);
+			likedto.setLikeState(likeState);
+
+			
+			int currentPage = 1;
+			
+			if(pageNum!=null) {
+				
+				currentPage = Integer.parseInt(pageNum);
+							
+			}
+
+			postService.updateHitCount(postId);
+			
+			Post dto = postService.getReadData(postId);
+			
+			if(dto==null) {
+				
+				ModelAndView mav = new ModelAndView();
+				mav.setViewName("redirect:/mydetail?pageNum=" + pageNum);
+				
+				return mav;
+			}
+
+			String param = "pageNum=" + pageNum;
+		
+			
+			ModelAndView mav = new ModelAndView();
+			
+			//좋아요 부분
+			mav.addObject("likedto",likedto);
+
+			mav.addObject("dto",dto);
+			mav.addObject("params",param);
+			mav.addObject("pageNum",pageNum);
+
+			
+			mav.setViewName("/mydetail");
+			
+			return mav;
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 

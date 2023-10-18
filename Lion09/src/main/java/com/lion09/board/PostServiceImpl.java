@@ -96,14 +96,17 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public void updateLike(int postId) throws Exception {
-		postlikeMapper.updateLike(postId);
+	public List<Post> mygetLists(int start, int end,String userId) throws Exception {
+		return postMapper.mygetLists(start,end,userId);
 	}
 
 	@Override
-	public void deleteLike(int postId) throws Exception {
-		postlikeMapper.deleteLike(postId);
+	public int mygetDataCount(String userId) throws Exception {
+		return postMapper.mygetDataCount(userId);
 	}
+
+
+
 
 
 	

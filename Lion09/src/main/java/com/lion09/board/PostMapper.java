@@ -16,10 +16,14 @@ public interface PostMapper {
 	public int getDataCount(@Param("searchKey") String searchKey, @Param("searchValue") String searchValue) throws Exception;
 	
 	public List<Post> getLists(@Param("start") Integer start,@Param("end") Integer end, @Param("searchKey") String searchKey, @Param("searchValue") String searchValue) throws Exception;
+
+	public List<Post> mygetLists(@Param("start") Integer start,@Param("end") Integer end, @Param("userId") String userId) throws Exception;
 	
 	public void updateHitCount(int postId) throws Exception;
 
 	public Post getReadData(int postId) throws Exception;
+	
+	public int mygetDataCount(String userId) throws Exception;
 	
 	public void updateData(Post dto) throws Exception;
 	

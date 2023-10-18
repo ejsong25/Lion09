@@ -84,9 +84,8 @@ public class PostController {
 	//@PostMapping(value="/write_ok.action")
 	@RequestMapping(value="/write_ok.action", method = {RequestMethod.POST})
 	public ModelAndView write_ok(@RequestPart("chooseFileName") MultipartFile cFile,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto) throws Exception {
-	  
-		System.out.println( "전");
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto,HttpServletRequest request) throws Exception {
+	 
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -97,6 +96,11 @@ public class PostController {
 		int maxPostId = postService.maxPostId();
 		dto.setPostId(maxPostId + 1);
 
+		 String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
+		    dto.setContents(plainText);
+		
+		
+		
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
 			String uploadDir = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
@@ -128,8 +132,6 @@ public class PostController {
 			dto.setChooseFile(newFilename);
 
 			// 데이터베이스에 데이터 추가
-
-			System.out.println(dto);
 
 			postService.insertData(dto);
 
@@ -241,10 +243,27 @@ public class PostController {
 	
 	
 	@GetMapping("/detail")
-	public ModelAndView detail(HttpServletRequest request) throws Exception {
+	public ModelAndView detail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 		
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		String pageNum = request.getParameter("pageNum");
+		
+		
+		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+		
+		
+		String userId = Mdto.getUserId();
+
+
+		PostLikeDTO likedto = new PostLikeDTO();
+		
+		likedto.setUserId(userId);
+		likedto.setPostId(postId);
+		
+		
+		int likeState = postService.findPostlikeState(likedto);
+		likedto.setLikeState(likeState);
+
 		
 		int currentPage = 1;
 		
@@ -253,9 +272,7 @@ public class PostController {
 			currentPage = Integer.parseInt(pageNum);
 						
 		}
-	
-		
-		
+
 		postService.updateHitCount(postId);
 		
 		Post dto = postService.getReadData(postId);
@@ -276,14 +293,10 @@ public class PostController {
 		
 		ModelAndView mav = new ModelAndView();
 		
-
-		
 		//좋아요 부분
-		int likeState = postService.findPostlikeState();
-		
-		PostLikeDTO likedto = new PostLikeDTO();
-		
-		likedto.setLikeState(likeState);
+
+		System.out.println(likedto + "후");
+
 		
 		mav.addObject("likedto",likedto);
 		
@@ -293,12 +306,17 @@ public class PostController {
 		mav.addObject("dto",dto);
 		mav.addObject("params",param);
 		mav.addObject("pageNum",pageNum);
+
 		
 		mav.setViewName("/detail");
 		
 		return mav;
 		
 	}
+	
+	
+	
+	
 	
 	//좋아요 관심목록에 추가
 	@PostMapping(value = "/insertLike.action")

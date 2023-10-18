@@ -33,6 +33,6 @@ public interface PostService {
 	
 	public void deletePostlike(PostLikeDTO likedto) throws Exception;
 	
-	public int findPostlikeState() throws Exception;
+	public int findPostlikeState(PostLikeDTO likedto) throws Exception;
 
 }

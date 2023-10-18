@@ -64,10 +64,7 @@ public class PostServiceImpl implements PostService{
 		postlikeMapper.deletePostlike(likedto);
 	}
 
-	@Override
-	public int findPostlikeState() throws Exception {
-		return postlikeMapper.findPostlikeState();
-	}
+
 
 	@Override
 	public void updateData(Post dto) throws Exception {
@@ -91,6 +88,11 @@ public class PostServiceImpl implements PostService{
 	public void imgDefault(Post dto) throws Exception {
 		postMapper.imgDefault(dto);
 		
+	}
+
+	@Override
+	public int findPostlikeState(PostLikeDTO likedto) throws Exception {
+		return postlikeMapper.findPostlikeState(likedto);
 	}
 
 

@@ -23,7 +23,7 @@ public class PostLike implements Serializable{
 	private Post post;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "memberId")
+	@JoinColumn(name = "userId")
 	private Member member;
 	
 	private LocalDateTime likeDate;

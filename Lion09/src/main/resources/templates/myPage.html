@@ -123,7 +123,7 @@
 				document.getElementById("myLatitude").value = latitude;
 				document.getElementById("myLongitude").value = longitude;
 
-				alert('동네인증이 완료되었습니다.')
+				alert('동네설정이 완료되었습니다.')
 				
 				f.action="/address_update.action";
 				f.submit();
@@ -198,7 +198,8 @@
 					 enctype="multipart/form-data">
 					
 					<div align="center">
-						<br/><input type="file" name="mypageFilename"><br/>
+						<br/><input type="file" name="mypageFilename" onchange="loadFile(this)"><br/>
+						<script src="js/writePhoto.js"></script>
 						<input type="button" class="profileImgBtn" value="사진변경" onclick="profileImg_update();">
 						<input type="button" class="profileImgBtn" value="사진삭제" onclick="profileImg_defalut();">
 					
@@ -209,7 +210,7 @@
 							<h3
 								style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">내 동네</h3>
 							<input type="text" id="myAddress" name="myAddress" th:value="${dto.myAddress}" readonly/>
-							<input type="button" value="동네인증" onclick="searchAddress();">
+							<input type="button" value="동네설정" onclick="searchAddress();">
 							<div>
 								<input type="hidden" name="myLatitude" id="myLatitude" th:value="${dto.myLatitude}"/>
 								<input type="hidden" name="myLongitude" id="myLongitude" th:value="${dto.myLongitude}"/>
@@ -274,7 +275,6 @@
 			</div>
 		</footer>
 	</div>
-
 
 	<script>
 			var container = document.getElementById('map');

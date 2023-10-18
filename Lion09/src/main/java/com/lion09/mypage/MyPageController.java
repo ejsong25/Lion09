@@ -208,7 +208,6 @@ public class MyPageController {
 
 		Member dto = mypageService.selectData(userId);
 		dto.setUserId(userId);
-		System.out.println(dto.getMyRange());//반경확인
 		List<Member> findList = mypageService.findLocationsNearby(dto);
 
 		mav.addObject("dto",dto);
@@ -252,9 +251,6 @@ public class MyPageController {
 			throws Exception {
 		
 		dto.setUserId(sessionInfo.getUserId());
-		
-		System.out.println(
-				dto.getUserPwd());
 		
 		mypageService.updatePwd(dto);
 		

@@ -21,11 +21,6 @@ public class LionController {
 		return "faqs";
 	}
 	
-	@GetMapping("/wishList")
-	public String wishList() {
-		return "wishList";
-	}
-	
 	@GetMapping("/account")
 	public String account() {
 		return "account";

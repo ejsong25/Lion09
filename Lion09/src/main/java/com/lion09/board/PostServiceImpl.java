@@ -94,6 +94,16 @@ public class PostServiceImpl implements PostService{
 	public int findPostlikeState(PostLikeDTO likedto) throws Exception {
 		return postlikeMapper.findPostlikeState(likedto);
 	}
+	
+	@Override
+	public void updateLike(int postId) throws Exception {
+		postlikeMapper.updateLike(postId);
+	}
+
+	@Override
+	public void deleteLike(int postId) throws Exception {
+		postlikeMapper.deleteLike(postId);
+	}
 
 	@Override
 	public List<Post> mygetLists(int start, int end,String userId) throws Exception {
@@ -105,7 +115,10 @@ public class PostServiceImpl implements PostService{
 		return postMapper.mygetDataCount(userId);
 	}
 
-
+	@Override
+	public List<Post> likeList(String userId) throws Exception {
+		return postlikeMapper.likeList(userId);
+	}
 
 
 

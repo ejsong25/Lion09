@@ -319,32 +319,71 @@ public class PostController {
 	
 	
 	//좋아요 관심목록에 추가
-	@PostMapping(value = "/insertLike.action")
-	public ModelAndView insertLike(PostLikeDTO likedto) throws Exception {
+		@PostMapping(value = "/insertLike.action")
+		public ModelAndView insertLike(PostLikeDTO likedto,
+				@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto) throws Exception {
+			
+			int postId = dto.getPostId();
+			
+			//좋아요
+			likedto.setUserId(sessionInfo.getUserId());
+			likedto.setPostId(postId);
+			
+			int likeState = postService.findPostlikeState(likedto);
+			likedto.setLikeState(likeState);
+			
+			postService.insertPostlike(likedto);
+			postService.updateLike(postId);
+			
+			ModelAndView mav = new ModelAndView();
+			
+			mav.setViewName("redirect:/list1");
+			
+			return mav;
+			
+		}
 		
-		postService.insertPostlike(likedto);
+		//관심목록에서 삭제
+		@PostMapping(value = "/deleteLike.action")
+		public ModelAndView delteLike(PostLikeDTO likedto,Post dto,
+				@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+			
+			int postId = dto.getPostId();
+			
+			likedto.setUserId(sessionInfo.getUserId());
+			likedto.setPostId(dto.getPostId());
+			
+			postService.deletePostlike(likedto);
+			postService.deleteLike(postId);
+			
+			ModelAndView mav = new ModelAndView();
+			
+			mav.setViewName("redirect:/list1");
+			
+			return mav;
+			
+		}
 		
-		ModelAndView mav = new ModelAndView();
+		//관심목록 불러오기
+		@GetMapping(value = "/wishList")
+		public ModelAndView likeList(
+				@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 		
-		mav.setViewName("redirect:/list1");
-		
-		return mav;
-		
-	}
-	
-	//관심목록에서 삭제
-	@PostMapping(value = "/deleteLike.action")
-	public ModelAndView delteLike(PostLikeDTO likedto) throws Exception {
-		
-		postService.deletePostlike(likedto);
-		
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("redirect:/list1");
-		
-		return mav;
-		
-	}
+			String userId = sessionInfo.getUserId();
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("/wishList");
+			
+			List<Post> likeList = postService.likeList(userId);
+			
+			System.out.println(likeList);
+			
+			mav.addObject("likeList", likeList);
+			
+			
+			return mav;
+			
+		}
 	
 	
 	//게시글 수정하기

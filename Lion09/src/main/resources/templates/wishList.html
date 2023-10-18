@@ -1,54 +1,53 @@
+
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-<title>관심 상품</title>
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link href="css/templatemo-style.css" rel="stylesheet" />
-<link href="css/all.min.css" rel="stylesheet" />
-<link href="css/wishList.css" rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>공동구매</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="css/all.min.css" rel="stylesheet" />
+	<link href="css/list.css" rel="stylesheet" th:href="@{/css/list.css}"/>
+    <link href="css/templatemo-style.css" rel="stylesheet" />
+    <link href="css/qna.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 
 </head>
 <style>
 @font-face {
-	font-family: 'ONE-Mobile-POP';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-	font-family: 'omyu_pretty';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
-		format('woff2');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 </style>
 
 
 
 
-<body>
+<body> 
 
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
 
 	<div class="container">
-		<!-- Top box -->
+	<!-- Top box -->
 		<!-- Logo & Site Name -->
-		<div class="placeholder">
+		<div class="placeholder">	
 			<div class="parallax-window" data-parallax="scroll">
 				<img src="img/bg.jpeg" style="width: 100%;">
 				<div class="tm-header">
@@ -65,145 +64,146 @@
 		</div>
 
 
-		<main>
+
+<div class="tm-paging-links" align="center">
+
+</div>
+
+    <div id="slider-wrap">
+    <ul id="slider">
+        <li>
+            <div>
+                <h3>D-1</h3>
+                <span>마감임박 #1</span>
+            </div>
+            <img src="https://i.ytimg.com/vi/0BdlwVBmmhM/maxresdefault.jpg">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-2</h3>
+                <span>마감임박 #2</span>
+            </div>
+            <img src="https://cdn.wadiz.kr/ft/images/green001/2020/0813/20200813112227666_64.gif">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-3</h3>
+                <span>마감임박 #3</span>
+            </div>
+            <img src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1135026_16045410254419205.jpg">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-4</h3>
+                <span>마감임박 #4</span>
+            </div>
+            <img src="https://t1.daumcdn.net/cfile/tistory/2207573D58CFDE2704">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-5</h3>
+                <span>마감임박 #5</span>
+            </div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-yVNBtJ7wE1ZptgUx5fmNIBNmk2K8IoDFA70ztTGNQBq3G90qpL2YEr4DRtx-HpJOKgs&usqp=CAU">
+        </li>
+    </ul>
+
+    <div class="slider-btns" id="next"><span>▶</span></div>
+    <div class="slider-btns" id="previous"><span>◀</span></div>
+
+    <div id="slider-pagination-wrap">
+        <ul>
+        </ul>
+    </div>
+</div>
 
 			<div class="tm-container-inner tm-persons">
-				<div>
-					<h1 class="top_title">관심 목록</h1>
-
-					<div class="item_container">
-						<div class="item_row">
-							<div class="item">
-								<img
-									src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/2e3462bb439e276d12b809c12f515a5ee4ed128aa4799ca88879a79de0df7c79.webp?q=82&s=300x300&t=crop"
-									style="border-radius: 12px; width: 200px">
-								<h2 class="item_name">위닉스제습기</h2>
-								<h2 class="item_cost">50,000원</h2>
-								<h1 class="item_place">서울 성동구 행당동</h1>
-								<div class="like_chating">
-									<span><i class="bi-heart"
-										style="font-size: 1rem; color: red; cursor: pointer;"></i></span> <span
-										style="color: red; font-size: 15px;">&nbsp;관심</span> <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-									<span class="chat">채팅 48</span>
-								</div>
-							</div>
-						</div>
-						<div class="item_row">
-							<div class="item">
-								<img
-									src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/2e3462bb439e276d12b809c12f515a5ee4ed128aa4799ca88879a79de0df7c79.webp?q=82&s=300x300&t=crop"
-									style="border-radius: 12px; width: 200px">
-								<h2 class="item_name">위닉스제습기</h2>
-								<h2 class="item_cost">50,000원</h2>
-								<h1 class="item_place">서울 성동구 행당동</h1>
-								<div class="like_chating">
-									<span><i class="bi-heart"
-										style="font-size: 1rem; color: red; cursor: pointer;"></i></span> <span
-										style="color: red; font-size: 15px;">&nbsp;관심</span> <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-									<span class="chat">채팅 48</span>
-								</div>
-							</div>
-						</div>
-						
-						<div class="item_row">
-							<div class="item">
-								<img
-									src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/2e3462bb439e276d12b809c12f515a5ee4ed128aa4799ca88879a79de0df7c79.webp?q=82&s=300x300&t=crop"
-									style="border-radius: 12px; width: 200px">
-								<h2 class="item_name">위닉스제습기</h2>
-								<h2 class="item_cost">50,000원</h2>
-								<h1 class="item_place">서울 성동구 행당동</h1>
-								<div class="like_chating">
-									<span><i class="bi-heart"
-										style="font-size: 1rem; color: red; cursor: pointer;"></i></span> <span
-										style="color: red; font-size: 15px;">&nbsp;관심</span> <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-									<span class="chat">채팅 48</span>
-								</div>
-							</div>
-						</div>
-						<div class="item_row">
-							<div class="item">
-								<img
-									src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/2e3462bb439e276d12b809c12f515a5ee4ed128aa4799ca88879a79de0df7c79.webp?q=82&s=300x300&t=crop"
-									style="border-radius: 12px; width: 200px">
-								<h2 class="item_name">위닉스제습기</h2>
-								<h2 class="item_cost">50,000원</h2>
-								<h1 class="item_place">서울 성동구 행당동</h1>
-								<div class="like_chating">
-									<span><i class="bi-heart"
-										style="font-size: 1rem; color: red; cursor: pointer;"></i></span> <span
-										style="color: red; font-size: 15px;">&nbsp;관심</span> <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-									<span class="chat">채팅 48</span>
-								</div>
-							</div>
-						</div>
-						<div class="item_row">
-							<div class="item">
-								<img
-									src="https://dnvefa72aowie.cloudfront.net/origin/article/202303/2e3462bb439e276d12b809c12f515a5ee4ed128aa4799ca88879a79de0df7c79.webp?q=82&s=300x300&t=crop"
-									style="border-radius: 12px; width: 200px">
-								<h2 class="item_name">위닉스제습기</h2>
-								<h2 class="item_cost">50,000원</h2>
-								<h1 class="item_place">서울 성동구 행당동</h1>
-								<div class="like_chating">
-									<span><i class="bi-heart"
-										style="font-size: 1rem; color: red; cursor: pointer;"></i></span> <span
-										style="color: red; font-size: 15px;">&nbsp;관심</span> <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-									<span class="chat">채팅 48</span>
-								</div>
-							</div>
-						</div>
-					</div>
+        <div>
+            
+            <div class="content_4_wrap">
+            
+            
+ 			<div id="lists">
+      		
+      			<div class="item_row">
+				    <div th:each="dto, index : ${likeList}">
+				        <div class="item" data-category="${dto.categoryId}">
+				            <a th:href="@{|${detailUrl} + '&postId=' + ${dto.postId}|}">
+				                <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px;"/>
+				            </a>
+				            <h2 class="item_name" th:text="${dto.title}">제목</h2> 
+				            <h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
+				            <h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
+				            <div class="like_chating" style="display: flex; align-items: center; justify-content: center;">
+				                <i class="bi-heart" style="font-size:1rem; color: red; cursor: pointer;"></i>
+				                <span style="color: red; font-size: 15px;">관심</span>
+				                <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+				                <span class="chat">채팅 48</span>
+				            </div>
+				        </div>
+				    </div>
 				</div>
+				
+				
+      				
+		 	</div>
+                    
+                    	<!-- <div th:if="${#lists.size(dataCount)}>0"
+							th:each="dataCount:${dataCount}">
+							<div colspan="5" id="footer">
+								<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
+							</div>
+						</div> -->
+                 </div>
+              </div>
+        </div>
+                
+		<br/><br/>
+		
+   			<div>
+		</div>
+    
+    		
 			</div>
-		</main>
+	
+    	
+    
+	<hr class="hr-solid" />
+		
+	<footer class="tm-footer text-center">
+		<div style="float: left;">
+			<p>
+				<b>사자고</b>
+			</p>
+			<br />
+			<p>
+				<b>사업자등록번호</b> 202-30-92017
+			</p>
+			<p>
+				<b>이메일</b> help@liongg.co.kr
+			</p>
+			<p>
+				<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+			</p>
+			<p>
+				Copyright &copy; 2020 Simple House | Design: TemplateMo
+			</p>
+		</div>
+		<div style="float: right;">
+			<div>
+				<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+			</div>
+		</div>
+	</footer>
 
-		<br />
-		<br />
-		<hr class="hr-solid" />
-		<!-- footer 자리 -->
-		<footer class="tm-footer text-center">
-			<div style="float: left;">
-				<p>
-					<b>사자고</b>
-				</p>
-				<br />
-				<p>
-					<b>사업자등록번호</b> 202-30-92017
-				</p>
-				<p>
-					<b>이메일</b> help@liongg.co.kr
-				</p>
-				<p>
-					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
-				</p>
-				<p>
-					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
-						href="https://templatemo.com">TemplateMo</a>
-				</p>
-			</div>
-			<div style="float: right;">
-				<div>
-					<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
-				</div>
-			</div>
-		</footer>
-	</div>
-	<!-- 관심 하트  -->
-	<script>
-		var i = 0;
-		$('i').on('click', function() {
-			if (i == 0) {
-				$(this).attr('class', 'bi-heart-fill');
-				i++;
-			} else if (i == 1) {
-				$(this).attr('class', 'bi-heart');
-				i--;
-			}
-
-		});
-	</script>
-	<script type="text/javascript"
+	 </div>
+		
+	
+		<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
 	<script>
 		var container = document.getElementById('map');
@@ -213,9 +213,83 @@
 		};
 
 		var map = new kakao.maps.Map(container, options);
-	</script>
+	</script>		
+	
 	<script src="js/list.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/parallax.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// Handle click on paging links
+			$('.tm-paging-link').click(function(e){
+				e.preventDefault();
+				
+				var page = $(this).text().toLowerCase();
+				$('.tm-gallery-page').addClass('hidden');
+				$('#tm-gallery-page-' + page).removeClass('hidden');
+				$('.tm-paging-link').removeClass('active');
+				$(this).addClass("active");
+			});
+		});
+	</script>
+	<!--관심 하트  -->
+		<script>
+
+        var i = 0;
+        $('i').on('click',function(){
+            if(i==0){
+                $(this).attr('class','bi-heart-fill');
+                i++;
+            }else if(i==1){
+                $(this).attr('class','bi-heart');
+                i--;
+            }
+
+        });
+
+    </script>
+    
+    
+    	
+<script type="text/javascript">
+
+	function sendIt() {
+		
+		var f = document.searchForm;
+		
+		f.action = "/list1.action";
+		f.submit();
+	}
+
+</script>
+
+
+
+<script>
+    // 카테고리 선택 시 필터링
+    function filterItems(linkElement) {
+
+    	const categoryId = linkElement.getAttribute('data-category');
+    	
+        // 모든 아이템을 숨김
+        const items = document.querySelectorAll('.item');
+        items.forEach(item => item.style.display = 'none');
+        
+        
+        // 선택한 categoryId에 해당하는 아이템을 보여줌
+        const selectedItems = document.querySelectorAll(`.item[data-category="${categoryId}"]`);
+        selectedItems.forEach(item => item.style.display = 'block');
+
+    }
+    
+    // 전체보기 클릭 시 모든 아이템을 보여줌
+    function showAllItems() {
+        const items = document.querySelectorAll('.item');
+        items.forEach(item => item.style.display = 'block');
+    }
+    
+  
+</script>
+
 </body>
 </html>

@@ -65,11 +65,10 @@ public class LionPayController {
 		start = (pageNum - 1) * numPerPage + 1;
 		end = pageNum * numPerPage;
 		List<ListDTO> listDto = lionPayService.getLists(start, end, userId);
-		System.out.println(listDto);
-		
+				
 		ModelAndView mav = new ModelAndView();
-		int dataCount = lionPayService.getDataCount(userId);
 		
+		int dataCount = lionPayService.getDataCount(userId)-1;
 		int totalPage = PayUtil.getPageCount(numPerPage, dataCount);
 
 		if(currentPage > totalPage)

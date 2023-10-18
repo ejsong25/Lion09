@@ -10,9 +10,9 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <insert id="insertData" parameterType="com.lion09.board.Post">
-    insert into post (postId, nickName, title, status, productsPrice, hitCount, contents,
-    created, deadLine, chooseFile, postLikeCount, recruitment, categoryId, myAddr, likeDate)
-    values (#{postId}, #{nickName}, #{title}, #{status}, #{productsPrice}, 0, #{contents}, current_timestamp, current_timestamp, #{chooseFile}, 0, #{recruitment}, #{categoryId}, #{myAddr}, current_timestamp)
+    insert into post (postId,title, productsPrice, hitCount, contents,
+    created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile)
+    values (#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile})
 </insert>
 
 <select id="getLists" parameterType="hashMap"

@@ -31,6 +31,30 @@
 }
 </style>
 
+<script type="text/javascript">
+
+	function sendIt() {
+		
+		f = document.myForm;
+		
+		pwd1 = f.pwd1.value;
+		pwd2 = f.pwd2.value;
+		
+		if(pwd1!=pwd2) {
+			alert('비밀번호가 일치하지 않습니다.');
+			return;
+		}
+		
+		f.userPwd.value = pwd2;
+		
+		alert('비밀번호가 변경되었습니다.')
+		
+		f.action = "/updatePwd.action";
+		f.submit(); 
+	}
+
+</script>
+
 </head>
 <body>
 
@@ -76,29 +100,28 @@
 					</div>
 				</header>
 				
-				<form action="/user/update" method="post" th:object="${loginMember}">
-				<div style="margin-left: 40%;">
+				<form action="" method="post" name="myForm">
+					<div style="margin-left: 40%;">
 					<div class="login">
 						<h3>
-							이메일 <input type="email" class="form-control" th:field="*{email}"
+							이메일 <input type="email" class="form-control" th:value="${dto.email}"
+								style="border-radius: 5px; width: 40%;" readonly>
+						</h3>
+						<h3>
+							비밀번호 <input type="password" class="form-control" id="pwd1"
 								style="border-radius: 5px; width: 40%;">
 						</h3>
 						<h3>
-							비밀번호 <input type="password" class="form-control" th:field="*{userPwd}"
-								style="border-radius: 5px; width: 40%;">
-						</h3>
-						<h3>
-							비밀번호 확인 <input type="password" class="form-control" name="userPwd1"
-								style="border-radius: 5px; width: 40%;">
+							비밀번호 확인 <input type="password" class="form-control" name="userPwd"
+								style="border-radius: 5px; width: 40%;" id="pwd2">
 						</h3>
 
 					</div>
 
-
 					<br />
 					<br />
 					<br />
-					<button class="modal-open-btn">서비스 이용약관</button>
+					<input type="button" class="modal-open-btn" value="서비스 이용약관">
 
 					<div class="modal">
 						<div class="modal-overlay"></div>
@@ -114,7 +137,7 @@
 								LIONPAY 를 이용한 이용자 간 거래 및 상품 구매가 불가능합니다. 그 밖의 내용은 사자고 개인정보 처리방침을
 								따릅니다.</div>
 							<div class="modal-footer">
-								<button class="modal-close-btn">Close</button>
+								<input type="button" class="modal-close-btn" value="Close">
 							</div>
 						</div>
 					</div>
@@ -122,12 +145,12 @@
 				<div style="margin-left: 30%;">
 					<br />
 					<br />
-					<button type="submit" class="profileBtn">정보 수정</button>
+					<input type="button" onclick="sendIt();" class="profileBtn" value="정보수정">
 					<br />
 					
 				</div>
-				</form>
 
+				</form>
 				<div align="center" style="margin-top: 100px;"></div>
 
 			</div>

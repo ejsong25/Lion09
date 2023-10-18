@@ -27,10 +27,12 @@ public class Post {
 	@Id
 	private int postId;
 	
-	//작성자
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "nickName")
-	private Member writer;
+//	//작성자
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "nickName")
+//	private Member writer;
+
+	private String nickName;
 	
 	@Column(length = 40)
 	private String title;
@@ -79,6 +81,6 @@ public class Post {
 	private PostLike postLike;
 	
 	//채팅
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")
-	private ChatRoomDTO chatRoom;
+//	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")
+//	private ChatRoomDTO chatRoom;
 }

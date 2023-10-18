@@ -8,21 +8,21 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 <select id="getPostlike" parameterType="com.lion09.board.PostLikeDTO"
 	resultType="com.lion09.board.PostLikeDTO">
 	select userId,postId,likeDate,likeState from postLike 
-	where postId='12'
+	where postId=#{postId}
 </select>
 
 <insert id="insertPostlike" parameterType="com.lion09.board.PostLikeDTO">
 	insert into postLike (userId, postId, likeDate, likeState)
-	values ('111', '12',current_timestamp, 1)
+	values (#{userId},#{postId},current_timestamp, 1)
 </insert>
 
 <delete id="deletePostlike" parameterType="com.lion09.board.PostLikeDTO">
-	delete postLike where postId='12'
+	delete postLike where postId=#{postId}
 </delete>
 
 <select id="findPostlikeState" parameterType="com.lion09.board.PostLikeDTO"
 	resultType="int">
-	select count(*) from postLike where userId='111' and postId='12'
+	select count(*) from postLike where userId=#{userId} and postId=#{postId}
 </select>
 
 </mapper>

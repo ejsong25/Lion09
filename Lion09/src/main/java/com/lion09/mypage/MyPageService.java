@@ -22,5 +22,7 @@ public interface MyPageService {
 	public List<Member> findLocationsNearby(Member dto) throws Exception;
 
 	public void updateRange(Member dto) throws Exception;
+
+	public void updatePwd(Member dto) throws Exception;
 	
 }

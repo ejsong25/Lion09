@@ -11,6 +11,6 @@ public interface PostLikeMapper {
 	
 	public void deletePostlike(PostLikeDTO likedto) throws Exception;
 	
-	public int findPostlikeState() throws Exception;
+	public int findPostlikeState(PostLikeDTO likedto) throws Exception;
 	
 }

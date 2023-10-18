@@ -54,8 +54,8 @@ public class Member {
 	private List<Order> orders = new ArrayList<>();
 	
 	//작성 글
-	@OneToMany(mappedBy = "writer")
-	private List<Post> posts = new ArrayList<>();
+//	@OneToMany(mappedBy = "writer")
+//	private List<Post> posts = new ArrayList<>();
 	
 	//라이온페이
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "member")

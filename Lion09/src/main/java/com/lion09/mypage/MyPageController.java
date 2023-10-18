@@ -224,7 +224,6 @@ public class MyPageController {
 		dto.setUserId(sessionInfo.getUserId());
 		
 		mypageService.updateRange(dto);
-		System.out.println(dto.getMyRange());
 
 		ModelAndView mav = new ModelAndView();
 
@@ -235,21 +234,35 @@ public class MyPageController {
 	}
 
 
-	@GetMapping("/update")
-	public String createUpdateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, Model model) throws Exception {
-		Member loginMember = memberService.getUser(sessionInfo.getUserId());
-		model.addAttribute("loginMember", loginMember);
-		return "account";
+	@GetMapping(value = "/update")
+	public ModelAndView updatePwd(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account");
+
+		Member dto = mypageService.selectData(sessionInfo.getUserId());
+
+		mav.addObject("dto",dto);
+		
+		return mav;
 	}
 	
-	@PostMapping("/update")
-	public String update(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, @Valid MemberUpdateForm form, BindingResult result) throws Exception {
-		if(result.hasErrors())
-			return "account"; 
-		//myPageService에 회원 정보 수정 쿼리 추가 해주세용
+	@PostMapping(value="/updatePwd.action")
+	public ModelAndView updatePwd(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, Member dto) 
+			throws Exception {
 		
+		dto.setUserId(sessionInfo.getUserId());
 		
-		return "redirect:/";
+		System.out.println(
+				dto.getUserPwd());
+		
+		mypageService.updatePwd(dto);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("redirect:/update");
+		
+		return mav;
 	}
 	
 	

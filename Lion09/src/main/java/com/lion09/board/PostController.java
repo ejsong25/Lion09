@@ -71,11 +71,16 @@ public class PostController {
 	public ModelAndView write(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/write"); 
 		
 		Member dto = mypageService.selectData(sessionInfo.getUserId());
 		
 		mav.addObject("dto",dto);
+		
+		if(dto.getMyAddress()==null) {
+			mav.setViewName("/addressInsert");
+		}else {
+			mav.setViewName("/write"); 
+		}
 		
 		return mav;
 	}

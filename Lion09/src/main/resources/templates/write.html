@@ -79,7 +79,7 @@
 		//이미지 파일
 		
 		//파일을 선택하는 input 요소 가져오기
-	    var fileInput = document.querySelector('input[name="chooseFilename"]');
+	    var fileInput = document.querySelector('input[name="chooseFileName"]');
 	
 		//이미지파일을 선택했을 경우
 	    if (!fileInput.files.length === 0) {
@@ -143,23 +143,26 @@
 
 <body style="padding-top: 5rem;">
 
-   	<div class="container">
+
+	<div class="container">
 	<!-- Top box -->
 		<!-- Logo & Site Name -->
-		<div class="placeholder">
-			<div class="parallax-window" data-parallax="scroll" data-image-src="img/bg.jpeg">
+		<div class="placeholder">	
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
 				<div class="tm-header">
 					<div class="row tm-header-inner">
 						<div class="col-md-6 col-12">
 							<div class="tm-site-text-box">
-								<h1 class="tm-site-title">글쓰기</h1>
-  							</div>
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>	
-	</div>
+		</div>
+		</div>
         <main role="main" class="container">
                      
             <form action="" method="post" name="myForm1" enctype="multipart/form-data">
@@ -167,7 +170,6 @@
 				<nav>
 					<ul>
 						<li class="tm-paging-item1"><a href="#" class="tm-paging-link1 active" onchange="">공동구매</a></li>
-						<li class="tm-paging-item1"><a href="#" class="tm-paging-link1">만나서 거래</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -177,12 +179,12 @@
 				
 				<div class="image-upload" id="image-upload">
 			        <div class="button">
-			          <span style="font-size: 5em; color: #8993a4;" id="chooseFile" name="chooseFile">
+			          <span style="font-size: 5em; color: #8993a4;" id="chooseFile" >
 						  <i class="fas fa-camera"></i>
 					  </span>
 			        </div>
 	
-				    <input type="file" id="chooseFile" name="chooseFilename" accept="image/*" onchange="loadFile(this)">
+				    <input type="file" id="chooseFileName" name="chooseFileName" onchange="loadFile(this)">
 				
 			      	<div class="fileContainer">
 			        	<div class="fileInput">
@@ -227,7 +229,7 @@
                 style="border-radius:5px;width:99%;" value="" onchange="recruitmentChange();"/>
             </div>
 	             
-        	<input type="text" class="form-control" name="myAddress" id="myAddr" th:value="${dto.myAddress}" 
+        	<input type="text" class="form-control" name="myAddress" id="myAddr" 
         		style="border-radius:5px; width:100%; padding:5px;" readonly/>
         	<!-- 제목~주소 끝 --> 
         
@@ -254,9 +256,10 @@
                 	onclick="sendIt();" value="작성완료">
                 <br/><br/>
             </div>    
-           
+        
            </form>
-        </main>   
+        </main>  
+       
 
 <script src="js/jquery.min.js"></script>
 <script src="js/parallax.min.js"></script>

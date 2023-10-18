@@ -3,6 +3,8 @@ package com.lion09.board;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,11 +34,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.lion09.board.PostUtil;
 import com.lion09.member.Member;
+import com.lion09.member.MemberForm;
 import com.lion09.mypage.MyPageService;
-import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
 import com.lion09.board.Post;
 import com.lion09.board.PostService;
+import com.lion09.SessionConst;
 
 @Controller
 public class PostController {
@@ -76,87 +80,73 @@ public class PostController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/write_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView write_ok(@RequestPart("chooseFile") MultipartFile cFile, HttpServletRequest request) {
-	    ModelAndView mav = new ModelAndView();
-
-	    Post dto = new Post();
-	    dto.setTitle(request.getParameter("title"));
-
-	    try {
-	        // 유효성 검사 및 값 설정
-	        String categoryIdStr = request.getParameter("categoryId");
-	        int categoryId = Integer.parseInt(categoryIdStr);
-	        dto.setCategoryId(categoryId);
-
-	        String productsPriceStr = request.getParameter("productsPrice");
-	        int productsPrice = Integer.parseInt(productsPriceStr);
-	        dto.setProductsPrice(productsPrice);
-
-	        String recruitmentStr = request.getParameter("recruitment");
-	        int recruitment = Integer.parseInt(recruitmentStr);
-	        dto.setRecruitment(recruitment);
-
-	    } catch (NumberFormatException e) {
-	        // 숫자로 변환할 수 없는 값이 들어왔을 경우 처리
-	        mav.setViewName("error");
-	        mav.addObject("errorMessage", "Invalid input for numeric fields.");
-	        return mav;
-	    }
-
-	 
-	    String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
-	    dto.setContents(plainText);
-	    dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
 	
-	    try {
-	        if (!cFile.isEmpty()) {
-	            // 파일 업로드를 위한 경로 설정
-	            String uploadDir = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
-	            
-	            // 업로드한 파일의 원래 파일 이름 가져오기
-	            String originalFilename = cFile.getOriginalFilename();
+	//@PostMapping(value="/write_ok.action")
+	@RequestMapping(value="/write_ok.action", method = {RequestMethod.POST})
+	public ModelAndView write_ok(@RequestPart("chooseFileName") MultipartFile cFile,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto) throws Exception {
+	  
+		System.out.println( "전");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+		String nickName = Mdto.getNickName();
+		dto.setNickName(nickName);
+		
+		int maxPostId = postService.maxPostId();
+		dto.setPostId(maxPostId + 1);
 
-	    		//확장자 추출
-	    	    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-	    		
-	    	    //새 파일 이름 생성 (현재 시간 대신 "111" 추가)
-	    	    String newFilename = originalFilename.replace(fileExtension, "_111" + fileExtension);
+		if (!cFile.isEmpty()) {
+			// 파일 업로드를 위한 경로 설정
+			String uploadDir = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
-	            // 파일을 서버에 저장
-	            File newFile = new File(uploadDir, newFilename);
-	            cFile.transferTo(newFile);
+			// 업로드한 파일의 원래 파일 이름 가져오기
+			String originalFilename = cFile.getOriginalFilename();
 
-	            // 데이터베이스에 파일 경로 저장
-	            //String fullPath = uploadDir + newFilename; // 웹 경로로 저장
+			//확장자 추출
+			String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
 
-	            dto.setChooseFile(newFilename);
+			// 현재 시간을 나타내는 날짜 포맷 생성
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
-	            // 데이터베이스에 데이터 추가
-	            int maxPostId = postService.maxPostId();
-	            dto.setPostId(maxPostId + 1);
-	            postService.insertData(dto);
+			// 현재 날짜 및 시간을 가져와 포맷팅
+			Date now = new Date(System.currentTimeMillis());
+			String timestamp = dateFormat.format(now);
+			
+			
+			//새 파일 이름 생성 
+			String newFilename = originalFilename.replace(fileExtension, "_" +dto.getPostId() + timestamp +fileExtension);
 
-	            mav.setViewName("redirect:/list1");
+			// 파일을 서버에 저장
+			File newFile = new File(uploadDir, newFilename);
+			cFile.transferTo(newFile);
 
-	        } else {
-	            // 사진 입력을 안했을 경우(무조건 postLion.jpg 입력)
-	            String newFilename = "lion.png";
-	            dto.setChooseFile(newFilename);
+			// 데이터베이스에 파일 경로 저장
+			//String fullPath = uploadDir + newFilename; // 웹 경로로 저장
 
-	            // 데이터베이스에 데이터 추가
-	            int maxPostId = postService.maxPostId();
-	            dto.setPostId(maxPostId + 1);
-	            postService.insertData(dto);
+			dto.setChooseFile(newFilename);
 
-	            mav.setViewName("redirect:/list1");
-	        }
-	    } catch (Exception e) {
-	        // 파일 업로드 중 오류 발생할 경우 처리
-	        mav.setViewName("error");
-	        mav.addObject("errorMessage", "Error uploading the file.");
-	    }
+			// 데이터베이스에 데이터 추가
 
+			System.out.println(dto);
+
+			postService.insertData(dto);
+
+			mav.setViewName("redirect:/list1");
+
+		} else {
+			// 사진 입력을 안했을 경우(무조건 lion.jpg 입력)
+			String newFilename = "lion.png";
+			dto.setChooseFile(newFilename);
+
+			postService.insertData(dto);
+
+			mav.setViewName("redirect:/list1");
+		}
+
+
+		mav.setViewName("redirect:/list1");
 	    return mav;
 	}
 	
@@ -433,7 +423,7 @@ public class PostController {
 
 
 			//이미지 사진들 모아두는 폴더
-			String upload_path = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
+			String upload_path = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
 			Post dto = postService.getReadData(postId);
 					
@@ -441,7 +431,7 @@ public class PostController {
 			String beforeFilename = dto.getChooseFile();
 
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//게시글 이미지가 기존의 이미지가 아닐 경우 삭제
 			if(!beforeFilename.equals("lion.png")) {
@@ -521,7 +511,7 @@ public class PostController {
 			
 			
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//기본 사진 이미지가 아닐 경우 삭제		
 			if(beforeFilename.equalsIgnoreCase("lion.png")){

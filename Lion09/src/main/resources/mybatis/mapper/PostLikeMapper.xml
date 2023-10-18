@@ -25,4 +25,12 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	select count(*) from postLike where userId=#{userId} and postId=#{postId}
 </select>
 
+<update id="updateLike" parameterType="int">
+	update post set postLikeCount=postLikeCount+1 where postId=#{postId}
+</update>
+
+<update id="deleteLike" parameterType="int">
+	update post set postLikeCount=postLikeCount-1 where postId=#{postId}
+</update>
+
 </mapper>

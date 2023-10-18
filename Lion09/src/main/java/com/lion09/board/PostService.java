@@ -34,5 +34,9 @@ public interface PostService {
 	public void deletePostlike(PostLikeDTO likedto) throws Exception;
 	
 	public int findPostlikeState(PostLikeDTO likedto) throws Exception;
+	
+	public void updateLike(int postId) throws Exception;
+
+	public void deleteLike(int postId) throws Exception;
 
 }

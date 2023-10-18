@@ -249,23 +249,19 @@ public class PostController {
 	
 	
 	@GetMapping("/detail")
-	public ModelAndView detail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+	public ModelAndView detail(HttpServletRequest request,PostLikeDTO likedto,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 		
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		String pageNum = request.getParameter("pageNum");
 		
-		
 		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
-		
 		
 		String userId = Mdto.getUserId();
 
-
-		PostLikeDTO likedto = new PostLikeDTO();
-		
+		//좋아요
 		likedto.setUserId(userId);
 		likedto.setPostId(postId);
-		
 		
 		int likeState = postService.findPostlikeState(likedto);
 		likedto.setLikeState(likeState);
@@ -292,27 +288,19 @@ public class PostController {
 		}
 		
 		
-		
-		
 		String param = "pageNum=" + pageNum;
-	
 		
 		ModelAndView mav = new ModelAndView();
 		
-		//좋아요 부분
-
 		System.out.println(likedto + "후");
 
 		
 		mav.addObject("likedto",likedto);
 		
-		
-		
-		
 		mav.addObject("dto",dto);
 		mav.addObject("params",param);
 		mav.addObject("pageNum",pageNum);
-
+		mav.addObject("likedto",likedto);//좋아요
 		
 		mav.setViewName("/detail");
 		
@@ -321,14 +309,22 @@ public class PostController {
 	}
 	
 	
-	
-	
-	
 	//좋아요 관심목록에 추가
 	@PostMapping(value = "/insertLike.action")
-	public ModelAndView insertLike(PostLikeDTO likedto) throws Exception {
+	public ModelAndView insertLike(PostLikeDTO likedto,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto) throws Exception {
+		
+		int postId = dto.getPostId();
+		
+		//좋아요
+		likedto.setUserId(sessionInfo.getUserId());
+		likedto.setPostId(postId);
+		
+		int likeState = postService.findPostlikeState(likedto);
+		likedto.setLikeState(likeState);
 		
 		postService.insertPostlike(likedto);
+		postService.updateLike(postId);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -340,9 +336,16 @@ public class PostController {
 	
 	//관심목록에서 삭제
 	@PostMapping(value = "/deleteLike.action")
-	public ModelAndView delteLike(PostLikeDTO likedto) throws Exception {
+	public ModelAndView delteLike(PostLikeDTO likedto,Post dto,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+		
+		int postId = dto.getPostId();
+		
+		likedto.setUserId(sessionInfo.getUserId());
+		likedto.setPostId(dto.getPostId());
 		
 		postService.deletePostlike(likedto);
+		postService.deleteLike(postId);
 		
 		ModelAndView mav = new ModelAndView();
 		

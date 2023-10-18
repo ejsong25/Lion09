@@ -13,4 +13,8 @@ public interface PostLikeMapper {
 	
 	public int findPostlikeState(PostLikeDTO likedto) throws Exception;
 	
+	public void updateLike(int postId) throws Exception;
+
+	public void deleteLike(int postId) throws Exception;
+	
 }

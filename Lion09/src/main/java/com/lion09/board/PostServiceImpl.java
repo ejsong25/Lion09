@@ -95,6 +95,15 @@ public class PostServiceImpl implements PostService{
 		return postlikeMapper.findPostlikeState(likedto);
 	}
 
+	@Override
+	public void updateLike(int postId) throws Exception {
+		postlikeMapper.updateLike(postId);
+	}
+
+	@Override
+	public void deleteLike(int postId) throws Exception {
+		postlikeMapper.deleteLike(postId);
+	}
 
 
 	

@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
 import com.lion09.member.Member;
+import com.lion09.member.MemberService;
+import com.lion09.member.MemberUpdateForm;
 
 @Controller
 public class MyPageController {
@@ -30,6 +35,9 @@ public class MyPageController {
 	@Autowired
 	@Qualifier("myPageServiceImpl")
 	private MyPageService mypageService;
+	
+	@Autowired
+	private MemberService memberService;
 
 	//mypage 불러오기
 	@GetMapping(value = "/myPage")
@@ -226,6 +234,23 @@ public class MyPageController {
 
 	}
 
+
+	@GetMapping("/update")
+	public String createUpdateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, Model model) throws Exception {
+		Member loginMember = memberService.getUser(sessionInfo.getUserId());
+		model.addAttribute("loginMember", loginMember);
+		return "account";
+	}
+	
+	@PostMapping("/update")
+	public String update(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, @Valid MemberUpdateForm form, BindingResult result) throws Exception {
+		if(result.hasErrors())
+			return "account"; 
+		//myPageService에 회원 정보 수정 쿼리 추가 해주세용
+		
+		
+		return "redirect:/";
+	}
 	
 	
 	

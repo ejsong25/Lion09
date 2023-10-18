@@ -67,22 +67,4 @@ public class MemberController {
 		
 		return "redirect:/login";
 	}
-	
-	@GetMapping("/update")
-	public String createUpdateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, Model model) throws Exception {
-		Member loginMember = memberService.getUser(sessionInfo.getUserId());
-		model.addAttribute("loginMember", loginMember);
-		return "account";
-	}
-	
-	@PostMapping("/update")
-	public String update(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, @Valid MemberUpdateForm form, BindingResult result) throws Exception {
-		if(result.hasErrors())
-			return "account"; 
-		Member member = memberService.getUser(sessionInfo.getUserId());
-		member.setEmail(form.getEmail());
-		member.setUserPwd(form.getUserPwd());
-		return "redirect:/";
-	}
-	
 }

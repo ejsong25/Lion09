@@ -1,10 +1,16 @@
 package com.lion09.chat;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import lombok.*;
 
-/**
- * @description 변경 예정
- */
+@Table(name = "chatMessages")
+@Entity
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,14 +24,28 @@ public class ChatDTO {
         ENTER, TALK, LEAVE;
     }
 
+    @Column(nullable = true)
     private MessageType type; // 메시지 타입
+    
+    @Id
     private String roomId; // 방 번호
+    
+    @Column(nullable = true)
     private String sender; // 채팅을 보낸 사람
+    
+    @Column(nullable = true)
     private String message; // 메시지
+    
+    @Column(nullable = true)
     private String time; // 채팅 발송 시간
 
     /* 파일 업로드 관련 변수 */
+    @Column(nullable = true)
     private String s3DataUrl; // 파일 업로드 url
+    
+    @Column(nullable = true)
     private String fileName; // 파일이름
+    
+    @Column(nullable = true)
     private String fileDir; // s3 파일 경로
 }

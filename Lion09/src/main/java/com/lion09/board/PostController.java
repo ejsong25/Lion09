@@ -97,6 +97,7 @@ public class PostController {
 		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
 		String nickName = Mdto.getNickName();
 		dto.setNickName(nickName);
+		dto.setMyAddr(Mdto.getMyAddress());
 		
 		int maxPostId = postService.maxPostId();
 		dto.setPostId(maxPostId + 1);
@@ -355,12 +356,20 @@ public class PostController {
 	//게시글 수정하기
 	
 		@GetMapping("/writeUpdated")
-		public ModelAndView writeUpdated(@RequestParam(name = "postId", defaultValue = "1") int postId,HttpServletRequest request) throws Exception {
+		public ModelAndView writeUpdated(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,HttpServletRequest request) throws Exception {
 			
 			ModelAndView mav = new ModelAndView();
-		
 			
+			
+			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+			
+			String userId = Mdto.getUserId();
+
+			int postId = Integer.parseInt(request.getParameter("postId"));
 			String pageNum = request.getParameter("pageNum");
+			
+			
+			
 			
 			Post dto =  postService.getReadData(postId);
 			
@@ -381,6 +390,11 @@ public class PostController {
 		@Transactional
 		@RequestMapping(value="/writeUpdated_ok", method = {RequestMethod.POST})
 		public ModelAndView writeUpdated_ok(@RequestParam(name = "postId", defaultValue = "1") int postId,HttpServletRequest request) throws Exception {
+			
+			
+			
+			
+			
 			
 			ModelAndView mav = new ModelAndView();
 			

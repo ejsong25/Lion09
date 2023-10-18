@@ -164,13 +164,13 @@
                   <span style="font-size: 15px;">조회수 : [[${dto.hitCount}]]</span>
                   <span style="color: red; font-size: 15px; margin-right: 80%;">관심 : [[${dto.postLikeCount}]]</span>
                 
-<!--                 하트(좋아요)
+                <!-- 하트(좋아요) -->
                 <form action="" method="post" name="likeForm">
 	                <i th:if="${likedto.likeState == 0}" class="bi-heart" style="font-size:2rem; color: red; cursor: pointer;"
 					   onclick="postLike1();"></i>
 					<i th:if="${likedto.likeState == 1}" class="bi-heart-fill" style="font-size:2rem; color: red; cursor: pointer;"
 					   onclick="postLike2();"></i>
-                </form> -->
+                </form> 
                 
               </div>
                

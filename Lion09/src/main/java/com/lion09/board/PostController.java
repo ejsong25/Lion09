@@ -337,7 +337,7 @@ public class PostController {
 			
 			ModelAndView mav = new ModelAndView();
 			
-			mav.setViewName("redirect:/list1");
+			mav.setViewName("redirect:/detail?postId=" + postId);
 			
 			return mav;
 			
@@ -358,7 +358,7 @@ public class PostController {
 			
 			ModelAndView mav = new ModelAndView();
 			
-			mav.setViewName("redirect:/list1");
+			mav.setViewName("redirect:/detail?postId=" + postId);
 			
 			return mav;
 			

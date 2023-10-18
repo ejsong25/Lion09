@@ -194,8 +194,6 @@
 				       <div class="buttonContainer">
 				           <div class="submitButton" id="submitButton">파일확인</div>
 				       </div>
-		        <!--   <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
-			           <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button> -->
 			      	</div>
 				</div>
 				    <!-- 파일 미리보기 -->
@@ -229,7 +227,7 @@
                 style="border-radius:5px;width:99%;" value="" onchange="recruitmentChange();"/>
             </div>
 	             
-        	<input type="text" class="form-control" name="myAddress" id="myAddr" 
+        	<input type="text" class="form-control" name="myAddress" th:value="${dto.myAddress}" id="myAddr" 
         		style="border-radius:5px; width:100%; padding:5px;" readonly/>
         	<!-- 제목~주소 끝 --> 
         

@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.lion09.mypage.MyPageMapper">
 
 <select id="selectData" parameterType="String" resultType="com.lion09.member.Member">
-	select userId,nickName,energy,profileImgName,myAddress,myLatitude,myLongitude,myRange
+	select userId,nickName,energy,profileImgName,myAddress,myLatitude,myLongitude,myRange,email
 	from member where userId=#{userId}
 </select>
 
@@ -44,6 +44,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <update id="updateRange" parameterType="com.lion09.member.Member">
 	update member set myRange=#{myRange} where userId=#{userId}
+</update>
+
+<update id="updatePwd" parameterType="com.lion09.member.Member">
+	update member set userPwd=#{userPwd} where userId=#{userId}
 </update>
 
 </mapper>

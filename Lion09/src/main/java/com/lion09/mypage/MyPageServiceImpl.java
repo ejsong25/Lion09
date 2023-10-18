@@ -49,7 +49,10 @@ public class MyPageServiceImpl implements MyPageService {
 	public void updateRange(Member dto) throws Exception {
 		mypageMapper.updateRange(dto);
 	}
+	
+	@Override
+	public void updatePwd(Member dto) throws Exception {
+		mypageMapper.updatePwd(dto);
+	}
 
-	
-	
 }

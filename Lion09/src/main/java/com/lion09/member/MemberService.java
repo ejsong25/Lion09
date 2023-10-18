@@ -35,8 +35,8 @@ public class MemberService {
 //		ListDTO listDto = new ListDTO();
 //		listDto.setMember(member); // Member와 연결
 //		listDto.setUserId(member.getUserId());
-
-		lionPayService.insertRecharge(member.getUserId());
+		int maxNum = lionPayService.maxNum(member.getUserId());
+		lionPayService.insertRecharge(maxNum + 1, member.getUserId());
 
 		return member.getUserId();
 	}

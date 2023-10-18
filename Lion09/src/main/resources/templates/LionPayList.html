@@ -106,16 +106,16 @@ function filter() {
 						</div>
 						<div>
 							<table id="listTable" border="1">
-							    <tr th:if="${#lists.size(lists)}>0" th:each="listDto, index:${lists}">
-							        <td class="left">
+							    <tr th:if="${listDto.accountName != null} and ${listDto.rechargeAmount != null}" th:each="listDto, index: ${lists}">
+								    <td class="left">
 								        <span th:text="${listDto.accountName} + ' 계좌'"></span><br/>
 								        <span th:text="${#dates.format(listDto.date, 'yyyy-MM-dd HH:mm:ss')}"></span>
 								    </td>
-							        <td class="center">
-							        	<span th:text="'+ ' + ${listDto.rechargeAmount + '원 충전'}"></span>
-							        </td>
-							        <!-- <td class="center" th:text="'- ' + ${listDto.rechargeAmount + '원 사용'}"></td> -->
-							    </tr>
+								    <td class="center">
+								        <span th:text="'+ ' + ${listDto.rechargeAmount + '원 충전'}"></span>
+								    </td>
+								</tr>
+
 							    <table id="listTable" style="border: 0;">
 							    	<tr th:if="${#lists.size(dataCount)}>0"
 										th:each="dataCount:${dataCount}">

@@ -8,8 +8,8 @@
     INSERT INTO lionPay (userId) VALUES (#{userId})
 </insert>
 
-<insert id="insertRecharge" parameterType="String">
-    INSERT INTO recharge (num, userId) VALUES (0, #{userId})
+<insert id="insertRecharge">
+    INSERT INTO recharge (num, userId) VALUES (#{num}, #{userId})
 </insert>
 
 <update id="updateRechargeAmt" parameterType="com.lion09.pay.LionPayDTO">
@@ -34,8 +34,8 @@
 </update>
 
 <!-- 전체 데이터 개수 -->
-<select id="getDataCount" parameterType="map" resultType="Integer">
-	select nvl(count(*),0) from recharge
+<select id="getDataCount" resultType="Integer">
+	select nvl(count(*),0) from recharge where userId=#{userId}
 </select>
 
 <!-- 하나의 데이터 -->
@@ -44,26 +44,26 @@
 </select>
 
 <insert id="insertData">
-	insert into recharge (num, userId,rechargeAmount,accountName,categoryId,date) values (#{dto.num}, #{userId},#{dto.rechargeAmount},#{dto.accountName},#{dto.categoryId},CURRENT_TIMESTAMP)
+	insert into recharge (num, userId,rechargeAmount,accountName,categoryId,date) values (#{dto.num},#{userId},#{dto.rechargeAmount},#{dto.accountName},#{dto.categoryId},CURRENT_TIMESTAMP)
 </insert>
 
 <select id="getListData" parameterType="String" resultType="com.lion09.pay.ListDTO">
 	select userId,rechargeAmount,accountName,categoryId,date from recharge where userId=#{userId} and num > 0 ORDER BY date DESC limit 4
 </select>
 
-<select id="getLists" parameterType="hashMap" resultType="com.lion09.pay.ListDTO">
+<select id="getLists" resultType="com.lion09.pay.ListDTO">
 	select * from (
 	select rownum rnum, data.* from(
-	select rechargeAmount,accountName,date
-	from recharge where num > 0 and userId = #{userId}
-	order by date desc) data)
+	select userId, rechargeAmount,accountName,date
+	from recharge where userId = #{userId} and rechargeAmount is not null
+	order by date desc) data )
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
 </select>
 
 <select id="maxNum" resultType="Integer">
-	select nvl(max(num),0) from recharge where userId = #{userId}
+	select nvl(max(num),0) from recharge
 </select>
 
 </mapper>

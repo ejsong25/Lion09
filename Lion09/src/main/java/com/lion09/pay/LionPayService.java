@@ -8,7 +8,7 @@ public interface LionPayService {
 	
 	public void insertLionPay(LionPayDTO dto) throws Exception;
 	
-	public void insertRecharge(String userId) throws Exception;
+	public void insertRecharge(Integer num, String userId) throws Exception;
 
 	public void updateRechargeAmt(LionPayDTO dto) throws Exception;
 	
@@ -28,7 +28,7 @@ public interface LionPayService {
 	
 	public List<ListDTO> getLists(@Param("start")Integer start,@Param("end")Integer end, String userId) throws Exception;
 	
-	public Integer getDataCount() throws Exception;
+	public Integer getDataCount(String userId) throws Exception;
 	
 	public Integer maxNum(String userId) throws Exception;
 	

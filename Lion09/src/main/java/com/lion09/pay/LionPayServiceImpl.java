@@ -3,6 +3,7 @@ package com.lion09.pay;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ public class LionPayServiceImpl implements LionPayService {
 	}
 	
 	@Override
-	public void insertRecharge(String userId) throws Exception {
-		lionPayMapper.insertRecharge(userId);
+	public void insertRecharge(Integer num, String userId) throws Exception {
+		lionPayMapper.insertRecharge(num, userId);
 		
 	}
 	
@@ -52,8 +53,8 @@ public class LionPayServiceImpl implements LionPayService {
 	}
 	
 	@Override
-	public Integer getDataCount() throws Exception {
-		return lionPayMapper.getDataCount();
+	public Integer getDataCount(String userId) throws Exception {
+		return lionPayMapper.getDataCount(userId);
 	}
 	
 	@Override

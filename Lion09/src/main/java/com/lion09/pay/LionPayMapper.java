@@ -12,7 +12,7 @@ public interface LionPayMapper {
 	
 	public void insertLionPay(LionPayDTO dto) throws Exception;
 	
-	public void insertRecharge(@Param("userId") String userId) throws Exception;
+	public void insertRecharge(@Param("num") Integer num, @Param("userId") String userId) throws Exception;
 	
 	public void updateRechargeAmt(LionPayDTO dto) throws Exception;
 	
@@ -32,7 +32,7 @@ public interface LionPayMapper {
 	
 	public List<ListDTO> getLists(@Param("start")Integer start,@Param("end")Integer end, @Param("userId") String userId) throws Exception;
 	
-	public Integer getDataCount() throws Exception;
+	public Integer getDataCount(@Param("userId") String userId) throws Exception;
 	
 	public Integer maxNum(@Param("userId") String userId) throws Exception;
 	

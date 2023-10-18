@@ -64,11 +64,11 @@ public class LionPayController {
 		
 		start = (pageNum - 1) * numPerPage + 1;
 		end = pageNum * numPerPage;
-		
-		List<ListDTO> lists = lionPayService.getLists(start, end, userId);
+		List<ListDTO> listDto = lionPayService.getLists(start, end, userId);
+		System.out.println(listDto);
 		
 		ModelAndView mav = new ModelAndView();
-		int dataCount = lionPayService.getDataCount();
+		int dataCount = lionPayService.getDataCount(userId);
 		
 		int totalPage = PayUtil.getPageCount(numPerPage, dataCount);
 
@@ -83,7 +83,7 @@ public class LionPayController {
 		
 		mav.setViewName("LionPayList");
 		mav.addObject("dto",dto);
-		mav.addObject("lists",lists);
+		mav.addObject("lists",listDto);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("dataCount", dataCount);
 		
@@ -106,7 +106,7 @@ public class LionPayController {
 	    if(dto1.getBalance() == null) {
 	    	currentBalance = 0;
 	    }else {
-	    	currentBalance = dto.getBalance();
+	    	currentBalance = dto1.getBalance();
 	    }
 	    int afterBalance = currentBalance + rechargeAmount;
 

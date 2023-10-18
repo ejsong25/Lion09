@@ -463,7 +463,7 @@ window.addEventListener('load', function() {
 					</div>
 					<div>
 						<table id="listTable" border="1">
-						    <tr th:each="listDto : ${lists}">
+						    <tr th:if="${listDto.accountName != null} and ${listDto.rechargeAmount != null}" th:each="listDto : ${lists}">
 						        <td class="left">
 							        <span th:text="${listDto.accountName} + ' 계좌'"></span><br/>
 							        <span th:text="${#dates.format(listDto.date, 'yyyy-MM-dd HH:mm:ss')}"></span>

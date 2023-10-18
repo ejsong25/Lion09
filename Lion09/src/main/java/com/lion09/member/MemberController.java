@@ -48,6 +48,7 @@ public class MemberController {
 			member.setUserId(form.getUserId());
 			member.setUserPwd(form.getUserPwd1());
 			member.setUserName(form.getUserName());
+			member.setEnergy(40);
 			member.setEmail(form.getEmail());
 			member.setNickName(form.getNickName());
 			member.setProfileImgName("lion.png");

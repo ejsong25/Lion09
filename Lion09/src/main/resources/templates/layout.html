@@ -13,14 +13,11 @@
 	<nav th:fragment="navbar" class="col-md-6 col-12 tm-nav">
 		<ul class="tm-nav-ul">
 			<li class="tm-nav-li-left">
-				<a href="/" class="tm-nav-link active">사자고</a>
-			</li>
-			<li class="tm-nav-li-left"><a href="/list1"
-				class="tm-nav-link">공동구매</a></li>
-			<li class="tm-nav-li-left"><a href="/list2"
-				class="tm-nav-link">동네직거래</a></li>
-			<li class="tm-nav-li-left"><a href="/faqs"
-				class="tm-nav-link">고객센터</a></li>
+				<a href="/" class="tm-nav-link active">사자고</a></li>
+			<li class="tm-nav-li-left">
+				<a href="/list1" class="tm-nav-link">공동구매</a></li>
+			<li class="tm-nav-li-left">
+				<a href="/faqs" class="tm-nav-link">고객센터</a></li>
 				
 			<li class="tm-nav-li-right" th:if="${session.loginMember == null}"><a href="/user/signup"
 				class="tm-nav-link">회원가입</a></li>

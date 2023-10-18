@@ -20,11 +20,6 @@ public class LionController {
 	public String faqs() {
 		return "faqs";
 	}
-
-	@GetMapping("/list2")
-	public String list2() {
-		return "list2";
-	}
 	
 	@GetMapping("/wishList")
 	public String wishList() {

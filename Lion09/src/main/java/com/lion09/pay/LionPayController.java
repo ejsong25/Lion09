@@ -101,8 +101,13 @@ public class LionPayController {
 	    
 	    //현재 값 - balance, rechargeAmount
 	    LionPayDTO dto1 = lionPayService.getReadData(userId);
+	    int currentBalance;
 	    
-	    int currentBalance = dto1.getBalance();
+	    if(dto1.getBalance() == null) {
+	    	currentBalance = 0;
+	    }else {
+	    	currentBalance = dto.getBalance();
+	    }
 	    int afterBalance = currentBalance + rechargeAmount;
 
 	    //100만원 이하일 때만 충전 가능

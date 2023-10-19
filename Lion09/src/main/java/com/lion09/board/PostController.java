@@ -325,6 +325,8 @@ public class PostController {
 			return mav;
 		}
 
+		
+		System.out.println(dto.getUserId());
 
 		String param = "pageNum=" + pageNum;
 
@@ -482,10 +484,6 @@ public class PostController {
 	public ModelAndView writeUpdated_ok(@RequestParam(name = "postId", defaultValue = "1") int postId,HttpServletRequest request) throws Exception {
 
 
-
-
-
-
 		ModelAndView mav = new ModelAndView();
 
 		Post dto = new Post();
@@ -510,12 +508,8 @@ public class PostController {
 		postService.updateData(dto);
 
 
-
 		String pageNum = request.getParameter("pageNum");
 		String param = "pageNum=" + pageNum;
-
-
-
 
 		mav.setViewName("redirect:/myList?" + param);
 
@@ -524,9 +518,6 @@ public class PostController {
 
 
 	}
-
-
-
 
 
 	//게시글 이미지 업데이트
@@ -691,14 +682,10 @@ public class PostController {
 
 
 
-
-
 	@GetMapping("/myList")
 	public ModelAndView myList(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-
-
 
 
 		//			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
@@ -752,13 +739,11 @@ public class PostController {
 
 		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);
 
-		String mydetailUrl = "/mydetail?pageNum=" + totalPage;
+		String mydetailUrl = "/detail?pageNum=" + totalPage;
 
 		if (!param.equals("")) {
 			mydetailUrl = mydetailUrl + "&" + param;
 		}
-
-
 
 
 		mav.setViewName("/myList"); 
@@ -771,85 +756,6 @@ public class PostController {
 		return mav;
 
 	}
-
-
-
-
-	@GetMapping("/mydetail")
-	public ModelAndView mydetail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-
-		int postId = Integer.parseInt(request.getParameter("postId"));
-		String pageNum = request.getParameter("pageNum");
-
-
-		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
-
-
-		String userId = Mdto.getUserId();
-
-
-		PostLikeDTO likedto = new PostLikeDTO();
-
-		likedto.setUserId(userId);
-		likedto.setPostId(postId);
-
-
-		int likeState = postService.findPostlikeState(likedto);
-		likedto.setLikeState(likeState);
-
-
-		int currentPage = 1;
-
-		if(pageNum!=null) {
-
-			currentPage = Integer.parseInt(pageNum);
-
-		}
-
-		postService.updateHitCount(postId);
-
-		Post dto = postService.getReadData(postId);
-
-		if(dto==null) {
-
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("redirect:/mydetail?pageNum=" + pageNum);
-
-			return mav;
-		}
-
-		String param = "pageNum=" + pageNum;
-
-
-		ModelAndView mav = new ModelAndView();
-
-		//좋아요 부분
-		mav.addObject("likedto",likedto);
-
-		mav.addObject("dto",dto);
-		mav.addObject("params",param);
-		mav.addObject("pageNum",pageNum);
-
-
-		mav.setViewName("/mydetail");
-
-		return mav;
-
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

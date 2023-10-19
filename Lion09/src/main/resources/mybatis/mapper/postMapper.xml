@@ -63,7 +63,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	resultType="com.lion09.board.Post">
 	select postId,nickName,title,status,productsPrice,hitCount,contents,
 	created,deadLine,chooseFile,postLikeCount,recruitment,categoryId,myAddr,
-	likeDate from post where postId=#{postId}	
+	likeDate,userId from post where postId=#{postId}	
 </select>
 
 <update id="updateHitCount" parameterType="int">

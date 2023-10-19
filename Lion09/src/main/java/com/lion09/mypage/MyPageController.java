@@ -267,6 +267,10 @@ public class MyPageController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("review");
 
+		Member mdto = mypageService.selectData(sessionInfo.getUserId());
+
+		mav.addObject("mdto",mdto);
+
 		return mav;
 	}
 	

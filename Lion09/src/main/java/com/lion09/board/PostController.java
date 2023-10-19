@@ -366,21 +366,50 @@ public class PostController {
 
 	//관심목록 불러오기
 	@GetMapping(value = "/wishList")
-	public ModelAndView likeList(
+	public ModelAndView likeList(@Param("start") Integer start,@Param("end") Integer end,@Param("userId") String userId,
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum, Post dto,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
-		String userId = sessionInfo.getUserId();
-
 		ModelAndView mav = new ModelAndView();
+
+		int currentPage = 1;
+
+		if(pageNum!=null) {
+			currentPage = Integer.parseInt(pageNum);
+		}
+		
+		int numPerPage = 12;
+
+		start = (currentPage - 1) * numPerPage + 1;
+		end = currentPage * numPerPage;
+
+		userId = sessionInfo.getUserId();
+
+		List<Post> likeList = postService.likeList(start,end,userId);
+		
+		int dataCount = postService.getLikeCount(userId);
+
+		int totalPage = postUtil.getPageCount(numPerPage, dataCount);
+		
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+		
+		String listUrl = "/wishList";
+
+		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		String detailUrl = "/detail?pageNum=" + totalPage;
+
 		mav.setViewName("/wishList");
-
-		List<Post> likeList = postService.likeList(userId);
-
-		System.out.println(likeList);
-
+		mav.addObject("userId", userId);
 		mav.addObject("likeList", likeList);
-
-
+		mav.addObject("dataCount", dataCount);
+		mav.addObject("pageIndexList", pageIndexList);
+		mav.addObject("detailUrl", detailUrl);
+//		mav.addObject("currentPage", currentPage); 
+//		mav.addObject("totalPage", totalPage); 
+		    
 		return mav;
 
 	}

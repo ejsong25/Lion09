@@ -18,7 +18,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
-
 </head>
 <style>
 @font-face {
@@ -34,6 +33,8 @@
     font-weight: normal;
     font-style: normal;
 }
+
+
 </style>
 
 
@@ -121,18 +122,16 @@
     </div>
 </div>
 
-			<div class="tm-container-inner tm-persons">
-        <div>
+	<div class="tm-container-inner tm-persons">
             
-            <div class="content_4_wrap">
-            
+          <div class="content_4_wrap">
             
  			<div id="lists">
-      		
+      			<div th:if="${likeList.size()}>0">
       			<div class="item_row">
 				    <div th:each="dto, index : ${likeList}">
 				        <div class="item" data-category="${dto.categoryId}">
-				            <a th:href="@{|${detailUrl} + '&postId=' + ${dto.postId}|}">
+				            <a th:href="@{${detailUrl} + '&postId=' + ${dto.postId}}">
 				                <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px;"/>
 				            </a>
 				            <h2 class="item_name" th:text="${dto.title}">제목</h2> 
@@ -147,20 +146,16 @@
 				        </div>
 				    </div>
 				</div>
-				
-				
-      				
-		 	</div>
+				</div>
                     
-                    	<!-- <div th:if="${#lists.size(dataCount)}>0"
-							th:each="dataCount:${dataCount}">
-							<div colspan="5" id="footer">
-								<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
-							</div>
-						</div> -->
-                 </div>
-              </div>
-        </div>
+                 <div th:if="${#lists.size(dataCount)}>0"
+					th:each="dataCount:${dataCount}">
+					<div colspan="5" id="footer">
+						<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
+					</div>
+				</div> 
+           </div>
+         </div>
                 
 		<br/><br/>
 		
@@ -168,7 +163,7 @@
 		</div>
     
     		
-			</div>
+	</div>
 	
     	
     

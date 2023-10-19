@@ -116,8 +116,13 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public List<Post> likeList(String userId) throws Exception {
-		return postlikeMapper.likeList(userId);
+	public List<Post> likeList(int start,int end,String userId) throws Exception {
+		return postlikeMapper.likeList(start,end,userId);
+	}
+
+	@Override
+	public int getLikeCount(String userId) throws Exception {
+		return postlikeMapper.getLikeCount(userId);
 	}
 
 

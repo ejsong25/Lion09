@@ -282,8 +282,6 @@ public class PostController {
 
 	}
 	
-
-
 	@GetMapping("/detail")
 	public ModelAndView detail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
@@ -291,10 +289,10 @@ public class PostController {
 		String pageNum = request.getParameter("pageNum");
 
 
-		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+		Member mdto = mypageService.selectData(sessionInfo.getUserId());
 
 
-		String userId = Mdto.getUserId();
+		String userId = mdto.getUserId();
 
 
 		PostLikeDTO likedto = new PostLikeDTO();
@@ -337,6 +335,7 @@ public class PostController {
 
 		mav.addObject("likedto",likedto);
 
+		mav.addObject("mdto",mdto);
 		mav.addObject("dto",dto);
 		mav.addObject("params",param);
 		mav.addObject("pageNum",pageNum);
@@ -347,10 +346,6 @@ public class PostController {
 		return mav;
 
 	}
-
-
-
-
 
 	//좋아요 관심목록에 추가
 	@PostMapping(value = "/insertLike.action")

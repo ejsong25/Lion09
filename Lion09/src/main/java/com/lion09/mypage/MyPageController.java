@@ -232,7 +232,6 @@ public class MyPageController {
 
 	}
 
-
 	@GetMapping(value = "/update")
 	public ModelAndView updatePwd(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
@@ -258,6 +257,16 @@ public class MyPageController {
 		
 		mav.setViewName("redirect:/update");
 		
+		return mav;
+	}
+	
+	//리뷰
+	@GetMapping(value = "/review")
+	public ModelAndView review(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("review");
+
 		return mav;
 	}
 	

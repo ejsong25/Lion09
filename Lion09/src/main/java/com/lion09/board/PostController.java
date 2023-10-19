@@ -52,10 +52,21 @@ public class PostController {
 	@Autowired
 	PostUtil postUtil;
 
-	@RequestMapping(value = "index")
-	public ModelAndView index() throws Exception {
+	@RequestMapping(value = "/" , method = {RequestMethod.GET})
+	public ModelAndView index(Post dto) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
+	
+		List<Post> lists = postService.deadlineProduct();
+		
+	
+		
+		String deadLineUrl = "/detail?postId=";	
+		
+		
+		mav.addObject("lists", lists);
+		mav.addObject("deadLineUrl",deadLineUrl);
+		mav.addObject("dto",dto);
 
 		mav.setViewName("index");
 

@@ -47,5 +47,8 @@ public interface PostService {
 	public List<Post> likeList(int start,int end,String userId) throws Exception;
 	
 	public int getLikeCount(String userId) throws Exception;
+	
+	//마감임박
+	public List<Post> deadlineProduct() throws Exception;
 
 }

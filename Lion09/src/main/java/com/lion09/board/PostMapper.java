@@ -33,5 +33,12 @@ public interface PostMapper {
 	
 	public void imgDefault(Post dto) throws Exception;
 	
+	//마감임박
+	public List<Post> deadlineProduct() throws Exception;
+
+	
+	
+	
+	
 
 }

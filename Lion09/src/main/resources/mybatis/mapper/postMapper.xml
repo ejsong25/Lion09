@@ -11,8 +11,9 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 
 <insert id="insertData" parameterType="com.lion09.board.Post">
     insert into post (userId,postId,title, productsPrice, hitCount, contents,
-    created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile)
-    values (#{userId},#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile})
+    created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile,deadLine)
+    values (#{userId},#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, 
+    #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile},current_timestamp+5)
 </insert>
 
 <select id="getLists" parameterType="hashMap"
@@ -89,6 +90,23 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 <update id="imgDefault" parameterType="com.lion09.board.Post">
 	update post set chooseFile='lion.png' where postId=#{postId}
 </update>
+
+
+
+ <!-- 마감 일주일 남은 게시글 목록 가져오기 -->
+<select id="deadlineProduct" resultType="com.lion09.board.Post">
+    SELECT postId, title, productsPrice, hitCount, userId, created, deadLine,
+        chooseFile, postLikeCount, recruitment, categoryId, myAddr
+    FROM post
+    <![CDATA[
+    WHERE deadLine <= DATEADD('DAY', 7, CURRENT_TIMESTAMP())
+    ]]>
+    ORDER BY deadLine DESC
+    LIMIT 5;
+</select>
+
+
+
 
 </mapper>
 

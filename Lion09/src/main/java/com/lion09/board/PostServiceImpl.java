@@ -125,7 +125,10 @@ public class PostServiceImpl implements PostService{
 		return postlikeMapper.getLikeCount(userId);
 	}
 
-
+	@Override
+	public List<Post> deadlineProduct() throws Exception {
+		return postMapper.deadlineProduct();
+	}
 
 	
 	

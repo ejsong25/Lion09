@@ -184,9 +184,16 @@ public class PostController {
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 
+		ModelAndView mav = new ModelAndView();
 		Member mdto = mypageService.selectData(sessionInfo.getUserId());
 		mdto.setUserId(sessionInfo.getUserId());
 
+		if(mdto.getMyAddress()==null) {
+			mav.setViewName("/addressInsert");
+			return mav;
+		}
+		
+		
 		int currentPage = 1;
 
 		if(pageNum!=null) {
@@ -222,7 +229,6 @@ public class PostController {
 
 		}
 
-		ModelAndView mav = new ModelAndView();
 
 		int dataCount = postService.getDataCount(searchKey, searchValue);
 

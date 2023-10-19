@@ -45,27 +45,66 @@
 	<div th:replace="layout :: navbar"></div>
 
 	<div class="container">
-	<!-- Top box -->
-		<!-- Logo & Site Name -->
-		<div class="placeholder">	
-			<div class="parallax-window" data-parallax="scroll">
-				<img src="img/bg.jpeg" style="width: 100%;">
-				<div class="tm-header">
-					<div class="row tm-header-inner">
-						<div class="col-md-6 col-12">
-							<div class="tm-site-text-box">
-								<h1 class="tm-site-title">사자고</h1>
-								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+       <div id="slider-wrap">
+		    <ul id="slider">
+		        <li>
+		            <div>
+		                <h3>D-1</h3>
+		                <span>마감임박 #1</span>
+		            </div>
+		            <img src="https://i.ytimg.com/vi/0BdlwVBmmhM/maxresdefault.jpg">
+		        </li>
+		
+		        <li>
+		            <div>
+		                <h3>D-2</h3>
+		                <span>마감임박 #2</span>
+		            </div>
+		            <img src="https://cdn.wadiz.kr/ft/images/green001/2020/0813/20200813112227666_64.gif">
+		        </li>
+		
+		        <li>
+		            <div>
+		                <h3>D-3</h3>
+		                <span>마감임박 #3</span>
+		            </div>
+		            <img src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1135026_16045410254419205.jpg">
+		        </li>
+		
+		        <li>
+		            <div>
+		                <h3>D-4</h3>
+		                <span>마감임박 #4</span>
+		            </div>
+		            <img src="https://t1.daumcdn.net/cfile/tistory/2207573D58CFDE2704">
+		        </li>
+		
+		        <li>
+		            <div>
+		                <h3>D-5</h3>
+		                <span>마감임박 #5</span>
+		            </div>
+		            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-yVNBtJ7wE1ZptgUx5fmNIBNmk2K8IoDFA70ztTGNQBq3G90qpL2YEr4DRtx-HpJOKgs&usqp=CAU">
+		        </li>
+		    </ul>
+
+		    <div class="slider-btns" id="next"><span>▶</span></div>
+		    <div class="slider-btns" id="previous"><span>◀</span></div>
+		
+		    <div id="slider-pagination-wrap">
+		        <ul>
+		        </ul>
+		    </div>
 		</div>
 
-
-		<div class="row1">
-			<div class="card card-margin search-form">
+		<div class="tm-container-inner tm-persons" align="center">
+       		<div>
+            <h1 class="top_title" style="margin-bottom: 5px">공구 참여</h1>
+			</div>
+            
+            <!-- 검색 및 카테고리 -->
+			<div class="row1" style="margin: 20px;">
+			<div class="card card-margin search-form" align="center">
 				<div class="card-body p-0">
 					<form id="search-form" action="" method="get" name="searchForm">
 							<div class="col-lg-3 col-md-3 col-sm-12 p-0" style="float: left;">
@@ -94,96 +133,35 @@
                                         </svg>
 								</button>
 						</div>
-						
 					</form>
-					
 				</div>
 			</div>
+	        <div align="right">
+				<ul>
+					<li><a href="/write.action" class="writeButton">글쓰기</a></li>
+				</ul>
+			</div>
+			</div>
+            
+			
+			
+
+
+		<div class="tm-paging-links" align="center">
+		<nav>
+			<ul>
+				<li class="tm-paging-item" value=""><a href="#" class="tm-paging-link" data-category="all" onclick="showAllItems()">전체보기</a></li>
+				<li class="tm-paging-item" value="1"><a href="#" class="tm-paging-link" data-category="1" onclick="filterItems(this)">신선식품</a></li>
+				<li class="tm-paging-item" value="2"><a href="#" class="tm-paging-link" data-category="2" onclick="filterItems(this)">가공식품</a></li>
+				<li class="tm-paging-item" value="3"><a href="#" class="tm-paging-link" data-category="3" onclick="filterItems(this)">의류 신발</a></li>
+				<li class="tm-paging-item" value="4"><a href="#" class="tm-paging-link" data-category="4" onclick="filterItems(this)">생활 주방</a></li>
+				<li class="tm-paging-item" value="5"><a href="#" class="tm-paging-link" data-category="5" onclick="filterItems(this)">스포츠 레저</a></li>
+				<li class="tm-paging-item" value="6"><a href="#" class="tm-paging-link" data-category="6" onclick="filterItems(this)">도서</a></li>
+				<li class="tm-paging-item" value="7"><a href="#" class="tm-paging-link" data-category="7" onclick="filterItems(this)">기타물품</a></li>
+			</ul></nav>
 		</div>
-
-
-<div class="tm-paging-links" align="center">
-<nav>
-	<ul>
-		<li class="tm-paging-item" value=""><a href="#" class="tm-paging-link" data-category="all" onclick="showAllItems()">전체보기</a></li>
-		<li class="tm-paging-item" value="1"><a href="#" class="tm-paging-link" data-category="1" onclick="filterItems(this)">신선식품</a></li>
-		<li class="tm-paging-item" value="2"><a href="#" class="tm-paging-link" data-category="2" onclick="filterItems(this)">가공식품</a></li>
-		<li class="tm-paging-item" value="3"><a href="#" class="tm-paging-link" data-category="3" onclick="filterItems(this)">의류 신발</a></li>
-		<li class="tm-paging-item" value="4"><a href="#" class="tm-paging-link" data-category="4" onclick="filterItems(this)">생활 주방</a></li>
-		<li class="tm-paging-item" value="5"><a href="#" class="tm-paging-link" data-category="5" onclick="filterItems(this)">스포츠 레저</a></li>
-		<li class="tm-paging-item" value="6"><a href="#" class="tm-paging-link" data-category="6" onclick="filterItems(this)">도서</a></li>
-		<li class="tm-paging-item" value="7"><a href="#" class="tm-paging-link" data-category="7" onclick="filterItems(this)">기타물품</a></li>
-	</ul></nav>
-</div>
-
-
-
-
-                <div id="slider-wrap">
-    <ul id="slider">
-        <li>
-            <div>
-                <h3>D-1</h3>
-                <span>마감임박 #1</span>
-            </div>
-            <img src="https://i.ytimg.com/vi/0BdlwVBmmhM/maxresdefault.jpg">
-        </li>
-
-        <li>
-            <div>
-                <h3>D-2</h3>
-                <span>마감임박 #2</span>
-            </div>
-            <img src="https://cdn.wadiz.kr/ft/images/green001/2020/0813/20200813112227666_64.gif">
-        </li>
-
-        <li>
-            <div>
-                <h3>D-3</h3>
-                <span>마감임박 #3</span>
-            </div>
-            <img src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1135026_16045410254419205.jpg">
-        </li>
-
-        <li>
-            <div>
-                <h3>D-4</h3>
-                <span>마감임박 #4</span>
-            </div>
-            <img src="https://t1.daumcdn.net/cfile/tistory/2207573D58CFDE2704">
-        </li>
-
-        <li>
-            <div>
-                <h3>D-5</h3>
-                <span>마감임박 #5</span>
-            </div>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-yVNBtJ7wE1ZptgUx5fmNIBNmk2K8IoDFA70ztTGNQBq3G90qpL2YEr4DRtx-HpJOKgs&usqp=CAU">
-        </li>
-    </ul>
-
-    <div class="slider-btns" id="next"><span>▶</span></div>
-    <div class="slider-btns" id="previous"><span>◀</span></div>
-
-    <div id="slider-pagination-wrap">
-        <ul>
-        </ul>
-    </div>
-</div>
-
-			<div class="tm-container-inner tm-persons">
-        <div>
-            <h1 class="top_title">공구 참여</h1>
-            
-            
-          <div align="right">
-			  <ul>
-			     <li><a href="/write.action" class="writeButton">글쓰기</a></li>
-			  </ul>
-		  </div>
-						
-       
-                     
+			
+			<div>	 
             <div class="content_4_wrap">
             
             
@@ -212,8 +190,8 @@
                     
                     	<div th:if="${#lists.size(dataCount)}>0"
 							th:each="dataCount:${dataCount}">
-							<div colspan="5" id="footer">
-								<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
+							<div colspan="5" id="footer" align="center">
+								<a th:utext="${pageIndexList }"></a>
 							</div>
 						</div>
                  </div>

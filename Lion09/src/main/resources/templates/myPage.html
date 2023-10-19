@@ -134,6 +134,20 @@
 		});
 
 	}
+	
+	function loadImage(input) {
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function(e) {
+	            // 이미지 미리보기 엘리먼트의 src 속성을 변경하여 이미지를 표시
+	            document.getElementById('profileImage').src = e.target.result;
+	        };
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+	
+	
+	
 </script>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164&libraries=services"></script>
@@ -190,6 +204,7 @@
 							<img class="profileImg" id="profileImage" 
 								th:src="@{'/img/mypage/' + ${dto.profileImgName} + '?_=' + ${#dates.createNow().getTime()}}" >  
 						</div>
+						
 					</div>
 				</header>
 				
@@ -198,7 +213,10 @@
 					 enctype="multipart/form-data">
 					
 					<div align="center">
-						<br/><input type="file" name="mypageFilename"><br/>
+						<br/><input type="file" name="mypageFilename" onchange="loadImage(this)"><br/>
+						
+						
+						
 						<input type="button" class="profileImgBtn" value="사진변경" onclick="profileImg_update();">
 						<input type="button" class="profileImgBtn" value="사진삭제" onclick="profileImg_defalut();">
 					
@@ -274,7 +292,6 @@
 			</div>
 		</footer>
 	</div>
-
 
 	<script>
 			var container = document.getElementById('map');

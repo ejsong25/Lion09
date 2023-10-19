@@ -220,7 +220,7 @@ public class PostController {
 			currentPage = totalPage;
 		}
 
-		String listUrl = "/list3";
+		String listUrl = "/list1";
 
 		if(!param.equals("")) {
 			listUrl = listUrl + "?" + param;
@@ -260,7 +260,7 @@ public class PostController {
 		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);
 
-		mav.setViewName("/list3"); 
+		mav.setViewName("/list1"); 
 		mav.addObject("lists", lists);
 		mav.addObject("dataCount", dataCount);
 		mav.addObject("pageIndexList", pageIndexList);

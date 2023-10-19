@@ -195,7 +195,7 @@
 			</div>
 
 			<!-- Page Content -->
-			<div style="width: 100%;">
+			<div style="width: 100%;" align="center">
 				<header>
 					<div align="center">
 						<h2 class="col-12 text-center tm-section-title">마이페이지</h2>
@@ -213,21 +213,25 @@
 					 enctype="multipart/form-data">
 					
 					<div align="center">
-						<br/><input type="file" name="mypageFilename" onchange="loadImage(this)"><br/>
+						<input type="file" name="mypageFilename" id="mypageFilename" onchange="loadImage(this)">
 						
-						
-						
+						<label for="mypageFilename">
+						  <div class="profileImgBtn" style="width: 150px; height: 30px; font-size: 16pt;">사진 선택</div>
+						</label>
+						<br/>				
 						<input type="button" class="profileImgBtn" value="사진변경" onclick="profileImg_update();">
 						<input type="button" class="profileImgBtn" value="사진삭제" onclick="profileImg_defalut();">
 					
 					</div>
 					
-					<div style="margin-left: 27%;">
+					<div style="width: 500px;">
 						<div>
-							<h3
-								style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">내 동네</h3>
-							<input type="text" id="myAddress" name="myAddress" th:value="${dto.myAddress}" readonly/>
-							<input type="button" value="동네인증" onclick="searchAddress();">
+							<h3 style="font-family: 'omyu_pretty'; font-size: 20pt; 
+								padding-top: 14px; padding-left: 50px;" align="left">내 동네</h3>
+							<input type="text" align="left" id="myAddress" name="myAddress" th:value="${dto.myAddress}" readonly
+								style="font-family: 'omyu_pretty'; font-size: 17pt; width: 400px; "/>
+							<br/>
+							<input type="button" value="동네인증" class="profileBtn" onclick="searchAddress();">
 							<div>
 								<input type="hidden" name="myLatitude" id="myLatitude" th:value="${dto.myLatitude}"/>
 								<input type="hidden" name="myLongitude" id="myLongitude" th:value="${dto.myLongitude}"/>
@@ -236,7 +240,7 @@
 							<h3
 							    style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">닉네임</h3>
 							<input type="text" name="nickName" th:value="${dto.nickName}"
-							    style="font-family: 'omyu_pretty'; font-size: 17pt; width: 60%;"/>
+							    style="font-family: 'omyu_pretty'; font-size: 17pt; width: 60%; padding-left: 4px;"/>
 							</div>
 							<br />
 							<br />
@@ -248,7 +252,7 @@
 					</div>
 				</form>
 				
-				<div style="margin-left: 28%; margin-top: 20px;">
+				<div style="margin-left: 28%; margin-top: 20px;" align="left">
 					<h4 style="font-family: 'omyu_pretty'; font-size: 20pt;">에너지
 						게이지</h4>
 					<b style="font-family: 'omyu_pretty'; font-size: 15pt;">[[${dto.energy}]]%</b>

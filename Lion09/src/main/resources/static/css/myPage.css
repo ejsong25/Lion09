@@ -174,24 +174,8 @@
 
 
 /* 파일 업로드 */
-.btn-upload {
-  width: 150px;
-  height: 30px;
-  background: #fff;
-  border: 1px solid rgb(77,77,77);
-  border-radius: 10px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:hover {
-    background: rgb(77,77,77);
-    color: #fff;
-  }
-}
 
-#file {
+#mypageFilename {
   display: none;
 }
 

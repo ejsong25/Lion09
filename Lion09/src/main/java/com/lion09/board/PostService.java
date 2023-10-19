@@ -44,6 +44,11 @@ public interface PostService {
 	public void deleteLike(int postId) throws Exception;
 	
 	//관심목록
-	public List<Post> likeList(String userId) throws Exception;
+	public List<Post> likeList(int start,int end,String userId) throws Exception;
+	
+	public int getLikeCount(String userId) throws Exception;
+	
+	//마감임박
+	public List<Post> deadlineProduct() throws Exception;
 
 }

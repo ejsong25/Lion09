@@ -33,13 +33,22 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	update post set postLikeCount=postLikeCount-1 where postId=#{postId}
 </update>
 
-<select id="likeList" parameterType="String" resultType="com.lion09.board.Post">
-	select p.title,p.productsPrice,p.chooseFile,p.myAddr
-	from postLike pl
-	inner join post p on pl.postId = p.postId
-	WHERE pl.userId=#{userId}
-	order by pl.likeDate desc
-	limit #{3} offset #{1}
+<select id="likeList" parameterType="hashMap" resultType="com.lion09.board.Post">
+    <![CDATA[
+    select * from (
+        select rownum rnum, data.* from (
+            select pl.postId as postLikeId, p.postId as postId, title, productsPrice, chooseFile, myAddr
+            from postLike pl
+            inner join post p on pl.postId = p.postId
+            WHERE pl.userId=#{userId}
+            order by pl.likeDate desc
+        ) data
+    ) where rnum >= #{start} and rnum <= #{end}
+    ]]>
+</select>
+
+<select id="getLikeCount" parameterType="String" resultType="int">
+	select count(*) from postLike where userId=#{userId} 
 </select>
 
 </mapper>

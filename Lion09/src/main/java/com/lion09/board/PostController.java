@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,75 +44,86 @@ import com.lion09.SessionConst;
 
 @Controller
 public class PostController {
-	
+
 	@Autowired
 	@Qualifier("postServiceImpl")
 	private PostService postService;
-	
+
 	@Autowired
 	PostUtil postUtil;
-	
-	@RequestMapping(value = "index")
-	public ModelAndView index() throws Exception {
-		
+
+	@RequestMapping(value = "/" , method = {RequestMethod.GET})
+	public ModelAndView index(Post dto) throws Exception {
+
 		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("index");
-		
-		return mav;
-		
-	}
 	
+		List<Post> lists = postService.deadlineProduct();
+		
+	
+		
+		String deadLineUrl = "/detail?postId=";	
+		
+		
+		mav.addObject("lists", lists);
+		mav.addObject("deadLineUrl",deadLineUrl);
+		mav.addObject("dto",dto);
+
+		mav.setViewName("index");
+
+		return mav;
+
+	}
+
 	@Autowired
 	@Qualifier("myPageServiceImpl")
 	private MyPageService mypageService;
-	
+
 	//글쓰기 페이지 불러오기
 	@GetMapping("/write.action")
 	public ModelAndView write(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-		
+
 		ModelAndView mav = new ModelAndView();
-		
+
 		Member dto = mypageService.selectData(sessionInfo.getUserId());
-		
+
 		mav.addObject("dto",dto);
-		
+
 		if(dto.getMyAddress()==null) {
 			mav.setViewName("/addressInsert");
 		}else {
 			mav.setViewName("/write"); 
 		}
-		
+
 		return mav;
 	}
-	
-	
+
+
 	//@PostMapping(value="/write_ok.action")
 	@RequestMapping(value="/write_ok.action", method = {RequestMethod.POST})
 	public ModelAndView write_ok(@RequestPart("chooseFileName") MultipartFile cFile,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto,HttpServletRequest request) throws Exception {
-	 
-		
+
+
 		ModelAndView mav = new ModelAndView();
-		
+
 		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
 		String nickName = Mdto.getNickName();
 		dto.setNickName(nickName);
 		dto.setMyAddr(Mdto.getMyAddress());
 		dto.setUserId(sessionInfo.getUserId());
-	
-		
+
+
 		int maxPostId = postService.maxPostId();
 		dto.setPostId(maxPostId + 1);
 
-		 String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
-		    dto.setContents(plainText);
-		
-		
-		
+		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
+		dto.setContents(plainText);
+
+
+
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
-			String uploadDir = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String uploadDir = "C:\\git-lion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			// 업로드한 파일의 원래 파일 이름 가져오기
 			String originalFilename = cFile.getOriginalFilename();
@@ -125,8 +137,8 @@ public class PostController {
 			// 현재 날짜 및 시간을 가져와 포맷팅
 			Date now = new Date(System.currentTimeMillis());
 			String timestamp = dateFormat.format(now);
-			
-			
+
+
 			//새 파일 이름 생성 
 			String newFilename = originalFilename.replace(fileExtension, "_" +dto.getPostId() + timestamp +fileExtension);
 
@@ -157,25 +169,29 @@ public class PostController {
 
 
 		mav.setViewName("redirect:/list1");
-	    return mav;
+		return mav;
 	}
-	
-	
-			
-	
-	@GetMapping("/list1")
-	public ModelAndView list(@Param("start") Integer start, @Param("end") Integer end,
+
+
+
+	@RequestMapping(value = "/list1", 
+			method = {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView list1(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
 			@Param("searchKey") String searchKey,
 			@Param("searchValue") String searchValue, Post dto,
-			HttpServletRequest request) throws Exception {
-		
+			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+
+		Member mdto = mypageService.selectData(sessionInfo.getUserId());
+		mdto.setUserId(sessionInfo.getUserId());
+
 		int currentPage = 1;
-		
+
 		if(pageNum!=null) {
-			
+
 			currentPage = Integer.parseInt(pageNum);
-						
+
 		}
 
 		searchKey = request.getParameter("searchKey");
@@ -197,7 +213,6 @@ public class PostController {
 		start = (currentPage - 1) * numPerPage + 1;
 		end = currentPage * numPerPage;
 
-		List<Post> lists = postService.getLists(start, end, searchKey, searchValue);
 
 		String param = "";
 		if (searchValue != null && !searchValue.equals("")) {
@@ -217,7 +232,7 @@ public class PostController {
 		}
 
 		String listUrl = "/list1";
-		
+
 		if(!param.equals("")) {
 			listUrl = listUrl + "?" + param;
 		}
@@ -235,268 +250,310 @@ public class PostController {
 		}
 
 
-		
+		//반경조회해서 가져오기
+		List<Member> findList = mypageService.findLocationsNearby(mdto);
+		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
+		List<Post> lists = new ArrayList<>();
+
+		for (Member member : findList) {
+			String myAddress = member.getMyAddress();
+
+			for (Post post : allLists) {
+				String myAddr = post.getMyAddr();
+				if (myAddr.equals(myAddress)) {
+					lists.add(post);
+				} 
+			}
+
+		}
+
+
+		mav.addObject("mdto",mdto);
+		mav.addObject("findList",findList);
 
 		mav.setViewName("/list1"); 
 		mav.addObject("lists", lists);
 		mav.addObject("dataCount", dataCount);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("detailUrl", detailUrl);
-		
+
 
 		return mav;
 
 	}
 	
-	
-	
 	@GetMapping("/detail")
 	public ModelAndView detail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-		
+
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		String pageNum = request.getParameter("pageNum");
-		
-		
-		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
-		
-		
-		String userId = Mdto.getUserId();
+
+
+		Member mdto = mypageService.selectData(sessionInfo.getUserId());
+
+
+		String userId = mdto.getUserId();
 
 
 		PostLikeDTO likedto = new PostLikeDTO();
-		
+
 		likedto.setUserId(userId);
 		likedto.setPostId(postId);
-		
-		
+
+
 		int likeState = postService.findPostlikeState(likedto);
 		likedto.setLikeState(likeState);
 
-		
+
 		int currentPage = 1;
-		
+
 		if(pageNum!=null) {
-			
+
 			currentPage = Integer.parseInt(pageNum);
-						
+
 		}
 
 		postService.updateHitCount(postId);
-		
+
 		Post dto = postService.getReadData(postId);
-		
+
 		if(dto==null) {
-			
+
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("redirect:/list1?pageNum=" + pageNum);
-			
+
 			return mav;
 		}
 
-		
+
 		String param = "pageNum=" + pageNum;
-	
-		
+
+
 		ModelAndView mav = new ModelAndView();
-		
+
 		//좋아요 부분
 
 		mav.addObject("likedto",likedto);
-		
+
+		mav.addObject("mdto",mdto);
 		mav.addObject("dto",dto);
 		mav.addObject("params",param);
 		mav.addObject("pageNum",pageNum);
 
-		
+
 		mav.setViewName("/detail");
-		
+
 		return mav;
-		
+
 	}
-	
-	
-	
-	
-	
+
 	//좋아요 관심목록에 추가
-		@PostMapping(value = "/insertLike.action")
-		public ModelAndView insertLike(PostLikeDTO likedto,
-				@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto) throws Exception {
-			
-			int postId = dto.getPostId();
-			
-			//좋아요
-			likedto.setUserId(sessionInfo.getUserId());
-			likedto.setPostId(postId);
-			
-			int likeState = postService.findPostlikeState(likedto);
-			likedto.setLikeState(likeState);
-			
-			postService.insertPostlike(likedto);
-			postService.updateLike(postId);
-			
-			ModelAndView mav = new ModelAndView();
-			
-			mav.setViewName("redirect:/detail?postId=" + postId);
-			
-			return mav;
-			
+	@PostMapping(value = "/insertLike.action")
+	public ModelAndView insertLike(PostLikeDTO likedto,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto) throws Exception {
+
+		int postId = dto.getPostId();
+
+		//좋아요
+		likedto.setUserId(sessionInfo.getUserId());
+		likedto.setPostId(postId);
+
+		int likeState = postService.findPostlikeState(likedto);
+		likedto.setLikeState(likeState);
+
+		postService.insertPostlike(likedto);
+		postService.updateLike(postId);
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/detail?postId=" + postId);
+
+		return mav;
+
+	}
+
+	//관심목록에서 삭제
+	@PostMapping(value = "/deleteLike.action")
+	public ModelAndView delteLike(PostLikeDTO likedto,Post dto,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+		int postId = dto.getPostId();
+
+		likedto.setUserId(sessionInfo.getUserId());
+		likedto.setPostId(dto.getPostId());
+
+		postService.deletePostlike(likedto);
+		postService.deleteLike(postId);
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/detail?postId=" + postId);
+
+		return mav;
+
+	}
+
+	//관심목록 불러오기
+	@GetMapping(value = "/wishList")
+	public ModelAndView likeList(@Param("start") Integer start,@Param("end") Integer end,@Param("userId") String userId,
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum, Post dto,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+
+		int currentPage = 1;
+
+		if(pageNum!=null) {
+			currentPage = Integer.parseInt(pageNum);
 		}
 		
-		//관심목록에서 삭제
-		@PostMapping(value = "/deleteLike.action")
-		public ModelAndView delteLike(PostLikeDTO likedto,Post dto,
-				@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-			
-			int postId = dto.getPostId();
-			
-			likedto.setUserId(sessionInfo.getUserId());
-			likedto.setPostId(dto.getPostId());
-			
-			postService.deletePostlike(likedto);
-			postService.deleteLike(postId);
-			
-			ModelAndView mav = new ModelAndView();
-			
-			mav.setViewName("redirect:/detail?postId=" + postId);
-			
-			return mav;
-			
+		int numPerPage = 12;
+
+		start = (currentPage - 1) * numPerPage + 1;
+		end = currentPage * numPerPage;
+
+		userId = sessionInfo.getUserId();
+
+		List<Post> likeList = postService.likeList(start,end,userId);
+		
+		int dataCount = postService.getLikeCount(userId);
+
+		int totalPage = postUtil.getPageCount(numPerPage, dataCount);
+		
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
 		}
 		
-		//관심목록 불러오기
-		@GetMapping(value = "/wishList")
-		public ModelAndView likeList(
-				@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+		String listUrl = "/wishList";
+
+		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
-			String userId = sessionInfo.getUserId();
-			
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("/wishList");
-			
-			List<Post> likeList = postService.likeList(userId);
-			
-			System.out.println(likeList);
-			
-			mav.addObject("likeList", likeList);
-			
-			
-			return mav;
-			
-		}
-	
-	
-	//게시글 수정하기
-	
-		@GetMapping("/writeUpdated")
-		public ModelAndView writeUpdated(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,HttpServletRequest request) throws Exception {
-			
-			ModelAndView mav = new ModelAndView();
-			
-			
-			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
-			
-			String userId = Mdto.getUserId();
+		String detailUrl = "/detail?pageNum=" + totalPage;
 
-			int postId = Integer.parseInt(request.getParameter("postId"));
-			String pageNum = request.getParameter("pageNum");
-			
-			
-			
-			
-			Post dto =  postService.getReadData(postId);
-			
-			String param = "pageNum=" + pageNum;
-			
-			mav.addObject("dto", dto);
-			mav.addObject("params",param);
-			mav.addObject("pageNum", pageNum);
-			mav.setViewName("writeUpdated");
-
-			
-			  return mav;
-		}
-	
-		
-		
-		//게시글 수정하기
-		@Transactional
-		@RequestMapping(value="/writeUpdated_ok", method = {RequestMethod.POST})
-		public ModelAndView writeUpdated_ok(@RequestParam(name = "postId", defaultValue = "1") int postId,HttpServletRequest request) throws Exception {
-			
-			
-			
-			
-			
-			
-			ModelAndView mav = new ModelAndView();
-			
-			Post dto = new Post();
-				
-					dto.setPostId(postId);
-			 	
-			 		dto.setTitle(request.getParameter("title"));
-
-			        dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
-
-			        dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
-
-			        dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));
-
-			     
-			        String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
-			    	dto.setContents(plainText);
-			    	dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
-
-
-
-			postService.updateData(dto);
-
-			
-			
-		    String pageNum = request.getParameter("pageNum");
-		    String param = "pageNum=" + pageNum;
-			
-
+		mav.setViewName("/wishList");
+		mav.addObject("userId", userId);
+		mav.addObject("likeList", likeList);
+		mav.addObject("dataCount", dataCount);
+		mav.addObject("pageIndexList", pageIndexList);
+		mav.addObject("detailUrl", detailUrl);
+//		mav.addObject("currentPage", currentPage); 
+//		mav.addObject("totalPage", totalPage); 
 		    
+		return mav;
 
-			mav.setViewName("redirect:/myList?" + param);
-			
+	}
+
+
+	//게시글 수정하기
+	@GetMapping("/writeUpdated")
+	public ModelAndView writeUpdated(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,HttpServletRequest request) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+
+
+		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+
+		String userId = Mdto.getUserId();
+
+		int postId = Integer.parseInt(request.getParameter("postId"));
+		String pageNum = request.getParameter("pageNum");
+
+
+
+
+		Post dto =  postService.getReadData(postId);
+
+		String param = "pageNum=" + pageNum;
+
+		mav.addObject("dto", dto);
+		mav.addObject("params",param);
+		mav.addObject("pageNum", pageNum);
+		mav.setViewName("writeUpdated");
+
+
+		return mav;
+	}
+
+
+
+	//게시글 수정하기
+	@Transactional
+	@RequestMapping(value="/writeUpdated_ok", method = {RequestMethod.POST})
+	public ModelAndView writeUpdated_ok(@RequestParam(name = "postId", defaultValue = "1") int postId,HttpServletRequest request) throws Exception {
+
+
+
+
+
+
+		ModelAndView mav = new ModelAndView();
+
+		Post dto = new Post();
+
+		dto.setPostId(postId);
+
+		dto.setTitle(request.getParameter("title"));
+
+		dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
+
+		dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
+
+		dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));
+
+
+		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
+		dto.setContents(plainText);
+		dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
+
+
+
+		postService.updateData(dto);
+
+
+
+		String pageNum = request.getParameter("pageNum");
+		String param = "pageNum=" + pageNum;
+
+
+
+
+		mav.setViewName("redirect:/myList?" + param);
+
+		return mav;
+
+
+
+	}
+
+
+
+
+
+	//게시글 이미지 업데이트
+	@RequestMapping(value="/chooseFile_update.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView imageUpdated(@RequestParam(name = "postId", defaultValue = "1") int postId,
+			HttpServletRequest request,
+			@RequestPart("chooseFile") MultipartFile cFile) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+
+		//int postId = Integer.parseInt(request.getParameter("postId"));
+		String postIdString = request.getParameter("postId");
+		if (postIdString == null || postIdString.isEmpty()) {
+			mav.addObject("error", "postId가 비어있습니다."); // 오류 메시지 설정
+			mav.setViewName("error_page"); // 오류 페이지로 리다이렉트 또는 뷰 이름 설정
 			return mav;
-			
-			
-			
 		}
-		
-		
-		
-		
-		
-		//게시글 이미지 업데이트
-		@RequestMapping(value="/chooseFile_update.action", method = {RequestMethod.GET, RequestMethod.POST})
-		public ModelAndView imageUpdated(@RequestParam(name = "postId", defaultValue = "1") int postId,
-				HttpServletRequest request,
-				@RequestPart("chooseFile") MultipartFile cFile) throws Exception {
-			
-			ModelAndView mav = new ModelAndView();
-			
-			//int postId = Integer.parseInt(request.getParameter("postId"));
-			 String postIdString = request.getParameter("postId");
-			 if (postIdString == null || postIdString.isEmpty()) {
-			        mav.addObject("error", "postId가 비어있습니다."); // 오류 메시지 설정
-			        mav.setViewName("error_page"); // 오류 페이지로 리다이렉트 또는 뷰 이름 설정
-			        return mav;
-			    }
-			
-			  try {
-			        postId = Integer.parseInt(postIdString);
+
+		try {
+			postId = Integer.parseInt(postIdString);
 
 
 			//이미지 사진들 모아두는 폴더
 			String upload_path = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
 			Post dto = postService.getReadData(postId);
-					
+
 			//삭제할 파일 이름 추출
 			String beforeFilename = dto.getChooseFile();
 
@@ -507,21 +564,21 @@ public class PostController {
 			if(!beforeFilename.equals("lion.png")) {
 				String filePathToDelete = delete_pate + beforeFilename;
 				File fileToDelete = new File(filePathToDelete);
-				
+
 				if (fileToDelete.exists()) {
 					fileToDelete.delete();  
 				} 
 			}
-		
+
 
 			//바꿀 파일 이름 추출
 			String originalFilename = cFile.getOriginalFilename();
 
 			//확장자 추출
-		    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-			
-		    //새 파일 이름 생성 (현재 시간 대신 "111" 추가)
-		    String newFilename = originalFilename.replace(fileExtension, "_111" + fileExtension);
+			String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+			//새 파일 이름 생성 (현재 시간 대신 "111" 추가)
+			String newFilename = originalFilename.replace(fileExtension, "_111" + fileExtension);
 
 			//MyPageDTO에 파일 이름 설정
 			dto.setChooseFile(newFilename);
@@ -531,275 +588,275 @@ public class PostController {
 			//경로에 업로드
 			cFile.transferTo(new File(upload_path + newFilename));  
 
-		    String pageNum = request.getParameter("pageNum");
-		    String param = "pageNum=" + pageNum +"&" + "postId=" + postId;
-			
+			String pageNum = request.getParameter("pageNum");
+			String param = "pageNum=" + pageNum +"&" + "postId=" + postId;
+
 			//리다이렉트할 URL 설정
-	        String redirectUrl = "/writeUpdated?" + param ;
-	        
-	        //RedirectView를 사용하여 리다이렉션 설정
-	        RedirectView redirectView = new RedirectView(redirectUrl, true);
+			String redirectUrl = "/writeUpdated?" + param ;
 
-	        //대기 후 리다이렉트
-	        try {
-	            Thread.sleep(3000);
-	        } catch (InterruptedException e) {
-	            Thread.currentThread().interrupt();
-	        }
+			//RedirectView를 사용하여 리다이렉션 설정
+			RedirectView redirectView = new RedirectView(redirectUrl, true);
+
+			//대기 후 리다이렉트
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
 
 
-	        mav.setView(redirectView);
+			mav.setView(redirectView);
 
-			
-			  } catch (NumberFormatException e) {
-			        mav.addObject("error", "postId 파싱 중 오류가 발생했습니다."); // 오류 메시지 설정
-			        mav.setViewName("error_page"); // 오류 페이지로 리다이렉트 또는 뷰 이름 설정
-			    }
-			  return mav;
+
+		} catch (NumberFormatException e) {
+			mav.addObject("error", "postId 파싱 중 오류가 발생했습니다."); // 오류 메시지 설정
+			mav.setViewName("error_page"); // 오류 페이지로 리다이렉트 또는 뷰 이름 설정
 		}
-		
-		
-		
-		
-		//이미지파일 삭제
-		//@PostMapping(value = "/chooseFile_delete.action")
-		@RequestMapping(value="/chooseFile_delete.action", method = {RequestMethod.GET, RequestMethod.POST})
-		public ModelAndView imgDefault(HttpServletRequest request) throws Exception {
-			
-			ModelAndView mav = new ModelAndView();
-			
-			int postId = Integer.parseInt(request.getParameter("postId"));
-			
-			String pageNum = request.getParameter("pageNum");
-		    String param = "pageNum=" + pageNum +"&" + "postId=" + postId;
-			
-			
-			Post dto = postService.getReadData(postId);
-			
-			//삭제할 파일 이름 추출
-			String beforeFilename = dto.getChooseFile();
-			
-			
-			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+		return mav;
+	}
 
-			//기본 사진 이미지가 아닐 경우 삭제		
-			if(beforeFilename.equalsIgnoreCase("lion.png")){
-				mav.setViewName("redirect:/writeUpdated?" + param );
-				return mav;
-			}
-			
-			if(beforeFilename!="lion.png") {
-				String filePathToDelete = delete_pate + beforeFilename;
-				File fileToDelete = new File(filePathToDelete);
-				
-				if (fileToDelete.exists()) {
-					fileToDelete.delete();  
-				} 
-			}
-			//기본 이미지 lion.png로 변경
-			postService.imgDefault(dto);
 
+
+
+	//이미지파일 삭제
+	//@PostMapping(value = "/chooseFile_delete.action")
+	@RequestMapping(value="/chooseFile_delete.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView imgDefault(HttpServletRequest request) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+
+		int postId = Integer.parseInt(request.getParameter("postId"));
+
+		String pageNum = request.getParameter("pageNum");
+		String param = "pageNum=" + pageNum +"&" + "postId=" + postId;
+
+
+		Post dto = postService.getReadData(postId);
+
+		//삭제할 파일 이름 추출
+		String beforeFilename = dto.getChooseFile();
+
+
+		//삭제할 파일 경로
+		String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+
+		//기본 사진 이미지가 아닐 경우 삭제		
+		if(beforeFilename.equalsIgnoreCase("lion.png")){
 			mav.setViewName("redirect:/writeUpdated?" + param );
-
 			return mav;
-			
 		}
-		
-		@RequestMapping(value="/deleted_ok.action", method = {RequestMethod.POST,RequestMethod.GET})
-		public ModelAndView deleted_ok(HttpServletRequest request) throws Exception {
-			
+
+		if(beforeFilename!="lion.png") {
+			String filePathToDelete = delete_pate + beforeFilename;
+			File fileToDelete = new File(filePathToDelete);
+
+			if (fileToDelete.exists()) {
+				fileToDelete.delete();  
+			} 
+		}
+		//기본 이미지 lion.png로 변경
+		postService.imgDefault(dto);
+
+		mav.setViewName("redirect:/writeUpdated?" + param );
+
+		return mav;
+
+	}
+
+	@RequestMapping(value="/deleted_ok.action", method = {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView deleted_ok(HttpServletRequest request) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+
+		Post dto = new Post();
+
+		int postId = Integer.parseInt(request.getParameter("postId"));
+		String pageNum = request.getParameter("pageNum");
+
+
+		postService.deleteData(postId);
+
+		String param = "pageNum=" + pageNum;
+
+		// 데이터 업데이트 후 데이터 다시 읽기
+		Post updatedPost = postService.getReadData(dto.getPostId());
+
+
+		mav.setViewName("redirect:/list1?" + param);
+
+		return mav;
+
+
+	}
+
+
+
+
+
+	@GetMapping("/myList")
+	public ModelAndView myList(@Param("start") Integer start, @Param("end") Integer end,
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
+			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+
+
+
+		//			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+		//			String userId = sessionInfo.getUserId();
+
+		Post dto = new Post();
+
+		String userId = sessionInfo.getUserId();
+		//dto.setUserId(userId);
+
+		System.out.println(userId);
+
+		int currentPage = 1;
+
+		if(pageNum!=null) {
+
+			currentPage = Integer.parseInt(pageNum);
+
+		}
+
+
+		int numPerPage = 12;
+
+		start = (currentPage - 1) * numPerPage + 1;
+		end = currentPage * numPerPage;
+
+		List<Post> lists = postService.mygetLists(start, end,userId);
+
+		String param = "";
+
+
+		ModelAndView mav = new ModelAndView();
+
+		int dataCount = postService.mygetDataCount(userId);
+
+		int totalPage = postUtil.getPageCount(numPerPage, dataCount);
+
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+
+		String listUrl = "/myList";
+
+		if(!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+
+		if (!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+
+		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);
+
+		String mydetailUrl = "/mydetail?pageNum=" + totalPage;
+
+		if (!param.equals("")) {
+			mydetailUrl = mydetailUrl + "&" + param;
+		}
+
+
+
+
+		mav.setViewName("/myList"); 
+		mav.addObject("lists", lists);
+		mav.addObject("dataCount", dataCount);
+		mav.addObject("pageIndexList", pageIndexList);
+		mav.addObject("mydetailUrl", mydetailUrl);
+
+
+		return mav;
+
+	}
+
+
+
+
+	@GetMapping("/mydetail")
+	public ModelAndView mydetail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+		int postId = Integer.parseInt(request.getParameter("postId"));
+		String pageNum = request.getParameter("pageNum");
+
+
+		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
+
+
+		String userId = Mdto.getUserId();
+
+
+		PostLikeDTO likedto = new PostLikeDTO();
+
+		likedto.setUserId(userId);
+		likedto.setPostId(postId);
+
+
+		int likeState = postService.findPostlikeState(likedto);
+		likedto.setLikeState(likeState);
+
+
+		int currentPage = 1;
+
+		if(pageNum!=null) {
+
+			currentPage = Integer.parseInt(pageNum);
+
+		}
+
+		postService.updateHitCount(postId);
+
+		Post dto = postService.getReadData(postId);
+
+		if(dto==null) {
+
 			ModelAndView mav = new ModelAndView();
-
-			Post dto = new Post();
-			
-			int postId = Integer.parseInt(request.getParameter("postId"));
-			String pageNum = request.getParameter("pageNum");
-			
-
-			postService.deleteData(postId);
-			
-			String param = "pageNum=" + pageNum;
-			
-		    // 데이터 업데이트 후 데이터 다시 읽기
-		    Post updatedPost = postService.getReadData(dto.getPostId());
-
-
-			mav.setViewName("redirect:/list1?" + param);
-			
-			return mav;
-
-			
-		}
-		
-		
-		
-		
-		
-		@GetMapping("/myList")
-		public ModelAndView myList(@Param("start") Integer start, @Param("end") Integer end,
-				@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
-				HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-			
-			
-			
-
-//			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
-//			String userId = sessionInfo.getUserId();
-			
-			Post dto = new Post();
-			
-			String userId = sessionInfo.getUserId();
-			//dto.setUserId(userId);
-			
-			System.out.println(userId);
-		
-			int currentPage = 1;
-			
-			if(pageNum!=null) {
-				
-				currentPage = Integer.parseInt(pageNum);
-							
-			}
-
-
-			int numPerPage = 12;
-
-			start = (currentPage - 1) * numPerPage + 1;
-			end = currentPage * numPerPage;
-
-			List<Post> lists = postService.mygetLists(start, end,userId);
-
-			String param = "";
-			
-
-			ModelAndView mav = new ModelAndView();
-
-			int dataCount = postService.mygetDataCount(userId);
-
-			int totalPage = postUtil.getPageCount(numPerPage, dataCount);
-
-			if (currentPage > totalPage) {
-				currentPage = totalPage;
-			}
-
-			String listUrl = "/myList";
-			
-			if(!param.equals("")) {
-				listUrl = listUrl + "?" + param;
-			}
-
-			if (!param.equals("")) {
-				listUrl = listUrl + "?" + param;
-			}
-
-			String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);
-
-			String mydetailUrl = "/mydetail?pageNum=" + totalPage;
-
-			if (!param.equals("")) {
-				mydetailUrl = mydetailUrl + "&" + param;
-			}
-
-
-			
-
-			mav.setViewName("/myList"); 
-			mav.addObject("lists", lists);
-			mav.addObject("dataCount", dataCount);
-			mav.addObject("pageIndexList", pageIndexList);
-			mav.addObject("mydetailUrl", mydetailUrl);
-			
+			mav.setViewName("redirect:/mydetail?pageNum=" + pageNum);
 
 			return mav;
-
 		}
-		
-		
-		
-		
-		@GetMapping("/mydetail")
-		public ModelAndView mydetail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-			
-			int postId = Integer.parseInt(request.getParameter("postId"));
-			String pageNum = request.getParameter("pageNum");
-			
-			
-			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
-			
-			
-			String userId = Mdto.getUserId();
+
+		String param = "pageNum=" + pageNum;
 
 
-			PostLikeDTO likedto = new PostLikeDTO();
-			
-			likedto.setUserId(userId);
-			likedto.setPostId(postId);
-			
-			
-			int likeState = postService.findPostlikeState(likedto);
-			likedto.setLikeState(likeState);
+		ModelAndView mav = new ModelAndView();
 
-			
-			int currentPage = 1;
-			
-			if(pageNum!=null) {
-				
-				currentPage = Integer.parseInt(pageNum);
-							
-			}
+		//좋아요 부분
+		mav.addObject("likedto",likedto);
 
-			postService.updateHitCount(postId);
-			
-			Post dto = postService.getReadData(postId);
-			
-			if(dto==null) {
-				
-				ModelAndView mav = new ModelAndView();
-				mav.setViewName("redirect:/mydetail?pageNum=" + pageNum);
-				
-				return mav;
-			}
+		mav.addObject("dto",dto);
+		mav.addObject("params",param);
+		mav.addObject("pageNum",pageNum);
 
-			String param = "pageNum=" + pageNum;
-		
-			
-			ModelAndView mav = new ModelAndView();
-			
-			//좋아요 부분
-			mav.addObject("likedto",likedto);
 
-			mav.addObject("dto",dto);
-			mav.addObject("params",param);
-			mav.addObject("pageNum",pageNum);
+		mav.setViewName("/mydetail");
 
-			
-			mav.setViewName("/mydetail");
-			
-			return mav;
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		return mav;
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

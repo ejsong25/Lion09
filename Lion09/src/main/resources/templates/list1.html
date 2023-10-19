@@ -162,6 +162,46 @@
 		</div>
 			
 			<div>	 
+			
+			<!-- 동네 범위설정 -->
+			<form action="" method="post" name="myRange">
+			<div class="slidecontainer">
+			    <input type="range" min="1" max="5" th:value="${mdto.myRange}" 
+			    class="slider" id="myRange" name="myRange">
+			    <p><span id="sliderValue"></span>km</p>
+				<input type="button" value="조회" onclick="findAddress();">
+			</div>
+			</form>
+			 <script>
+			   	var slider = document.getElementById("myRange");
+			    var output = document.getElementById("sliderValue");
+			    
+			    output.innerHTML = slider.value;
+
+			    slider.oninput = function() {
+			        output.innerHTML = this.value;
+			    }
+			    
+			    function findAddress() {
+					f = document.myRange;
+					
+					alert('주소반경변경');
+					
+					f.action="/updateRange.action";
+					f.submit();
+				
+				}
+		        
+		    </script>
+			
+			<tr th:each="mdto:${findList}">
+			
+				<td th:text="${mdto.myAddress}"></td>
+				
+			</tr>
+			<!-- 동네 범위설정 -->
+			
+			
             <div class="content_4_wrap">
             
             

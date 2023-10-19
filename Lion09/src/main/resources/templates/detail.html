@@ -97,7 +97,7 @@
         </div><br/>
               
         <div style="float: left;">
-         	<p style="font-size: 20px;" th:text="${dto.nickName}">&nbsp;&nbsp;${dto.nickName}</p>
+         	<p style="font-size: 20px;" th:text="${mdto.nickName}">&nbsp;&nbsp;${dto.nickName}</p>
             <p th:text="${dto.myAddr}">&nbsp;&nbsp;${dto.myAddr}</p>
      	</div>
 	        
@@ -108,10 +108,10 @@
 	    <!-- 에너지 게이지 프로세스바 -->        
 	  	<div style="margin-left: 58%; margin-top: 20px;position: static;">
 	       	<h4 style="font-family: 'omyu_pretty'; font-size: 20pt;">에너지 게이지</h4>
-	        <b style="font-family: 'omyu_pretty'; font-size: 15pt;">50%</b>    		
+	        <b style="font-family: 'omyu_pretty'; font-size: 15pt;">[[${mdto.energy}]]%</b>    		
 	      <div class="progress" style="margin-top: 20px;">
 			  <div class="progress-number" aria-valuenow="첫에너지 40%"></div>
-			   <progress class="progressBar" value="50" min="0" max="100"></progress>
+			   <progress class="progressBar" th:value="${mdto.energy}" min="0" max="100"></progress>
 		  </div>
       	</div>
               
@@ -138,7 +138,8 @@
                   <div class="flex-box between info-button-box">                      
 
                 <div class="button-box" style="margin-left: 88%;">
-                    <button class="orange">채팅하기</button>
+                    <input type="button" class="orange" th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}"
+                    	value="채팅하기">
                 </div>
             </div>
       	  	

@@ -50,5 +50,13 @@ public interface PostService {
 	
 	//마감임박
 	public List<Post> deadlineProduct() throws Exception;
+	
+	//인기글
+	public List<Post> hitProduct() throws Exception;
+	
+	
+	
+	
+	
 
 }

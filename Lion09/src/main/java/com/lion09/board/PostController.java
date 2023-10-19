@@ -58,13 +58,14 @@ public class PostController {
 		ModelAndView mav = new ModelAndView();
 	
 		List<Post> lists = postService.deadlineProduct();
-		
-	
+			
+		List<Post> lists1 = postService.hitProduct();
 		
 		String deadLineUrl = "/detail?postId=";	
 		
 		
 		mav.addObject("lists", lists);
+		mav.addObject("lists1", lists1);
 		mav.addObject("deadLineUrl",deadLineUrl);
 		mav.addObject("dto",dto);
 
@@ -508,10 +509,10 @@ public class PostController {
 		postService.updateData(dto);
 
 
-		String pageNum = request.getParameter("pageNum");
-		String param = "pageNum=" + pageNum;
+//		String pageNum = request.getParameter("pageNum");
+//		String param = "pageNum=" + pageNum;
 
-		mav.setViewName("redirect:/myList?" + param);
+		mav.setViewName("redirect:/list1?");
 
 		return mav;
 

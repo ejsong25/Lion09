@@ -105,7 +105,14 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
     LIMIT 5;
 </select>
 
-
+ <!-- 인기글 목록 가져오기 -->
+<select id="hitProduct" resultType="com.lion09.board.Post">
+    SELECT postId, title, productsPrice, hitCount, userId, created, deadLine,
+        chooseFile, postLikeCount, recruitment, categoryId, myAddr
+    FROM post
+    ORDER BY hitCount DESC
+    LIMIT 5;
+</select>
 
 
 </mapper>

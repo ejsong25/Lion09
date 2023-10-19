@@ -130,6 +130,13 @@ public class PostServiceImpl implements PostService{
 		return postMapper.deadlineProduct();
 	}
 
+	@Override
+	public List<Post> hitProduct() throws Exception {
+		return postMapper.hitProduct();
+	}
+
+
+
 	
 	
 	

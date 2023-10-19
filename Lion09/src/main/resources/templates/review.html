@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>MyPage</title>
+<link href="css/myPage.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+
+<script type="text/javascript">
+
+	function updateRating() {
+	  const stars = document.querySelectorAll('.star-rating input[name="rating"]');
+	  let selectedRating = 0;
+	
+	  stars.forEach((star, index) => {
+	    if (star.checked) {
+	      selectedRating = stars.length - index;
+	    }
+	  });
+	  
+	  if(selectedRating==0) {
+		  alert('만족도를 선택해주세요')
+	  }else {
+		  alert('선택한 별의 개수: ' + selectedRating);
+	  }
+
+	}
+
+</script>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164&libraries=services"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<style type="text/css">
+
+@font-face {
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  justify-content: space-around;
+  padding: 0 0.2em;
+  text-align: center;
+  width: 5em;
+}
+ 
+.star-rating input {
+  display: none;
+}
+ 
+.star-rating label {
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: #2b2a29;
+  cursor: pointer;
+}
+ 
+.star-rating :checked ~ label {
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  -webkit-text-fill-color: #fff58c;
+}
+
+</style>
+
+</head>
+<body>
+
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+	<div class="container">
+		<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 만나서 거래</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	
+	<div align="center" style="margin-top: 200px; margin-bottom: 200px;">
+	
+
+		<h1 style="font-family: 'omyu_pretty';">[[${mdto.nickName}]]님,</h2>
+		<h1 style="font-family: 'omyu_pretty';">ㅇㅇㅇ과의 거래는 어떠셨나요?</h2>
+		<br/>
+	
+		<div class="star-rating space-x-4 mx-auto">
+		  <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
+		  <label for="5-stars" class="star pr-4">★</label>
+		  <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
+		  <label for="4-stars" class="star">★</label>
+		  <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
+		  <label for="3-stars" class="star">★</label>
+		  <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
+		  <label for="2-stars" class="star">★</label>
+		  <input type="radio" id="1-star" name="rating" value="1" v-model="ratings"/>
+		  <label for="1-star" class="star">★</label>
+		</div>
+		<br/><br/><br/><br/>
+		
+		<input type="button" class="profileBtn" style="width: 200px;"
+			value="후기작성완료" onclick="updateRating()">
+
+
+	</div>	
+	
+	
+	
+	
+	
+	<!-- footer 자리 -->
+	<footer class="tm-footer text-center">
+		<div style="float: left;">
+
+			<p>
+				<b>사자고</b>
+			</p>
+			<br />
+			<p>
+				<b>사업자등록번호</b> 202-30-92017
+			</p>
+			<p>
+				<b>이메일</b> help@liongg.co.kr
+			</p>
+			<p>
+				<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+			</p>
+			<p>
+				Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+					href="https://templatemo.com">TemplateMo</a>
+			</p>
+		</div>
+		<div style="float: right;">
+			<div>
+				<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+			</div>
+		</div>
+	</footer>
+</div>
+
+
+<script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(37.49886, 127.03170),
+			level: 2
+		};
+
+		var map = new kakao.maps.Map(container, options);
+</script>
+
+</body>
+</html>

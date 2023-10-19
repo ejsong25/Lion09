@@ -39,7 +39,6 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	inner join post p on pl.postId = p.postId
 	WHERE pl.userId=#{userId}
 	order by pl.likeDate desc
-	limit #{3} offset #{1}
 </select>
 
 </mapper>

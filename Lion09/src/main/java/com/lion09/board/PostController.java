@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,13 +163,17 @@ public class PostController {
 
 
 
-
-	@GetMapping("/list1")
-	public ModelAndView list(@Param("start") Integer start, @Param("end") Integer end,
+	@RequestMapping(value = "/list1", 
+			method = {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView list1(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
 			@Param("searchKey") String searchKey,
 			@Param("searchValue") String searchValue, Post dto,
-			HttpServletRequest request) throws Exception {
+			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+
+		Member mdto = mypageService.selectData(sessionInfo.getUserId());
+		mdto.setUserId(sessionInfo.getUserId());
 
 		int currentPage = 1;
 
@@ -197,7 +202,6 @@ public class PostController {
 		start = (currentPage - 1) * numPerPage + 1;
 		end = currentPage * numPerPage;
 
-		List<Post> lists = postService.getLists(start, end, searchKey, searchValue);
 
 		String param = "";
 		if (searchValue != null && !searchValue.equals("")) {
@@ -216,7 +220,7 @@ public class PostController {
 			currentPage = totalPage;
 		}
 
-		String listUrl = "/list1";
+		String listUrl = "/list3";
 
 		if(!param.equals("")) {
 			listUrl = listUrl + "?" + param;
@@ -235,9 +239,28 @@ public class PostController {
 		}
 
 
+		//반경조회해서 가져오기
+		List<Member> findList = mypageService.findLocationsNearby(mdto);
+		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
+		List<Post> lists = new ArrayList<>();
+
+		for (Member member : findList) {
+			String myAddress = member.getMyAddress();
+
+			for (Post post : allLists) {
+				String myAddr = post.getMyAddr();
+				if (myAddr.equals(myAddress)) {
+					lists.add(post);
+				} 
+			}
+
+		}
 
 
-		mav.setViewName("/list1"); 
+		mav.addObject("mdto",mdto);
+		mav.addObject("findList",findList);
+
+		mav.setViewName("/list3"); 
 		mav.addObject("lists", lists);
 		mav.addObject("dataCount", dataCount);
 		mav.addObject("pageIndexList", pageIndexList);
@@ -247,7 +270,7 @@ public class PostController {
 		return mav;
 
 	}
-
+	
 
 
 	@GetMapping("/detail")

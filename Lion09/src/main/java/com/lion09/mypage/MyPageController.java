@@ -206,27 +206,27 @@ public class MyPageController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("myPage2");
 
-		Member dto = mypageService.selectData(userId);
-		dto.setUserId(userId);
-		List<Member> findList = mypageService.findLocationsNearby(dto);
+		Member mdto = mypageService.selectData(userId);
+		mdto.setUserId(userId);
+		List<Member> findList = mypageService.findLocationsNearby(mdto);
 
-		mav.addObject("dto",dto);
+		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);
 		
 		return mav;
 	}
 
-	//프로필 업데이트
+	//반경 업데이트
 	@PostMapping(value = "/updateRange.action")
-	public ModelAndView updateRange(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member dto) throws Exception {
+	public ModelAndView updateRange(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member mdto) throws Exception {
 
-		dto.setUserId(sessionInfo.getUserId());
-		
-		mypageService.updateRange(dto);
+		mdto.setUserId(sessionInfo.getUserId());
+		System.out.println(mdto.getMyRange());
+		mypageService.updateRange(mdto);
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName("redirect:/myPage2");
+		mav.setViewName("redirect:/list1");
 
 		return mav;
 

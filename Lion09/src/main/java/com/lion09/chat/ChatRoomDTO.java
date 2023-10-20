@@ -27,7 +27,6 @@ import com.lion09.board.Post;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatRoomDTO {
-	
     
 	@Id
 	private Integer num;
@@ -38,9 +37,7 @@ public class ChatRoomDTO {
 	@Column(nullable = true)
     private String roomId; // 채팅방 아이디
     
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postId")
-    private Post post;
+    private int postId;
     
     @Column(nullable = true)
     private String roomName; // 채팅방 이름

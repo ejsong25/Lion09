@@ -44,11 +44,8 @@
     <div class="username-page-container">
         <h1 class="title">Type your username</h1>
         <form id="usernameForm" name="usernameForm">
-            <div  th:if="${user == null}" class="form-group">
-                <input type="text" id="name" placeholder="닉네임" autocomplete="off" class="form-control"/>
-            </div>
-            <div  th:if="${user != null}" class="form-group">
-                <input type="text" id="name" placeholder="닉네임" autocomplete="off" class="form-control" th:value="${dto.nickName}"/>
+            <div class="form-group">
+                <input type="text" id="name" placeholder="닉네임" autocomplete="off" class="form-control" th:value="${session.loginMember.nickName}"/>
             </div>
             <div class="form-group">
                 <button type="submit" class="accent username-submit">Start</button>
@@ -75,9 +72,9 @@
             연결중...
         </div>
         <ul id="messageArea">
-        	<li th:class="${msg.type == 'TALK'} ? chat-message : event-message" th:each="msg:${msgs}">
-				<i th:if="${msg.type == 'TALK'}">프</i>
-				<span th:if="${msg.type == 'TALK'}" th:text="${msg.nickName}"></span>
+        	<li th:class="${msg.type.name() == 'TALK'} ? chat-message : event-message" th:each="msg:${msgs}">
+				<i th:if="${msg.type.name() == 'TALK'}">프</i>
+				<span th:if="${msg.type.name() == 'TALK'}" th:text="${msg.nickName}"></span>
 				<p th:text="${msg.message}"></p>
 			</li>
         </ul>
@@ -99,7 +96,7 @@
 	            </div>
         	</div>
         	<button class="backBtn" onclick="javascript:location.href='/chat';">돌아가기</button>
-        	<button class="backBtn2" th:onclick="@{|location.href='/chat/leave?roomId=${room.roomId}'|}">채팅방 나가기</button>
+        	<button class="backBtn2" th:onclick="@{|location.href='/chat/leave?postId=${room.postId}'|}">채팅방 나가기</button>
     </div>
 </div>
 

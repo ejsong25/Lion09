@@ -10,6 +10,8 @@ public interface ChatRoomMapper {
 
 	public List<ChatRoomDTO> findAllRoom() throws Exception;
 	
+	public ChatRoomDTO findRoomByPostId(@Param("postId") int postId) throws Exception;
+	
 	public ChatRoomDTO findRoomById(@Param("roomId") String roomId) throws Exception;
 	
 	public void createChatRoom(ChatRoomDTO dto) throws Exception;

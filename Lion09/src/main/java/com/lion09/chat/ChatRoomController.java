@@ -3,6 +3,8 @@ package com.lion09.chat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
+import com.lion09.board.Post;
+import com.lion09.board.PostService;
 import com.lion09.member.MemberService;
 
 import java.security.Principal;
@@ -28,6 +32,9 @@ public class ChatRoomController {
     private final MsgChatService msgChatService;
     private final MemberService memberService;
     private final SimpMessageSendingOperations template;
+    @Autowired
+    @Qualifier("postServiceImpl")
+    private PostService postService;
     
     @GetMapping("/chat")
     public String goChatRoom(Model model, Principal principal) throws Exception {
@@ -72,19 +79,32 @@ public class ChatRoomController {
     // 채팅방을 찾아서 클라이언트를 chatroom 으로 보낸다.
     @GetMapping("/chat/room")
     public String roomDetail(Model model, HttpServletRequest request, Principal principal) throws Exception {
-    	String roomId = request.getParameter("roomId");
-    	log.info("roomId {}", roomId);
+    	
+    	int postId = Integer.parseInt(request.getParameter("postId"));
+    	log.info("postId {}", postId);
 
         if (principal != null) {
             // Principal 객체에서 사용자 이름 가져오기
             String username = principal.getName();
             model.addAttribute("username", username);
-
-            // 여기서 사용자 정보를 가져오는 추가적인 로직을 구현하실 수 있습니다.
         }
 
-        ChatRoomDTO room = chatService.findRoomById(roomId);
-        List<ChatDTO> msg = msgChatService.getMsg(roomId);
+        ChatRoomDTO room = chatService.findRoomByPostId(postId);
+        if(room == null) {
+        	Post post =  postService.getReadData(postId);
+        	//방 만들기
+        	//1. chat room,
+        	ChatRoomDTO dto = new ChatRoomDTO();
+        	dto.setUserId(post.getUserId());//채팅방 주인 = 게시글 작성자
+        	dto.setRoomName(post.getTitle());
+        	dto.setChatType(ChatType.MSG);
+        	dto.setMaxUserCnt(post.getRecruitment());
+        	dto.setPostId(postId);
+        	chatService.createChatRoom(dto);
+        	
+        	room = chatService.findRoomByPostId(postId);
+      }
+        List<ChatDTO> msg = msgChatService.getMsg(postId);
         model.addAttribute("room", room);
         model.addAttribute("msgs", msg);
         

@@ -47,7 +47,7 @@ public class ChatController {
         	// 채팅방 유저+1
         	chatService.plusUserCnt(chat.getRoomId());
         	chat.setMessage(chat.getNickName() + " 님이 입장하였습니다.");
-        	
+        	chat.setType(MessageType.ENTER);
         	// 채팅방에 유저 추가 및 UserUUID 반환
         	String userUUID = msgChatService.addMsg(chat.getRoomId(),chat.getUserId(),
         			chat.getNickName(), MessageType.ENTER, chat.getMessage());

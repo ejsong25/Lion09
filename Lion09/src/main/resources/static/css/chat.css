@@ -21,6 +21,12 @@ body {
 	font-size: 16pt;
 }
 
+.tm-nav-link.active,
+.tm-nav-link:hover {
+  color: white;
+  border-bottom: 1px solid white;
+}
+
 .container {
   width: 100%;
   max-width: 1200px;

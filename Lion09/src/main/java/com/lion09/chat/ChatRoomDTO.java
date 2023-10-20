@@ -6,6 +6,8 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -26,7 +28,14 @@ import com.lion09.board.Post;
 @NoArgsConstructor
 public class ChatRoomDTO {
 	
-    @Id
+    
+	@Id
+	private Integer num;
+	
+	@Column(nullable = true)
+	private String userId;
+	
+	@Column(nullable = true)
     private String roomId; // 채팅방 아이디
     
     @OneToOne(fetch = FetchType.LAZY)
@@ -48,10 +57,7 @@ public class ChatRoomDTO {
     @Column(nullable = true)
     private Boolean secretChk; // 채팅방 잠금 여부
     
-    public enum ChatType{  // 문자 채팅
-        MSG
-    }
-    
+    @Enumerated(EnumType.STRING)
     @Column(nullable = true)
     private ChatType chatType; //  채팅 타입 여부
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lion09.chat.ChatRoomMapper">
+
+<select id="findAllRoom" resultType="com.lion09.chat.ChatRoomDTO">
+	select * from chatRoom
+</select>
+
+<select id="findRoomById" parameterType="String" resultType="com.lion09.chat.ChatRoomDTO">
+    SELECT * FROM chatRoom WHERE roomId = #{roomId}
+</select>
+
+<insert id="createChatRoom" parameterType="com.lion09.chat.ChatRoomDTO">
+    INSERT INTO chatRoom (num, userId, roomId, roomName, userCount, maxUserCnt, roomPwd, secretChk, chatType) 
+    VALUES (#{num}, #{userId}, #{roomId}, #{roomName}, 0, #{maxUserCnt}, #{roomPwd}, #{secretChk}, #{chatType})
+</insert>
+
+<select id="confirmPwd" resultType="boolean" parameterType="map">
+    SELECT COUNT(*) FROM chatRoom
+    WHERE roomId = #{roomId}
+    AND roomPwd = #{roomPwd}
+</select>
+
+<update id="plusUserCnt">
+    UPDATE chatRoom
+    SET userCount = userCount + 1
+    WHERE roomId = #{roomId}
+</update>
+
+<update id="minusUserCnt">
+    UPDATE chatRoom
+    SET userCount = CASE
+        WHEN userCount > 0 THEN userCount - 1
+        ELSE 0
+    END
+    WHERE roomId = #{roomId}
+</update>
+
+<select id="chkRoomUserCnt" resultType="boolean">
+    SELECT
+    CASE
+        WHEN userCount + 1 > maxUserCnt THEN 0
+        ELSE 1
+    END
+    FROM chatRoom
+    WHERE roomId = #{roomId}
+</select>
+
+<delete id="deleteChatRoom">
+    DELETE FROM chatRoom WHERE roomId = #{roomId}
+</delete>
+
+<select id="maxNum" resultType="Integer">
+	select nvl(max(num),0) from chatRoom
+</select>
+
+</mapper>

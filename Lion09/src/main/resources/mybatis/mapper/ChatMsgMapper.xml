@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lion09.chat.ChatMsgMapper">
+
+<insert id="insertUser">
+    INSERT INTO chatMessages (num, userId, roomId, nickName, type, message, time) VALUES 
+    (#{num}, #{userId}, #{roomId}, #{nickName}, #{msgType}, #{message}, sysdate)
+</insert>
+
+<select id="maxNum" resultType="Integer">
+	select nvl(max(num),0) from chatMessages
+</select>
+
+<select id="getUserList" resultType="String">
+	select nickName from chatMessages where roomId = #{roomId} and Type = 'ENTER'
+</select>
+
+<select id="getUser" resultType="String">
+	select nickName from chatMessages where roomId = #{roomId} and userId = #{userId} and Type = 'ENTER'
+</select>
+ 
+<delete id="remove">
+	delete from chatMessages where roomId = #{roomId} and userId = #{userId}
+</delete>
+
+<select id="getMsg" resultType="com.lion09.chat.ChatDTO">
+	select nickName,message,type,time from chatMessages where roomId=#{roomId} order by time asc
+</select>
+
+</mapper>

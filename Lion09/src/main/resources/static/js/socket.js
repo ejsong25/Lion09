@@ -28,10 +28,9 @@ const url = new URL(location.href).searchParams;
 const roomId = url.get('roomId');
 
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
 
-    // username 중복 확인
-    isDuplicateName();
+alert('1');
+    username = document.querySelector('#name').value.trim();
 
     // usernamePage 에 hidden 속성 추가해서 가리고
     // chatPage 를 등장시킴
@@ -46,11 +45,11 @@ function connect(event) {
 
 
     event.preventDefault();
-
-
 }
 
 function onConnected() {
+
+alert('2');
 
     // sub 할 url => /sub/chat/room/roomId 로 구독한다
     stompClient.subscribe('/sub/chat/room/' + roomId, onMessageReceived);
@@ -61,7 +60,7 @@ function onConnected() {
         {},
         JSON.stringify({
             "roomId": roomId,
-            sender: username,
+            nickName: username,
             type: 'ENTER'
         })
     )
@@ -70,28 +69,11 @@ function onConnected() {
 
 }
 
-// 유저 닉네임 중복 확인
-function isDuplicateName() {
 
-    $.ajax({
-        type: "GET",
-        url: "/chat/duplicateName",
-        data: {
-            "username": username,
-            "roomId": roomId
-        },
-        success: function (data) {
-            console.log("함수 동작 확인 : " + data);
-
-            username = data;
-        }
-    })
-
-}
-
-// 유저 리스트 받기
-// ajax 로 유저 리스를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나왔을 때마다 실행된다.
+// ajax 로 유저리스트를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나왔을 때마다 실행된다.
 function getUserList() {
+
+alert('3');
     const $list = $("#list");
 
     $.ajax({
@@ -113,18 +95,20 @@ function getUserList() {
 
 
 function onError(error) {
+alert('4');
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
 
 // 메시지 전송때는 JSON 형식을 메시지를 전달한다.
 function sendMessage(event) {
+alert('5');
     var messageContent = messageInput.value.trim();
 
     if (messageContent && stompClient) {
         var chatMessage = {
             "roomId": roomId,
-            sender: username,
+            nickName: username,
             message: messageInput.value,
             type: 'TALK'
         };
@@ -138,32 +122,33 @@ function sendMessage(event) {
 // 메시지를 받을 때도 마찬가지로 JSON 타입으로 받으며,
 // 넘어온 JSON 형식의 메시지를 parse 해서 사용한다.
 function onMessageReceived(payload) {
+alert('6');
     var chat = JSON.parse(payload.body);
 
     var messageElement = document.createElement('li');
 
     if (chat.type === 'ENTER') {  // chatType 이 enter 라면 아래 내용
         messageElement.classList.add('event-message');
-        chat.content = chat.sender + chat.message;
+        chat.content = chat.nickName + chat.message;
         getUserList();
 
-    } else if (chat.type === 'LEAVE') { // chatType 가 leave 라면 아래 내용
-        messageElement.classList.add('event-message');
-        chat.content = chat.sender + chat.message;
-        getUserList();
+    //} else if (chat.type === 'LEAVE') { // chatType 가 leave 라면 아래 내용
+        //messageElement.classList.add('event-message');
+        //chat.content = chat.nickName + chat.message;
+        //getUserList();
 
     } else { // chatType 이 talk 라면 아래 내용
         messageElement.classList.add('chat-message');
 
         var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(chat.sender[0]);
+        var avatarText = document.createTextNode(chat.nickName[0]);
         avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(chat.sender);
+        avatarElement.style['background-color'] = getAvatarColor(chat.nickName);
 
         messageElement.appendChild(avatarElement);
 
         var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(chat.sender);
+        var usernameText = document.createTextNode(chat.nickName);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
     }
@@ -202,6 +187,7 @@ function onMessageReceived(payload) {
 
 
 function getAvatarColor(messageSender) {
+alert('7');
     var hash = 0;
     for (var i = 0; i < messageSender.length; i++) {
         hash = 31 * hash + messageSender.charCodeAt(i);
@@ -254,7 +240,7 @@ function uploadFile(){
 
         var chatMessage = {
             "roomId": roomId,
-            sender: username,
+            nickName: username,
             message: username+" 님의 파일 업로드",
             type: 'TALK',
             s3DataUrl : data.s3DataUrl, // Dataurl

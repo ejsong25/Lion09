@@ -88,6 +88,53 @@ body:before {
     transform: translate(-50%,-50%);
 }
 
+.backBtn {
+	float: left;
+    padding: 10px 20px;
+    color: #eec94f;
+    position: relative;
+    background-color: #ffffff;
+   	border: 3px solid #eec94f;
+    display: inline-block;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+	font-family: 'omyu_pretty';
+	font-size: 17pt;
+	margin-bottom: 40px;
+	margin-top: 40px;
+}
+
+.backBtn:hover {
+	color: #ffffff;
+    background: #eec94f;
+}
+
+.backBtn2 {
+	margin-left: 15px;
+	float: left;
+    padding: 10px 20px;
+    color: #eec94f;
+    position: relative;
+    background-color: #ffffff;
+   	border: 3px solid #eec94f;
+    display: inline-block;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+	font-family: 'omyu_pretty';
+	font-size: 17pt;
+	margin-bottom: 40px;
+	margin-top: 40px;
+}
+
+.backBtn2:hover {
+	color: #ffffff;
+    background: #eec94f;
+}
+
 button#uploadFile {
 	margin-left: 250px;
     margin-top: -55px;

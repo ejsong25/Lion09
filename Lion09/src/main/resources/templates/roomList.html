@@ -24,13 +24,13 @@
             // 모달창 열릴 때 이벤트 처리 => roomId 가져오기
             $("#enterRoomModal").on("show.bs.modal", function (event) {
                 roomId = $(event.relatedTarget).data('id');
-                // console.log("roomId: " + roomId);
+                alert("roomId: " + roomId);
 
             });
 
             $("#confirmPwdModal").on("show.bs.modal", function (e) {
                 roomId = $(e.relatedTarget).data('id');
-                // console.log("roomId: " + roomId);
+                alert("roomId: " + roomId);
 
             });
 

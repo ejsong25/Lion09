@@ -53,4 +53,13 @@ public class MemberService {
 		
 	}
 	
+	public Member getUserByNickName(String nickName) throws Exception {
+		Member findMember = memberRepository.findByNickName(nickName);
+		
+		if(findMember != null) {
+			return findMember;
+		}else {
+			throw new Exception("User Not Found");
+		}
+	}
 }

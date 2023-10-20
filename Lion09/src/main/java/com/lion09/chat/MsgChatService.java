@@ -2,8 +2,11 @@ package com.lion09.chat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,7 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 @Service
 public class MsgChatService {
-
+	
+	private final ChatRoomMapper chatRoomMapper;
+	private final ChatMsgMapper chatMsgMapper;
 
     // 채팅방 삭제에 따른 채팅방의 사진 삭제를 위한 fileService 선언
     private final FileService fileService;
@@ -28,71 +33,49 @@ public class MsgChatService {
                 .maxUserCnt(maxUserCnt) // 최대 인원수 제한
                 .build();
 
-        room.setUserList(new ConcurrentHashMap<String, String>());
-
         // msg 타입이면 ChatType.MSG
-        room.setChatType(ChatRoomDTO.ChatType.MSG);
-
-        // map 에 채팅룸 아이디와 만들어진 채팅룸을 저장
-        ChatRoomMap.getInstance().getChatRooms().put(room.getRoomId(), room);
+        room.setChatType(ChatType.MSG);
 
         return room;
     }
 
 
     // 채팅방 유저 리스트에 유저 추가
-    public String addUser(Map<String, ChatRoomDTO> chatRoomMap, String roomId, String userName){
-    	ChatRoomDTO room = chatRoomMap.get(roomId);
-        String userUUID = UUID.randomUUID().toString();
+    public String addMsg(String roomId, String userId, String nickName, MessageType msgType,
+    		String message) throws Exception{
+    	ChatRoomDTO room = chatRoomMapper.findRoomById(roomId);
 
-        // 아이디 중복 확인 후 userList 에 추가
-        //room.getUserList().put(userUUID, userName);
-
-        // hashmap 에서 concurrentHashMap 으로 변경
-        ConcurrentHashMap<String, String> userList = (ConcurrentHashMap<String, String>)room.getUserList();
-        userList.put(userUUID, userName);
-
-
-        return userUUID;
-    }
-
-    // 채팅방 유저 이름 중복 확인
-    public String isDuplicateName(Map<String, ChatRoomDTO> chatRoomMap, String roomId, String username){
-    	ChatRoomDTO room = chatRoomMap.get(roomId);
-        String tmp = username;
-
-        // 만약 userName 이 중복이라면 랜덤한 숫자를 붙임
-        // 이때 랜덤한 숫자를 붙였을 때 getUserlist 안에 있는 닉네임이라면 다시 랜덤한 숫자 붙이기!
-        while(room.getUserList().containsValue(tmp)){
-            int ranNum = (int) (Math.random()*100)+1;
-
-            tmp = username+ranNum;
-        }
-
-        return tmp;
-    }
-
-    // 채팅방 userName 조회
-    public String findUserNameByRoomIdAndUserUUID(Map<String, ChatRoomDTO> chatRoomMap, String roomId, String userUUID){
-    	ChatRoomDTO room = chatRoomMap.get(roomId);
-        return (String) room.getUserList().get(userUUID);
+    	int maxNum = chatMsgMapper.maxNum();
+    	chatMsgMapper.insertUser(maxNum+1,roomId,userId,nickName,msgType,message);
+    	
+        return userId;
     }
 
     // 채팅방 전체 userlist 조회
-    public ArrayList<String> getUserList(Map<String, ChatRoomDTO> chatRoomMap, String roomId){
+    public ArrayList<String> getUserList(String roomId) throws Exception{
         ArrayList<String> list = new ArrayList<>();
 
-        ChatRoomDTO room = chatRoomMap.get(roomId);
+        ChatRoomDTO room = chatRoomMapper.findRoomById(roomId);
 
-        // hashmap 을 for 문을 돌린 후
-        // value 값만 뽑아내서 list 에 저장 후 reutrn
-        room.getUserList().forEach((key, value) -> list.add((String) value));
-        return list;
+        return chatMsgMapper.getUserList(roomId);
+    }
+    
+    public String getUser(String roomId,String userId) throws Exception{
+
+        ChatRoomDTO room = chatRoomMapper.findRoomById(roomId);
+
+        return chatMsgMapper.getUser(roomId,userId);
+        
     }
 
     // 채팅방 특정 유저 삭제
-    public void delUser(Map<String, ChatRoomDTO> chatRoomMap, String roomId, String userUUID){
-    	ChatRoomDTO room = chatRoomMap.get(roomId);
-        room.getUserList().remove(userUUID);
+    public void delUser(String roomId, String userId) throws Exception{
+    	ChatRoomDTO room = chatRoomMapper.findRoomById(roomId);
+    	chatMsgMapper.remove(roomId, userId);
+    }
+    
+    //메세지
+    public List<ChatDTO> getMsg(String roomId) throws Exception{
+    	return chatMsgMapper.getMsg(roomId);
     }
 }

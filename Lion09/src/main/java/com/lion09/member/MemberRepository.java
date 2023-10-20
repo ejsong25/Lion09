@@ -22,4 +22,11 @@ public class MemberRepository {
 		return em.find(Member.class, userId);
 	}
 	
+	public Member findByNickName(String nickName) {
+		return em.createQuery(
+				"select m from Member m where m.nickName = :nickName",
+				Member.class)
+				.setParameter("nickName", nickName)
+				.getSingleResult();
+	}
 }

@@ -35,13 +35,11 @@
 <script type="text/javascript">
 	
 	function nickName_update() {
-		
-		f = document.myForm;
-		
-		alert('프로필 수정이 완료되었습니다.');
-		
-		f.action="/mypage_update.action";
-		f.submit();
+	    var f = document.myForm;
+	  
+	    f.action = "/mypage_update.action";
+	
+	    f.submit();
 	}
 	
 	function profileImg_update() {
@@ -241,10 +239,20 @@
 							    style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 14px;">닉네임</h3>
 							<input type="text" name="nickName" th:value="${dto.nickName}"
 							    style="font-family: 'omyu_pretty'; font-size: 17pt; width: 60%; padding-left: 4px;"/>
+							
+							<div th:if="${successMessage}">
+							    <div class="alert alert-success" th:text="${successMessage}" 
+							    	style="font-family: 'omyu_pretty'; color: blue;"></div>
+							</div>
+							
+							<div th:if="${errorMessage}">
+							    <div class="alert alert-danger" th:text="${errorMessage}" 
+							    	style="font-family: 'omyu_pretty'; color: red;"></div>
+							</div>
+							
 							</div>
 							<br />
-							<br />
-							<input type="button" class="profileBtn" value="프로필 수정" onclick="nickName_update();"/>
+							<input type="button" class="profileBtn" value="닉네임 수정" onclick="nickName_update();"/>
 							<br />
 							<br />
 							<br />

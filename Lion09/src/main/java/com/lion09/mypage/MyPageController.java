@@ -53,20 +53,31 @@ public class MyPageController {
 		return mav;
 	}
 	
+	
 	//닉네임 업데이트
 	@PostMapping(value = "/mypage_update.action")
-	public ModelAndView mypage_update(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member dto) throws Exception {
-
-		dto.setUserId(sessionInfo.getUserId());
-		
-		mypageService.updateData(dto);
+	public ModelAndView mypage_update(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+			Member dto,RedirectAttributes redirectAttributes) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
 
-		mav.setViewName("redirect:/myPage");
+		dto.setUserId(sessionInfo.getUserId());
+		
+		int nickNameCheck = mypageService.selectNickName(dto.getNickName());
+		
+		if(nickNameCheck==0) {
+			mypageService.updateData(dto);
+			mav.setViewName("redirect:/myPage");
+			redirectAttributes.addFlashAttribute("successMessage", "닉네임이 변경되었습니다");
+			
+			return mav;
+		}else {
+			mav.setViewName("redirect:/myPage");
+			redirectAttributes.addFlashAttribute("errorMessage", "닉네임이 이미 존재합니다");
 
-		return mav;
-
+			return mav;
+		}
+		
 	}
 	
 	//주소 업데이트

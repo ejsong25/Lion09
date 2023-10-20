@@ -38,22 +38,6 @@
 </style>
 
 
-<script type="text/javascript">
-
-	function category() {
-	    
-		var f = document.categoryForm;
-		
-		if(categeryId == 1) {
-			f.categoryId1.value = categoryId;
-		}
-	    
-	    f.action = "/category.action";
-	    f.submit();
-	    
-	}
-
-</script>
 
 
 <body> 
@@ -166,30 +150,21 @@
 		
 		       
 
-<form action="/list1" method="get" name="categoryForm">
-    <div align="center">
-        <nav>
-            <ul class="nav-list">
-                <li><a href="/list1" class="profileBtn">전체보기</a></li>
-                <li><input type="button" class="profileBtn" value="신선식품" id="1" onclick="category();">
-                	<input type="hidden" name="categoryId1" id="categoryId1" value="1" /></li>
-                <li><input type="button" class="profileBtn" value="가공식품" id="2" onclick="category(this.id);">
-                	<input type="hidden" name="categoryId2" id="categoryId2" value="2" /></li>
-                <li><input type="button" class="profileBtn" value="의류 신발" id="3" onclick="category(this.id);">
-                	<input type="hidden" name="categoryId3" id="categoryId3" value="3" /></li>
-                <li><input type="button" class="profileBtn" value="뷰티 미용" id="4" onclick="category(this.id);">
-                	<input type="hidden" name="categoryId4" id="categoryId4" value="4" /></li>
-                <li><input type="button" class="profileBtn" value="생활 주방" id="5" onclick="category(this.id);">
-                	<input type="hidden" name="categoryId5" id="categoryId5" value="5" /></li>
-                <li><input type="button" class="profileBtn" value="스포츠 레저" id="6" onclick="category(this.id);">
-                	<input type="hidden" name="categoryId6" id="categoryId6" value="6" /></li>
-                <li><input type="button" class="profileBtn" value="도서" id="7" onclick="category(this.id);">
-                	<input type="hidden" name="categoryId7" id="categoryId7" value="7" /></li>
-                <li><input type="button" class="profileBtn" value="기타물품" id="8" onclick="category(this.id);">
-                	<input type="hidden" name="categoryId8" id="categoryId8" value="8" /></li>
-            </ul>
-        </nav>
-    </div>
+<form action="/list1" method="get" name="catehoryForm">
+<div align="center">
+<nav>
+	<ul class="nav-list">
+		<li><a href="/list1" class="profileBtn">전체보기</a></li>
+ 		<li><a href="/category.action?categoryId=1" class="profileBtn">신선식품</a></li>
+		<li><a href="/category.action?categoryId=2" class="profileBtn">가공식품</a></li>
+		<li><a href="/category.action?categoryId=3" class="profileBtn">의류 신발</a></li>
+		<li><a href="/category.action?categoryId=4" class="profileBtn">뷰티 미용</a></li>
+		<li><a href="/category.action?categoryId=5" class="profileBtn">생활 주방</a></li>
+		<li><a href="/category.action?categoryId=6" class="profileBtn">스포츠 레저</a></li>
+		<li><a href="/category.action?categoryId=7" class="profileBtn">도서</a></li>
+		<li><a href="/category.action?categoryId=8" class="profileBtn">기타물품</a></li> 
+	</ul></nav>
+</div>
 </form>
 
 <br/><br/>

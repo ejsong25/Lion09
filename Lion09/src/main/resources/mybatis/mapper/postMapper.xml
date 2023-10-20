@@ -47,6 +47,29 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
  ]]>
  </select>
  
+ 
+ <select id="getCategoryId" parameterType="hashMap"
+ resultType="com.lion09.board.Post">
+	 select postId,nickName,title,status,productsPrice,hitCount,
+	 contents,to_char(created,'YYYY-MM-DD'),to_char(deadLine,'YYYY-MM-DD'),
+	 chooseFile,postLikeCount,recruitment,
+	 categoryId,myAddr,to_char(likeDate,'YYYY-MM-DD')
+	 from post
+	 where categoryId = #{categoryId}
+
+</select>
+ 
+<select id="getAllCategoryData" parameterType="hashMap"
+ resultType="com.lion09.board.Post">
+	 select postId,nickName,title,status,productsPrice,hitCount,
+	 contents,to_char(created,'YYYY-MM-DD'),to_char(deadLine,'YYYY-MM-DD'),
+	 chooseFile,postLikeCount,recruitment,
+	 categoryId,myAddr,to_char(likeDate,'YYYY-MM-DD')
+	 from post
+</select>
+ 
+ 
+ 
 
 
 <select id="getDataCount" parameterType="map" resultType="int">

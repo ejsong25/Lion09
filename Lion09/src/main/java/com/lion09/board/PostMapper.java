@@ -33,6 +33,10 @@ public interface PostMapper {
 	
 	public void imgDefault(Post dto) throws Exception;
 	
+	public List<Post> getCategoryId(int categoryId) throws Exception;
+	
+	public List<Post> getAllCategoryData() throws Exception;
+	
 	//마감임박
 	public List<Post> deadlineProduct() throws Exception;
 	

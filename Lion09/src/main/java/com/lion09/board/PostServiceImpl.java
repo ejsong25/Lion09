@@ -136,6 +136,19 @@ public class PostServiceImpl implements PostService{
 	}
 
 
+	@Override
+	public List<Post> getCategoryId(int categoryId) throws Exception {
+		return postMapper.getCategoryId(categoryId);
+	}
+
+	@Override
+	public List<Post> getAllCategoryData() throws Exception {
+		
+		return postMapper.getAllCategoryData();
+	}
+
+
+	
 
 	
 	

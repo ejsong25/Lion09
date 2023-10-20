@@ -29,6 +29,11 @@ public interface PostService {
 	
 	public void imgDefault(Post dto) throws Exception;
 	
+	public List<Post> getCategoryId(int categoryId) throws Exception;
+	
+	public List<Post> getAllCategoryData() throws Exception;
+
+	
 	
 	//좋아요 기능
 	public void insertPostlike(PostLikeDTO likedto) throws Exception;

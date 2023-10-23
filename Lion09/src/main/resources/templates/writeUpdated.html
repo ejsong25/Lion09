@@ -172,24 +172,25 @@
 			    <!-- 마감일 작성 -->
 		        	<div>
 		        		<label style="font-size: 18px; color: #747474;">&nbsp;&nbsp;&nbsp;마감일을 입력해주세요.
-		                <input type="datetime-local" class="form-control" name="deadLine" id="deadLine" style="border-radius: 5px; width: 99%;" value="2023-10-17T15:30" onchange="deadLineChange();" />
+		                <input type="datetime-local" class="form-control" name="deadLine" id="deadLine" 
+		                	style="border-radius: 5px; width: 99%;" value="2023-10-17T15:30" onchange="deadLineChange();" />
 		          		</label>
 		            </div>
 	            <!-- 마감일 작성 완료 -->
 			                 
 			    <script>
-  // 현재 날짜와 시간 가져오기
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = (now.getMonth() + 1).toString().padStart(2, '0');
-  var day = now.getDate().toString().padStart(2, '0');
-  var hours = now.getHours().toString().padStart(2, '0');
-  var minutes = now.getMinutes().toString().padStart(2, '0');
-  var currentDatetime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
-
-  // 입력란에 현재 날짜와 시간 설정 (현재 시간 이후의 날짜만 설정 가능)
-  document.getElementById("deadLine").min = currentDatetime;
-</script>             
+				  // 현재 날짜와 시간 가져오기
+				  var now = new Date();
+				  var year = now.getFullYear();
+				  var month = (now.getMonth() + 1).toString().padStart(2, '0');
+				  var day = now.getDate().toString().padStart(2, '0');
+				  var hours = now.getHours().toString().padStart(2, '0');
+				  var minutes = now.getMinutes().toString().padStart(2, '0');
+				  var currentDatetime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+				
+				  // 입력란에 현재 날짜와 시간 설정 (현재 시간 이후의 날짜만 설정 가능)
+				  document.getElementById("deadLine").min = currentDatetime;
+				</script>             
 			                 
 			                  
 				<br/><br/><br/>		

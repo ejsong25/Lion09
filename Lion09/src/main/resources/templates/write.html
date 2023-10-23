@@ -65,6 +65,14 @@
 			return;
 		}
 		f.recruitment.value = str;
+		
+		str = f.deadLine.value;
+		if(!str){
+			alert("\마감일을 선택해주세요.");
+			f.deadLine.focus();
+			return;
+		}
+		f.deadLine.value = str;
 	
 		str = f.contents.value;
 		str = str.trim();

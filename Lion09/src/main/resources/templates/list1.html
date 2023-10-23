@@ -392,39 +392,5 @@
 
 
 
-<script>
-    // 카테고리 선택 시 필터링
-    /*  
-    function filterItems(linkElement) {
-
-    	const categoryId = linkElement.getAttribute('data-category');
-    	
-        // 모든 아이템을 숨김
-        const items = document.querySelectorAll('.item');
-        items.forEach(item => item.style.display = 'none');
-        
-        
-        // 선택한 categoryId에 해당하는 아이템을 보여줌
-        const selectedItems = document.querySelectorAll(`.item[data-category="${categoryId}"]`);
-        selectedItems.forEach(item => item.style.display = 'block');
-
-    }*/
-    
-    // 전체보기 클릭 시 모든 아이템을 보여줌
-    function showAllItems() {
-        const items = document.querySelectorAll('.item');
-        items.forEach(item => item.style.display = 'block');
-    }
-    
-  
-</script>
-
-
-
-
-
-
-
-
 </body>
 </html>

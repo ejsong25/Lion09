@@ -536,6 +536,8 @@ public class PostController {
 
 		dto.setPostId(postId);
 
+		dto.setStatus(request.getParameter("status"));;
+
 		dto.setTitle(request.getParameter("title"));
 
 		dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
@@ -551,12 +553,9 @@ public class PostController {
 
 		dto.setDeadLine(deadLine);
 
-
-
 		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
 		dto.setContents(plainText);
 		dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
-
 
 
 		postService.updateData(dto);

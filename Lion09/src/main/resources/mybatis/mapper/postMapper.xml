@@ -14,7 +14,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
     created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile,deadLine,status,participant)
     values (#{userId},#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, 
     #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile},
-    #{deadLine},'판매중',0)
+    #{deadLine},'모집중',0)
 </insert>
 
 <select id="getLists" parameterType="hashMap"
@@ -75,7 +75,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	update post set title=#{title},myAddr=#{myAddr},
 	productsPrice=#{productsPrice},contents=#{contents},
 	recruitment=#{recruitment},categoryId=#{categoryId},
-	deadLine=#{deadLine}
+	deadLine=#{deadLine},status=#{status}
 	where postId=#{postId}
 </update>
 

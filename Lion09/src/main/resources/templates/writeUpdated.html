@@ -23,6 +23,27 @@
 
 <link rel="stylesheet" href="writePhoto.css">
 
+
+
+
+   <script type="text/javascript">
+   
+	   function productsPriceChange(){
+	       var productsPrice = document.getElementById('productsPrice').value;
+	       
+	   }
+	   
+	   function recruitmentChange(){
+	   	var recruitment = document.getElementById('recruitment').value;
+	   }    
+	
+	   function deadLineChange(){
+	   	var deadLine = document.querySelector("#deadLine").value;
+	   } 
+ 
+   </script>
+
+
 </head>
 
 <style>
@@ -144,6 +165,16 @@
   
 		        <input type="text" class="form-control" name="myAddr" id="myAddr" th:value="${dto.myAddr}"
 		         style="border-radius:5px; width:100%; padding:5px;" hidden/>
+		         
+			         
+			    <!-- 마감일 작성 -->
+		        	<div>
+		        		<label style="font-size: 18px; color: #747474;">&nbsp;&nbsp;&nbsp;마감일을 입력해주세요.
+		                <input type="datetime-local" class="form-control" name="deadLine" id="deadLine"
+		                style="border-radius:5px;width:99%;" value="" onchange="deadLineChange();"/>
+		          		</label>
+		            </div>
+	            <!-- 마감일 작성 완료 -->
 			                  
 				<br/><br/><br/>		
 
@@ -320,22 +351,7 @@
 
 
 
-    <script type="text/javascript">
-    
-    function productsPriceChange(){
-        var productsPrice = document.getElementById('productsPrice').value;
-        
-    }
-    
-    function recruitmentChange(){
-    	var recruitment = document.getElementById('recruitment').value;
-    }    
 
-     function typeClick(){
-    	var type = document.getElementById('type').value;
-    }  
-  
-    </script>
 	
 	
     </body>

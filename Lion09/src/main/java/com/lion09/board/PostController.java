@@ -5,6 +5,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +128,7 @@ public class PostController {
 
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
-			String uploadDir = "C:\\git-lion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String uploadDir = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			// 업로드한 파일의 원래 파일 이름 가져오기
 			String originalFilename = cFile.getOriginalFilename();
@@ -541,6 +543,14 @@ public class PostController {
 		dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
 
 		dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));
+		
+		String deadLineParameter = request.getParameter("deadLine");
+		// 여기에서 날짜와 시간을 원하는 형식으로 변환하십시오. 예를 들어, LocalDateTime 또는 다른 적절한 형식으로 파싱합니다.
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime deadLine = LocalDateTime.parse(deadLineParameter, formatter);
+
+		dto.setDeadLine(deadLine);
+
 
 
 		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");

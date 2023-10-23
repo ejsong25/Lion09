@@ -1409,3 +1409,23 @@ address {
 	color: #ffffff;
     background: #eec94f;
 }
+
+.tm-paging-links1 nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between; /* Flexbox를 사용하여 가로로 정렬합니다. */
+}
+
+.tm-paging-item1 {
+    display: flex;
+    flex-direction: column; /* 내부의 텍스트를 세로로 정렬하기 위해 추가합니다. */
+    align-items: center; /* 가로로 중앙 정렬합니다. */
+    text-align: center; /* 텍스트를 가로로 가운데 정렬합니다. */
+}
+
+/* 마지막 단추의 오른쪽 마진을 0으로 설정하여 여백을 줄입니다. */
+.tm-paging-item1:last-child {
+    margin-right: 0;
+}
+

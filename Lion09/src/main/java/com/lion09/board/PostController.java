@@ -173,16 +173,13 @@ public class PostController {
 		return mav;
 	}
 
-
-
 	@RequestMapping(value = "/list1", 
 			method = {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView list1(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
-			@Param("searchKey") String searchKey,
-			@Param("searchValue") String searchValue, Post dto,
+			@Param("searchKey") String searchKey,@Param("searchValue") String searchValue,
+			@Param("categoryId") String categoryId,Post dto,
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-
 
 		ModelAndView mav = new ModelAndView();
 		Member mdto = mypageService.selectData(sessionInfo.getUserId());
@@ -262,19 +259,34 @@ public class PostController {
 		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
 		List<Post> lists = new ArrayList<>();
 
-		for (Member member : findList) {
-			String myAddress = member.getMyAddress();
-
-			for (Post post : allLists) {
-				String myAddr = post.getMyAddr();
-				if (myAddr.equals(myAddress)) {
-					lists.add(post);
-				} 
+		int myCategoryId = (categoryId != null) ? Integer.parseInt(categoryId) : 0;
+		
+		if(myCategoryId == 0) {
+			for (Member member : findList) {
+				String myAddress = member.getMyAddress();
+				
+				for (Post post : allLists) {
+					String myAddr = post.getMyAddr();
+					if (myAddr.equals(myAddress)) {
+						lists.add(post);
+					} 
+				}
+				
 			}
-
+		}else {
+			for (Member member : findList) {
+				String myAddress = member.getMyAddress();
+				for (Post post : allLists) {
+					String myAddr = post.getMyAddr();
+					
+					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+						lists.add(post);
+					} 
+				}
+				
+			}
 		}
-
-
+		
 		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);
 
@@ -764,8 +776,7 @@ public class PostController {
 
 	}
 
-
-
+	
 
 
 

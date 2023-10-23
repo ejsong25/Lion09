@@ -206,33 +206,11 @@ public class MyPageController {
 
 	}
 	
-	//주소 반경
-	@RequestMapping(value = "/myPage2", 
-			method = {RequestMethod.POST,RequestMethod.GET})
-//	@GetMapping(value = "/myPage2")
-	public ModelAndView myPage2(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-
-		String userId = sessionInfo.getUserId();
-	
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("myPage2");
-
-		Member mdto = mypageService.selectData(userId);
-		mdto.setUserId(userId);
-		List<Member> findList = mypageService.findLocationsNearby(mdto);
-
-		mav.addObject("mdto",mdto);
-		mav.addObject("findList",findList);
-		
-		return mav;
-	}
-
 	//반경 업데이트
 	@PostMapping(value = "/updateRange.action")
 	public ModelAndView updateRange(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, Member mdto) throws Exception {
 
 		mdto.setUserId(sessionInfo.getUserId());
-		System.out.println(mdto.getMyRange());
 		mypageService.updateRange(mdto);
 
 		ModelAndView mav = new ModelAndView();

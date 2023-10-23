@@ -145,26 +145,26 @@
 			
 
 		<form action="" name="categoryForm" method="get">
-		<div align="center">
+		<div class="tm-paging-links1" align="center">
 		<nav>
-			<ul class="nav-list">
-				<li value="0"><a href="#" class="profileBtn" data-category="0" onclick="filterItems(this)">전체보기</a></li>
-				<li value="1"><a href="#" class="profileBtn" data-category="1" onclick="filterItems(this)">신선식품</a></li>
-				<li value="2"><a href="#" class="profileBtn" data-category="2" onclick="filterItems(this)">가공식품</a></li>
-				<li value="3"><a href="#" class="profileBtn" data-category="3" onclick="filterItems(this)">의류 신발</a></li>
-				<li value="4"><a href="#" class="profileBtn" data-category="3" onclick="filterItems(this)">뷰티 미용</a></li>
-				<li value="5"><a href="#" class="profileBtn" data-category="4" onclick="filterItems(this)">생활 주방</a></li>
-				<li value="6"><a href="#" class="profileBtn" data-category="5" onclick="filterItems(this)">스포츠 레저</a></li>
-				<li value="7"><a href="#" class="profileBtn" data-category="6" onclick="filterItems(this)">도서</a></li>
-				<li value="8"><a href="#" class="profileBtn" data-category="7" onclick="filterItems(this)">기타물품</a></li>
+			<ul>
+				<li class="tm-paging-item1" value="0"><a href="#" class="tm-paging-link" data-category="0" onclick="filterItems(this)">전체보기</a></li>
+				<li class="tm-paging-item1" value="1"><a href="#" class="tm-paging-link" data-category="1" onclick="filterItems(this)">신선식품</a></li>
+				<li class="tm-paging-item1" value="2"><a href="#" class="tm-paging-link" data-category="2" onclick="filterItems(this)">가공식품</a></li>
+				<li class="tm-paging-item1" value="3"><a href="#" class="tm-paging-link" data-category="3" onclick="filterItems(this)">의류 신발</a></li>
+				<li class="tm-paging-item1" value="4"><a href="#" class="tm-paging-link" data-category="3" onclick="filterItems(this)">뷰티 미용</a></li>
+				<li class="tm-paging-item1" value="5"><a href="#" class="tm-paging-link" data-category="4" onclick="filterItems(this)">생활 주방</a></li>
+				<li class="tm-paging-item1" value="6"><a href="#" class="tm-paging-link" data-category="5" onclick="filterItems(this)">스포츠 레저</a></li>
+				<li class="tm-paging-item1" value="7"><a href="#" class="tm-paging-link" data-category="6" onclick="filterItems(this)">도서</a></li>
+				<li class="tm-paging-item1" value="8"><a href="#" class="tm-paging-link" data-category="7" onclick="filterItems(this)">기타물품</a></li>
 			</ul>
 			<input type="hidden" name="categoryId" id="categoryId">
 			</nav>
-		</div><br/><br/>
+		</div>
 			
 			<script type="text/javascript">
 				document.addEventListener("DOMContentLoaded", function () {
-			        const liElements = document.querySelectorAll(".tm-paging-item");
+			        const liElements = document.querySelectorAll(".tm-paging-item1");
 
 			        liElements.forEach(function (li) {
 			            li.addEventListener("click", function (event) {

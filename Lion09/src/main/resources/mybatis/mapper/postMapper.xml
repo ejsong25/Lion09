@@ -11,9 +11,9 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 
 <insert id="insertData" parameterType="com.lion09.board.Post">
     insert into post (userId,postId,title, productsPrice, hitCount, contents,
-    created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile,deadLine)
+    created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile,deadLine,status,participant)
     values (#{userId},#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, 
-    #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile},current_timestamp+5)
+    #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile},current_timestamp+5,'Complete',0)
 </insert>
 
 <select id="getLists" parameterType="hashMap"
@@ -47,29 +47,6 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
  ]]>
  </select>
  
- 
- <select id="getCategoryId" parameterType="hashMap"
- resultType="com.lion09.board.Post">
-	 select postId,nickName,title,status,productsPrice,hitCount,
-	 contents,to_char(created,'YYYY-MM-DD'),to_char(deadLine,'YYYY-MM-DD'),
-	 chooseFile,postLikeCount,recruitment,
-	 categoryId,myAddr,to_char(likeDate,'YYYY-MM-DD')
-	 from post
-	 where categoryId = #{categoryId}
-
-</select>
- 
-<select id="getAllCategoryData" parameterType="hashMap"
- resultType="com.lion09.board.Post">
-	 select postId,nickName,title,status,productsPrice,hitCount,
-	 contents,to_char(created,'YYYY-MM-DD'),to_char(deadLine,'YYYY-MM-DD'),
-	 chooseFile,postLikeCount,recruitment,
-	 categoryId,myAddr,to_char(likeDate,'YYYY-MM-DD')
-	 from post
-</select>
- 
- 
- 
 
 
 <select id="getDataCount" parameterType="map" resultType="int">
@@ -85,7 +62,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 <select id="getReadData" parameterType="int"
 	resultType="com.lion09.board.Post">
 	select postId,nickName,title,status,productsPrice,hitCount,contents,
-	created,deadLine,chooseFile,postLikeCount,recruitment,categoryId,myAddr,
+	created,deadLine,chooseFile,postLikeCount,recruitment,categoryId,myAddr,participant,
 	likeDate,userId from post where postId=#{postId}	
 </select>
 
@@ -115,7 +92,6 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 </update>
 
 
-
  <!-- 마감 일주일 남은 게시글 목록 가져오기 -->
 <select id="deadlineProduct" resultType="com.lion09.board.Post">
     SELECT postId, title, productsPrice, hitCount, userId, created, deadLine,
@@ -136,6 +112,13 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY hitCount DESC
     LIMIT 5;
 </select>
+
+
+<select id="getReadStatus" parameterType="int"
+	 resultType="java.lang.String">
+	select status from post where postId=#{postId}	
+</select>
+
 
 
 </mapper>

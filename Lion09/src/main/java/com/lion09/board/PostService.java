@@ -1,7 +1,11 @@
 package com.lion09.board;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.lion09.board.Post;
+import com.lion09.order.Order;
 
 public interface PostService {
 	
@@ -29,11 +33,6 @@ public interface PostService {
 	
 	public void imgDefault(Post dto) throws Exception;
 	
-	public List<Post> getCategoryId(int categoryId) throws Exception;
-	
-	public List<Post> getAllCategoryData() throws Exception;
-
-	
 	
 	//좋아요 기능
 	public void insertPostlike(PostLikeDTO likedto) throws Exception;
@@ -59,9 +58,26 @@ public interface PostService {
 	//인기글
 	public List<Post> hitProduct() throws Exception;
 	
+	//참여하기
+	public void insertOrder1(Order Odto) throws Exception;	
 	
+	public void updateOrder(int postId) throws Exception;
+
+	public void deleteOrder1(Order Odto) throws Exception;
 	
+	public void deleteOrder2(int postId) throws Exception;
 	
+	public List<Order> OrderList(@Param("start") Integer start,@Param("end") Integer end,@Param("userId") String userId) throws Exception;
+	
+	public String findOrderState(Order Odto) throws Exception;
+	
+	public String getReadStatus(int postId) throws Exception;
+	
+	public int maxId() throws Exception;
+	
+	public int findOrderCount(Order Odto) throws Exception;
+	
+	public List<Order> orderHistory(String userId) throws Exception;
 	
 
 }

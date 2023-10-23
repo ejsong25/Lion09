@@ -63,6 +63,9 @@ public class Post {
 	@Column(length = 5)
 	private int recruitment;
 	
+	@Column(length = 5)
+	private int participant;
+	
 //	@Column(length = 20)
 //	private String type;
 	

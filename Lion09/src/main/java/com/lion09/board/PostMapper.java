@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.lion09.order.Order;
+
 @Mapper
 public interface PostMapper {
 	
@@ -33,17 +35,15 @@ public interface PostMapper {
 	
 	public void imgDefault(Post dto) throws Exception;
 	
-	public List<Post> getCategoryId(int categoryId) throws Exception;
-	
-	public List<Post> getAllCategoryData() throws Exception;
-	
 	//마감임박
 	public List<Post> deadlineProduct() throws Exception;
 	
 	//인기글 
 	public List<Post> hitProduct() throws Exception;
 	
+	//참여하기
+	public String getReadStatus(int postId) throws Exception; 
 	
-	
+
 
 }

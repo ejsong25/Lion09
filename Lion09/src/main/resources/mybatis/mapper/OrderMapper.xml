@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lion09.board.OrderMapper">
+
+    <!-- 하나의 게시물에 참여한 사람 수 -->
+    <select id="maxId" resultType="int">
+        select nvl(max(orderId),0) from orders where postId=#{postId}
+    </select>
+
+    <!-- 공구 참여 추가 -->
+    <insert id="insertOrder1" parameterType="com.lion09.order.Order">
+        insert into orders (userId,postId,orderDate,orderPrice,count,status)
+        values (#{userId},#{postId},current_timestamp,#{orderPrice},1,'Reserved')
+    </insert>
+
+
+
+    <!-- 공구 참여 취소2 -->
+    <delete id="deleteOrder1" parameterType="com.lion09.order.Order">
+        delete from orders where postId=#{postId}
+    </delete>
+
+    <!-- post에서  참여 취소3 -->
+    <update id="deleteOrder2" parameterType="int">
+        update post set participant=participant-1 where postId=#{postId}
+    </update>
+
+    <!-- post에서 공구 참여 추가1 -->
+    <update id="updateOrder" parameterType="int">
+        update post set participant=participant+1 where postId=#{postId}
+    </update>
+
+    <!-- 공구 참여 목록 (주석 처리된 부분은 필요에 따라 활성화) -->
+	<select id="orderHistory" parameterType="hashMap"
+	 resultType="com.lion09.board.Post">
+		 select postId,userId,orderDate,orderPrice,count,status
+		 from orders where userId=#{userId}
+	 </select>
+
+
+
+
+    <!--  공구참여 갯수 -->
+    <select id="findOrderState" parameterType="com.lion09.order.Order" resultType="String">
+        select status from orders where userId=#{userId} and postId=#{postId}
+    </select>
+    
+    <select id="findOrderCount" parameterType="com.lion09.order.Order"
+	resultType="int">
+	select count(*) from orders where userId=#{userId} and postId=#{postId}
+</select>
+
+</mapper>

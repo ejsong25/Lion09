@@ -38,6 +38,8 @@ public interface LionPayMapper {
 	
 	public void insertUsage(@Param("dto") ListDTO listDto,@Param("userId") String userId) throws Exception;
 	
+	public Integer getRefundData(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
 	List<String> getBankList();
 	
 }

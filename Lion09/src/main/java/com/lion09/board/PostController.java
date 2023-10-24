@@ -41,7 +41,9 @@ import com.lion09.member.MemberForm;
 import com.lion09.mypage.MyPageService;
 import com.lion09.order.Order;
 import com.lion09.order.OrderStatus;
+import com.lion09.pay.LionPayDTO;
 import com.lion09.pay.LionPayService;
+import com.lion09.pay.ListDTO;
 import com.lion09.SessionInfo;
 import com.lion09.board.Post;
 import com.lion09.board.PostService;
@@ -133,7 +135,7 @@ public class PostController {
 
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
-			String uploadDir = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String uploadDir = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 
 			// 업로드한 파일의 원래 파일 이름 가져오기
@@ -330,11 +332,11 @@ public class PostController {
 	    Order Odto = new Order();
 	    
 	    member = mypageService.selectData(userId);
-	    post = postService.getReadData(postId);
+	    post = postService.getReadData(postId);	  
 	    String status = postService.getReadStatus(postId);
 	   
-	    Odto.setMember(member);
-	    Odto.setPost(post);
+	    Odto.setUserId(userId);
+	    Odto.setPostId(postId);
 
 	    int count  = postService.findOrderCount(Odto);
 	   
@@ -569,6 +571,7 @@ public class PostController {
 
 
 		postService.updateData(dto);
+		postService.updateOrders(dto);
 
 
 //		String pageNum = request.getParameter("pageNum");
@@ -604,7 +607,7 @@ public class PostController {
 
 
 			//이미지 사진들 모아두는 폴더
-			String upload_path = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
+			String upload_path = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
 
 			Post dto = postService.getReadData(postId);
@@ -613,7 +616,7 @@ public class PostController {
 			String beforeFilename = dto.getChooseFile();
 
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//게시글 이미지가 기존의 이미지가 아닐 경우 삭제
 			if(!beforeFilename.equals("lion.png")) {
@@ -693,7 +696,7 @@ public class PostController {
 
 
 		//삭제할 파일 경로
-		String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+		String delete_pate = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 
 		//기본 사진 이미지가 아닐 경우 삭제		
@@ -731,6 +734,7 @@ public class PostController {
 
 
 		postService.deleteData(postId);
+		postService.deleteData(postId);
 
 		String param = "pageNum=" + pageNum;
 
@@ -753,15 +757,9 @@ public class PostController {
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 
-		//			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
-		//			String userId = sessionInfo.getUserId();
-
 		Post dto = new Post();
 
 		String userId = sessionInfo.getUserId();
-		//dto.setUserId(userId);
-
-		System.out.println(userId);
 
 		int currentPage = 1;
 
@@ -823,10 +821,11 @@ public class PostController {
 	}
 
 	//참여 목록에서 삭제
-	@PostMapping(value = "/deleteOrder.action")
+	@GetMapping(value = "/deleteOrder")
 	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
+		String userId = sessionInfo.getUserId();
 		int postId = dto.getPostId();
 
 		member = mypageService.selectData(sessionInfo.getUserId());
@@ -834,11 +833,30 @@ public class PostController {
 	    String status = postService.getReadStatus(postId);
 
 	    //참여하기
-	    Odto.setMember(member); //userId
-	    Odto.setPost(dto); //postId
+	    Odto.setUserId(sessionInfo.getUserId()); //userId
+	    Odto.setPostId(dto.getPostId()); //postId
 
 	    postService.deleteOrder1(Odto);
 	    postService.deleteOrder2(postId);
+
+	    // 참여 취소 잔액 환불
+	    LionPayDTO payDto = lionPayService.getReadData(userId);
+	    Integer refund = lionPayService.getRefundData(userId, postId);
+
+	    if (refund != null) {
+	        int newBalance = payDto.getBalance() + refund;
+	        payDto.setBalance(newBalance);
+	        lionPayService.updateBalData(payDto);
+	    }
+
+	    ListDTO listDto = new ListDTO();
+	    listDto.setNum(lionPayService.maxNum(userId) + 1);
+	    listDto.setUserId(userId);
+	    listDto.setPostId(postId);
+	    listDto.setAccountName(payDto.getAccountName());
+	    listDto.setRechargeAmount(refund);
+
+	    lionPayService.insertData(listDto, userId);
 
 		ModelAndView mav = new ModelAndView();
 
@@ -871,9 +889,10 @@ public class PostController {
 		member = mypageService.selectData(sessionInfo.getUserId());
 		
 		
-		Odto.setMember(member); //userId
 
 		
+		Odto.setUserId(sessionInfo.getUserId());; //userId
+
 
 		    
 	    List<Order> lists = postService.orderHistory(Odto.getUserId(),start,end);
@@ -891,17 +910,16 @@ public class PostController {
 			listUrl = listUrl + "?" + param;
 		}
 		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);	
-		String detailUrl = "/list1";
+		String detailUrl = "/detail?";
 		if (!param.equals("")) {
 			detailUrl = detailUrl + "&" + param;
 		}
 
-	  	   	
+	  	   	System.out.println(lists);
 
 	    mav.setViewName("orderHistory"); 
 
 	    
-	    mav.addObject("dto", dto);
 	    mav.addObject("Odto", Odto);
 	    mav.addObject("lists", lists);
 	    mav.addObject("dataCount", dataCount);

@@ -36,7 +36,7 @@ public class ListDTO {
 	private Integer usage;
 	
 	@Column(nullable = true)
-	private Integer categoryId;
+	private int postId;
 	
 	@Column(nullable = true)
 	private Timestamp date;

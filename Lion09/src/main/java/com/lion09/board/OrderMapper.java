@@ -34,4 +34,8 @@ public interface OrderMapper {
 	
 	public String findOrderData(String userId) throws Exception;
 	
+	public void updateOrders(Post dto) throws Exception;
+	
+	public void deleteOrders(int postId) throws Exception;
+	
 }

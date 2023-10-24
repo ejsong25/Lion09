@@ -50,8 +50,8 @@ public class Member {
 	private int myRange;
 	
 	//주문 내역
-	@OneToMany(mappedBy = "member")
-	private List<Order> orders = new ArrayList<>();
+//	@OneToMany(mappedBy = "member")
+//	private List<Order> orders = new ArrayList<>();
 	
 	//작성 글
 //	@OneToMany(mappedBy = "writer")

@@ -79,21 +79,25 @@
 		}
   	  
 	}
-
     
     function order2() {
+    	alert('참여가 취소되었습니다.')
+	    var postId = [[${dto.postId}]];
+	    var url = "/deleteOrder?postId=" + postId;
+
+	    window.location.href = url;
+	}
+    
+    function order3() {
         
     	f = document.orderForm;
     	var currentClass = $(this).attr('class');
         
     	$(this).attr('class', 'joinButton2');
-        alert('참여가 취소되었습니다.')
-        f.action="/deleteOrder.action";
-        	
-        f.submit();
+        alert('정원이 찼습니다.')
+
         
     }
-    
     
     <!-- 결제 방법 선택 -->
     document.querySelector(".joinButton1").addEventListener("click", function() {
@@ -215,12 +219,21 @@
             <div class="flex-box between info-button-box">                      
 
 				<div class="flex-box button-box" style="margin-left: 66%;" 
-					th:if="${mdto.userId == dto.userId}">
+					th:if="${mdto.userId == dto.userId && dto.participant == 1}">
                     <button class="orange" th:onclick="@{|location.href='/writeUpdated?postId=${dto.postId}&${params}'|}">수정하기</button>
                     <button class="grey" th:onclick="@{|location.href='/deleted_ok.action?postId=${dto.postId}&${params}'|}">삭제하기</button>
                  
                   <button class="orange" th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}">채팅보기</button>
                 </div>
+                
+                <div class="flex-box button-box" style="margin-left: 80%;" 
+					th:if="${mdto.userId == dto.userId && dto.participant > 1}">
+                <button class="orange" th:onclick="@{|location.href='/writeUpdated?postId=${dto.postId}&${params}'|}">수정하기</button>
+                <button class="orange" th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}">채팅보기</button>
+                </div>
+                
+                
+                
 
                 <div class="button-box" style="margin-left: 88%;"
                 	th:if="${mdto.userId != dto.userId}">
@@ -295,7 +308,8 @@
 				      </div>
 				    </div>
 				</div>
-            <input type="button"  th:if="${Odto.count  == 1}"  onclick="order2();"  class="joinButton2" value="취소하기">
+            <input type="button"  th:if="${Odto.count==1 && dto.participant  != dto.recruitment}"  onclick="order2();"  class="joinButton2" value="취소하기">+
+            <input type="button"  th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order3();" value="참여하기">
         	<input type="hidden" th:value="${dto.postId}" name="postId">
         	<div class="modal-container">
 		        <div class="popup-wrap" id="popup">

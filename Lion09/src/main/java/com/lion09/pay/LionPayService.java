@@ -34,6 +34,8 @@ public interface LionPayService {
 	
 	public void insertUsage(ListDTO listDto, String userId) throws Exception;
 	
+	public Integer getRefundData(String userId, int postId) throws Exception;
+	
 	List<String> getBankList();
 	
 }

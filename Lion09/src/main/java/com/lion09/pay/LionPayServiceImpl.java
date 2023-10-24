@@ -90,9 +90,15 @@ public class LionPayServiceImpl implements LionPayService {
 	}
 	
 	@Override
+	public Integer getRefundData(String userId, int postId) throws Exception {
+		return lionPayMapper.getRefundData(userId, postId);
+	}
+	
+	@Override
     public List<String> getBankList() {
         List<String> bankList = Arrays.asList("국민은행", "기업은행", "농협은행", "신한은행", "우리은행", "하나은행", "새마을금고", "케이뱅크", "토스뱅크", "우체국");
         return bankList;
     }
+
 
 }

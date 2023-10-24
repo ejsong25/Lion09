@@ -224,9 +224,6 @@ public class LionPayController {
 		member = mypageService.selectData(sessionInfo.getUserId());
 	    dto = postService.getReadData(postId);
 	    String status = postService.getReadStatus(postId);
-	    
-	    System.out.println(postId);
-	    System.out.println(dto);
 		
 		LionPayDTO payDto = lionPayService.getReadData(userId);
 		
@@ -238,11 +235,9 @@ public class LionPayController {
 			return mav;
 		}
 		
-
-		
 		//참여하기
-		Odto.setMember(member); //userId
-		Odto.setPost(dto); //postId
+		Odto.setUserId(userId); //userId
+		Odto.setPostId(postId); //postId
 		Odto.setOrderPrice(price); //orderPrice
 		Odto.setId((long) id + 1); //orderId 
 		Odto.setTitle(dto.getTitle());
@@ -272,6 +267,7 @@ public class LionPayController {
 		
 		listDto.setNum(lionPayService.maxNum(userId) + 1);
     	listDto.setUserId(userId);
+    	listDto.setPostId(postId);
     	listDto.setUsage(price);
     	listDto.setAccountName(lionPayService.getReadData(userId).getAccountName());
 		lionPayService.insertUsage(listDto, userId);

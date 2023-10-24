@@ -819,55 +819,6 @@ public class PostController {
 
 	}
 
-	//참여 목록에 추가
-	@PostMapping(value = "/insertOrder.action")
-	public ModelAndView insertOrder(Order Odto,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto,Member member) throws Exception {
-
-		ModelAndView mav = new ModelAndView();
-		
-		int postId = dto.getPostId();
-
-		int id = postService.maxId();
-
-	    member = mypageService.selectData(sessionInfo.getUserId());
-	    dto = postService.getReadData(postId);
-	    String status = postService.getReadStatus(postId);
-
-	    //참여하기
-	    Odto.setMember(member); //userId
-	    Odto.setPost(dto); //postId
-	    Odto.setOrderPrice(dto.getProductsPrice());	    //orderPrice
-		Odto.setId((long) id + 1); //orderId 
-		Odto.setTitle(dto.getTitle());
-	    
-	    OrderStatus orderStatus = null; // 초기화
-	    
-	    
-	    if (status != null) {
-	        try {
-	            orderStatus = OrderStatus.valueOf(status);	   
-	        } catch (IllegalArgumentException e) {
-	            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
-	            e.printStackTrace();
-	        }
-	    }
-	    
-	    Odto.setStatus(orderStatus);	  
-	 
-		postService.insertOrder1(Odto);
-		
-		System.out.println(Odto);
-		
-		postService.updateOrder(postId);
-
-	
-		mav.setViewName("redirect:/detail?postId=" + postId);
-
-		return mav;
-
-	}
-
 	//참여 목록에서 삭제
 	@PostMapping(value = "/deleteOrder.action")
 	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,

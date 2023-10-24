@@ -25,7 +25,7 @@ var colors = [
 
 // roomId 파라미터 가져오기
 const url = new URL(location.href).searchParams;
-const roomId = url.get('roomId');
+const postId = url.get('postId');
 
 function connect(event) {
 
@@ -51,17 +51,17 @@ function onConnected() {
 
 alert('2');
 
-    // sub 할 url => /sub/chat/room/roomId 로 구독한다
-    stompClient.subscribe('/sub/chat/room/' + roomId, onMessageReceived);
+    // sub 할 url => /sub/chat/room/postId 로 구독한다
+    stompClient.subscribe('/sub/chat/room/' + postId, onMessageReceived);
 
     // 서버에 username 을 가진 유저가 들어왔다는 것을 알림
     // /pub/chat/enterUser 로 메시지를 보냄
     stompClient.send("/pub/chat/enterUser",
         {},
         JSON.stringify({
-            "roomId": roomId,
-            nickName: username,
-            type: 'ENTER'
+            "postId": postId,
+            nickName: username
+//            type: 'ENTER'
         })
     )
 
@@ -80,7 +80,7 @@ alert('3');
         type: "GET",
         url: "/chat/userlist",
         data: {
-            "roomId": roomId
+            "postId": postId
         },
         success: function (data) {
             var users = "";
@@ -107,7 +107,7 @@ alert('5');
 
     if (messageContent && stompClient) {
         var chatMessage = {
-            "roomId": roomId,
+            "postId": postId,
             nickName: username,
             message: messageInput.value,
             type: 'TALK'
@@ -130,7 +130,7 @@ alert('6');
     if (chat.type === 'ENTER') {  // chatType 이 enter 라면 아래 내용
         messageElement.classList.add('event-message');
         chat.content = chat.nickName + chat.message;
-        getUserList();
+//        getUserList();
 
     //} else if (chat.type === 'LEAVE') { // chatType 가 leave 라면 아래 내용
         //messageElement.classList.add('event-message');
@@ -152,7 +152,7 @@ alert('6');
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
     }
-
+	getUserList();
     var contentElement = document.createElement('p');
 
     // 만약 s3DataUrl 의 값이 null 이 아니라면 => chat 내용이 파일 업로드와 관련된 내용이라면
@@ -172,17 +172,22 @@ alert('6');
         contentElement.appendChild(imgElement);
         contentElement.appendChild(downBtnElement);
 
-    }else{
+	    messageElement.appendChild(contentElement);
+	
+	    messageArea.appendChild(messageElement);
+	    messageArea.scrollTop = messageArea.scrollHeight;
+	    
+    }else if(chat.message != null){
         // 만약 s3DataUrl 의 값이 null 이라면
         // 이전에 넘어온 채팅 내용 보여주기
        var messageText = document.createTextNode(chat.message);
-        contentElement.appendChild(messageText);
+       contentElement.appendChild(messageText);
+   	  
+   	   messageElement.appendChild(contentElement);
+
+       messageArea.appendChild(messageElement);
+       messageArea.scrollTop = messageArea.scrollHeight;
     }
-
-    messageElement.appendChild(contentElement);
-
-    messageArea.appendChild(messageElement);
-    messageArea.scrollTop = messageArea.scrollHeight;
 }
 
 
@@ -205,7 +210,7 @@ function uploadFile(){
     var file = $("#file")[0].files[0];
     var formData = new FormData();
     formData.append("file",file);
-    formData.append("roomId", roomId);
+    formData.append("postId", postId);
 
     // 확장자 추출
     var fileDot = file.name.lastIndexOf(".");
@@ -239,7 +244,7 @@ function uploadFile(){
     }).done(function (data){
 
         var chatMessage = {
-            "roomId": roomId,
+            "postId": postId,
             nickName: username,
             message: username+" 님의 파일 업로드",
             type: 'TALK',

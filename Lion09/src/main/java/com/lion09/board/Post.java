@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.lion09.chat.ChatDTO;
 import com.lion09.chat.ChatRoomDTO;
 import com.lion09.member.Member;
@@ -52,6 +54,8 @@ public class Post {
 	private String contents;
 	
 	private LocalDateTime created;
+	
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime deadLine;
 	
 	@Column(length = 999)
@@ -86,6 +90,8 @@ public class Post {
 	private PostLike postLike;
 	
 	//채팅
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")
-	private ChatRoomDTO chatRoom;
+//	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")
+//	private ChatRoomDTO chatRoom;
+	
+
 }

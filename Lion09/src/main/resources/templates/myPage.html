@@ -11,6 +11,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="css/templatemo-style.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 
 <style>
 @font-face {
@@ -30,6 +31,25 @@
 	font-weight: normal;
 	font-style: normal;
 }
+
+
+.header__title img {
+  width: 40px;
+  height: 40px;
+  animation: carrot-logo-dance 2s ease-in-out infinite;
+}
+@keyframes carrot-logo-dance {
+  0% {
+    transform: rotateY(0);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
 </style>
 
 <script type="text/javascript">
@@ -187,7 +207,7 @@
 				<a href="/LionPay" class="w3-bar-item w3-button">LionPay</a> 
 				<a href="/myList" class="w3-bar-item w3-button">내가쓴글</a> 
 				<a href="/wishList" class="w3-bar-item w3-button">관심상품</a> 
-				<a href="#" class="w3-bar-item w3-button">거래내역</a> 
+				<a href="orderHistory" class="w3-bar-item w3-button">구매이력</a> 
 				<a href="/update" class="w3-bar-item w3-button">계정/정보</a>
 				<a href="/qna_list" class="w3-bar-item w3-button">문의내역</a>
 			</div>
@@ -224,11 +244,11 @@
 					
 					<div style="width: 500px;">
 						<div>
-							<h3 style="font-family: 'omyu_pretty'; font-size: 20pt; 
-								padding-top: 14px; padding-left: 50px;" align="left">내 동네</h3>
+							<h3
+							    style="font-family: 'omyu_pretty'; font-size: 20pt; padding-top: 40px;">내 동네</h3>
 							<input type="text" align="left" id="myAddress" name="myAddress" th:value="${dto.myAddress}" readonly
-								style="font-family: 'omyu_pretty'; font-size: 17pt; width: 400px; "/>
-							<br/>
+								style="font-family: 'omyu_pretty'; font-size: 17pt; width: 60%; "/>
+							<br/><br/>
 							<input type="button" value="동네인증" class="profileBtn" onclick="searchAddress();">
 							<div>
 								<input type="hidden" name="myLatitude" id="myLatitude" th:value="${dto.myLatitude}"/>
@@ -250,7 +270,7 @@
 							    	style="font-family: 'omyu_pretty'; color: red;"></div>
 							</div>
 							
-							</div>
+						</div>
 							<br />
 							<input type="button" class="profileBtn" value="닉네임 수정" onclick="nickName_update();"/>
 							<br />
@@ -260,9 +280,23 @@
 					</div>
 				</form>
 				
-				<div style="margin-left: 28%; margin-top: 20px;" align="left">
-					<h4 style="font-family: 'omyu_pretty'; font-size: 20pt;">에너지
-						게이지</h4>
+				
+				
+				<div style="margin-top: 20px; width: 400px;"align="left">
+					
+					<div class="header__title" style="display: flex; align-items: center;" th:if="${dto.energy < 30}">
+					    <h4 style="font-family: 'omyu_pretty'; font-size: 20pt; margin-right: 10px;">에너지 게이지</h4>
+					    <img src="img/babylion.png">
+					</div>
+					<div class="header__title" style="display: flex; align-items: center;" th:if="${dto.energy > 30 and dto.energy < 90}">
+					    <h4 style="font-family: 'omyu_pretty'; font-size: 20pt; margin-right: 10px;">에너지 게이지</h4>
+					    <img src="img/lion.png">
+					</div>
+					<div class="header__title" style="display: flex; align-items: center;" th:if="${dto.energy > 90}">
+					    <h4 style="font-family: 'omyu_pretty'; font-size: 20pt; margin-right: 10px;">에너지 게이지</h4>
+					    <img src="img/lionking.png">
+					</div>
+					
 					<b style="font-family: 'omyu_pretty'; font-size: 15pt;">[[${dto.energy}]]%</b>
 					<div class="progress" style="margin-top: 20px;">
 						<div class="progress-number" aria-valuenow="첫 에너지 40%"></div>
@@ -304,7 +338,7 @@
 			</div>
 		</footer>
 	</div>
-
+	
 	<script>
 			var container = document.getElementById('map');
 			var options = {

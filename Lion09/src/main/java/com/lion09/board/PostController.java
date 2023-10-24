@@ -5,6 +5,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -543,6 +545,8 @@ public class PostController {
 
 		dto.setPostId(postId);
 
+		dto.setStatus(request.getParameter("status"));;
+
 		dto.setTitle(request.getParameter("title"));
 
 		dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
@@ -550,12 +554,17 @@ public class PostController {
 		dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
 
 		dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));
+		
+		String deadLineParameter = request.getParameter("deadLine");
+		// 여기에서 날짜와 시간을 원하는 형식으로 변환하십시오. 예를 들어, LocalDateTime 또는 다른 적절한 형식으로 파싱합니다.
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime deadLine = LocalDateTime.parse(deadLineParameter, formatter);
 
+		dto.setDeadLine(deadLine);
 
 		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
 		dto.setContents(plainText);
 		dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
-
 
 
 		postService.updateData(dto);
@@ -810,41 +819,55 @@ public class PostController {
 
 	}
 
+	//참여 목록에 추가
+	@PostMapping(value = "/insertOrder.action")
+	public ModelAndView insertOrder(Order Odto,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto,Member member) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		
+		int postId = dto.getPostId();
+
+		int id = postService.maxId();
+
+	    member = mypageService.selectData(sessionInfo.getUserId());
+	    dto = postService.getReadData(postId);
+	    String status = postService.getReadStatus(postId);
+
+	    //참여하기
+	    Odto.setMember(member); //userId
+	    Odto.setPost(dto); //postId
+	    Odto.setOrderPrice(dto.getProductsPrice());	    //orderPrice
+		Odto.setId((long) id + 1); //orderId 
+		Odto.setTitle(dto.getTitle());
+	    
+	    OrderStatus orderStatus = null; // 초기화
+	    
+	    
+	    if (status != null) {
+	        try {
+	            orderStatus = OrderStatus.valueOf(status);	   
+	        } catch (IllegalArgumentException e) {
+	            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    Odto.setStatus(orderStatus);	  
+	 
+		postService.insertOrder1(Odto);
+		
+		System.out.println(Odto);
+		
+		postService.updateOrder(postId);
+
 	
-//	//참여 목록에 추가
-//	@PostMapping(value = "/insertOrder.action")
-//	public ModelAndView insertOrder(Order Odto,
-//			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto,Member member) throws Exception {
-//
-//		ModelAndView mav = new ModelAndView();
-//		
-//		int postId = dto.getPostId();
-//
-//		int id = postService.maxId();
-//
-//	    member = mypageService.selectData(sessionInfo.getUserId());
-//	    dto = postService.getReadData(postId);
-//	    String status = postService.getReadStatus(postId);
-//
-//	    //참여하기
-//	    Odto.setMember(member); //userId
-//	    Odto.setPost(dto); //postId
-//	    Odto.setOrderPrice(dto.getProductsPrice());	//orderPrice
-//		Odto.setId((long) id + 1); //orderId 
-//	    
-//		postService.insertOrder1(Odto);
-//		postService.updateOrder(postId);
-//
-//	
-//		mav.setViewName("redirect:/detail?postId=" + postId);
-//
-//		return mav;
-//
-//	}
-//
-//	
-//	
-//	
+		mav.setViewName("redirect:/detail?postId=" + postId);
+
+		return mav;
+
+	}
+
 	//참여 목록에서 삭제
 	@PostMapping(value = "/deleteOrder.action")
 	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
@@ -871,6 +894,69 @@ public class PostController {
 
 	}
 
+	//구매이력
+	@GetMapping(value = "/orderHistory") 
+	public ModelAndView orderHistory(Order Odto,Member member,Post dto,@Param("start") Integer start, @Param("end") Integer end,
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
+	   
+		ModelAndView mav = new ModelAndView();
 
+		int currentPage = 1;
+
+		if(pageNum!=null) {
+
+			currentPage = Integer.parseInt(pageNum);
+
+		}
+
+		int numPerPage = 5;
+		start = (currentPage - 1) * numPerPage + 1;
+		end = currentPage * numPerPage;			
+		member = mypageService.selectData(sessionInfo.getUserId());
+		
+		
+		Odto.setMember(member); //userId
+
+		
+
+		    
+	    List<Order> lists = postService.orderHistory(Odto.getUserId(),start,end);
+		String param = "";
+		int dataCount = postService.orderDataCount(sessionInfo.getUserId());
+		int totalPage = postUtil.getPageCount(numPerPage, dataCount);
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+		String listUrl = "/orderHistory";
+		if(!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+		if (!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);	
+		String detailUrl = "/list1";
+		if (!param.equals("")) {
+			detailUrl = detailUrl + "&" + param;
+		}
+
+	  	   	
+
+	    mav.setViewName("orderHistory"); 
+
+	    
+	    mav.addObject("dto", dto);
+	    mav.addObject("Odto", Odto);
+	    mav.addObject("lists", lists);
+	    mav.addObject("dataCount", dataCount);
+		mav.addObject("pageIndexList", pageIndexList);
+		mav.addObject("detailUrl", detailUrl);	    
+	   
+
+	    return mav;
+	}
+	
+	
 }

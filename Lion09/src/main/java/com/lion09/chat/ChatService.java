@@ -24,75 +24,65 @@ public class ChatService {
     private final FileService fileService;
 
     // 전체 채팅방 조회
-    public List<ChatRoomDTO> findAllRoom() throws Exception{
-        // TODO room userCnt 로직 수정 필요
+    public List<ChatRoomDTO> findAllRoom(String userId) throws Exception{
         // 채팅방 생성 순서를 최근순으로 반환
-        List<ChatRoomDTO> chatRooms = chatRoomMapper.findAllRoom();
+        List<ChatRoomDTO> chatRooms = chatRoomMapper.findAllRoom(userId);
         Collections.reverse(chatRooms);
 
         return chatRooms;
     }
 
+    public ChatRoomDTO findRoomByPostId(int postId) throws Exception{
+        return chatRoomMapper.findRoomByPostId(postId);
+    }
+    
     // roomID 기준으로 채팅방 찾기
     public ChatRoomDTO findRoomById(String roomId) throws Exception{
-        return chatRoomMapper.findRoomById(roomId);
+    	return chatRoomMapper.findRoomById(roomId);
     }
 
     // roomName 로 채팅방 만들기
     public void createChatRoom(ChatRoomDTO dto) throws Exception{
-
     	int maxNum = chatRoomMapper.maxNum(dto.getUserId())+1;
     	dto.setNum(maxNum);
-    	System.out.println(dto.getNum());
+//    	System.out.println(dto.getNum());
         // 채팅방 타입에 따라서 사용되는 Service 구분
         if(dto.getChatType() == ChatType.MSG){
             chatRoomMapper.createChatRoom(dto); //저장
         }
     }
 
-    // 채팅방 비밀번호 조회
-    public boolean confirmPwd(String roomId, String roomPwd) throws Exception{
-//        String pwd = chatRoomMap.get(roomId).getRoomPwd();
-
-        return roomPwd.equals(chatRoomMapper.confirmPwd(roomId, roomPwd));
-
-    }
-
     // 채팅방 인원+1
-    public void plusUserCnt(String roomId) throws Exception{
+    public void plusUserCnt(int postId) throws Exception{
         //log.info("cnt {}",chatRoomMapper.plusUserCnt(roomId));
-    	chatRoomMapper.plusUserCnt(roomId);
+    	chatRoomMapper.plusUserCnt(postId);
     }
 
     // 채팅방 인원-1
-    public void minusUserCnt(String roomId) throws Exception{
-    	chatRoomMapper.minusUserCnt(roomId);
+    public void minusUserCnt(int postId) throws Exception{
+    	chatRoomMapper.minusUserCnt(postId);
     }
 
     // maxUserCnt 에 따른 채팅방 입장 여부
-    public boolean chkRoomUserCnt(String roomId) throws Exception{
-    	return chatRoomMapper.chkRoomUserCnt(roomId);
+    public boolean chkRoomUserCnt(int postId) throws Exception{
+    	return chatRoomMapper.chkRoomUserCnt(postId);
 
     }
     
     // 채팅방 삭제
-    public void delChatRoom(String roomId) throws Exception{
-
-        try {
+    public void delChatRoom(int postId) throws Exception{
+    	try {
             // 채팅방 타입에 따라서 단순히 채팅방만 삭제할지 업로드된 파일도 삭제할지 결정
-            chatRoomMapper.delChatRoom(roomId);
 
-            if (chatRoomMapper.findRoomById(roomId).getChatType() == ChatType.MSG) { // MSG 채팅방은 사진도 추가 삭제
+    		chatRoomMapper.delChatRoom(postId);
+            if (chatRoomMapper.findRoomByPostId(postId).getChatType() == ChatType.MSG) { // MSG 채팅방은 사진도 추가 삭제
                 // 채팅방 안에 있는 파일 삭제
-                fileService.deleteFileDir(roomId);
+                fileService.deleteFileDir(postId);
             }
-
-            log.info("삭제 완료 roomId : {}", roomId);
+            log.info("삭제 완료 roomId : {}", postId);
 
         } catch (Exception e) { // 만약에 예외 발생시 확인하기 위해서 try catch
             System.out.println(e.getMessage());
         }
-
     }
-
 }

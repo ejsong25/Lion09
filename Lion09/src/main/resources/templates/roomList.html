@@ -250,7 +250,15 @@
 	                <th scope="col">채팅방 설정</th>
 	            </tr>
 	            <th:block th:fragment="content">
-	
+					<tr th:if="${#lists.isEmpty(list)}">
+						<td colspan="5">
+							<p>
+							채팅 내역이 없습니다.<br/>
+							공동구매 참여를 통해 새로운 채팅을 시작해 보세요<br/>
+							<button type="button" class="btn btn-info" onclick="javascript:location.href='/list1';" >공동구매 구경하러 가기</button>
+							</p>
+						</td>
+					</tr>
 	                <tr th:each="room : ${list}">
 	                    <span class="hidden" th:id="${room.roomName}"></span>
 	                    <td th:if="${room.secretChk}">
@@ -258,7 +266,7 @@
 	                    </td>
 	                    <td th:if="${!room.secretChk}">
 	                        <!-- thymeleaf 의 변수를 onclick 에 넣는 방법 -->
-	                        <a th:href="@{/chat/room(roomId=${room.roomId})}" th:roomId="${room.roomId}" onclick="return chkRoomUserCnt(this.getAttribute('roomId'));">[[${room.roomName}]]</a>
+	                        <a th:href="@{/chat/room(postId=${room.postId})}" th:roomId="${room.postId}" onclick="return chkRoomUserCnt(this.getAttribute('roomId'));">[[${room.roomName}]]</a>
 	                    </td>
 	                    <td>
 	                        <span th:if="${room.secretChk}">
@@ -266,19 +274,19 @@
 	                        </span>
 	                    </td>
 	                    <td>
-	                        <span class="badge bg-primary rounded-pill">[[${room.userCount}]]/[[${room.maxUserCnt}]]</span>
+	                        <span class="badge bg-primary rounded-pill">[[${room.userCount}]]</span>
 	                    </td>
 	                    <td>
 	                        <span th:if="${#strings.equals(room.chatType, 'MSG')}">일반 채팅</span>
 	                    </td>
 	                    <td>
-	                        <button class="btn btn-primary btn-sm" id="configRoom" data-bs-toggle="modal" data-bs-target="#confirmPwdModal" th:data-id="${room.roomId}">채팅방 설정</button>
+	                        <button class="btn btn-primary btn-sm" th:onclick="@{|location.href='/chat/leave?postId=${room.postId}'|}">채팅방 나가기</button>
 	                    </td>
 	                </tr>
 	            </th:block>
 	
 	        </table>
-	        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#roomModal">새로운 채팅</button>
+	        <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#roomModal">새로운 채팅</button> -->
 	
 	    </div>
 

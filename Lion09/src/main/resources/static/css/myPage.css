@@ -20,7 +20,7 @@
 
 /* 진행바 */
 .progress {
-	width: 38%;
+	width: 400px;
 	height: 20px;
 	position: absolute;
 	

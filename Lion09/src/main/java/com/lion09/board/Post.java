@@ -82,8 +82,8 @@ public class Post {
 	private LocalDateTime likeDate;
 	
 	//주문 리스트
-	@OneToMany(mappedBy = "post")
-	private List<Order> orders = new ArrayList<>();
+//	@OneToMany(mappedBy = "post")
+//	private List<Order> orders = new ArrayList<>();
 	
 	//관심
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")

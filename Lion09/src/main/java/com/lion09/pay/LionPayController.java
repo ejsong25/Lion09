@@ -241,8 +241,8 @@ public class LionPayController {
 
 		
 		//참여하기
-		Odto.setMember(member); //userId
-		Odto.setPost(dto); //postId
+		Odto.setUserId(userId); //userId
+		Odto.setPostId(postId); //postId
 		Odto.setOrderPrice(price); //orderPrice
 		Odto.setId((long) id + 1); //orderId 
 		Odto.setTitle(dto.getTitle());

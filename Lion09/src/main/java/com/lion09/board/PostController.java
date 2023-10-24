@@ -330,11 +330,11 @@ public class PostController {
 	    Order Odto = new Order();
 	    
 	    member = mypageService.selectData(userId);
-	    post = postService.getReadData(postId);
+	    post = postService.getReadData(postId);	  
 	    String status = postService.getReadStatus(postId);
 	   
-	    Odto.setMember(member);
-	    Odto.setPost(post);
+	    Odto.setUserId(userId);
+	    Odto.setPostId(postId);
 
 	    int count  = postService.findOrderCount(Odto);
 	   
@@ -836,8 +836,8 @@ public class PostController {
 	    String status = postService.getReadStatus(postId);
 
 	    //참여하기
-	    Odto.setMember(member); //userId
-	    Odto.setPost(dto); //postId
+	    Odto.setUserId(sessionInfo.getUserId()); //userId
+	    Odto.setPostId(dto.getPostId()); //postId
 
 	    postService.deleteOrder1(Odto);
 	    postService.deleteOrder2(postId);
@@ -873,9 +873,10 @@ public class PostController {
 		member = mypageService.selectData(sessionInfo.getUserId());
 		
 		
-		Odto.setMember(member); //userId
-
+	   // dto = postService.pos
 		
+		Odto.setUserId(sessionInfo.getUserId());; //userId
+		//Odto.setPostId(postId); //postId
 
 		    
 	    List<Order> lists = postService.orderHistory(Odto.getUserId(),start,end);
@@ -898,12 +899,11 @@ public class PostController {
 			detailUrl = detailUrl + "&" + param;
 		}
 
-	  	   	
+	  	   	System.out.println(lists);
 
 	    mav.setViewName("orderHistory"); 
 
 	    
-	    mav.addObject("dto", dto);
 	    mav.addObject("Odto", Odto);
 	    mav.addObject("lists", lists);
 	    mav.addObject("dataCount", dataCount);

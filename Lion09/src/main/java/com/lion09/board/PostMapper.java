@@ -44,6 +44,9 @@ public interface PostMapper {
 	//참여하기
 	public String getReadStatus(int postId) throws Exception; 
 	
+	public List<Post> getPostList() throws Exception;
+	
+	
 
 
 }

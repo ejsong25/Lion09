@@ -41,6 +41,7 @@ import com.lion09.member.MemberForm;
 import com.lion09.mypage.MyPageService;
 import com.lion09.order.Order;
 import com.lion09.order.OrderStatus;
+import com.lion09.pay.LionPayService;
 import com.lion09.SessionInfo;
 import com.lion09.board.Post;
 import com.lion09.board.PostService;
@@ -52,6 +53,10 @@ public class PostController {
 	@Autowired
 	@Qualifier("postServiceImpl")
 	private PostService postService;
+	
+	@Autowired
+	@Qualifier("lionPayServiceImpl")
+	private LionPayService lionPayService;
 
 	@Autowired
 	PostUtil postUtil;
@@ -376,6 +381,9 @@ public class PostController {
 	    }
 
 	    String param = "pageNum=" + pageNum;
+	    
+	    // 라이언페이
+	 	String payPwd = lionPayService.getReadData(userId).getPayPwd();
 
 	    ModelAndView mav = new ModelAndView();
 
@@ -388,6 +396,7 @@ public class PostController {
 	    mav.addObject("dto", dto);
 	    mav.addObject("params", param);
 	    mav.addObject("pageNum", pageNum);
+	    mav.addObject("payPwd",payPwd);
 
 	    mav.setViewName("/detail");
 
@@ -597,6 +606,7 @@ public class PostController {
 			//이미지 사진들 모아두는 폴더
 			String upload_path = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
+
 			Post dto = postService.getReadData(postId);
 
 			//삭제할 파일 이름 추출
@@ -684,6 +694,7 @@ public class PostController {
 
 		//삭제할 파일 경로
 		String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+
 
 		//기본 사진 이미지가 아닐 경우 삭제		
 		if(beforeFilename.equalsIgnoreCase("lion.png")){
@@ -811,55 +822,6 @@ public class PostController {
 
 	}
 
-	
-	//참여 목록에 추가
-	@PostMapping(value = "/insertOrder.action")
-	public ModelAndView insertOrder(Order Odto,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto,Member member) throws Exception {
-
-		ModelAndView mav = new ModelAndView();
-		
-		int postId = dto.getPostId();
-
-		int id = postService.maxId();
-
-	    member = mypageService.selectData(sessionInfo.getUserId());
-	    dto = postService.getReadData(postId);
-	    String status = postService.getReadStatus(postId);
-
-	    //참여하기
-	    Odto.setMember(member); //userId
-	    Odto.setPost(dto); //postId
-	    Odto.setOrderPrice(dto.getProductsPrice());	    //orderPrice
-		Odto.setId((long) id + 1); //orderId 
-	    
-//	    OrderStatus orderStatus = null; // 초기화
-	    
-	    
-//	    if (status != null) {
-//	        try {
-//	            orderStatus = OrderStatus.valueOf(status);	   
-//	        } catch (IllegalArgumentException e) {
-//	            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
-//	            e.printStackTrace();
-//	        }
-//	    }
-	    
-//	    Odto.setStatus(orderStatus);	  
-	 
-		postService.insertOrder1(Odto);
-		postService.updateOrder(postId);
-
-	
-		mav.setViewName("redirect:/detail?postId=" + postId);
-
-		return mav;
-
-	}
-
-	
-	
-	
 	//참여 목록에서 삭제
 	@PostMapping(value = "/deleteOrder.action")
 	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
@@ -886,16 +848,69 @@ public class PostController {
 
 	}
 
+	//구매이력
+	@GetMapping(value = "/orderHistory") 
+	public ModelAndView orderHistory(Order Odto,Member member,Post dto,@Param("start") Integer start, @Param("end") Integer end,
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
+	   
+		ModelAndView mav = new ModelAndView();
 
+		int currentPage = 1;
 
+		if(pageNum!=null) {
+
+			currentPage = Integer.parseInt(pageNum);
+
+		}
+
+		int numPerPage = 5;
+		start = (currentPage - 1) * numPerPage + 1;
+		end = currentPage * numPerPage;			
+		member = mypageService.selectData(sessionInfo.getUserId());
+		
+		
+		Odto.setMember(member); //userId
+
+		
+
+		    
+	    List<Order> lists = postService.orderHistory(Odto.getUserId(),start,end);
+		String param = "";
+		int dataCount = postService.orderDataCount(sessionInfo.getUserId());
+		int totalPage = postUtil.getPageCount(numPerPage, dataCount);
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+		String listUrl = "/orderHistory";
+		if(!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+		if (!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);	
+		String detailUrl = "/list1";
+		if (!param.equals("")) {
+			detailUrl = detailUrl + "&" + param;
+		}
+
+	  	   	
+
+	    mav.setViewName("orderHistory"); 
+
+	    
+	    mav.addObject("dto", dto);
+	    mav.addObject("Odto", Odto);
+	    mav.addObject("lists", lists);
+	    mav.addObject("dataCount", dataCount);
+		mav.addObject("pageIndexList", pageIndexList);
+		mav.addObject("detailUrl", detailUrl);	    
+	   
+
+	    return mav;
+	}
 	
 	
-	
-
-
-
-
-
-
 }

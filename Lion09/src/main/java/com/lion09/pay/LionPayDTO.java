@@ -38,4 +38,5 @@ public class LionPayDTO {
 	
 	@Column(nullable = true)
 	private Integer rechargeAmount;
+	
 }

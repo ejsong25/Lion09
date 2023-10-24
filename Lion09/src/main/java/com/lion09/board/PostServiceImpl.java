@@ -191,9 +191,25 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public List<Order> orderHistory(String userId) throws Exception {
-		return orderMapper.orderHistory(userId);
+	public List<Order> orderHistory(String userId,int start,int end) throws Exception {
+		return orderMapper.orderHistory(start, end, userId);
 	}
+
+	@Override
+	public int orderMaxId() throws Exception {
+		return orderMapper.orderMaxId();
+	}
+
+	@Override
+	public int orderDataCount(String userId) throws Exception {
+		return orderMapper.orderDataCount(userId);
+	}
+
+	@Override
+	public String findOrderData(String userId) throws Exception {
+		return orderMapper.findOrderData(userId);
+	}
+
 
 
 

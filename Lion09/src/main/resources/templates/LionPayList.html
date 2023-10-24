@@ -41,22 +41,19 @@ function filter() {
 
     for (var i = 0; i < rows.length; i++) {
         var cells = rows[i].getElementsByTagName("td");
-        if (cells.length === 3) {
-            var cellText = cells[2].innerText || cells[2].textContent;  // "충전" 글자가 포함된 열을 확인
+        if (cells.length === 2) { // 2개의 td 셀이 있는 행을 확인
+            var cellText = cells[1].innerText || cells[1].textContent; // 두 번째 열 (충전 또는 사용) 확인
 
-            if (selectedValue === "전체보기"){
-            	rows[i].style.display = "table-row";
-            	
-            } else if (selectedValue === "충전" && cellText.includes("충전")) {
+            if (selectedValue === "전체보기") {
                 rows[i].style.display = "table-row";
-                
-            } else if (selectedValue === "사용" && cellText.includes("사용")) {
-            	rows[i].style.display = "table-row";
-        	} else {
+            } else if ((selectedValue === "충전" && cellText.includes("충전")) ||
+                       (selectedValue === "사용" && cellText.includes("사용"))) {
+                rows[i].style.display = "table-row";
+            } else {
                 rows[i].style.display = "none";
             }
-    	}
-	}
+        }
+    }
 }
 	
 </script>
@@ -106,13 +103,14 @@ function filter() {
 						</div>
 						<div>
 							<table id="listTable" border="1">
-							    <tr th:if="${listDto.accountName != null} and ${listDto.rechargeAmount != null}" th:each="listDto, index: ${lists}">
+							    <tr th:if="${listDto.accountName != null}" th:each="listDto, index: ${lists}">
 								    <td class="left">
 								        <span th:text="${listDto.accountName} + ' 계좌'"></span><br/>
 								        <span th:text="${#dates.format(listDto.date, 'yyyy-MM-dd HH:mm:ss')}"></span>
 								    </td>
 								    <td class="center">
-								        <span th:text="'+ ' + ${listDto.rechargeAmount + '원 충전'}"></span>
+								        <span th:if="${listDto.rechargeAmount != null}" th:text="'+ ' + ${listDto.rechargeAmount + '원 충전'}" style="color: #eec94f;"></span>
+								        <span th:if="${listDto.usage != null}" th:text="'- ' + ${listDto.usage + '원 사용'}" style="color: #0000c6;"></span>
 								    </td>
 								</tr>
 

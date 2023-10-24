@@ -44,19 +44,20 @@
 </select>
 
 <insert id="insertData">
-	insert into recharge (num, userId,rechargeAmount,accountName,categoryId,date) values (#{dto.num},#{userId},#{dto.rechargeAmount},#{dto.accountName},#{dto.categoryId},CURRENT_TIMESTAMP)
+	insert into recharge (num, userId,rechargeAmount,accountName,categoryId,date)
+	values (#{dto.num},#{userId},#{dto.rechargeAmount},#{dto.accountName},#{dto.categoryId},CURRENT_TIMESTAMP)
 </insert>
 
 <select id="getListData" parameterType="String" resultType="com.lion09.pay.ListDTO">
-	select userId,rechargeAmount,accountName,categoryId,date from recharge where userId=#{userId} and num > 0 ORDER BY date DESC limit 4
+	select userId,rechargeAmount,accountName,categoryId,date,usage from recharge where userId=#{userId} and num > 0 ORDER BY date DESC limit 4
 </select>
 
 <select id="getLists" resultType="com.lion09.pay.ListDTO">
 	select * from (
 	select rownum rnum, data.* from(
-	select userId, rechargeAmount,accountName,date
-	from recharge where userId = #{userId} and rechargeAmount is not null
-	order by date desc) data )
+	select userId,usage,rechargeAmount,accountName,date
+	from recharge where userId = #{userId}
+	order by date desc) data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
@@ -65,5 +66,10 @@
 <select id="maxNum" resultType="Integer">
 	select nvl(max(num),0) from recharge
 </select>
+
+<insert id="insertUsage">
+	insert into recharge (num, userId,usage,accountName,categoryId,date)
+	values (#{dto.num},#{userId},#{dto.usage},#{dto.accountName},#{dto.categoryId},CURRENT_TIMESTAMP)
+</insert>
 
 </mapper>

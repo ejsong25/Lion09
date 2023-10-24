@@ -22,7 +22,6 @@ public class LionPayServiceImpl implements LionPayService {
 	@Override
 	public void insertRecharge(Integer num, String userId) throws Exception {
 		lionPayMapper.insertRecharge(num, userId);
-		
 	}
 	
 	@Override
@@ -83,6 +82,11 @@ public class LionPayServiceImpl implements LionPayService {
 	public Integer maxNum(String userId) throws Exception {
 		
 		return lionPayMapper.maxNum(userId);
+	}
+	
+	@Override
+	public void insertUsage(ListDTO listDto, String userId) throws Exception {
+		lionPayMapper.insertUsage(listDto,userId);
 	}
 	
 	@Override

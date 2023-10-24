@@ -7,11 +7,16 @@
     <select id="maxId" resultType="int">
         select nvl(max(orderId),0) from orders where postId=#{postId}
     </select>
+    
+    <!-- 거래내역 수 -->
+    <select id="orderMaxId" resultType="int">
+        select nvl(max(orderId),0) from orders
+    </select>
 
     <!-- 공구 참여 추가 -->
     <insert id="insertOrder1" parameterType="com.lion09.order.Order">
-        insert into orders (userId,postId,orderDate,orderPrice,count,status)
-        values (#{userId},#{postId},current_timestamp,#{orderPrice},1,'Reserved')
+        insert into orders (userId,postId,orderDate,orderPrice,count,status,title)
+        values (#{userId},#{postId},sysdate,#{orderPrice},1,#{status},#{title})
     </insert>
 
 
@@ -33,15 +38,19 @@
 
     <!-- 공구 참여 목록 (주석 처리된 부분은 필요에 따라 활성화) -->
 	<select id="orderHistory" parameterType="hashMap"
-	 resultType="com.lion09.board.Post">
-		 select postId,userId,orderDate,orderPrice,count,status
+	 resultType="com.lion09.order.Order">
+	 select * from (
+	 select rownum rnum, data.* from (
+		 select postId,userId, FORMATDATETIME(orderDate, 'yyyy-MM-dd') AS orderDate,orderPrice,count,status,title
 		 from orders where userId=#{userId}
+		  order by userId desc) data)
+ <![CDATA[
+ 	where rnum>=#{start} and rnum<=#{end}
+ ]]>
 	 </select>
 
 
-
-
-    <!--  공구참여 갯수 -->
+    <!--  거래 상태 -->
     <select id="findOrderState" parameterType="com.lion09.order.Order" resultType="String">
         select status from orders where userId=#{userId} and postId=#{postId}
     </select>
@@ -50,5 +59,17 @@
 	resultType="int">
 	select count(*) from orders where userId=#{userId} and postId=#{postId}
 </select>
+
+
+<select id="orderDataCount" parameterType="map" resultType="int">
+	select nvl(count(*),0) from orders where userId=#{userId}
+</select>
+
+
+
+<select id="findOrderData" parameterType="com.lion09.order.Order" resultType="String">
+    select postId from orders where userId=#{userId}
+</select>
+
 
 </mapper>

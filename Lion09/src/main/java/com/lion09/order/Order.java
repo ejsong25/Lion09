@@ -39,6 +39,8 @@ public class Order {
 	private int orderPrice;
 	private int count;
 	
+	private String title;
+	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status; //주문 상태[Complete, Canceled, Reserved]	
 	

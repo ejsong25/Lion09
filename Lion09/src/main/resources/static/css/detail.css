@@ -1,5 +1,186 @@
 @charset "UTF-8";
 
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body,div,button,input {
+	font-family: 'omyu_pretty';
+}
+
+.blue-text{
+	color: #7d7868;
+}
+
+/* 결제 모달창 */
+
+.modal-container{
+  width:100%;
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+.modal-btn-box{
+  width:100%;
+  text-align:center;
+}
+.modal-btn-box button{
+  display:inline-block;
+  width:150px;
+  height:50px;
+  background-color:#ffffff;
+  border:1px solid #e1e1e1;
+  cursor:pointer;
+  padding-top:8px;
+}
+
+.modal-input{
+	padding-left: 10px;
+	font-size: 18pt;
+}
+
+dl {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 15px;
+}
+
+dt {
+  font-size: 18pt;
+  font-weight: bold;
+  flex: 1;
+  text-align: right;
+  margin-right: 15px;
+}
+
+dd {
+  flex: 2;
+  text-align: left;
+}
+
+dd input{
+	border: 0;
+}
+
+.modal-container h3{
+	padding-top: 90px;
+	font-size: 20pt;
+	text-align: center;
+}
+
+.popup-wrap{
+  background-color:rgba(0,0,0,.3);
+  justify-content:center;
+  align-items:center;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  display:none;
+  padding:15px;
+}
+.popup{
+  width: 100%;
+  max-width: 450px;
+  background-color:#ffffff;
+  border-radius:10px;
+  overflow:hidden;
+  background-color:#eec94f;
+  box-shadow: 5px 10px 10px 1px rgba(0,0,0,.3);
+}
+.popup-head{
+  width:100%;
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.head-title {
+	color: #fff;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -3px;
+    text-align: center;
+}
+.popup-body{
+  width:100%;
+  background-color:#ffffff;
+  height: 300px;
+}
+.body-content{
+  width:100%;
+}
+.body-titlebox{
+  text-align:center;
+  width:100%;
+  height:40px;
+  margin-bottom:10px;
+}
+.body-contentbox{
+  word-break:break-word;
+  overflow-y:auto;
+  min-height:100px;
+  max-height:200px;
+}
+
+.body-contentbox2 dl{
+  word-break:break-word;
+  overflow-y:auto;
+  min-height:100px;
+  max-height:140px;
+  padding-left: 70px;
+  font-size: 18pt;
+}
+
+.body-contentbox2 dd{
+  flex: 2;
+  text-align: left;
+  padding-top: 30px;
+}
+
+.popup-foot{
+  width:100%;
+  height:60px;
+  display: flex;
+}
+.pop-btn{
+  flex: 1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#ffffff;
+  cursor:pointer;
+  font-size: 17pt;  
+}
+.pop-btn.confirm{
+  border-right:1px solid #fff;
+}
+
+.profileImgBtn {
+	width: 70px; 
+	margin-top: 20px;
+	position: relative;
+    background-color: #ffffff;
+   	border: 1px solid #444444;
+    display: inline-block;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.25s;
+	font-family: 'omyu_pretty';
+	font-size: 13pt;
+}
+
+.profileImgBtn:hover {
+	color: #ffffff;
+    background: #444444;
+}
+
 .content-box{
     margin-top: 65px;
 }
@@ -377,4 +558,21 @@ h1{
 	width: 100%; 
 	height: 100%; 
 	object-fit: cover;
+}
+
+.payButton {
+    margin-top: 30px;
+    color: white;
+    background-color: orange;
+    font-size: 20px;
+    font-weight: 900;
+    width: 300px;
+    height: 50px;
+    padding: 6px 12px;
+    border-radius: 12px;
+    margin-left: 120%;
+    border: none;
+}
+.payButton:hover{
+    background-color: rgb(255, 112, 18);
 }

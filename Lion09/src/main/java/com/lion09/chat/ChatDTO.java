@@ -57,4 +57,6 @@ public class ChatDTO {
     
     @Column(nullable = true)
     private String fileDir; // s3 파일 경로
+    
+  	private String profileImgName;
 }

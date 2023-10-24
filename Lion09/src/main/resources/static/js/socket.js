@@ -17,11 +17,7 @@ var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
 var username = null;
-
-var colors = [
-    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
-    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-];
+var profileImgName = null;
 
 // roomId 파라미터 가져오기
 const url = new URL(location.href).searchParams;
@@ -31,6 +27,7 @@ function connect(event) {
 
 alert('1');
     username = document.querySelector('#name').value.trim();
+    profileImgName = document.querySelector('#profileImgName').value;
 
     // usernamePage 에 hidden 속성 추가해서 가리고
     // chatPage 를 등장시킴
@@ -141,10 +138,14 @@ alert('6');
         messageElement.classList.add('chat-message');
 
         var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(chat.nickName[0]);
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(chat.nickName);
-
+        var avatarElement2 = document.createElement('img');
+        avatarElement2.src = '/img/mypage/' + profileImgName;
+        
+        avatarElement2.style.width = '45px'; 
+		avatarElement2.style.height = '45px';
+		
+        avatarElement.appendChild(avatarElement2);
+        
         messageElement.appendChild(avatarElement);
 
         var usernameElement = document.createElement('span');

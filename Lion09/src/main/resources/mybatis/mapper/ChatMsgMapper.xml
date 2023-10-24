@@ -33,13 +33,21 @@
 
 <!-- 들어온 시간 이후의 메세지만 출력되도록 -->
 <select id="getMsg" resultType="com.lion09.chat.ChatDTO">
-	select nickName,message,type,time from chatMessages 
-	where postId=#{postId} and 
-	time >= (
-		select time from chatMessages where userId = #{userId} 
-		and TYPE in ('MASTER', 'ENTER') and nickName != '알수없음'
-		order by time asc limit 1)
-	order by time asc
+	SELECT cm.nickName, cm.message, cm.type, cm.time, m.profileImgName
+	FROM chatMessages AS cm
+	INNER JOIN member AS m ON cm.userId = m.userId
+	WHERE cm.postId = #{postId} 
+	AND cm.time >= (
+	    SELECT cm_inner.time
+	    FROM chatMessages AS cm_inner
+	    WHERE cm_inner.userId = #{userId} 
+	    AND cm_inner.type IN ('MASTER', 'ENTER')
+	    AND cm_inner.nickName != '알수없음'
+	    ORDER BY cm_inner.time ASC
+	    LIMIT 1
+	)
+	AND cm.userId = #{userId} 
+	ORDER BY cm.time ASC;
 </select>
 
 <delete id="delMsg">

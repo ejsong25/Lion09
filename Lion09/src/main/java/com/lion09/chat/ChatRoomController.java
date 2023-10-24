@@ -92,9 +92,12 @@ public class ChatRoomController {
         	writerIntput.setType(MessageType.MASTER);
         	msgChatService.addMsg(writerIntput);
         }
+        String profileImgName =
+        		memberService.getUser(sessionInfo.getUserId()).getProfileImgName();
         List<ChatDTO> msg = msgChatService.getMsg(postId, sessionInfo.getUserId());
         model.addAttribute("room", room);
         model.addAttribute("msgs", msg);
+        model.addAttribute("profileImgName", profileImgName);
 //        프로필 사진
         if (room.getChatType() == ChatType.MSG) {
             return "chatroom";

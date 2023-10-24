@@ -46,6 +46,7 @@
         <form id="usernameForm" name="usernameForm">
             <div class="form-group">
                 <input type="text" id="name" placeholder="닉네임" autocomplete="off" class="form-control" th:value="${session.loginMember.nickName}"/>
+                <input type="hidden" id="profileImgName" th:value="${profileImgName}"/>
             </div>
             <div class="form-group">
                 <button type="submit" class="accent username-submit">Start</button>
@@ -73,7 +74,7 @@
         </div>
         <ul id="messageArea">
         	<li th:class="${msg.type.name() == 'TALK'} ? chat-message : event-message" th:each="msg:${msgs}">
-				<i th:if="${msg.type.name() == 'TALK'}">프</i>
+				<i><img th:if="${msg.type.name() == 'TALK'}" th:src="@{'/img/mypage/' + ${msg.profileImgName}}" style="width: 45px; height: 45px;"></img></i>
 				<span th:if="${msg.type.name() == 'TALK'}" th:text="${msg.nickName}"></span>
 				<p th:text="${msg.message}"></p>
 			</li>

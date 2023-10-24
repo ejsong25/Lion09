@@ -99,7 +99,7 @@
 
 						    <tbody id="lists">
 						    <tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}">
-					    	 	<td class="center" >[[${dto.title }]]</td>  
+						   <td class="center" >  <a th:href="@{${detailUrl} + '&postId=' + ${dto.postId}}" th:text="${dto.title}"></a></td>  					    	 	
 						        <td class="center">[[${dto.orderDate }]]</td>
 						        <td class="center" >[[${dto.orderPrice }]]원</td> 
 						        <td class="center" th:if="${dto.status != '거래완료'}">[[${dto.status }]]</td> 

@@ -755,15 +755,9 @@ public class PostController {
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 
-		//			Member Mdto = mypageService.selectData(sessionInfo.getUserId());
-		//			String userId = sessionInfo.getUserId();
-
 		Post dto = new Post();
 
 		String userId = sessionInfo.getUserId();
-		//dto.setUserId(userId);
-
-		System.out.println(userId);
 
 		int currentPage = 1;
 
@@ -873,10 +867,10 @@ public class PostController {
 		member = mypageService.selectData(sessionInfo.getUserId());
 		
 		
-	   // dto = postService.pos
+
 		
 		Odto.setUserId(sessionInfo.getUserId());; //userId
-		//Odto.setPostId(postId); //postId
+
 
 		    
 	    List<Order> lists = postService.orderHistory(Odto.getUserId(),start,end);
@@ -894,7 +888,7 @@ public class PostController {
 			listUrl = listUrl + "?" + param;
 		}
 		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);	
-		String detailUrl = "/list1";
+		String detailUrl = "/detail?";
 		if (!param.equals("")) {
 			detailUrl = detailUrl + "&" + param;
 		}

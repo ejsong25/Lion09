@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public interface FileService {
     // 파일 업로드를 위한 메서드 선언
-    FileUploadDTO uploadFile(MultipartFile file, String transaction, String roomId);
+    FileUploadDTO uploadFile(MultipartFile file, String transaction, int postId);
 
     // 현재 방에 업로드된 모든 파일 삭제 메서드
     void deleteFileDir(int postId);

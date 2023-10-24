@@ -25,7 +25,6 @@ const postId = url.get('postId');
 
 function connect(event) {
 
-alert('1');
     username = document.querySelector('#name').value.trim();
     profileImgName = document.querySelector('#profileImgName').value;
 
@@ -45,8 +44,6 @@ alert('1');
 }
 
 function onConnected() {
-
-alert('2');
 
     // sub 할 url => /sub/chat/room/postId 로 구독한다
     stompClient.subscribe('/sub/chat/room/' + postId, onMessageReceived);
@@ -70,7 +67,6 @@ alert('2');
 // ajax 로 유저리스트를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나왔을 때마다 실행된다.
 function getUserList() {
 
-alert('3');
     const $list = $("#list");
 
     $.ajax({
@@ -92,14 +88,14 @@ alert('3');
 
 
 function onError(error) {
-alert('4');
+
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
 
 // 메시지 전송때는 JSON 형식을 메시지를 전달한다.
 function sendMessage(event) {
-alert('5');
+
     var messageContent = messageInput.value.trim();
 
     if (messageContent && stompClient) {
@@ -119,7 +115,7 @@ alert('5');
 // 메시지를 받을 때도 마찬가지로 JSON 타입으로 받으며,
 // 넘어온 JSON 형식의 메시지를 parse 해서 사용한다.
 function onMessageReceived(payload) {
-alert('6');
+
     var chat = JSON.parse(payload.body);
 
     var messageElement = document.createElement('li');
@@ -193,7 +189,7 @@ alert('6');
 
 
 function getAvatarColor(messageSender) {
-alert('7');
+
     var hash = 0;
     for (var i = 0; i < messageSender.length; i++) {
         hash = 31 * hash + messageSender.charCodeAt(i);
@@ -208,6 +204,7 @@ messageForm.addEventListener('submit', sendMessage, true)
 
 /// 파일 업로드 부분 ////
 function uploadFile(){
+
     var file = $("#file")[0].files[0];
     var formData = new FormData();
     formData.append("file",file);
@@ -215,11 +212,9 @@ function uploadFile(){
 
     // 확장자 추출
     var fileDot = file.name.lastIndexOf(".");
-
     // 확장자 검사
     var fileType = file.name.substring(fileDot + 1, file.name.length);
     // console.log("type : " + fileType);
-
     if (!(fileType == "png" || fileType == "jpg" || fileType == "jpeg" || fileType == "gif"))
     {
         alert("파일 전송은 png, jpg, gif, jpeg 만 가능합니다.");
@@ -242,6 +237,7 @@ function uploadFile(){
         data : formData,
         processData: false,
         contentType: false
+        
     }).done(function (data){
 
         var chatMessage = {

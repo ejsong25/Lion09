@@ -5,8 +5,8 @@
 <mapper namespace="com.lion09.chat.ChatMsgMapper">
 
 <insert id="insertUser">
-    INSERT INTO chatMessages (num, userId, postId, nickName, type, message, time) VALUES 
-    (#{num}, #{userId}, #{postId}, #{nickName}, #{type}, #{message}, sysdate)
+    INSERT INTO chatMessages (num, userId, postId, nickName, type, message, time, fileDir, fileName) VALUES 
+    (#{num}, #{userId}, #{postId}, #{nickName}, #{type}, #{message}, sysdate, #{fileDir}, #{fileName})
 </insert>
 
 <select id="maxNum" resultType="Integer">
@@ -33,7 +33,7 @@
 
 <!-- 들어온 시간 이후의 메세지만 출력되도록 -->
 <select id="getMsg" resultType="com.lion09.chat.ChatDTO">
-	SELECT cm.nickName, cm.message, cm.type, cm.time, m.profileImgName
+	SELECT cm.fileDir, cm.fileName, cm.nickName, cm.message, cm.type, cm.time, m.profileImgName
 	FROM chatMessages AS cm
 	INNER JOIN member AS m ON cm.userId = m.userId
 	WHERE cm.postId = #{postId} 

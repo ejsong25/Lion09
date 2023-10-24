@@ -1,54 +1,101 @@
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 
-
 <head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>공동구매</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="css/all.min.css" rel="stylesheet" />
-	<link href="css/list.css" rel="stylesheet" th:href="@{/css/list.css}"/>
-    <link href="css/templatemo-style.css" rel="stylesheet" />
-    <link href="css/qna.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>wishList</title>
+<link href="css/myPage.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="css/all.min.css" rel="stylesheet" />
+<link href="css/list.css" rel="stylesheet" th:href="@{/css/list.css}" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<link href="css/qna.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
-</head>
+
 <style>
 @font-face {
-    font-family: 'ONE-Mobile-POP';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-    font-family: 'omyu_pretty';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
 
+.header__title img {
+	width: 40px;
+	height: 40px;
+	animation: carrot-logo-dance 2s ease-in-out infinite;
+}
 
+@
+keyframes carrot-logo-dance { 0% {
+	transform: rotateY(0);
+}
+
+50
+
+
+%
+{
+opacity
+
+
+:
+
+
+0
+.5
+;
+
+
+}
+to {
+	transform: rotateY(180deg);
+}
+}
 </style>
 
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164&libraries=services"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-
-
-<body> 
-
+</head>
+<body>
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
 
 	<div class="container">
-	<!-- Top box -->
+		<!-- Top box -->
 		<!-- Logo & Site Name -->
-		<div class="placeholder">	
+		<div class="placeholder">
 			<div class="parallax-window" data-parallax="scroll">
 				<img src="img/bg.jpeg" style="width: 100%;">
 				<div class="tm-header">
@@ -63,184 +110,117 @@
 			</div>
 		</div>
 
+		<div style="display: flex;">
 
-
-<div class="tm-paging-links" align="center">
-
-</div>
-
-	<div class="tm-container-inner tm-persons">
-            
-          <div class="content_4_wrap">
-            
- 			<div id="lists">
-      			<div th:if="${likeList.size()}>0">
-      			<div class="item_row">
-				    <div th:each="dto, index : ${likeList}">
-				        <div class="item" data-category="${dto.categoryId}">
-				            <a th:href="@{${detailUrl} + '&postId=' + ${dto.postId}}">
-				                <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px;"/>
-				            </a>
-				            <h2 class="item_name" th:text="${dto.title}">제목</h2> 
-				            <h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
-				            <h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
-				            <div class="like_chating" style="display: flex; align-items: center; justify-content: center;">
-				                <i class="bi-heart" style="font-size:1rem; color: red; cursor: pointer;"></i>
-				                <span style="color: red; font-size: 15px;">관심</span>
-				                <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-				                <span class="chat">채팅 48</span>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-				</div>
-                    
-                 <div th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
-					<div colspan="5" id="footer">
-						<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
-					</div>
-				</div> 
-                <div th:if="${dataCount}==0">
-                	<div align="center">
-						
-	                	<a href="/list1" class="w3-bar-item w3-button" 
-	                		style="font-family: 'omyu_pretty'; font-size: 18pt;">
-	                		<h3 style="font-size: 20pt;">아직 관심상품이 없습니다.</h3>
-	                		관심상품 추가하러가기</a> 
-                	</div>
-				</div> 
-
-           </div>
-         </div>
-                
-		<br/><br/>
-		
-   			<div>
-		</div>
-    
-    		
-	</div>
-	
-    	
-    
-	<hr class="hr-solid" />
-		
-	<footer class="tm-footer text-center">
-		<div style="float: left;">
-			<p>
-				<b>사자고</b>
-			</p>
-			<br />
-			<p>
-				<b>사업자등록번호</b> 202-30-92017
-			</p>
-			<p>
-				<b>이메일</b> help@liongg.co.kr
-			</p>
-			<p>
-				<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
-			</p>
-			<p>
-				Copyright &copy; 2020 Simple House | Design: TemplateMo
-			</p>
-		</div>
-		<div style="float: right;">
-			<div>
-				<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<h3 class="w3-bar-item">Menu</h3>
+				<a href="/LionPay" class="w3-bar-item w3-button">LionPay</a> <a
+					href="/myList" class="w3-bar-item w3-button">내가쓴글</a> <a
+					href="/wishList" class="w3-bar-item w3-button">관심상품</a> <a
+					href="orderHistory" class="w3-bar-item w3-button">구매이력</a> <a
+					href="/update" class="w3-bar-item w3-button">계정/정보</a> <a
+					href="/qna_list" class="w3-bar-item w3-button">문의내역</a>
 			</div>
-		</div>
-	</footer>
 
-	 </div>
-		
-	
-		<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
-	<script>
-		var container = document.getElementById('map');
-		var options = {
-			center : new kakao.maps.LatLng(37.49886, 127.03170),
-			level : 2
-		};
+			<!-- Page Content -->
+			<div style="width: 100%;" align="center">
+				<header>
+				<div align="center">
+					<br /> <br />
+					<h2 class="col-12 text-center tm-section-title">관심상품</h2>
 
-		var map = new kakao.maps.Map(container, options);
-	</script>		
-	
-	<script src="js/list.js"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/parallax.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			// Handle click on paging links
-			$('.tm-paging-link').click(function(e){
-				e.preventDefault();
-				
-				var page = $(this).text().toLowerCase();
-				$('.tm-gallery-page').addClass('hidden');
-				$('#tm-gallery-page-' + page).removeClass('hidden');
-				$('.tm-paging-link').removeClass('active');
-				$(this).addClass("active");
-			});
-		});
-	</script>
-	<!--관심 하트  -->
-		<script>
-
-        var i = 0;
-        $('i').on('click',function(){
-            if(i==0){
-                $(this).attr('class','bi-heart-fill');
-                i++;
-            }else if(i==1){
-                $(this).attr('class','bi-heart');
-                i--;
-            }
-
-        });
-
-    </script>
-    
-    
-    	
-<script type="text/javascript">
-
-	function sendIt() {
-		
-		var f = document.searchForm;
-		
-		f.action = "/list1.action";
-		f.submit();
-	}
-
-</script>
+				</div>
+				</header>
 
 
+				<div class="content_4_wrap">
 
-<script>
-    // 카테고리 선택 시 필터링
-    function filterItems(linkElement) {
+					<div id="lists">
+						<div th:if="${likeList.size()}>0">
+							<div class="item_row">
+								<div th:each="dto, index : ${likeList}">
+									<div class="item" data-category="${dto.categoryId}">
+										<a th:href="@{${detailUrl} + '&postId=' + ${dto.postId}}">
+											<img th:src="@{|/img/postimg/${dto.chooseFile}|}"
+											style="border-radius: 12px; width: 200px; height: 180px;" />
+										</a>
+										
+										<h2 class="item_name" th:text="${dto.title}">제목</h2>
+										<h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
+										<h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
+										<div class="like_chating"
+											style="display: flex; align-items: center; justify-content: center;">
+										<span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
+										<span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+                        				<span class="chat">조회수 [[${dto.hitCount}]]</span>
+										</div>
+					                    </div>
+								   </div>
+								</div>
+							 <div th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
+								<div colspan="5" id="footer">
+									<a th:utext="${pageIndexList }"></a>
+								</div>
+							</div>
+							<div th:if="${dataCount}==0">
+			                	<div align="center">
+									
+				                	<a href="/list1" class="w3-bar-item w3-button" 
+				                		style="font-family: 'omyu_pretty'; font-size: 18pt;">
+				                		<h3 style="font-size: 20pt;">아직 관심상품이 없습니다.</h3>
+				                		관심상품 추가하러가기</a> 
+			                	</div>
+							</div>  
+							 </div>
+							 
 
-    	const categoryId = linkElement.getAttribute('data-category');
-    	
-        // 모든 아이템을 숨김
-        const items = document.querySelectorAll('.item');
-        items.forEach(item => item.style.display = 'none');
-        
-        
-        // 선택한 categoryId에 해당하는 아이템을 보여줌
-        const selectedItems = document.querySelectorAll(`.item[data-category="${categoryId}"]`);
-        selectedItems.forEach(item => item.style.display = 'block');
+										</div>
+									</div>
 
-    }
-    
-    // 전체보기 클릭 시 모든 아이템을 보여줌
-    function showAllItems() {
-        const items = document.querySelectorAll('.item');
-        items.forEach(item => item.style.display = 'block');
-    }
-    
-  
-</script>
+								</div>
+							</div>
+								<hr class="hr-solid" />
+								<!-- footer 자리 -->
+								<footer class="tm-footer text-center">
+								<div style="float: left;">
 
+									<p>
+										<b>사자고</b>
+									</p>
+									<br />
+									<p>
+										<b>사업자등록번호</b> 202-30-92017
+									</p>
+									<p>
+										<b>이메일</b> help@liongg.co.kr
+									</p>
+									<p>
+										<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+									</p>
+									<p>
+										Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+											href="https://templatemo.com">TemplateMo</a>
+									</p>
+								</div>
+								<div style="float: right;">
+									<div>
+										<div id="map"
+											style="width: 400px; height: 200px; margin: auto;"></div>
+									</div>
+								</div>
+								</footer>
+							</div>
+
+						<script>
+							var container = document.getElementById('map');
+							var options = {
+								center : new kakao.maps.LatLng(37.49886,
+										127.03170),
+								level : 2
+							};
+
+							var map = new kakao.maps.Map(container, options);
+						</script>
 </body>
 </html>

@@ -238,14 +238,24 @@
 			                        <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px;"/>
 			                    </a>
 			                   
-                        <h2 class="item_name" th:text="${dto.title}">제목</h2> 
+                        <h2 class="item_name" th:text="${dto.title}">제목</h2>
+                        
+                        <div th:if="${dto.status == '모집중'}" style="width: 40px; background-color: #EB9D4B; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
+							border-radius: 5px; padding: 2px;">[[${dto.status}]]</div>
+						<div th:if="${dto.status == '모집완료'}" style="width: 52px; background-color: #EBC249; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
+							border-radius: 5px; padding: 2px;">[[${dto.status}]]</div>
+						<div th:if="${dto.status == '거래완료'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
+							border-radius: 5px; padding: 2px;">[[${dto.status}]]</div>
+							
                         <h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
                         <h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
                         <div class="like_chating" style="display: flex; align-items: center; justify-content: center;">
-                         <i class="bi-heart" style="font-size:1rem; color: red; cursor: pointer;"></i>
-                         <span style="color: red; font-size: 15px;">관심</span>
+                         <span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
                             <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-                            <span class="chat">채팅 48</span>
+                            <span class="chat">조회수 [[${dto.hitCount}]]</span>
                         </div>
                     </div>
 			   </div>

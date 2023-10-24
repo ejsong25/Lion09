@@ -14,22 +14,22 @@
 
 <script type="text/javascript">
 
-	function updateRating() {
-	  const stars = document.querySelectorAll('.star-rating input[name="rating"]');
-	  let selectedRating = 0;
+	function updateRating(rating) {
+	    const selectedRatingElement = document.getElementById('selectedRating');
+	    selectedRatingElement.value = rating;
+	}
 	
-	  stars.forEach((star, index) => {
-	    if (star.checked) {
-	      selectedRating = stars.length - index;
-	    }
-	  });
-	  
-	  if(selectedRating==0) {
-		  alert('만족도를 선택해주세요')
-	  }else {
-		  alert('선택한 별의 개수: ' + selectedRating);
-	  }
+	function updateEnergy() {
+		
+	    const selectedRatingElement = document.getElementById('selectedRating');
+	    const selectedRating = selectedRatingElement.value;
 
+	    if(selectedRating==0) {
+	    	alert('만족도를 선택해주세요.');
+	    }
+
+	    alert('선택한 별의 개수: ' + selectedRating);
+        
 	}
 
 </script>
@@ -123,28 +123,29 @@
 		<h1 style="font-family: 'omyu_pretty';">ㅇㅇㅇ과의 거래는 어떠셨나요?</h2>
 		<br/>
 	
-		<div class="star-rating space-x-4 mx-auto">
-		  <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
-		  <label for="5-stars" class="star pr-4">★</label>
-		  <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
-		  <label for="4-stars" class="star">★</label>
-		  <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
-		  <label for="3-stars" class="star">★</label>
-		  <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
-		  <label for="2-stars" class="star">★</label>
-		  <input type="radio" id="1-star" name="rating" value="1" v-model="ratings"/>
-		  <label for="1-star" class="star">★</label>
-		</div>
-		<br/><br/><br/><br/>
-		
-		<input type="button" class="profileBtn" style="width: 200px;"
-			value="후기작성완료" onclick="updateRating()">
+		<form action="" method="post" name="review">
 
+			<div class="star-rating space-x-4 mx-auto">
+			    <input type="radio" id="5-stars" name="rating" value="5"/>
+			    <label for="5-stars" class="star pr-4" onclick="updateRating(5)">★</label>
+			    <input type="radio" id="4-stars" name="rating" value="4"/>
+			    <label for="4-stars" class="star" onclick="updateRating(4)">★</label>
+			    <input type="radio" id="3-stars" name="rating" value="3"/>
+			    <label for="3-stars" class="star" onclick="updateRating(3)">★</label>
+			    <input type="radio" id="2-stars" name="rating" value="2"/>
+			    <label for="2-stars" class="star" onclick="updateRating(2)">★</label>
+			    <input type="radio" id="1-star" name="rating" value="1"/>
+			    <label for="1-star" class="star" onclick="updateRating(1)">★</label>
+			</div>
+			<br/><br/><br/><br/>
+		
+			<input type="text" id="selectedRating">
+			<input type="button" class="profileBtn" style="width: 200px;"
+				value="후기작성완료" onclick="updateEnergy()">
+			
+		</form>
 
 	</div>	
-	
-	
-	
 	
 	
 	<!-- footer 자리 -->

@@ -37,7 +37,8 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
     <![CDATA[
     select * from (
         select rownum rnum, data.* from (
-            select pl.postId as postLikeId, p.postId as postId, title, productsPrice, chooseFile, myAddr
+            select pl.postId as postLikeId, p.postId as postId, title, productsPrice, chooseFile, myAddr,
+            hitCount,postLikeCount
             from postLike pl
             inner join post p on pl.postId = p.postId
             WHERE pl.userId=#{userId}

@@ -1,53 +1,78 @@
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
 
-
 <head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>공동구매</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="css/all.min.css" rel="stylesheet" />
-	<link href="css/list.css" rel="stylesheet" th:href="@{/css/list.css}"/>
-    <link href="css/templatemo-style.css" rel="stylesheet" />
-    <link href="css/qna.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>MyPage</title>
+<link href="css/myPage.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="css/all.min.css" rel="stylesheet" />
+<link href="css/list.css" rel="stylesheet" th:href="@{/css/list.css}"/>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<link href="css/qna.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 
-</head>
 <style>
 @font-face {
-    font-family: 'ONE-Mobile-POP';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-    font-family: 'omyu_pretty';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
+
+
+.header__title img {
+  width: 40px;
+  height: 40px;
+  animation: carrot-logo-dance 2s ease-in-out infinite;
+}
+@keyframes carrot-logo-dance {
+  0% {
+    transform: rotateY(0);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
 </style>
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164&libraries=services"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-
-
-<body> 
-
+</head>
+<body>
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
-
 	<div class="container">
-	<!-- Top box -->
+		<!-- Top box -->
 		<!-- Logo & Site Name -->
-		<div class="placeholder">	
+		<div class="placeholder">
 			<div class="parallax-window" data-parallax="scroll">
 				<img src="img/bg.jpeg" style="width: 100%;">
 				<div class="tm-header">
@@ -55,25 +80,39 @@
 						<div class="col-md-6 col-12">
 							<div class="tm-site-text-box">
 								<h1 class="tm-site-title">사자고</h1>
+								<h6 class="tm-site-description">믿을만한 이웃 간 만나서 거래</h6>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<div style="display: flex;">
 
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<h3 class="w3-bar-item">Menu</h3>
+				<a href="/LionPay" class="w3-bar-item w3-button">LionPay</a> 
+				<a href="/myList" class="w3-bar-item w3-button">내가쓴글</a> 
+				<a href="/wishList" class="w3-bar-item w3-button">관심상품</a> 
+				<a href="orderHistory" class="w3-bar-item w3-button">구매이력</a> 
+				<a href="/update" class="w3-bar-item w3-button">계정/정보</a>
+				<a href="/qna_list" class="w3-bar-item w3-button">문의내역</a>
+			</div>
 
+			<!-- Page Content -->
+			<div style="width: 100%;" align="center">
+				<header>
+					<div align="center">
+						<br/><br/>
+						<h2 class="col-12 text-center tm-section-title">내가 쓴 글</h2>
 
-
-
-<div class="tm-paging-links" align="center">
-
-
-			<div class="tm-container-inner tm-persons">
-
-            <h1 class="top_title">내가 쓴 글</h1>
-   
-            <div class="content_4_wrap">
+					</div>
+				</header>
+				
+			
+			<div class="content_4_wrap">
             
             
  			 <div id="lists">
@@ -89,10 +128,9 @@
                         <h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
                         <h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
                         <div class="like_chating" style="display: flex; align-items: center; justify-content: center;">
-                         <i class="bi-heart" style="font-size:1rem; color: red; cursor: pointer;"></i>
-                         <span style="color: red; font-size: 15px;">관심</span>
+                         <span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
                             <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-                            <span class="chat">채팅 48</span>
+                            <span class="chat">조회수 [[${dto.hitCount}]]</span>
                         </div>
                     </div>
 			   </div>
@@ -108,110 +146,54 @@
                 </div>
              </div>
 		</div>
-	
-    	
-    
-	<hr class="hr-solid" />
-		
-	<footer class="tm-footer text-center">
-		<div style="float: left;">
-			<p>
-				<b>사자고</b>
-			</p>
-			<br />
-			<p>
-				<b>사업자등록번호</b> 202-30-92017
-			</p>
-			<p>
-				<b>이메일</b> help@liongg.co.kr
-			</p>
-			<p>
-				<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
-			</p>
-			<p>
-				Copyright &copy; 2020 Simple House | Design: TemplateMo
-			</p>
-		</div>
-		<div style="float: right;">
-			<div>
-				<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+			
+			
+			
+			
 			</div>
+		
+		<hr class="hr-solid" />
+		<!-- footer 자리 -->
+		<footer class="tm-footer text-center">
+			<div style="float: left;">
+
+				<p>
+					<b>사자고</b>
+				</p>
+				<br />
+				<p>
+					<b>사업자등록번호</b> 202-30-92017
+				</p>
+				<p>
+					<b>이메일</b> help@liongg.co.kr
+				</p>
+				<p>
+					<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+				</p>
+				<p>
+					Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+						href="https://templatemo.com">TemplateMo</a>
+				</p>
+			</div>
+			<div style="float: right;">
+				<div>
+					<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+				</div>
+			</div>
+		</footer>
 		</div>
-	</footer>
-
-	 </div>
 		
+	</div>
 	
-		<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
 	<script>
-		var container = document.getElementById('map');
-		var options = {
-			center : new kakao.maps.LatLng(37.49886, 127.03170),
-			level : 2
-		};
-
-		var map = new kakao.maps.Map(container, options);
-	</script>		
+			var container = document.getElementById('map');
+			var options = {
+				center: new kakao.maps.LatLng(37.49886, 127.03170),
+				level: 2
+			};
 	
-	<script src="js/list.js"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/parallax.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			// Handle click on paging links
-			$('.tm-paging-link').click(function(e){
-				e.preventDefault();
-				
-				var page = $(this).text().toLowerCase();
-				$('.tm-gallery-page').addClass('hidden');
-				$('#tm-gallery-page-' + page).removeClass('hidden');
-				$('.tm-paging-link').removeClass('active');
-				$(this).addClass("active");
-			});
-		});
+			var map = new kakao.maps.Map(container, options);
 	</script>
-	<!--관심 하트  -->
-		<script>
-
-        var i = 0;
-        $('i').on('click',function(){
-            if(i==0){
-                $(this).attr('class','bi-heart-fill');
-                i++;
-            }else if(i==1){
-                $(this).attr('class','bi-heart');
-                i--;
-            }
-
-        });
-
-    </script>
-    
-    
-    	
-<script type="text/javascript">
-
-	function sendIt() {
-		
-		var f = document.searchForm;
-		
-		f.action = "/myList.action";
-		f.submit();
-	}
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>

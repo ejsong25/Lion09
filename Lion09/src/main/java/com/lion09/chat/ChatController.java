@@ -28,7 +28,6 @@ public class ChatController {
     // 아래에서 사용되는 convertAndSend 를 사용하기 위해서 서언
     // convertAndSend 는 객체를 인자로 넘겨주면 자동으로 Message 객체로 변환 후 도착지로 전송한다.
     private final SimpMessageSendingOperations template;
-
     private final MsgChatService msgChatService;
     private final ChatService chatService;
     private final MemberService memberService;
@@ -42,22 +41,28 @@ public class ChatController {
     	Member findMember = memberService.getUserByNickName(chat.getNickName());
         chat.setUserId(findMember.getUserId());
         
-        if(msgChatService.getUser(chat.getRoomId(),chat.getUserId()) == null) {
-        	
-        	// 채팅방 유저+1
-        	chatService.plusUserCnt(chat.getRoomId());
+        if(msgChatService.getUser(chat.getPostId(),chat.getUserId()) == null) {
+//        	글쓴이가 아닐 경우 채팅방 유저+1
+        	if(chat.getUserId() != chatService.findRoomByPostId(chat.getPostId()).getUserId()) {
+        		chatService.plusUserCnt(chat.getPostId());
+        	}
         	chat.setMessage(chat.getNickName() + " 님이 입장하였습니다.");
-        	
+        	chat.setType(MessageType.ENTER);
         	// 채팅방에 유저 추가 및 UserUUID 반환
-        	String userUUID = msgChatService.addMsg(chat.getRoomId(),chat.getUserId(),
-        			chat.getNickName(), MessageType.ENTER, chat.getMessage());
+        	ChatDTO enterMsg = new ChatDTO();
+        	enterMsg.setPostId(chat.getPostId());
+        	enterMsg.setUserId(chat.getUserId());
+        	enterMsg.setNickName(chat.getNickName());
+        	enterMsg.setType(MessageType.ENTER);
+        	enterMsg.setMessage(chat.getMessage());
+        	String userUUID = msgChatService.addMsg(enterMsg);
         }
         
         // 반환 결과를 socket session 에 userUUID 로 저장
         headerAccessor.getSessionAttributes().put("userUUID", chat.getUserId());
-        headerAccessor.getSessionAttributes().put("roomId", chat.getRoomId());
+        headerAccessor.getSessionAttributes().put("postId", chat.getPostId());
 
-        template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
+        template.convertAndSend("/sub/chat/room/" + chat.getPostId(), chat);
     }
 
     // 해당 유저
@@ -66,21 +71,23 @@ public class ChatController {
         log.info("CHAT {}", chat);
         chat.setMessage(chat.getMessage());
         Member findMember = memberService.getUserByNickName(chat.getNickName());
+        ChatDTO msg = new ChatDTO();
+        msg.setPostId(chat.getPostId());
+        msg.setUserId(findMember.getUserId());
+        msg.setNickName(chat.getNickName());
+        msg.setType(MessageType.TALK);
+        msg.setMessage(chat.getMessage());
+        msgChatService.addMsg(msg);
         
-        msgChatService.addMsg(chat.getRoomId(), findMember.getUserId(), chat.getNickName(), MessageType.TALK, chat.getMessage());
-        
-        template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
+        template.convertAndSend("/sub/chat/room/" + chat.getPostId(), chat);
 
     }
-
-    //
 
     // 채팅에 참여한 유저 리스트 반환
     @GetMapping("/chat/userlist")
     @ResponseBody
-    public ArrayList<String> userList(String roomId) throws Exception {
-
-        return msgChatService.getUserList(roomId);
+    public ArrayList<String> userList(String postId) throws Exception {
+    	return msgChatService.getUserList(Integer.parseInt(postId));
     }
 
 }

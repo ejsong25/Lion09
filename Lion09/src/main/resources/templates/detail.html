@@ -176,7 +176,7 @@
                     <button class="orange" th:onclick="@{|location.href='/writeUpdated?postId=${dto.postId}&${params}'|}">수정하기</button>
                     <button class="grey" th:onclick="@{|location.href='/deleted_ok.action?postId=${dto.postId}&${params}'|}">삭제하기</button>
                  
-                  <button class="orange">채팅보기</button>
+                  <button class="orange" th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}">채팅보기</button>
                 </div>
 
                 <div class="button-box" style="margin-left: 88%;"

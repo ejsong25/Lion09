@@ -31,7 +31,10 @@ public class ChatDTO {
     private Integer num;
     
     @Column(nullable = true)
-    private String roomId; // 방 번호
+    private int postId; // 방 번호 = 게시글 번호
+    
+    @Column(nullable = true)
+    private String roomId; // 방 번호 = 게시글 번호
     
     @Column(nullable = true)
     private String userId;

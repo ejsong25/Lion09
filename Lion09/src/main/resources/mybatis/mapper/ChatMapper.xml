@@ -5,16 +5,23 @@
 <mapper namespace="com.lion09.chat.ChatRoomMapper">
 
 <select id="findAllRoom" resultType="com.lion09.chat.ChatRoomDTO">
-	select * from chatRoom
+	<!-- 나가지 않은 사용자 -->
+	select * from chatRoom where postId 
+		IN (select postId from chatMessages where userId = #{userId}
+		and nickName != '알수없음')
 </select>
 
-<select id="findRoomById" parameterType="String" resultType="com.lion09.chat.ChatRoomDTO">
+<select id="findRoomByPostId" resultType="com.lion09.chat.ChatRoomDTO">
+    SELECT * FROM chatRoom WHERE postId = #{postId}
+</select>
+
+<select id="findRoomById" resultType="com.lion09.chat.ChatRoomDTO">
     SELECT * FROM chatRoom WHERE roomId = #{roomId}
 </select>
 
 <insert id="createChatRoom" parameterType="com.lion09.chat.ChatRoomDTO">
-    INSERT INTO chatRoom (num, userId, roomId, roomName, userCount, maxUserCnt, roomPwd, secretChk, chatType) 
-    VALUES (#{num}, #{userId}, #{roomId}, #{roomName}, 0, #{maxUserCnt}, #{roomPwd}, #{secretChk}, #{chatType})
+    INSERT INTO chatRoom (num, userId, postId, roomName, userCount, maxUserCnt, secretChk, chatType) 
+    VALUES (#{num}, #{userId}, #{postId}, #{roomName}, 1, #{maxUserCnt}, FALSE, #{chatType})
 </insert>
 
 <select id="confirmPwd" resultType="boolean" parameterType="map">
@@ -26,7 +33,7 @@
 <update id="plusUserCnt">
     UPDATE chatRoom
     SET userCount = userCount + 1
-    WHERE roomId = #{roomId}
+    WHERE postId = #{postId}
 </update>
 
 <update id="minusUserCnt">
@@ -35,7 +42,7 @@
         WHEN userCount > 0 THEN userCount - 1
         ELSE 0
     END
-    WHERE roomId = #{roomId}
+    WHERE postId = #{postId}
 </update>
 
 <select id="chkRoomUserCnt" resultType="boolean">
@@ -45,11 +52,11 @@
         ELSE 1
     END
     FROM chatRoom
-    WHERE roomId = #{roomId}
+    WHERE postId = #{postId}
 </select>
 
-<delete id="deleteChatRoom">
-    DELETE FROM chatRoom WHERE roomId = #{roomId}
+<delete id="delChatRoom">
+    DELETE chatRoom WHERE postId = #{postId}
 </delete>
 
 <select id="maxNum" resultType="Integer">

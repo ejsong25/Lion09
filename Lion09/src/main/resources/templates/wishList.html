@@ -95,12 +95,21 @@
 				</div>
 				</div>
                     
-                 <div th:if="${#lists.size(dataCount)}>0"
-					th:each="dataCount:${dataCount}">
+                 <div th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
 					<div colspan="5" id="footer">
 						<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
 					</div>
 				</div> 
+                <div th:if="${dataCount}==0">
+                	<div align="center">
+						
+	                	<a href="/list1" class="w3-bar-item w3-button" 
+	                		style="font-family: 'omyu_pretty'; font-size: 18pt;">
+	                		<h3 style="font-size: 20pt;">아직 관심상품이 없습니다.</h3>
+	                		관심상품 추가하러가기</a> 
+                	</div>
+				</div> 
+
            </div>
          </div>
                 

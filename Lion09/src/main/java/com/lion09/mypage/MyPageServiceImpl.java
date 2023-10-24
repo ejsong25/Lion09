@@ -24,6 +24,11 @@ public class MyPageServiceImpl implements MyPageService {
 	public void updateData(Member dto) throws Exception {
 		mypageMapper.updateData(dto);
 	}
+	
+	@Override
+	public int selectNickName(String nickName) throws Exception {
+		return mypageMapper.selectNickName(nickName);
+	}
 
 	@Override
 	public void updateAddress(Member dto) throws Exception {

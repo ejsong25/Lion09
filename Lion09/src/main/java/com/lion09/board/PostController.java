@@ -5,6 +5,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +39,8 @@ import com.lion09.board.PostUtil;
 import com.lion09.member.Member;
 import com.lion09.member.MemberForm;
 import com.lion09.mypage.MyPageService;
+import com.lion09.order.Order;
+import com.lion09.order.OrderStatus;
 import com.lion09.SessionInfo;
 import com.lion09.board.Post;
 import com.lion09.board.PostService;
@@ -126,6 +130,7 @@ public class PostController {
 			// 파일 업로드를 위한 경로 설정
 			String uploadDir = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
+
 			// 업로드한 파일의 원래 파일 이름 가져오기
 			String originalFilename = cFile.getOriginalFilename();
 
@@ -173,16 +178,13 @@ public class PostController {
 		return mav;
 	}
 
-
-
 	@RequestMapping(value = "/list1", 
 			method = {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView list1(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
-			@Param("searchKey") String searchKey,
-			@Param("searchValue") String searchValue, Post dto,
+			@Param("searchKey") String searchKey,@Param("searchValue") String searchValue,
+			@Param("categoryId") String categoryId,Post dto,
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-
 
 		ModelAndView mav = new ModelAndView();
 		Member mdto = mypageService.selectData(sessionInfo.getUserId());
@@ -262,19 +264,34 @@ public class PostController {
 		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
 		List<Post> lists = new ArrayList<>();
 
-		for (Member member : findList) {
-			String myAddress = member.getMyAddress();
-
-			for (Post post : allLists) {
-				String myAddr = post.getMyAddr();
-				if (myAddr.equals(myAddress)) {
-					lists.add(post);
-				} 
+		int myCategoryId = (categoryId != null) ? Integer.parseInt(categoryId) : 0;
+		
+		if(myCategoryId == 0) {
+			for (Member member : findList) {
+				String myAddress = member.getMyAddress();
+				
+				for (Post post : allLists) {
+					String myAddr = post.getMyAddr();
+					if (myAddr.equals(myAddress)) {
+						lists.add(post);
+					} 
+				}
+				
 			}
-
+		}else {
+			for (Member member : findList) {
+				String myAddress = member.getMyAddress();
+				for (Post post : allLists) {
+					String myAddr = post.getMyAddr();
+					
+					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+						lists.add(post);
+					} 
+				}
+				
+			}
 		}
-
-
+		
 		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);
 
@@ -290,70 +307,93 @@ public class PostController {
 	}
 	
 	@GetMapping("/detail")
-	public ModelAndView detail(HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+	public ModelAndView detail(HttpServletRequest request, @SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo) throws Exception {
 
-		int postId = Integer.parseInt(request.getParameter("postId"));
-		String pageNum = request.getParameter("pageNum");
+	    int postId = Integer.parseInt(request.getParameter("postId"));
+	    String pageNum = request.getParameter("pageNum");
+	    
+	    
+	    Member mdto = mypageService.selectData(sessionInfo.getUserId());
 
+    
+	    String userId = mdto.getUserId();
 
-		Member mdto = mypageService.selectData(sessionInfo.getUserId());
+	    Member member = new Member(); // Member 엔티티의 인스턴스 생성
+	    Post post = new Post(); // Post 엔티티의 인스턴스 생성
 
+	    // 참여하기
+	    Order Odto = new Order();
+	    
+	    member = mypageService.selectData(userId);
+	    post = postService.getReadData(postId);
+	    String status = postService.getReadStatus(postId);
+	   
+	    Odto.setMember(member);
+	    Odto.setPost(post);
 
-		String userId = mdto.getUserId();
+	    int count  = postService.findOrderCount(Odto);
+	   
+	    System.out.println(count);
+	    
+	    Odto.setCount(count);
+	    
+	    OrderStatus orderStatus = null; // 초기화
+	    
+	    
+	    if (status != null) {
+	        try {
+	            orderStatus = OrderStatus.valueOf(status);	   
+	        } catch (IllegalArgumentException e) {
+	            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
+	            e.printStackTrace();
+	        }
+	    }
 
+	    Odto.setStatus(orderStatus);
+	    
+	    
+	    PostLikeDTO likedto = new PostLikeDTO();
+	    likedto.setUserId(userId);
+	    likedto.setPostId(postId);
 
-		PostLikeDTO likedto = new PostLikeDTO();
+	    int likeState = postService.findPostlikeState(likedto);
+	    likedto.setLikeState(likeState);
 
-		likedto.setUserId(userId);
-		likedto.setPostId(postId);
+	    int currentPage = 1;
 
+	    if (pageNum != null) {
+	        currentPage = Integer.parseInt(pageNum);
+	    }
 
-		int likeState = postService.findPostlikeState(likedto);
-		likedto.setLikeState(likeState);
+	    postService.updateHitCount(postId);
 
+	    Post dto = postService.getReadData(postId);
 
-		int currentPage = 1;
+	    if (dto == null) {
+	        ModelAndView mav = new ModelAndView();
+	        mav.setViewName("redirect:/list1?pageNum=" + pageNum);
+	        return mav;
+	    }
 
-		if(pageNum!=null) {
+	    String param = "pageNum=" + pageNum;
 
-			currentPage = Integer.parseInt(pageNum);
+	    ModelAndView mav = new ModelAndView();
 
-		}
+	    // 좋아요 부분
+	    mav.addObject("likedto", likedto);
 
-		postService.updateHitCount(postId);
+	    // 참여하기 부분
+	    mav.addObject("Odto", Odto);
+	    mav.addObject("mdto", mdto);
+	    mav.addObject("dto", dto);
+	    mav.addObject("params", param);
+	    mav.addObject("pageNum", pageNum);
 
-		Post dto = postService.getReadData(postId);
+	    mav.setViewName("/detail");
 
-		if(dto==null) {
-
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("redirect:/list1?pageNum=" + pageNum);
-
-			return mav;
-		}
-
-		
-		System.out.println(dto.getUserId());
-
-		String param = "pageNum=" + pageNum;
-
-
-		ModelAndView mav = new ModelAndView();
-
-		//좋아요 부분
-
-		mav.addObject("likedto",likedto);
-
-		mav.addObject("mdto",mdto);
-		mav.addObject("dto",dto);
-		mav.addObject("params",param);
-		mav.addObject("pageNum",pageNum);
-
-
-		mav.setViewName("/detail");
-
-		return mav;
-
+	    System.out.println(mav);
+	    
+	    return mav;
 	}
 
 	//좋아요 관심목록에 추가
@@ -497,6 +537,8 @@ public class PostController {
 
 		dto.setPostId(postId);
 
+		dto.setStatus(request.getParameter("status"));;
+
 		dto.setTitle(request.getParameter("title"));
 
 		dto.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
@@ -504,12 +546,17 @@ public class PostController {
 		dto.setProductsPrice(Integer.parseInt(request.getParameter("productsPrice")));
 
 		dto.setRecruitment(Integer.parseInt(request.getParameter("recruitment")));
+		
+		String deadLineParameter = request.getParameter("deadLine");
+		// 여기에서 날짜와 시간을 원하는 형식으로 변환하십시오. 예를 들어, LocalDateTime 또는 다른 적절한 형식으로 파싱합니다.
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime deadLine = LocalDateTime.parse(deadLineParameter, formatter);
 
+		dto.setDeadLine(deadLine);
 
 		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
 		dto.setContents(plainText);
 		dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
-
 
 
 		postService.updateData(dto);
@@ -764,8 +811,87 @@ public class PostController {
 
 	}
 
+	
+	//참여 목록에 추가
+	@PostMapping(value = "/insertOrder.action")
+	public ModelAndView insertOrder(Order Odto,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto,Member member) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		
+		int postId = dto.getPostId();
+
+		int id = postService.maxId();
+
+	    member = mypageService.selectData(sessionInfo.getUserId());
+	    dto = postService.getReadData(postId);
+	    String status = postService.getReadStatus(postId);
+
+	    //참여하기
+	    Odto.setMember(member); //userId
+	    Odto.setPost(dto); //postId
+	    Odto.setOrderPrice(dto.getProductsPrice());	    //orderPrice
+		Odto.setId((long) id + 1); //orderId 
+	    
+//	    OrderStatus orderStatus = null; // 초기화
+	    
+	    
+//	    if (status != null) {
+//	        try {
+//	            orderStatus = OrderStatus.valueOf(status);	   
+//	        } catch (IllegalArgumentException e) {
+//	            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
+//	            e.printStackTrace();
+//	        }
+//	    }
+	    
+//	    Odto.setStatus(orderStatus);	  
+	 
+		postService.insertOrder1(Odto);
+		postService.updateOrder(postId);
+
+	
+		mav.setViewName("redirect:/detail?postId=" + postId);
+
+		return mav;
+
+	}
+
+	
+	
+	
+	//참여 목록에서 삭제
+	@PostMapping(value = "/deleteOrder.action")
+	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+		int postId = dto.getPostId();
+
+		member = mypageService.selectData(sessionInfo.getUserId());
+	    dto = postService.getReadData(postId);
+	    String status = postService.getReadStatus(postId);
+
+	    //참여하기
+	    Odto.setMember(member); //userId
+	    Odto.setPost(dto); //postId
+
+	    postService.deleteOrder1(Odto);
+	    postService.deleteOrder2(postId);
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/detail?postId=" + postId);
+
+		return mav;
+
+	}
 
 
+
+
+	
+	
+	
 
 
 

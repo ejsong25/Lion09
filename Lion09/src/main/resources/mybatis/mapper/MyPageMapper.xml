@@ -14,6 +14,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update member set nickName=#{nickName} where userId=#{userId}
 </update>
 
+<select id="selectNickName" parameterType="String" resultType="int">
+	select count(*) from member where nickName=#{nickName}
+</select>
+
 <update id="updateAddress" parameterType="com.lion09.member.Member">
 	update member set myAddress=#{myAddress},myLatitude=#{myLatitude},
 	myLongitude=#{myLongitude} where userId=#{userId}

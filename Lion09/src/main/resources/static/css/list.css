@@ -1378,3 +1378,53 @@ address {
 	top:1px;
 }
 
+/* 카테고리 버튼 css */
+
+.nav-list {
+    list-style: none;
+    padding: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+.profileBtn {
+    flex: 1; /* 동일한 공간을 차지하도록 flex 설정 */
+    padding: 15px 20px;
+    color: #eec94f;
+    background-color: #ffffff;
+    border: 1px solid #eec94f;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 400;
+    transition: 0.25s;
+    font-family: 'omyu_pretty';
+    font-size: 17pt;
+}
+
+
+
+.profileBtn:hover {
+	color: #ffffff;
+    background: #eec94f;
+}
+
+.tm-paging-links1 nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between; /* Flexbox를 사용하여 가로로 정렬합니다. */
+    margin: 0; /* 왼쪽 여백을 제거합니다. */ 
+}
+
+.tm-paging-item1 {
+    display: flex;
+    flex-direction: column; /* 내부의 텍스트를 세로로 정렬하기 위해 추가합니다. */
+    align-items: center; /* 가로로 중앙 정렬합니다. */
+    text-align: center; /* 텍스트를 가로로 가운데 정렬합니다. */
+    border: 1px solid #eec94f;
+    border-radius: 10px;
+}
+
+

@@ -48,6 +48,36 @@
         
     }
     
+   <!-- 참여하기 스크립트 -->
+    
+    function order1() {
+        
+    	f = document.orderForm;
+    	var currentClass = $(this).attr('class');
+        
+       	$(this).attr('class', 'joinButton1');
+       	alert('참여 되었습니다.')
+       	f.action="/insertOrder.action";
+       	
+        f.submit();
+        
+    }
+    
+    function order2() {
+        
+    	f = document.orderForm;
+    	var currentClass = $(this).attr('class');
+        
+    	$(this).attr('class', 'joinButton2');
+        alert('참여 취소되었습니다.')
+        f.action="/deleteOrder.action";
+        	
+        f.submit();
+        
+    }
+    
+    
+    
     </script>
 	
 </head>
@@ -96,10 +126,14 @@
 	        </div>
         </div><br/>
               
-        <div style="float: left;">
+       <div class="profileBox2">     
+      			<img class="profileImg" id="profileImage" 
+						th:src="@{'/img/mypage/' + ${mdto.profileImgName}}" >
+		</div>						
+        <div style=" float: left ;">
          	<p style="font-size: 20px;" th:text="${mdto.nickName}">&nbsp;&nbsp;${dto.nickName}</p>
-            <p th:text="${dto.myAddr}">&nbsp;&nbsp;${dto.myAddr}</p>
-     	</div>
+            <p th:text="${dto.myAddr}">&nbsp;&nbsp;${dto.myAddr}</p></div>
+     	
 	        
         <div class="header__title" style="margin-left: 58%;">
                <img src="img/lion.png">
@@ -184,20 +218,15 @@
         </div>
       </div>
     </div>
-
-	<!-- 참여인원 프로세스바 -->
-    <div class="productProgress">
-        <progress class="progress1"  value="30" min="0" max="100"></progress>
-       <!--  <div style="display: inline;font-size: 30px; font-weight: 500;"><p style ="text-align: right; margin:0px">{{post.participants}} / {{post.recruit_num}}명</p></div> -->
-    </div>
-            
+					<div style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 80%;">					
+				참여자 : [[${dto.participant}]] / 모집인원 : [[${dto.recruitment}]]</div>
+	<!-- 참여인원  -->        
     <div class="submitButtons">
-        <!-- <form action = "{% url 'share:join' post.id %}" method="post">
+			<form action="" method="post" name="orderForm">
             
-            <button class="joinButton" value="disjoin">Disjoin</button>
-        </form> -->
-        <form action = "{% url 'share:join' post.id %}" method="post"> 
-            <input type="button" class="joinButton" value="참여하기">
+			<input type="button" th:if="${Odto.count == 0}" onclick="order1();" class="joinButton1" value="참여하기">
+            <input type="button"  th:if="${Odto.count  == 1}"  onclick="order2();"  class="joinButton2" value="취소하기">
+        	 <input type="hidden" th:value="${dto.postId}" name="postId">
         </form>
     </div>
 	<br/><br/>

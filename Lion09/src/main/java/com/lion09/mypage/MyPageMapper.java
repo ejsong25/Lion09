@@ -14,6 +14,8 @@ public interface MyPageMapper {
 	
 	public void updateData(Member dto) throws Exception;
 
+	public int selectNickName(String nickName) throws Exception;
+
 	public void updateAddress(Member dto) throws Exception;
 	
 	public void imgUpdate(Member dto) throws Exception;

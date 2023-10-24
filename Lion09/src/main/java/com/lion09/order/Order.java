@@ -54,13 +54,13 @@ public class Order {
 	}
 	
 	//거래 취소 로직
-	public void cancel() {
-		if(getStatus() == OrderStatus.Complete) {
-			throw new IllegalStateException("이미 거래 완료된 상품입니다.");
-		}
-		this.setStatus(OrderStatus.Canceled);
+//	public void cancel() {
+//		if(getStatus() == OrderStatus.Complete) {
+//			throw new IllegalStateException("이미 거래 완료된 상품입니다.");
+//		}
+//		this.setStatus(OrderStatus.Canceled);
 //		재고 업데이트
-	}
+//	}
 	
 	//가격 조회 로직
 	public int getTotalPrice() {
@@ -68,4 +68,28 @@ public class Order {
 		
 		return totalPrice;
 	}
+	
+	
+	public String getUserId() {
+	    return member.getUserId();
+	}
+	
+	public int getPostId() {
+	    return post.getPostId();
+	}
+	
+	public String getStatus() {
+	    if (status != null) {
+	        return status.name(); // 혹은 status.toString()
+	    } else {
+	        return "Status is null"; // 또는 다른 적절한 처리
+	    }
+	}
+
+	public Long getOrderId() {
+	    return this.id;
+	}
+
+
+	
 }

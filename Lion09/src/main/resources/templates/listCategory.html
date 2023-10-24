@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 
+
+
 </head>
 <style>
 @font-face {
@@ -44,49 +46,66 @@
 	<div th:replace="layout :: navbar"></div>
 
 	<div class="container">
-       <div id="slider-wrap">
-		    <ul id="slider">
-		        <li>
-		           <div style="position: relative;">
-				        <img src="/img/balancefit.jpg" style="max-width: 100%; height: auto;">
-				        <iframe width="500" height="300" src="https://www.youtube.com/embed/ZoEccAEROHM?list=TLGGLgOBlWtwoSsyMzEwMjAyMw" title="미주가 소개하는 쫀쫀이 발란스핏💗" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top: 50; left: 0;"></iframe>
-				    </div>
-		        </li>
-		
-		        <li>
-		            <img src="/img/11.jpg">
-		        </li>
-		
-		        <li>
-		            <img src="/img/k.jpg">
-		        </li>
-		
-		        <li>
-		            <img src="/img/fall.jpg">
-		        </li>
-		
-		        <li>
-		            <img src="/img/dress.jpg">
-		        </li>
-		    </ul>
+	<!-- Top box -->
+		<!-- Logo & Site Name -->
+                <div id="slider-wrap">
+    <ul id="slider">
+        <li>
+            <div>
+                <h3>D-1</h3>
+                <span>마감임박 #1</span>
+            </div>
+            <img src="https://i.ytimg.com/vi/0BdlwVBmmhM/maxresdefault.jpg">
+        </li>
 
-		    <div class="slider-btns" id="next"><span>▶</span></div>
-		    <div class="slider-btns" id="previous"><span>◀</span></div>
-		
-		    <div id="slider-pagination-wrap">
-		        <ul>
-		        </ul>
-		    </div>
-		</div>
+        <li>
+            <div>
+                <h3>D-2</h3>
+                <span>마감임박 #2</span>
+            </div>
+            <img src="https://cdn.wadiz.kr/ft/images/green001/2020/0813/20200813112227666_64.gif">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-3</h3>
+                <span>마감임박 #3</span>
+            </div>
+            <img src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1135026_16045410254419205.jpg">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-4</h3>
+                <span>마감임박 #4</span>
+            </div>
+            <img src="https://t1.daumcdn.net/cfile/tistory/2207573D58CFDE2704">
+        </li>
+
+        <li>
+            <div>
+                <h3>D-5</h3>
+                <span>마감임박 #5</span>
+            </div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-yVNBtJ7wE1ZptgUx5fmNIBNmk2K8IoDFA70ztTGNQBq3G90qpL2YEr4DRtx-HpJOKgs&usqp=CAU">
+        </li>
+    </ul>
+
+    <div class="slider-btns" id="next"><span>▶</span></div>
+    <div class="slider-btns" id="previous"><span>◀</span></div>
+
+    <div id="slider-pagination-wrap">
+        <ul>
+        </ul>
+    </div>
+</div>
 
 		<div class="tm-container-inner tm-persons" align="center">
        		<div>
             <h1 class="top_title" style="margin-bottom: 5px">공구 참여</h1>
 			</div>
-            
-            <!-- 검색 및 카테고리 -->
-			<div class="row1" style="margin: 20px;">
-			<div class="card card-margin search-form" align="center">
+		<div class="row1" style="margin: 20px;">
+			<div class="card card-margin search-form">
 				<div class="card-body p-0">
 					<form id="search-form" action="" method="get" name="searchForm">
 							<div class="col-lg-3 col-md-3 col-sm-12 p-0" style="float: left;">
@@ -114,61 +133,44 @@
                                         </svg>
 								</button>
 						</div>
+						
 					</form>
+					
 				</div>
 			</div>
-	        <div align="right">
-				<ul>
-					<li><a href="/write.action" class="writeButton">글쓰기</a></li>
-				</ul>
-			</div>
-			</div>
-            
 			
-			
-
-		<form action="" name="categoryForm" method="get">
-		<div class="tm-paging-links1" align="center">
-		<nav>
-			<ul>
-				<li class="tm-paging-item1" value="0"><a href="#" class="tm-paging-link" data-category="0" onclick="filterItems(this)">전체보기</a></li>
-				<li class="tm-paging-item1" value="1"><a href="#" class="tm-paging-link" data-category="1" onclick="filterItems(this)">신선식품</a></li>
-				<li class="tm-paging-item1" value="2"><a href="#" class="tm-paging-link" data-category="2" onclick="filterItems(this)">가공식품</a></li>
-				<li class="tm-paging-item1" value="3"><a href="#" class="tm-paging-link" data-category="3" onclick="filterItems(this)">의류 신발</a></li>
-				<li class="tm-paging-item1" value="4"><a href="#" class="tm-paging-link" data-category="3" onclick="filterItems(this)">뷰티 미용</a></li>
-				<li class="tm-paging-item1" value="5"><a href="#" class="tm-paging-link" data-category="4" onclick="filterItems(this)">생활 주방</a></li>
-				<li class="tm-paging-item1" value="6"><a href="#" class="tm-paging-link" data-category="5" onclick="filterItems(this)">스포츠 레저</a></li>
-				<li class="tm-paging-item1" value="7"><a href="#" class="tm-paging-link" data-category="6" onclick="filterItems(this)">도서</a></li>
-				<li class="tm-paging-item1" value="8"><a href="#" class="tm-paging-link" data-category="7" onclick="filterItems(this)">기타물품</a></li>
-			</ul>
-			<input type="hidden" name="categoryId" id="categoryId">
-			</nav>
+			  <div align="right">
+			  <ul>
+			     <li><a href="/write.action" class="writeButton">글쓰기</a></li>
+			  </ul>
+		  </div>
 		</div>
-			
-			<script type="text/javascript">
-				document.addEventListener("DOMContentLoaded", function () {
-			        const liElements = document.querySelectorAll(".tm-paging-item1");
+		
 
-			        liElements.forEach(function (li) {
-			            li.addEventListener("click", function (event) {
-			                //클릭한 li 요소의 value를 가져와서 알림 창으로 표시
-			                const value = li.getAttribute("value");
-			                
-			                //categoryId 필드에 선택한 value 값을 설정
-			                document.getElementById("categoryId").value = value;
-			                
-			                f = document.categoryForm;
-			                
-			                f.submit();
-			                
-			                
-			            });
-			        });
-			    });
-				
-				
-			</script>
-			</form>
+		
+		       
+
+<form action="/list1" method="get" name="catehoryForm">
+<div align="center">
+<nav>
+	<ul class="nav-list">
+		<li><a href="/list1" class="profileBtn">전체보기</a></li>
+ 		<li><a href="/category.action?categoryId=1" class="profileBtn">신선식품</a></li>
+		<li><a href="/category.action?categoryId=2" class="profileBtn">가공식품</a></li>
+		<li><a href="/category.action?categoryId=3" class="profileBtn">의류 신발</a></li>
+		<li><a href="/category.action?categoryId=4" class="profileBtn">뷰티 미용</a></li>
+		<li><a href="/category.action?categoryId=5" class="profileBtn">생활 주방</a></li>
+		<li><a href="/category.action?categoryId=6" class="profileBtn">스포츠 레저</a></li>
+		<li><a href="/category.action?categoryId=7" class="profileBtn">도서</a></li>
+		<li><a href="/category.action?categoryId=8" class="profileBtn">기타물품</a></li> 
+	</ul></nav>
+</div>
+</form>
+
+<br/><br/>
+
+
+			<div>	 
 			
 			<!-- 동네 범위설정 -->
 			<form action="" method="post" name="myRange">
@@ -207,8 +209,12 @@
 				
 			</tr>
 			<!-- 동네 범위설정 -->
-			
-			
+
+            
+ 
+						
+       
+                     
             <div class="content_4_wrap">
             
             
@@ -216,30 +222,19 @@
       				<div th:if="${#lists.size(lists)}>0">
       					<div class="item_row">
           					<div th:each="dto, index:${lists}">
-         						<div class="item" data-category="${dto.categoryId}">
+         						<div class="item">
 			                    <a th:href="@{${detailUrl} + '&postId=' + ${dto.postId}}">
 			                        <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px;"/>
 			                    </a>
 			                   
                         <h2 class="item_name" th:text="${dto.title}">제목</h2> 
-					
-						<div th:if="${dto.status == '모집중'}" style="width: 40px; background-color: #EB9D4B; display: inline-block; 
-							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
-							border-radius: 5px; padding: 2px;">[[${dto.status}]]</div>
-						<div th:if="${dto.status == '모집완료'}" style="width: 52px; background-color: #EBC249; display: inline-block; 
-							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
-							border-radius: 5px; padding: 2px;">[[${dto.status}]]</div>
-						<div th:if="${dto.status == '거래완료'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
-							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
-							border-radius: 5px; padding: 2px;">[[${dto.status}]]</div>
-							
-						
-                        <h2 class="item_cost" th:text="${dto.productsPrice}" style="display: inline-block; vertical-align: middle;">가격</h2>
+                        <h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
                         <h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
                         <div class="like_chating" style="display: flex; align-items: center; justify-content: center;">
-                         <span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
+                         <i class="bi-heart" style="font-size:1rem; color: red; cursor: pointer;"></i>
+                         <span style="color: red; font-size: 15px;">관심</span>
                             <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-                            <span class="chat">조회수 [[${dto.hitCount}]]</span>
+                            <span class="chat">채팅 48</span>
                         </div>
                     </div>
 			   </div>
@@ -248,8 +243,8 @@
                     
                     	<div th:if="${#lists.size(dataCount)}>0"
 							th:each="dataCount:${dataCount}">
-							<div colspan="5" id="footer" align="center">
-								<a th:utext="${pageIndexList }"></a>
+							<div colspan="5" id="footer">
+								<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
 							</div>
 						</div>
                  </div>
@@ -289,7 +284,7 @@
 		</div>
     
     		
-	
+			</div>
 	
     	
     
@@ -320,6 +315,7 @@
 			</div>
 		</div>
 	</footer>
+
 	 </div>
 		
 	
@@ -371,17 +367,17 @@
     
     
     	
-<script type="text/javascript">
+	<script type="text/javascript">
+	
+		function sendIt() {
+			
+			var f = document.searchForm;
+			
+			f.action = "/list1.action";
+			f.submit();
+		}
+	</script>
 
-	function sendIt() {
-		
-		var f = document.searchForm;
-		
-		f.action = "/list1.action";
-		f.submit();
-	}
-
-</script>
 
 
 

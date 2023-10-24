@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.lion09.order.Order;
+
 @Mapper
 public interface PostMapper {
 	
@@ -39,7 +41,9 @@ public interface PostMapper {
 	//인기글 
 	public List<Post> hitProduct() throws Exception;
 	
+	//참여하기
+	public String getReadStatus(int postId) throws Exception; 
 	
-	
+
 
 }

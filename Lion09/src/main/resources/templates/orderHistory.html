@@ -99,10 +99,13 @@
 
 						    <tbody id="lists">
 						    <tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}">
-					    	 <td class="center" >상품명</td>  
-						        <td class="center" th:text="${dto.orderDate }">공구 날짜</td>
+					    	 	<td class="center" >[[${dto.title }]]</td>  
+						        <td class="center">[[${dto.orderDate }]]</td>
 						        <td class="center" >[[${dto.orderPrice }]]원</td> 
-						        <td class="center" th:text="${dto.status }">거래 상태</td> 
+						        <td class="center" th:if="${dto.status != '거래완료'}">[[${dto.status }]]</td> 
+						        <td class="center" th:if="${dto.status == '거래완료'}">[[${dto.status }]]
+						        	<a href="/review">후기작성</a>
+						        </td> 
 						    </tr>
 							</tbody>
 

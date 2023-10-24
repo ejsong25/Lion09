@@ -70,4 +70,14 @@
 </select>
 
 
+
+<update id="updateOrders" parameterType="com.lion09.board.Post">
+	update orders set title=#{title},orderPrice=#{productsPrice},status=#{status}
+	where postId=#{postId}
+</update>
+
+<select id="deleteOrders" parameterType="int">
+	delete orders where postId=#{postId}
+</select>
+
 </mapper>

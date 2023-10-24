@@ -210,6 +210,16 @@ public class PostServiceImpl implements PostService{
 		return orderMapper.findOrderData(userId);
 	}
 
+	@Override
+	public void updateOrders(Post dto) throws Exception {
+		orderMapper.updateOrders(dto);
+	}
+
+	@Override
+	public void deleteOrders(int postId) throws Exception {
+		orderMapper.deleteOrders(postId);
+	}
+
 
 
 

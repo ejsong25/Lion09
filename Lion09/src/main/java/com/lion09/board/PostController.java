@@ -831,22 +831,26 @@ public class PostController {
 	    Odto.setPost(dto); //postId
 	    Odto.setOrderPrice(dto.getProductsPrice());	    //orderPrice
 		Odto.setId((long) id + 1); //orderId 
+		Odto.setTitle(dto.getTitle());
 	    
-//	    OrderStatus orderStatus = null; // 초기화
+	    OrderStatus orderStatus = null; // 초기화
 	    
 	    
-//	    if (status != null) {
-//	        try {
-//	            orderStatus = OrderStatus.valueOf(status);	   
-//	        } catch (IllegalArgumentException e) {
-//	            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
-//	            e.printStackTrace();
-//	        }
-//	    }
+	    if (status != null) {
+	        try {
+	            orderStatus = OrderStatus.valueOf(status);	   
+	        } catch (IllegalArgumentException e) {
+	            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
+	            e.printStackTrace();
+	        }
+	    }
 	    
-//	    Odto.setStatus(orderStatus);	  
+	    Odto.setStatus(orderStatus);	  
 	 
 		postService.insertOrder1(Odto);
+		
+		System.out.println(Odto);
+		
 		postService.updateOrder(postId);
 
 	
@@ -855,6 +859,7 @@ public class PostController {
 		return mav;
 
 	}
+
 
 	
 	
@@ -888,13 +893,69 @@ public class PostController {
 
 
 
+	//구매이력
+	@GetMapping(value = "/orderHistory") 
+	public ModelAndView orderHistory(Order Odto,Member member,Post dto,@Param("start") Integer start, @Param("end") Integer end,
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+
+	   
+		ModelAndView mav = new ModelAndView();
+
+		int currentPage = 1;
+
+		if(pageNum!=null) {
+
+			currentPage = Integer.parseInt(pageNum);
+
+		}
+
+		int numPerPage = 5;
+		start = (currentPage - 1) * numPerPage + 1;
+		end = currentPage * numPerPage;			
+		member = mypageService.selectData(sessionInfo.getUserId());
+		
+		
+		Odto.setMember(member); //userId
+
+		
+
+		    
+	    List<Order> lists = postService.orderHistory(Odto.getUserId(),start,end);
+		String param = "";
+		int dataCount = postService.orderDataCount(sessionInfo.getUserId());
+		int totalPage = postUtil.getPageCount(numPerPage, dataCount);
+		if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+		String listUrl = "/orderHistory";
+		if(!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+		if (!param.equals("")) {
+			listUrl = listUrl + "?" + param;
+		}
+		String pageIndexList = postUtil.pageIndexList(currentPage, totalPage, listUrl);	
+		String detailUrl = "/list1";
+		if (!param.equals("")) {
+			detailUrl = detailUrl + "&" + param;
+		}
+
+	  	   	
+
+	    mav.setViewName("orderHistory"); 
+
+	    
+	    mav.addObject("dto", dto);
+	    mav.addObject("Odto", Odto);
+	    mav.addObject("lists", lists);
+	    mav.addObject("dataCount", dataCount);
+		mav.addObject("pageIndexList", pageIndexList);
+		mav.addObject("detailUrl", detailUrl);	    
+	   
+
+	    return mav;
+	}
 	
 	
-	
-
-
-
-
-
-
 }

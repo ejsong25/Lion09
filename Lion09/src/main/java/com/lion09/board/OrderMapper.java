@@ -26,7 +26,12 @@ public interface OrderMapper {
 	
 	public int findOrderCount(Order Odto) throws Exception;
 	
-	public List<Order> orderHistory(String userId) throws Exception;
+	public List<Order> orderHistory(@Param("start") Integer start,@Param("end") Integer end, @Param("userId") String userId) throws Exception;
 	
-
+	public int orderMaxId() throws Exception;
+	
+	public int orderDataCount(String userId) throws Exception;
+	
+	public String findOrderData(String userId) throws Exception;
+	
 }

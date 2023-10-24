@@ -1,0 +1,187 @@
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>나만의 문의함</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="css/all.min.css" rel="stylesheet" />
+<link href="css/list.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<link href="css/templatemo-style.css" rel="stylesheet" />
+<link href="css/qna.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+	function sendIt() {
+		
+		var f = document.searchForm;
+		
+		f.action = "/qna_list.action";
+		f.submit();
+	}
+
+</script>
+
+</head>
+
+
+
+<style>
+@font-face {
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
+
+
+
+
+<body>
+
+	<!-- 네비바 자리 -->
+	<div th:replace="layout :: navbar"></div>
+
+	<div class="container">
+		<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll">
+				<img src="img/bg.jpeg" style="width: 100%;">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title">공구 구매이력</h1>
+								<h6 class="tm-site-description">History</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div>
+					<br/>
+					<br/>
+					<button class="profileBtn" onclick="javascript:location.href='/list1';">공구하러 가기</button>
+					<br/>
+					
+				</div>
+
+				<table>
+						    <tr>
+						        <th class="title">공구 상품명</th>
+						        <th class="orderDate">공구 날짜</th>
+						        <th class="orderPrice">공구 가격</th>
+						        <th class="status">거래 상태</th>
+						    </tr>
+						    
+						    <tbody id="lists">
+						    <tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}">
+						     <td class="center" >  <a th:href="@{${detailUrl}}" th:text="${dto.title}"> 상품명</a></td> 
+						   <!--     <td class="center" th:text="${dto.title}">공구 상품명</td> -->
+						        <td class="center" th:text="${dto.orderDate }">공구 날짜</td>
+						        <td class="center" >[[${dto.orderPrice }]]원</td> 
+						        <td class="center" th:text="${dto.status }">거래 상태</td> 
+						    </tr>
+							</tbody>
+
+
+
+
+				</table>
+							<br/><br/><br/>
+			                    	<div th:if="${#lists.size(dataCount)}>0"
+										th:each="dataCount:${dataCount}">
+										<div colspan="5" id="footer" align="center">
+											<a style="margin-left: 0%;" th:utext="${pageIndexList }"></a>
+										</div>
+									</div>
+	
+
+	<br/><Br/><br/>
+	<hr class="hr-solid" />
+	<br/><br/>
+
+	<footer class="tm-footer text-center">
+		<div style="float: left;">
+			<p>
+				<b>사자고</b>
+			</p>
+			<br />
+			<p>
+				<b>사업자등록번호</b> 202-30-92017
+			</p>
+			<p>
+				<b>이메일</b> help@liongg.co.kr
+			</p>
+			<p>
+				<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+			</p>
+			<p>
+				Copyright &copy; 2020 Simple House | Design: TemplateMo
+			</p>
+		</div>
+		<div style="float: right;">
+			<div>
+				<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+			</div>
+		</div>
+	</footer>
+
+	</div>
+	
+		<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
+	<script>
+		var container = document.getElementById('map');
+		var options = {
+			center : new kakao.maps.LatLng(37.49886, 127.03170),
+			level : 2
+		};
+
+		var map = new kakao.maps.Map(container, options);
+	</script>		
+	
+
+
+
+
+	<script src="js/list.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/parallax.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// Handle click on paging links
+			$('.tm-paging-link').click(function(e){
+				e.preventDefault();
+				
+				var page = $(this).text().toLowerCase();
+				$('.tm-gallery-page').addClass('hidden');
+				$('#tm-gallery-page-' + page).removeClass('hidden');
+				$('.tm-paging-link').removeClass('active');
+				$(this).addClass("active");
+			});
+		});
+	</script>
+
+</body>
+</html>

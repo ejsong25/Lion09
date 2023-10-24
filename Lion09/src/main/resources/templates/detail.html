@@ -79,20 +79,14 @@
 		}
   	  
 	}
-
     
     function order2() {
-        
-    	f = document.orderForm;
-    	var currentClass = $(this).attr('class');
-        
-    	$(this).attr('class', 'joinButton2');
-        alert('참여가 취소되었습니다.')
-        f.action="/deleteOrder.action";
-        	
-        f.submit();
-        
-    }
+    	alert('참여가 취소되었습니다.')
+	    var postId = [[${dto.postId}]];
+	    var url = "/deleteOrder?postId=" + postId;
+
+	    window.location.href = url;
+	}
     
     function order3() {
         
@@ -104,10 +98,6 @@
 
         
     }
-    
-    
-    
-    
     
     <!-- 결제 방법 선택 -->
     document.querySelector(".joinButton1").addEventListener("click", function() {

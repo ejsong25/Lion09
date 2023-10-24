@@ -99,7 +99,7 @@ public class MyPageController {
 		String beforeFilename = dto.getProfileImgName();
 
 		//삭제할 파일 경로
-		String delete_pate = "C:\\git-lion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
+		String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
 
 		//기본 프로필 이미지가 아닐 경우 삭제
 		if(beforeFilename!="lion.png") {
@@ -139,7 +139,7 @@ public class MyPageController {
 		String beforeFilename = dto.getProfileImgName();
 		
 		//삭제할 파일 경로
-		String delete_pate = "C:\\git-lion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
+		String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\mypage\\";
 
 		//기본 프로필 이미지가 아닐 경우 삭제
 		if(!beforeFilename.equals("lion.png")) {

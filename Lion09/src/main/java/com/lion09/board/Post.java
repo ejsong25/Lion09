@@ -83,6 +83,6 @@ public class Post {
 	private PostLike postLike;
 	
 	//채팅
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")
-	private ChatRoomDTO chatRoom;
+//	@OneToOne(fetch = FetchType.LAZY, mappedBy = "post")
+//	private ChatRoomDTO chatRoom;
 }

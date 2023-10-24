@@ -463,12 +463,17 @@ window.addEventListener('load', function() {
 					</div>
 					<div>
 						<table id="listTable" border="1">
-						    <tr th:if="${listDto.accountName != null} and ${listDto.rechargeAmount != null}" th:each="listDto : ${lists}">
+						    <tr th:if="${listDto.accountName != null}" th:each="listDto : ${lists}">
 						        <td class="left">
 							        <span th:text="${listDto.accountName} + ' 계좌'"></span><br/>
 							        <span th:text="${#dates.format(listDto.date, 'yyyy-MM-dd HH:mm:ss')}"></span>
 							    </td>
-						        <td class="center" th:text="'+ ' + ${listDto.rechargeAmount + '원 충전'}"></td>
+						        <td class="center" th:if="${listDto.rechargeAmount != null}">
+								    <span th:text="'+ ' + ${listDto.rechargeAmount + '원 충전'}" style="color: #eec94f;"></span>
+								</td>
+								<td class="center" th:if="${listDto.usage != null}">
+								    <span th:text="'- ' + ${listDto.usage + '원 사용'}" style="color: #0000c6;"></span>
+								</td>
 						    </tr>
 						</table>
 					</div>
@@ -569,7 +574,9 @@ window.addEventListener('load', function() {
 		    enteredPwd += $("#payPwd5").val();
 		    enteredPwd += $("#payPwd6").val();
 
-		    if (enteredPwd === dtoPwd) {
+		    if (!enteredPwd) {
+	            alert('PAY비밀번호를 입력해주세요.');
+	        } else if (enteredPwd === dtoPwd) {
 		        $("#modal").css("display", "none");
 		        $("#nextModal").css("display", "block");
 		        
@@ -586,7 +593,6 @@ window.addEventListener('load', function() {
 		});
 	  });
 	  
-		
 	</script>
 	<script src="js/payPwd.js"></script>
 </body>

@@ -24,13 +24,11 @@
             // 모달창 열릴 때 이벤트 처리 => roomId 가져오기
             $("#enterRoomModal").on("show.bs.modal", function (event) {
                 roomId = $(event.relatedTarget).data('id');
-                alert("roomId: " + roomId);
 
             });
 
             $("#confirmPwdModal").on("show.bs.modal", function (e) {
                 roomId = $(e.relatedTarget).data('id');
-                alert("roomId: " + roomId);
 
             });
 
@@ -61,7 +59,7 @@
                         "roomPwd" : $confirmPwd
                     },
                     success : function(result){
-
+                    	
                         // result 의 결과에 따라서 아래 내용 실행
                         if(result){ // true 일때는
                             // $configRoomBtn 를 활성화 상태로 만들고 비밀번호 확인 완료를 출력
@@ -174,7 +172,7 @@
                 },
                 success : function(result){
                     // console.log("동작완료")
-                    // console.log("확인 : "+chkRoomUserCnt(roomId))
+                    //alert("확인 : "+chkRoomUserCnt(roomId));
 
                     if(result){
                         if (chkRoomUserCnt(roomId)) {

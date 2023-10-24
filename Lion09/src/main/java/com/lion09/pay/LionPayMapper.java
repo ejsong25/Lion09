@@ -36,6 +36,8 @@ public interface LionPayMapper {
 	
 	public Integer maxNum(@Param("userId") String userId) throws Exception;
 	
+	public void insertUsage(@Param("dto") ListDTO listDto,@Param("userId") String userId) throws Exception;
+	
 	List<String> getBankList();
 	
 }

@@ -21,6 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
+import com.lion09.board.Post;
+import com.lion09.board.PostService;
+import com.lion09.member.Member;
+import com.lion09.mypage.MyPageService;
+import com.lion09.order.Order;
 
 
 @RestController
@@ -32,6 +37,14 @@ public class LionPayController {
 	@Autowired
 	@Qualifier("lionPayServiceImpl")
 	private LionPayService lionPayService;
+	
+	@Autowired
+	@Qualifier("postServiceImpl")
+	private PostService postService;
+	
+	@Autowired
+	@Qualifier("myPageServiceImpl")
+	private MyPageService mypageService;
 	
 	@GetMapping(value = "/LionPay")
 	public ModelAndView index(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception{
@@ -122,7 +135,7 @@ public class LionPayController {
 	    	
 	        lionPayService.updateBalData(dto1);
 	        lionPayService.updateRechargeAmt(dto1);
-	        lionPayService.insertData(listDto,userId); //기록 저장
+	        lionPayService.insertData(listDto,userId); // 충전 기록 저장
 	        
 	        response.put("listDto", listDto);
 	        response.put("canCharge", true); // 충전 가능
@@ -194,6 +207,64 @@ public class LionPayController {
 		mav.setViewName("redirect:/LionPay");
 		
 		return mav;
+	}
+	
+	@GetMapping("/payMoney")
+	public ModelAndView payMoney(ListDTO listDto, Order Odto, Post dto,Member member,
+			@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+			HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String userId = sessionInfo.getUserId();
+		int postId = dto.getPostId();
+		int id = postService.maxId();
+		int price = Integer.parseInt(request.getParameter("price"));
+		
+		member = mypageService.selectData(sessionInfo.getUserId());
+	    dto = postService.getReadData(postId);
+	    String status = postService.getReadStatus(postId);
+	    
+	    System.out.println(postId);
+	    System.out.println(dto);
+		
+		LionPayDTO payDto = lionPayService.getReadData(userId);
+		
+		if(payDto.getBalance() < price) {
+//			mav.addObject("balanceError", true);
+//			mav.addObject("errorMessage", "페이머니 충전 후 결제해주세요.");
+			mav.setViewName("redirect:/LionPay");
+			
+			return mav;
+		}
+		
+		//참여하기
+		Odto.setMember(member); //userId
+		Odto.setPost(dto); //postId
+		Odto.setOrderPrice(price); //orderPrice
+		Odto.setId((long) id + 1); //orderId 
+		
+		postService.insertOrder1(Odto);
+		postService.updateOrder(postId);
+		
+		int newBalance = payDto.getBalance() - price;
+		LionPayDTO newDto = new LionPayDTO();
+		newDto.setUserId(userId);
+		newDto.setBalance(newBalance);
+		lionPayService.updateBalData(newDto);
+		
+		listDto.setNum(lionPayService.maxNum(userId) + 1);
+    	listDto.setUserId(userId);
+    	listDto.setUsage(price);
+    	listDto.setAccountName(lionPayService.getReadData(userId).getAccountName());
+		lionPayService.insertUsage(listDto, userId);
+		
+		
+		mav.setViewName("redirect:/detail?postId=" + postId);
+		
+		mav.addObject("lists",listDto);
+		
+		return mav;
+		
 	}
 	
 }

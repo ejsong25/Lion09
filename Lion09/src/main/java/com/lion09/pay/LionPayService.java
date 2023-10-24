@@ -9,7 +9,7 @@ public interface LionPayService {
 	public void insertLionPay(LionPayDTO dto) throws Exception;
 	
 	public void insertRecharge(Integer num, String userId) throws Exception;
-
+	
 	public void updateRechargeAmt(LionPayDTO dto) throws Exception;
 	
 	public void updateBalData(LionPayDTO dto) throws Exception;
@@ -32,5 +32,8 @@ public interface LionPayService {
 	
 	public Integer maxNum(String userId) throws Exception;
 	
+	public void insertUsage(ListDTO listDto, String userId) throws Exception;
+	
 	List<String> getBankList();
+	
 }

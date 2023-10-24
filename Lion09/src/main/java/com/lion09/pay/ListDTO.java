@@ -33,8 +33,12 @@ public class ListDTO {
 	private Integer rechargeAmount;
 	
 	@Column(nullable = true)
+	private Integer usage;
+	
+	@Column(nullable = true)
 	private Integer categoryId;
 	
 	@Column(nullable = true)
 	private Timestamp date;
+	
 }

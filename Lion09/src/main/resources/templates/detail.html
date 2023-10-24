@@ -394,7 +394,7 @@
    	
  	// "x" 버튼 클릭 시 모달 창 닫기
 	  btnClose.addEventListener('click', function() {
-	    modal.style.display = 'none';
+		$("#modal").css("display", "none");
 	    
 	    document.getElementById('payPwd1').value = '';
 	    document.getElementById('payPwd2').value = '';
@@ -429,7 +429,7 @@
 	        } else {
 	            if (!dtoPwd) {
 	                alert('먼저 PAY비밀번호를 등록해주세요.');
-	                modal.style.display = 'none';
+	                $("#modal").css("display", "none");
 	                popup.style.display = 'none';
 	            } else {
 	                alert('비밀번호가 일치하지 않습니다.');

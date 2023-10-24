@@ -5,28 +5,44 @@
 <mapper namespace="com.lion09.chat.ChatMsgMapper">
 
 <insert id="insertUser">
-    INSERT INTO chatMessages (num, userId, roomId, nickName, type, message, time) VALUES 
-    (#{num}, #{userId}, #{roomId}, #{nickName}, #{msgType}, #{message}, sysdate)
+    INSERT INTO chatMessages (num, userId, postId, nickName, type, message, time) VALUES 
+    (#{num}, #{userId}, #{postId}, #{nickName}, #{type}, #{message}, sysdate)
 </insert>
 
 <select id="maxNum" resultType="Integer">
 	select nvl(max(num),0) from chatMessages
 </select>
 
+<!-- 여러명 조회 -->
 <select id="getUserList" resultType="String">
-	select nickName from chatMessages where roomId = #{roomId} and Type = 'ENTER'
+	select distinct nickName from chatMessages where postId = #{postId} and nickname != '알수없음'
 </select>
 
+<!-- 1명 조회 -->
 <select id="getUser" resultType="String">
-	select nickName from chatMessages where roomId = #{roomId} and userId = #{userId} and Type = 'ENTER'
+	select nickName from chatMessages 
+	where postId = #{postId} 
+	and userId = #{userId} 
+	and Type = 'ENTER'
+	and nickName != '알수없음'
 </select>
  
-<delete id="remove">
-	delete from chatMessages where roomId = #{roomId} and userId = #{userId}
-</delete>
+<update id="remove">
+	update chatMessages set nickName ='알수없음' where postId = #{postId} and userId = #{userId}
+</update>
 
+<!-- 들어온 시간 이후의 메세지만 출력되도록 -->
 <select id="getMsg" resultType="com.lion09.chat.ChatDTO">
-	select nickName,message,type,time from chatMessages where roomId=#{roomId} order by time asc
+	select nickName,message,type,time from chatMessages 
+	where postId=#{postId} and 
+	time >= (
+		select time from chatMessages where userId = #{userId} 
+		and TYPE in ('MASTER', 'ENTER') and nickName != '알수없음'
+		order by time asc limit 1)
+	order by time asc
 </select>
 
+<delete id="delMsg">
+	delete chatMessages where postId = #{postId}
+</delete>
 </mapper>

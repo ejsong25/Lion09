@@ -41,41 +41,34 @@ public class MsgChatService {
 
 
     // 채팅방 유저 리스트에 유저 추가
-    public String addMsg(String roomId, String userId, String nickName, MessageType msgType,
-    		String message) throws Exception{
-    	ChatRoomDTO room = chatRoomMapper.findRoomById(roomId);
-
+    public String addMsg(ChatDTO dto) throws Exception{
     	int maxNum = chatMsgMapper.maxNum();
-    	chatMsgMapper.insertUser(maxNum+1,roomId,userId,nickName,msgType,message);
+    	dto.setNum(maxNum+1);
+    	chatMsgMapper.insertUser(dto);
     	
-        return userId;
+        return dto.getUserId();
     }
 
     // 채팅방 전체 userlist 조회
-    public ArrayList<String> getUserList(String roomId) throws Exception{
-        ArrayList<String> list = new ArrayList<>();
-
-        ChatRoomDTO room = chatRoomMapper.findRoomById(roomId);
-
-        return chatMsgMapper.getUserList(roomId);
+    public ArrayList<String> getUserList(int postId) throws Exception{
+        return chatMsgMapper.getUserList(postId);
     }
     
-    public String getUser(String roomId,String userId) throws Exception{
-
-        ChatRoomDTO room = chatRoomMapper.findRoomById(roomId);
-
-        return chatMsgMapper.getUser(roomId,userId);
-        
+    public String getUser(int postId,String userId) throws Exception{
+    	return chatMsgMapper.getUser(postId,userId);
     }
 
     // 채팅방 특정 유저 삭제
-    public void delUser(String roomId, String userId) throws Exception{
-    	ChatRoomDTO room = chatRoomMapper.findRoomById(roomId);
-    	chatMsgMapper.remove(roomId, userId);
+    public void delUser(int postId, String userId) throws Exception{
+    	chatMsgMapper.remove(postId, userId);
     }
     
     //메세지
-    public List<ChatDTO> getMsg(String roomId) throws Exception{
-    	return chatMsgMapper.getMsg(roomId);
+    public List<ChatDTO> getMsg(int postId, String userId) throws Exception{
+    	return chatMsgMapper.getMsg(postId, userId);
+    }
+    
+    public void delMsg(int postId) throws Exception{
+    	chatMsgMapper.delMsg(postId);
     }
 }

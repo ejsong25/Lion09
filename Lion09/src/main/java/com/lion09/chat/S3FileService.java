@@ -83,7 +83,8 @@ public class S3FileService implements FileService{
     }
 
     @Override
-    public void deleteFileDir(String path) {
+    public void deleteFileDir(int postId) {
+    	String path = Integer.toString(postId);
         for (S3ObjectSummary summary : amazonS3.listObjects(bucket, path).getObjectSummaries()) {
             amazonS3.deleteObject(bucket, summary.getKey());
         }

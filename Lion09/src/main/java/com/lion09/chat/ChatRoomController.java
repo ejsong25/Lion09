@@ -16,6 +16,7 @@ import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
 import com.lion09.board.Post;
 import com.lion09.board.PostService;
+import com.lion09.member.Member;
 import com.lion09.member.MemberService;
 
 import java.security.Principal;
@@ -36,9 +37,11 @@ public class ChatRoomController {
     @Qualifier("postServiceImpl")
     private PostService postService;
     
+    //네비바 클릭시 chatList
     @GetMapping("/chat")
-    public String goChatRoom(Model model, Principal principal) throws Exception {
-        model.addAttribute("list", chatService.findAllRoom());
+    public String goChatRoom(@SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo,
+    				Model model, Principal principal) throws Exception {
+        model.addAttribute("list", chatService.findAllRoom(sessionInfo.getUserId()));
 
         if (principal != null) {
             String username = principal.getName();
@@ -46,39 +49,16 @@ public class ChatRoomController {
             log.debug("Username: {}", username);
         }
 
-        log.debug("SHOW ALL ChatList {}", chatService.findAllRoom());
+        log.debug("SHOW ALL ChatList {}", chatService.findAllRoom(sessionInfo.getUserId()));
         return "roomlist";
-    }
-
-    // 채팅방 생성
-    // 채팅방 생성 후 다시 / 로 return
-    @PostMapping("/chat/createroom")
-    public String createRoom(@SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo,
-    		@RequestParam("roomName") String name,
-                             @RequestParam("roomPwd") String roomPwd,
-                             @RequestParam("secretChk") String secretChk,
-                             @RequestParam(value = "maxUserCnt", defaultValue = "2") String maxUserCnt,
-                             @RequestParam("chatType") String chatType,
-                             RedirectAttributes rttr) throws NumberFormatException, Exception {
-
-        // 매개변수 : 방 이름, 패스워드, 방 잠금 여부, 방 인원수
-    	ChatRoomDTO dto = msgChatService.createChatRoom(name, roomPwd, Boolean.parseBoolean(secretChk), Integer.parseInt(maxUserCnt));
-        dto.setChatType(ChatType.MSG);
-        dto.setUserId(sessionInfo.getUserId());
-        chatService.createChatRoom(dto);
-
-
-        log.info("CREATE Chat Room [{}]", dto);
-
-        rttr.addFlashAttribute("roomName", dto);
-        return "redirect:/chat";
     }
 
     // 채팅방 입장 화면
     // 파라미터로 넘어오는 roomId 를 확인후 해당 roomId 를 기준으로
     // 채팅방을 찾아서 클라이언트를 chatroom 으로 보낸다.
     @GetMapping("/chat/room")
-    public String roomDetail(Model model, HttpServletRequest request, Principal principal) throws Exception {
+    public String roomDetail(@SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo,
+    		Model model, HttpServletRequest request, Principal principal) throws Exception {
     	
     	int postId = Integer.parseInt(request.getParameter("postId"));
     	log.info("postId {}", postId);
@@ -93,79 +73,69 @@ public class ChatRoomController {
         if(room == null) {
         	Post post =  postService.getReadData(postId);
         	//방 만들기
-        	//1. chat room,
         	ChatRoomDTO dto = new ChatRoomDTO();
         	dto.setUserId(post.getUserId());//채팅방 주인 = 게시글 작성자
         	dto.setRoomName(post.getTitle());
         	dto.setChatType(ChatType.MSG);
-        	dto.setMaxUserCnt(post.getRecruitment());
+        	dto.setMaxUserCnt(99);
         	dto.setPostId(postId);
         	chatService.createChatRoom(dto);
         	
         	room = chatService.findRoomByPostId(postId);
-      }
-        List<ChatDTO> msg = msgChatService.getMsg(postId);
+        	
+//        	글 작성자 chatMessages에 넣어놓기
+        	
+        	ChatDTO writerIntput = new ChatDTO();
+        	writerIntput.setPostId(postId);
+        	writerIntput.setUserId(post.getUserId());
+        	writerIntput.setNickName(post.getNickName());
+        	writerIntput.setType(MessageType.MASTER);
+        	msgChatService.addMsg(writerIntput);
+        }
+        List<ChatDTO> msg = msgChatService.getMsg(postId, sessionInfo.getUserId());
         model.addAttribute("room", room);
         model.addAttribute("msgs", msg);
-        
+//        프로필 사진
         if (room.getChatType() == ChatType.MSG) {
             return "chatroom";
         }
-
         // 반환값이 없는 경우 기본 반환값 설정
         return "defaultViewName"; // 변경이 필요한 경우에 기본 뷰 이름으로 수정
     }
-
-
-    // 채팅방 비밀번호 확인
-    @PostMapping("/chat/confirmPwd/{roomId}")
-    @ResponseBody
-    public boolean confirmPwd(@PathVariable String roomId, @RequestParam String roomPwd) throws Exception{
-
-        // 넘어온 roomId 와 roomPwd 를 이용해서 비밀번호 찾기
-        // 찾아서 입력받은 roomPwd 와 room pwd 와 비교해서 맞으면 true, 아니면  false
-        return chatService.confirmPwd(roomId, roomPwd);
-    }
-
-    // 채팅방 삭제
-    @GetMapping("/chat/delRoom/{roomId}")
-    public String delChatRoom(@PathVariable String roomId) throws Exception{
-
-        // roomId 기준으로 chatRoomMap 에서 삭제, 해당 채팅룸 안에 있는 사진 삭제
-    	chatService.delChatRoom(roomId);
-
+    
+    public String delChatRoom(int postId) throws Exception{
+    	chatService.delChatRoom(postId);
+    	msgChatService.delMsg(postId);
         return "redirect:/chat";
     }
 
     // 유저 카운트
-    @GetMapping("/chat/chkUserCnt/{roomId}")
+    @GetMapping("/chat/chkUserCnt/{postId}")
     @ResponseBody
-    public boolean chUserCnt(@PathVariable String roomId) throws Exception{
+    public boolean chUserCnt(@PathVariable int postId) throws Exception{
 
-        return chatService.chkRoomUserCnt(roomId);
+        return chatService.chkRoomUserCnt(postId);
     }
     
  // 유저 퇴장 시에는 EventListener 을 통해서 유저 퇴장을 확인
     @GetMapping("/chat/leave")
     public String webSocketDisconnectListener(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo, HttpServletRequest request ,StompHeaderAccessor headerAccessor) throws Exception {
 //        log.info("DisConnEvent {}", event);
-
 //        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-
         // stomp 세션에 있던 uuid 와 roomId 를 확인해서 채팅방 유저 리스트와 room 에서 해당 유저를 삭제
 //        String userId = (String) headerAccessor.getSessionAttributes().get("userUUID");
-        String userId = sessionInfo.getUserId();
 //        String roomId = (String) headerAccessor.getSessionAttributes().get("roomId");
-        String roomId = request.getParameter("roomId");
-
-        log.info("headAccessor {}", headerAccessor);
-
+//        log.info("headAccessor {}", headerAccessor);
+    	
+    	String userId = sessionInfo.getUserId();
+        int postId = Integer.parseInt(request.getParameter("postId"));
+        
         // 채팅방 유저 -1
-        chatService.minusUserCnt(roomId);
-
-        // 채팅방 유저 리스트에서 UUID 유저 닉네임 조회 및 리스트에서 유저 삭제
+        chatService.minusUserCnt(postId);
+        
+        //나간 회원 이름 알수 없음 설정
+//        msgChatService.delUser(postId, userId);
         String nickName = memberService.getUser(userId).getNickName();
-        msgChatService.delUser(roomId, userId);
 
         if (nickName != null) {
             log.info("User Disconnected : " + nickName);
@@ -173,12 +143,26 @@ public class ChatRoomController {
             // builder 어노테이션 활용
             ChatDTO chat = ChatDTO.builder()
                     .type(MessageType.LEAVE)
-                    .nickName(nickName)
+                    .postId(postId)
+                    .nickName("알수없음")
                     .message(nickName + " 님이 퇴장하였습니다.")
                     .build();
-
-            template.convertAndSend("/sub/chat/room/" + roomId, chat);
+            
+            template.convertAndSend("/sub/chat/room/" + postId, chat);
+            //퇴장 메세지 insert
+            chat.setMessage(chat.getNickName() + " 님이 퇴장하였습니다.");
+            chat.setUserId(userId);
+            msgChatService.addMsg(chat);
+            //닉네임 알수 없음으로 설정
+            msgChatService.delUser(postId, userId);
         }
+        //채팅방 삭제
+        if(chatService.findRoomByPostId(postId).getUserCount() == 0) {
+        	System.out.println(postId);
+        	msgChatService.delMsg(postId);
+        	chatService.delChatRoom(postId);
+        }
+        
         return "redirect:/chat";
     }
 }

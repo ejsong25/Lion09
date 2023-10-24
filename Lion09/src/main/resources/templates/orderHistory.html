@@ -94,10 +94,12 @@
 						        <th class="status">거래 상태</th>
 						    </tr>
 						    
+						    
+						    
+
 						    <tbody id="lists">
 						    <tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}">
-						     <td class="center" >  <a th:href="@{${detailUrl}}" th:text="${dto.title}"> 상품명</a></td> 
-						   <!--     <td class="center" th:text="${dto.title}">공구 상품명</td> -->
+					    	 <td class="center" >상품명</td>  
 						        <td class="center" th:text="${dto.orderDate }">공구 날짜</td>
 						        <td class="center" >[[${dto.orderPrice }]]원</td> 
 						        <td class="center" th:text="${dto.status }">거래 상태</td> 

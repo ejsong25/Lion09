@@ -26,6 +26,7 @@ import com.lion09.board.PostService;
 import com.lion09.member.Member;
 import com.lion09.mypage.MyPageService;
 import com.lion09.order.Order;
+import com.lion09.order.OrderStatus;
 
 
 @RestController
@@ -237,12 +238,29 @@ public class LionPayController {
 			return mav;
 		}
 		
+
+		
 		//참여하기
 		Odto.setMember(member); //userId
 		Odto.setPost(dto); //postId
 		Odto.setOrderPrice(price); //orderPrice
 		Odto.setId((long) id + 1); //orderId 
-		
+		Odto.setTitle(dto.getTitle());
+
+		  OrderStatus orderStatus = null; // 초기화
+		    
+		    
+		    if (status != null) {
+		        try {
+		            orderStatus = OrderStatus.valueOf(status);	   
+		        } catch (IllegalArgumentException e) {
+		            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
+		            e.printStackTrace();
+		        }
+		    }
+		    
+		    Odto.setStatus(orderStatus);
+
 		postService.insertOrder1(Odto);
 		postService.updateOrder(postId);
 		

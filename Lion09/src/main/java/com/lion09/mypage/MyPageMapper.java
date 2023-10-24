@@ -27,5 +27,9 @@ public interface MyPageMapper {
 	public void updateRange(Member dto) throws Exception;
 
 	public void updatePwd(Member dto) throws Exception;
+
+	public void updateEnergy(String userId) throws Exception;
+	
+	public void updateEnergy2(String userId) throws Exception;
 	
 }

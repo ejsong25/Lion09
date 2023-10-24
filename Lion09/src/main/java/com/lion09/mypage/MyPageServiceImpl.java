@@ -60,4 +60,14 @@ public class MyPageServiceImpl implements MyPageService {
 		mypageMapper.updatePwd(dto);
 	}
 
+	@Override
+	public void updateEnergy(String userId) throws Exception {
+		mypageMapper.updateEnergy(userId);
+	}
+
+	@Override
+	public void updateEnergy2(String userId) throws Exception {
+		mypageMapper.updateEnergy2(userId);
+	}
+
 }

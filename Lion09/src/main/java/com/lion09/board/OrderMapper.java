@@ -37,5 +37,7 @@ public interface OrderMapper {
 	public void updateOrders(Post dto) throws Exception;
 	
 	public void deleteOrders(int postId) throws Exception;
+
+	public void updateReview(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
 	
 }

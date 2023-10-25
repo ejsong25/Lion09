@@ -116,8 +116,7 @@ public class PostController {
 		int maxPostId = postService.maxPostId();
 		dto.setPostId(maxPostId + 1);
 
-		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
-		dto.setContents(plainText);
+		dto.setContents(dto.getContents());
 
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
@@ -522,8 +521,7 @@ public class PostController {
 
 		dto.setDeadLine(deadLine);
 
-		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
-		dto.setContents(plainText);
+		dto.setContents(request.getParameter("contents"));
 		dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
 
 		postService.updateData(dto);

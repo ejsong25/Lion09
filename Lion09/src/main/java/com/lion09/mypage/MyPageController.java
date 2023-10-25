@@ -270,22 +270,22 @@ public class MyPageController {
 		mav.setViewName("review");
 
 		Post dto = postService.getReadData(postId);
-		Member odto = mypageService.selectData(dto.getUserId());
+		Member odto = mypageService.selectData(dto.getUserId());//게시물주인
 		
-		Member mdto = mypageService.selectData(sessionInfo.getUserId());
-
+		Member mdto = mypageService.selectData(sessionInfo.getUserId());//로그인한사람
+		
 		mav.addObject("mdto",mdto);
 		mav.addObject("odto",odto);
+		mav.addObject("postId",postId);
 
 		return mav;
 	}
 	
 	@PostMapping(value="/updateEnergy.action")
 	public ModelAndView updateEnergy(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, 
-			Member dto,@Param("selectedRating") int selectedRating,@Param("userId") String userId) 
+			@Param("selectedRating") int selectedRating,@Param("userId") String userId,
+			@Param("postId") int postId) 
 			throws Exception {
-		
-		System.out.println(selectedRating);
 		
 		if(selectedRating==1) {
 			mypageService.updateEnergy2(userId);
@@ -298,6 +298,10 @@ public class MyPageController {
 			mypageService.updateEnergy(userId);
 			mypageService.updateEnergy(userId);
 		}
+		
+		userId = sessionInfo.getUserId();
+		
+		postService.updateReview(userId,postId);
 		
 		ModelAndView mav = new ModelAndView();
 		

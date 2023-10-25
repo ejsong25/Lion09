@@ -75,7 +75,7 @@
 		f.deadLine.value = str;
 	
 		str = f.contents.value;
-		str = str.trim();
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
 		if(!str){
 			alert("\n내용을 입력하세요.");
 			f.contents.focus();

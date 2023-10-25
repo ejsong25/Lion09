@@ -20,9 +20,7 @@
 <link href="css/templatemo-style.css" rel="stylesheet" />
 <link href="css/write.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-
 <link rel="stylesheet" href="writePhoto.css">
-
 
  <script type="text/javascript">
 
@@ -216,7 +214,7 @@
             <div class="container" style="width: 65%;">
 				<div class="image-upload" id="image-upload" align="center">
 				
- 					<img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px"/>
+ 					<img th:if="${dto.chooseFile != 'lion.png'}" th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px"/>
  					
 				        <div class="button">
 				          <span style="font-size: 5em; color: #8993a4;" id="chooseFile">
@@ -296,11 +294,11 @@
 			  // 입력란에 현재 날짜와 시간 설정 (현재 시간 이후의 날짜만 설정 가능)
 			  document.getElementById("deadLine").min = currentDatetime;
 			  
-			   // "선택 완료" 버튼 클릭 시 달력 닫기
-			    document.getElementById("closeDateButton").addEventListener("click", function() {
-			        var dateInput = document.getElementById("deadLine");
-			        dateInput.isDroppedDown = false; // 이 코드는 해당 컨트롤이 달력을 닫도록 설정합니다.
-			    });
+		   // "선택 완료" 버튼 클릭 시 달력 닫기
+		    document.getElementById("closeDateButton").addEventListener("click", function() {
+		        var dateInput = document.getElementById("deadLine");
+		        dateInput.isDroppedDown = false; // 이 코드는 해당 컨트롤이 달력을 닫도록 설정합니다.
+		    });
 			  
 		 </script>  
 			                  

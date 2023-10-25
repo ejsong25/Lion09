@@ -2,25 +2,24 @@
 <html lang="en">
 <head>
   
-    <!-- include libraries(jQuery, bootstrap) -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<!-- include libraries(jQuery, bootstrap) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>                     
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>글쓰기</title>  
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>                     
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>글쓰기</title>  
 
 <link href="css/templatemo-style.css" rel="stylesheet" />
 <link href="css/write.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-
 <link rel="stylesheet" href="writePhoto.css">
 
 <script type="text/javascript">
@@ -120,13 +119,13 @@
 	        
 	    }
 	    
-	    function recruitmentChange(){
-	    	var recruitment = document.getElementById('recruitment').value;
-	    }    
+    function recruitmentChange(){
+    	var recruitment = document.getElementById('recruitment').value;
+    }    
 
-	    function deadLineChange(){
-	    	var deadLine = document.querySelector("#deadLine").value;
-	    } 
+    function deadLineChange(){
+    	var deadLine = document.querySelector("#deadLine").value;
+    } 
 
 </script>
 
@@ -151,42 +150,41 @@
 
 <body>
 
-<!-- 네비바 자리 -->
+	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
+	
 	<div class="container">
 	<!-- Top box -->
 		<!-- Logo & Site Name -->
-		<div class="placeholder">	
-			<div class="parallax-window" data-parallax="scroll">
-				<img src="img/bg.jpeg" style="width: 100%;">
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll" data-image-src="img/bg.jpeg">
 				<div class="tm-header">
 					<div class="row tm-header-inner">
 						<div class="col-md-6 col-12">
 							<div class="tm-site-text-box">
-								<h1 class="tm-site-title">사자고</h1>
-								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>
-							</div>
+								<h1 class="tm-site-title">글쓰기</h1>
+  							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		</div>
-        <main role="main" class="container">
+		</div>	
+	</div>
+    
+    <main role="main" class="container">
                      
-            <form action="" method="post" name="myForm1" enctype="multipart/form-data">
-             <div class="tm-paging-links1">
+    	<form action="" method="post" name="myForm1" enctype="multipart/form-data">
+        	<div class="tm-paging-links1">
 				<nav>
 					<ul>
-						<li class="tm-paging-item1"><a href="#" class="tm-paging-link1 active" onchange="">공동구매</a></li>
+						<li class="tm-paging-item1"></li>
 					</ul>
 				</nav>
 			</div>
 			
 			<!-- 이미지 업로드 -->
-			<div class="container" style="width: 98%;">
-				
-				<div class="image-upload" id="image-upload">
+			<div class="container" style="width: 65%;">
+				<div class="image-upload" id="image-upload" align="center">
 			        <div class="button">
 			          <span style="font-size: 5em; color: #8993a4;" id="chooseFile" >
 						  <i class="fas fa-camera"></i>
@@ -194,117 +192,109 @@
 			        </div>
 	
 				    <input type="file" id="chooseFileName" name="chooseFileName" onchange="loadFile(this)">
-				
 			      	<div class="fileContainer">
 			        	<div class="fileInput">
 			              <!-- <p>FILE NAME: </p> -->
 			              <p id="fileName" hidden=""></p>
 			      		</div>
-				       <div class="buttonContainer">
-				           <div class="submitButton" id="submitButton">파일확인</div>
-				       </div>
-			      	</div>
-				</div>
+				        <div class="buttonContainer">
+				           <div class="submitButton" id="submitButton"></div>
+				       	</div>
+			      	</div><br/>
+				
 				    <!-- 파일 미리보기 -->
 				    <div class="image-show" id="image-show"></div>
-			</div>
-			<br/><br/>
+				</div>
+				<br/><br/>
 			
-			<!-- 제목~주소 -->
-            <select class="form-control" name="categoryId" id="categoryId"  style="border-radius:5px; width:100%; padding:5px;">
-                <option value="0">카테고리 선택</option>
-                <option value="1">신선식품</option>
-                <option value="2">가공식품</option>
-                <option value="3">의류/신발</option>
-                <option value="4">뷰티/미용</option>
-                <option value="5">생활/주방</option>
-                <option value="6">스포츠/레저</option>
-                <option value="7">도서</option>
-                <option value="8">기타물품</option>
-            </select>
-   			<div class="form-group form-price"></div>
+				<!-- 제목~주소 -->
+	            <select class="form-control" name="categoryId" id="categoryId"  style="border-radius:5px; width:100%; padding:5px;">
+	                <option value="0">카테고리 선택</option>
+	                <option value="1">신선식품</option>
+	                <option value="2">가공식품</option>
+	                <option value="3">의류/신발</option>
+	                <option value="4">뷰티/미용</option>
+	                <option value="5">생활/주방</option>
+	                <option value="6">스포츠/레저</option>
+	                <option value="7">도서</option>
+	                <option value="8">기타물품</option>
+	            </select>
+   				<div class="form-group form-price"></div>
 	              
-			<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
-			<br/>	
+				<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
+				<br/>	
 			
-	        <div class="form-group form-price">
-                <input type="number" class="form-control" name="productsPrice" min="0" step="1000" placeholder="가격을 입력해주세요. (￦)"
-				style="border-radius:5px;width:99%;" value=""  onchange="productsPriceChange();"/>
-	        </div>
-            <div class="form-group form-price">
-                <input type="number" class="form-control" name="recruitment" min="2" max="5" step="1" placeholder="모집인원을 입력해주세요. (명)" 
-                style="border-radius:5px;width:99%;" value="" onchange="recruitmentChange();"/>
-            </div>
-	             
-        	<input type="text" class="form-control" name="myAddress" th:value="${dto.myAddress}" id="myAddr" 
-        		style="border-radius:5px; width:100%; padding:5px;" readonly hidden/>
-        	<!-- 제목~주소 끝 --> 
+		        <div class="form-group form-price">
+	                <input type="number" class="form-control" name="productsPrice" min="0" step="1000" placeholder="가격을 입력해주세요. (￦)"
+					style="border-radius:5px;width:99%;" value=""  onchange="productsPriceChange();"/>
+		        </div>
+	            <div class="form-group form-price">
+	                <input type="number" class="form-control" name="recruitment" min="2" max="5" step="1" placeholder="모집인원을 입력해주세요. (명)" 
+	                style="border-radius:5px;width:99%;" value="" onchange="recruitmentChange();"/>
+	            </div>
+		             
+	        	<input type="text" class="form-control" name="myAddress" th:value="${dto.myAddress}" id="myAddr" 
+	        		style="border-radius:5px; width:100%; padding:5px;" readonly hidden/>
+	        	<!-- 제목~주소 끝 --> 
         	
-        	<!-- 마감일 작성 -->
-        	<div>
-        		<label style="font-size: 18px; color: #747474; margin-right: 30px;" >&nbsp;&nbsp;&nbsp;마감일을 입력해주세요.
-                <input type="datetime-local" class="form-control" name="deadLine" id="deadLine"
-                style="border-radius:5px;width:99%;" value="" onchange="deadLineChange();"/>
-          		</label>
-          		  <button type="button" id="closeDateButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 5px;">선택 완료</button>
-            </div>
-            <!-- 마감일 작성 완료 -->
+	        	<!-- 마감일 작성 -->
+	        	<div>
+	        		<label style="font-size: 18px; color: #747474; margin-right: 30px;" >&nbsp;&nbsp;&nbsp;마감일을 입력해주세요.
+	                <input type="datetime-local" class="form-control" name="deadLine" id="deadLine"
+	                style="border-radius:5px;width:99%;" value="" onchange="deadLineChange();"/>
+	          		</label>
+	          		  <button type="button" id="closeDateButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 5px;">선택 완료</button>
+	            </div>
+	            <!-- 마감일 작성 완료 -->
         
-       	  <script>
-	     
-       	  
-			  // 현재 날짜와 시간 가져오기
-			  var now = new Date();
-			  var year = now.getFullYear();
-			  var month = (now.getMonth() + 1).toString().padStart(2, '0');
-			  var day = now.getDate().toString().padStart(2, '0');
-			  var hours = now.getHours().toString().padStart(2, '0');
-			  var minutes = now.getMinutes().toString().padStart(2, '0');
-			  var currentDatetime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
-			
-			  // 입력란에 현재 날짜와 시간 설정 (현재 시간 이후의 날짜만 설정 가능)
-			  document.getElementById("deadLine").min = currentDatetime;
-			 
-			  
+       	 	 <script>
+	       	  
+				  // 현재 날짜와 시간 가져오기
+				  var now = new Date();
+				  var year = now.getFullYear();
+				  var month = (now.getMonth() + 1).toString().padStart(2, '0');
+				  var day = now.getDate().toString().padStart(2, '0');
+				  var hours = now.getHours().toString().padStart(2, '0');
+				  var minutes = now.getMinutes().toString().padStart(2, '0');
+				  var currentDatetime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+				
+				  // 입력란에 현재 날짜와 시간 설정 (현재 시간 이후의 날짜만 설정 가능)
+				  document.getElementById("deadLine").min = currentDatetime;
+				 
 			   // "선택 완료" 버튼 클릭 시 달력 닫기
 			    document.getElementById("closeDateButton").addEventListener("click", function() {
 			        var dateInput = document.getElementById("deadLine");
 			        dateInput.isDroppedDown = false; // 이 코드는 해당 컨트롤이 달력을 닫도록 설정합니다.
 			    });
 			  
-			  
-			  
 			</script>  
         
+        		<br/><br/>
 
-        
-        	<br/><br/>
-
-			<div class="pt-1">
-            	<textarea id="summernote" name="contents"></textarea>
-            </div> 
+				<div class="pt-1">
+	            	<textarea id="summernote" name="contents"></textarea>
+	            </div> 
 	                  
-			<!-- 게시글 작성 -->
-            <script>
-                $('#summernote').summernote({
-                  placeholder: '게시글 내용을 작성해 주세요. (판매금지 물품은 게시가 제한 될 수 있습니다.)<br/><br/> 신뢰할 수 있는 거래를 위해 자세히 적어주세요. <br/><br/> 구매 후 공구하는 경우는 영수증 사진을 필수로 첨부해주세요',
-                  tabsize: 2,
-                  height: 400
-                });
-            </script>      
-            <br/><br/>             
+				<!-- 게시글 작성 -->
+	            <script>
+	                $('#summernote').summernote({
+	                  placeholder: '게시글 내용을 작성해 주세요. (판매금지 물품은 게시가 제한 될 수 있습니다.)<br/><br/> 신뢰할 수 있는 거래를 위해 자세히 적어주세요. <br/><br/> 구매 후 공구하는 경우는 영수증 사진을 필수로 첨부해주세요',
+	                  tabsize: 2,
+	                  height: 400
+	                });
+	            </script>      
+            	<br/><br/>             
                                  
-            <div class="pt-1 text-right">
-                <input type="button" class="btn btn btn-success" style="width:10%; padding:5px;" 
-                	onclick="javascript:location.href='list1';" value="작성취소">
-                <input type="button" class="btn btn btn-success" style="width:10%; padding:5px;" 
-                	onclick="sendIt();" value="작성완료">
-                <br/><br/>
-            </div>    
-        
-           </form>
-        </main>  
-       
+	            <div class="pt-1 text-right" style="padding-bottom: 50px;">
+	                <input type="button" class="qnaBtn" style="width:10%; padding:5px;"  
+	                	onclick="javascript:location.href='list1';" value="작성취소">
+	                <input type="button" class="qnaBtn" style="width:10%; padding:5px;" 
+	                	onclick="sendIt();" value="작성완료">
+	                <br/><br/>
+	            </div>    
+        </div>
+   </form>
+ </main>  
 
 <script src="js/jquery.min.js"></script>
 <script src="js/parallax.min.js"></script>

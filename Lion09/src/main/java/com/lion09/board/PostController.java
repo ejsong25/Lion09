@@ -8,36 +8,27 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.naming.directory.SearchResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.lion09.board.PostUtil;
 import com.lion09.member.Member;
-import com.lion09.member.MemberForm;
 import com.lion09.mypage.MyPageService;
 import com.lion09.order.Order;
 import com.lion09.order.OrderStatus;
@@ -45,8 +36,6 @@ import com.lion09.pay.LionPayDTO;
 import com.lion09.pay.LionPayService;
 import com.lion09.pay.ListDTO;
 import com.lion09.SessionInfo;
-import com.lion09.board.Post;
-import com.lion09.board.PostService;
 import com.lion09.SessionConst;
 
 @Controller
@@ -75,7 +64,6 @@ public class PostController {
 		List<Post> lists1 = postService.hitProduct();
 		
 		String deadLineUrl = "/detail?postId=";	
-		
 		
 		mav.addObject("lists", lists);
 		mav.addObject("lists1", lists1);
@@ -117,7 +105,6 @@ public class PostController {
 	public ModelAndView write_ok(@RequestPart("chooseFileName") MultipartFile cFile,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,Post dto,HttpServletRequest request) throws Exception {
 
-
 		ModelAndView mav = new ModelAndView();
 
 		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
@@ -126,19 +113,15 @@ public class PostController {
 		dto.setMyAddr(Mdto.getMyAddress());
 		dto.setUserId(sessionInfo.getUserId());
 
-
 		int maxPostId = postService.maxPostId();
 		dto.setPostId(maxPostId + 1);
 
 		String plainText = request.getParameter("contents").replaceAll("\\<.*?\\>", "");
 		dto.setContents(plainText);
 
-
-
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
 			String uploadDir = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
-
 
 			// 업로드한 파일의 원래 파일 이름 가져오기
 			String originalFilename = cFile.getOriginalFilename();
@@ -152,7 +135,6 @@ public class PostController {
 			// 현재 날짜 및 시간을 가져와 포맷팅
 			Date now = new Date(System.currentTimeMillis());
 			String timestamp = dateFormat.format(now);
-
 
 			//새 파일 이름 생성 
 			String newFilename = originalFilename.replace(fileExtension, "_" +dto.getPostId() + timestamp +fileExtension);
@@ -182,7 +164,6 @@ public class PostController {
 			mav.setViewName("redirect:/list1");
 		}
 
-
 		mav.setViewName("redirect:/list1");
 		return mav;
 	}
@@ -204,13 +185,10 @@ public class PostController {
 			return mav;
 		}
 		
-		
 		int currentPage = 1;
 
 		if(pageNum!=null) {
-
 			currentPage = Integer.parseInt(pageNum);
-
 		}
 
 		searchKey = request.getParameter("searchKey");
@@ -222,11 +200,8 @@ public class PostController {
 		} else {
 			if (request.getMethod().equalsIgnoreCase("GET")) {
 				searchValue = URLDecoder.decode(searchValue, "UTF-8");
-
 			}
-
 		}
-
 		int numPerPage = 12;
 
 		start = (currentPage - 1) * numPerPage + 1;
@@ -237,9 +212,7 @@ public class PostController {
 		if (searchValue != null && !searchValue.equals("")) {
 			param = "searchKey=" + searchKey;
 			param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
-
 		}
-
 
 		int dataCount = postService.getDataCount(searchKey, searchValue);
 
@@ -267,7 +240,6 @@ public class PostController {
 			detailUrl = detailUrl + "&" + param;
 		}
 
-
 		//반경조회해서 가져오기
 		List<Member> findList = mypageService.findLocationsNearby(mdto);
 		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
@@ -285,7 +257,6 @@ public class PostController {
 						lists.add(post);
 					} 
 				}
-				
 			}
 		}else {
 			for (Member member : findList) {
@@ -297,7 +268,6 @@ public class PostController {
 						lists.add(post);
 					} 
 				}
-				
 			}
 		}
 		
@@ -310,7 +280,6 @@ public class PostController {
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("detailUrl", detailUrl);
 
-
 		return mav;
 
 	}
@@ -321,9 +290,7 @@ public class PostController {
 	    int postId = Integer.parseInt(request.getParameter("postId"));
 	    String pageNum = request.getParameter("pageNum");
 	    
-	    
 	    Member mdto = mypageService.selectData(sessionInfo.getUserId());
-
     
 	    String userId = mdto.getUserId();
 
@@ -348,7 +315,6 @@ public class PostController {
 	    
 	    OrderStatus orderStatus = null; // 초기화
 	    
-	    
 	    if (status != null) {
 	        try {
 	            orderStatus = OrderStatus.valueOf(status);	   
@@ -359,7 +325,6 @@ public class PostController {
 	    }
 
 	    Odto.setStatus(orderStatus);
-	    
 	    
 	    PostLikeDTO likedto = new PostLikeDTO();
 	    likedto.setUserId(userId);
@@ -452,7 +417,6 @@ public class PostController {
 		mav.setViewName("redirect:/detail?postId=" + postId);
 
 		return mav;
-
 	}
 
 	//관심목록 불러오기
@@ -505,13 +469,11 @@ public class PostController {
 
 	}
 
-
 	//게시글 수정하기
 	@GetMapping("/writeUpdated")
 	public ModelAndView writeUpdated(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,HttpServletRequest request) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
-
 
 		Member Mdto = mypageService.selectData(sessionInfo.getUserId());
 
@@ -519,9 +481,6 @@ public class PostController {
 
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		String pageNum = request.getParameter("pageNum");
-
-
-
 
 		Post dto =  postService.getReadData(postId);
 
@@ -532,17 +491,13 @@ public class PostController {
 		mav.addObject("pageNum", pageNum);
 		mav.setViewName("writeUpdated");
 
-
 		return mav;
 	}
-
-
 
 	//게시글 수정하기
 	@Transactional
 	@RequestMapping(value="/writeUpdated_ok", method = {RequestMethod.POST})
 	public ModelAndView writeUpdated_ok(@RequestParam(name = "postId", defaultValue = "1") int postId,HttpServletRequest request) throws Exception {
-
 
 		ModelAndView mav = new ModelAndView();
 
@@ -571,7 +526,6 @@ public class PostController {
 		dto.setContents(plainText);
 		dto.setMyAddr(request.getParameter("myAddr")); // "myAddress"에서 "myAddr"로 수정
 
-
 		postService.updateData(dto);
 		postService.updateOrders(dto);
 
@@ -583,10 +537,7 @@ public class PostController {
 
 		return mav;
 
-
-
 	}
-
 
 	//게시글 이미지 업데이트
 	@RequestMapping(value="/chooseFile_update.action", method = {RequestMethod.GET, RequestMethod.POST})
@@ -606,7 +557,6 @@ public class PostController {
 
 		try {
 			postId = Integer.parseInt(postIdString);
-
 
 			//이미지 사진들 모아두는 폴더
 			String upload_path = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
@@ -629,7 +579,6 @@ public class PostController {
 					fileToDelete.delete();  
 				} 
 			}
-
 
 			//바꿀 파일 이름 추출
 			String originalFilename = cFile.getOriginalFilename();
@@ -664,7 +613,6 @@ public class PostController {
 				Thread.currentThread().interrupt();
 			}
 
-
 			mav.setView(redirectView);
 
 
@@ -674,9 +622,6 @@ public class PostController {
 		}
 		return mav;
 	}
-
-
-
 
 	//이미지파일 삭제
 	//@PostMapping(value = "/chooseFile_delete.action")
@@ -737,26 +682,18 @@ public class PostController {
 		postService.deleteData(postId);
 		postService.deleteData(postId);
 
-
-
 		// 데이터 업데이트 후 데이터 다시 읽기
 		Post updatedPost = postService.getReadData(dto.getPostId());
-
 
 		mav.setViewName("redirect:/list1");
 
 		return mav;
-
-
 	}
-
-
 
 	@GetMapping("/myList")
 	public ModelAndView myList(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
-
 
 		Post dto = new Post();
 
@@ -765,11 +702,8 @@ public class PostController {
 		int currentPage = 1;
 
 		if(pageNum!=null) {
-
 			currentPage = Integer.parseInt(pageNum);
-
 		}
-
 
 		int numPerPage = 12;
 
@@ -779,7 +713,6 @@ public class PostController {
 		List<Post> lists = postService.mygetLists(start, end,userId);
 
 		String param = "";
-
 
 		ModelAndView mav = new ModelAndView();
 
@@ -808,7 +741,6 @@ public class PostController {
 		if (!param.equals("")) {
 			mydetailUrl = mydetailUrl + "&" + param;
 		}
-
 
 		mav.setViewName("/myList"); 
 		mav.addObject("lists", lists);
@@ -922,10 +854,7 @@ public class PostController {
 	    mav.addObject("dataCount", dataCount);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("detailUrl", detailUrl);	    
-	   
 
 	    return mav;
 	}
-	
-	
 }

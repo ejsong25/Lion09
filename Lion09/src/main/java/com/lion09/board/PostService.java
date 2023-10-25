@@ -89,5 +89,7 @@ public interface PostService {
 	
 	public void deleteOrders(int postId) throws Exception;
 	
+	public String getReadType(String userId, int postId) throws Exception;
+	
 	
 }

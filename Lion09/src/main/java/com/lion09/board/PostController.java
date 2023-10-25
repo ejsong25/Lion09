@@ -314,15 +314,14 @@ public class PostController {
 	}
 	
 	@GetMapping("/detail")
-	public ModelAndView detail(HttpServletRequest request, @SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo) throws Exception {
+	public ModelAndView detail(HttpServletRequest request, 
+			@SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo) throws Exception {
 
 	    int postId = Integer.parseInt(request.getParameter("postId"));
 	    String pageNum = request.getParameter("pageNum");
 	    
-	    
 	    Member mdto = mypageService.selectData(sessionInfo.getUserId());
 
-    
 	    String userId = mdto.getUserId();
 
 	    Member member = new Member(); // Member 엔티티의 인스턴스 생성
@@ -340,8 +339,6 @@ public class PostController {
 
 	    int count  = postService.findOrderCount(Odto);
 	   
-	    System.out.println(count);
-	    
 	    Odto.setCount(count);
 	    
 	    OrderStatus orderStatus = null; // 초기화
@@ -386,6 +383,9 @@ public class PostController {
 	    
 	    // 라이언페이
 	 	String payPwd = lionPayService.getReadData(userId).getPayPwd();
+	 	
+	 	// 결제방법 타입 불러오기
+	 	String type = postService.getReadType(userId, postId);
 
 	    ModelAndView mav = new ModelAndView();
 
@@ -399,6 +399,7 @@ public class PostController {
 	    mav.addObject("params", param);
 	    mav.addObject("pageNum", pageNum);
 	    mav.addObject("payPwd",payPwd);
+	    mav.addObject("type", type);
 
 	    mav.setViewName("/detail");
 
@@ -820,9 +821,9 @@ public class PostController {
 
 	}
 
-	//참여 목록에서 삭제
-	@GetMapping(value = "/deleteOrder")
-	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
+	// 페이 결제 참여취소
+	@GetMapping(value = "/refund")
+	public ModelAndView refund(Order Odto,Post dto,Member member,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 		String userId = sessionInfo.getUserId();
@@ -830,7 +831,6 @@ public class PostController {
 
 		member = mypageService.selectData(sessionInfo.getUserId());
 	    dto = postService.getReadData(postId);
-	    String status = postService.getReadStatus(postId);
 
 	    //참여하기
 	    Odto.setUserId(sessionInfo.getUserId()); //userId
@@ -865,7 +865,32 @@ public class PostController {
 		return mav;
 
 	}
+	
+	// 만나서 거래 참여취소
+	@GetMapping(value = "/deleteOrder")
+	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
+		int postId = dto.getPostId();
+
+		member = mypageService.selectData(sessionInfo.getUserId());
+	    dto = postService.getReadData(postId);
+
+	    //참여하기
+	    Odto.setUserId(sessionInfo.getUserId()); //userId
+	    Odto.setPostId(dto.getPostId()); //postId
+
+	    postService.deleteOrder1(Odto);
+	    postService.deleteOrder2(postId);
+	    
+	    ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("redirect:/detail?postId=" + postId);
+		
+		return mav;
+		
+	}
+	
 	//구매이력
 	@GetMapping(value = "/orderHistory") 
 	public ModelAndView orderHistory(Order Odto,Member member,Post dto,@Param("start") Integer start, @Param("end") Integer end,

@@ -220,6 +220,11 @@ public class PostServiceImpl implements PostService{
 		orderMapper.deleteOrders(postId);
 	}
 
+	@Override
+	public String getReadType(String userId, int postId) throws Exception {
+		return orderMapper.getReadType(userId,postId);
+	}
+
 
 
 

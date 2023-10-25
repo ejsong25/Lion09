@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
@@ -210,16 +212,18 @@ public class LionPayController {
 		return mav;
 	}
 	
-	@GetMapping("/payMoney")
+	@RequestMapping(value = "/payMoney", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView payMoney(ListDTO listDto, Order Odto, Post dto,Member member,
 			@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+			@RequestBody Map<String, String> payload,
 			HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
 		String userId = sessionInfo.getUserId();
-		int postId = dto.getPostId();
 		int id = postService.maxId();
-		int price = Integer.parseInt(request.getParameter("price"));
+		int price = Integer.parseInt(payload.get("price"));
+		String selectedValue = payload.get("selectedValue");
+		int postId = Integer.parseInt(payload.get("postId"));
 		
 		member = mypageService.selectData(sessionInfo.getUserId());
 	    dto = postService.getReadData(postId);
@@ -241,6 +245,8 @@ public class LionPayController {
 		Odto.setOrderPrice(price); //orderPrice
 		Odto.setId((long) id + 1); //orderId 
 		Odto.setTitle(dto.getTitle());
+		Odto.setType(selectedValue); // 결제방법 L
+		System.out.println(selectedValue);
 
 		  OrderStatus orderStatus = null; // 초기화
 		    
@@ -249,7 +255,6 @@ public class LionPayController {
 		        try {
 		            orderStatus = OrderStatus.valueOf(status);	   
 		        } catch (IllegalArgumentException e) {
-		            // OrderStatus 열거형(enum)에 해당 상수가 없는 경우 처리 (예: 로깅)
 		            e.printStackTrace();
 		        }
 		    }
@@ -274,9 +279,58 @@ public class LionPayController {
 		
 		
 		mav.setViewName("redirect:/detail?postId=" + postId);
-		
 		mav.addObject("lists",listDto);
+		mav.addObject("selectedValue", selectedValue);
 		
+		return mav;
+		
+	}
+	
+	@RequestMapping(value = "/insertOrder", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView insertOrder(Order Odto, Post dto,Member member,
+			@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+			@RequestBody Map<String, String> payload,
+			HttpServletRequest request) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String userId = sessionInfo.getUserId();
+		int id = postService.maxId();
+		int price = Integer.parseInt(payload.get("price"));
+		String selectedValue = payload.get("selectedValue");
+		int postId = Integer.parseInt(payload.get("postId"));
+		
+		member = mypageService.selectData(sessionInfo.getUserId());
+	    dto = postService.getReadData(postId);
+	    String status = postService.getReadStatus(postId);
+	    
+	    //참여하기
+	    Odto.setUserId(userId); //userId
+	  	Odto.setPostId(postId); //postId
+	  	Odto.setOrderPrice(price); //orderPrice
+	  	Odto.setId((long) id + 1); //orderId 
+	  	Odto.setTitle(dto.getTitle());
+	  	Odto.setType(selectedValue); // 결제방법 M
+
+	  	OrderStatus orderStatus = null; // 초기화
+	  		    
+	  		    
+	  	if (status != null) {
+	  		try {
+	  			orderStatus = OrderStatus.valueOf(status);	   
+	  		} catch (IllegalArgumentException e) {
+	  		    e.printStackTrace();
+	  		}
+	  	}
+	  		    
+	  	Odto.setStatus(orderStatus);
+
+	  	postService.insertOrder1(Odto);
+	  	postService.updateOrder(postId);
+
+	  	mav.setViewName("redirect:/detail?postId=" + postId);
+	  	mav.addObject("selectedValue", selectedValue);
+			
 		return mav;
 		
 	}

@@ -46,7 +46,5 @@ public interface PostMapper {
 	
 	public List<Post> getPostList() throws Exception;
 	
-	
-
 
 }

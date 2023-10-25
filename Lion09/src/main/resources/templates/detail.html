@@ -17,11 +17,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<script src="https://kit.fontawesome.com/e4d856dfe9.js" crossorigin="anonymous"></script>
     
-    
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
+    var selectedValue;
+    var price;
+    var postId;
+    var data;
     
     <!-- 위시 하트 스크립트 -->
-    
     function postLike1() {
         
     	f = document.likeForm;
@@ -49,27 +51,52 @@
     }
     
    <!-- 참여하기 스크립트 -->
-    
    function order1() {
 	   
+	   // 결제진행여부 "예" 모달창
 	   $("#confirm").click(function(){
  		  $("#modal").show();
  	   });
 	   
 	   $("#popup2").css('display', 'flex').hide().fadeIn();
-	    
 
-	 	// "확인" 버튼 클릭 시
+	 	// 결제방법 "확인" 버튼 클릭 시
 	    $("#confirm2").click(function() {
-	        var selectedValue = document.querySelector('.fa-circle-check').getAttribute('value');
-	        if (selectedValue === 'LIONPAY') {
+	        selectedValue = document.querySelector('.fa-circle-check').getAttribute('value');
+	        
+	        price = [[${#numbers.formatDecimal(dto.productsPrice * 0.97, 0, 0)}]];
+	        postId = [[${dto.postId}]];
+
+	        data = {
+	            selectedValue: selectedValue,
+	            price: price,
+	            postId: postId
+	        };
+
+	        if (selectedValue === "L") {
 	        	document.getElementById("popup2").style.display = "none";
 	            $("#popup").css('display', 'flex').hide().fadeIn();
-	            
+		        
+	        } else if (selectedValue === "M") {
+	        	$.ajax({
+			        type: "POST",
+			        url: "/insertOrder",
+			        data: JSON.stringify(data),
+			        contentType: "application/json; charset=utf-8",
+			        success: function(response) {
+			            alert("결제 방법이 저장되었습니다.");
+			            document.getElementById("popup2").style.display = "none";
+			            window.location.href = "/detail?postId=" + postId;
+			        },
+			        error: function(error) {
+			            alert("오류 발생: " + error.responseText);
+			        }
+		        });
 	        }
+	        
 	    });
 	    
-	 	// "취소" 버튼 클릭 시 모달 창 닫기
+	 	// 결제방법 "취소" 버튼 클릭 시
 	    function modalClose(){
 	  	    $("#popup").fadeOut();
 	  	}
@@ -79,13 +106,24 @@
 		}
   	  
 	}
-    
+   
     function order2() {
-    	alert('참여가 취소되었습니다.')
-	    var postId = [[${dto.postId}]];
-	    var url = "/deleteOrder?postId=" + postId;
-
-	    window.location.href = url;
+    	
+    	var type = [[${type}]];
+    	var postId = [[${dto.postId}]];
+    	
+    	if (type === 'L') {
+    		alert('참여가 취소되었습니다.')
+		    var url = "/refund?postId=" + postId;
+		    window.location.href = url;
+	
+    	} else if(type === 'M'){
+    		alert('참여가 취소되었습니다.')
+		    var url = "/deleteOrder?postId=" + postId;
+		    window.location.href = url;
+	
+    	}
+    		
 	}
     
     function order3() {
@@ -95,7 +133,6 @@
         
     	$(this).attr('class', 'joinButton2');
         alert('정원이 찼습니다.')
-
         
     }
     
@@ -119,6 +156,7 @@
     	            // 현재 클릭한 아이콘을 선택
     	            this.classList.remove('fa-regular', 'fa-circle');
     	            this.classList.add('fa-regular', 'fa-circle-check');
+    	            
     	        });
     	    });
       }
@@ -294,10 +332,10 @@
 				          <div class="body-titlebox"></div>
 				          <div class="body-contentbox2" onclick="toggle();">
 				          	<dl>
-				          		<dd><i class="fa-regular fa-circle" value="LIONPAY"></i>&nbsp;LIONPAY 결제</dd>
+				          		<dd><i class="fa-regular fa-circle" value="L"></i>&nbsp;LIONPAY 결제</dd>
 				          	</dl>
 				          	<dl>
-				          	 	<dd><i class="fa-regular fa-circle" value="직거래"></i>&nbsp;만나서 거래</dd>
+				          	 	<dd><i class="fa-regular fa-circle" value="M"></i>&nbsp;만나서 거래</dd>
 				          	</dl>
 				          </div>
 				        </div>
@@ -308,7 +346,7 @@
 				      </div>
 				    </div>
 				</div>
-            <input type="button"  th:if="${Odto.count==1 && dto.participant  != dto.recruitment}"  onclick="order2();"  class="joinButton2" value="취소하기">+
+            <input type="button"  th:if="${Odto.count==1 && dto.participant  != dto.recruitment}"  onclick="order2();"  class="joinButton2" value="취소하기">
             <input type="button"  th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order3();" value="참여하기">
         	<input type="hidden" th:value="${dto.postId}" name="postId">
         	<div class="modal-container">
@@ -399,12 +437,10 @@
 	
    </script>
 	<script type="text/javascript" th:inline="javascript">
-   
    	var btnClose = document.getElementById('btnClose');
    	var btnCheck = document.getElementById('btnCheck');
    	var modal = document.getElementById('modal');
-   	var modal = document.getElementById('popup');
-   	var discount = document.getElementById('discount');
+   	var popup = document.getElementById('popup');
    	
  	// "x" 버튼 클릭 시 모달 창 닫기
 	  btnClose.addEventListener('click', function() {
@@ -418,8 +454,7 @@
 	    document.getElementById('payPwd6').value = '';
 	  });
 	  
-
-	  // 확인 버튼 클릭 시 모달 창
+	  // 결제 비번 확인 버튼 클릭 모달창
 	  $(document).ready(function() {
 	   $("#btnCheck").click(function() {
 		    var dtoPwd = $("#payPwd").val();
@@ -431,15 +466,26 @@
 		    enteredPwd += $("#payPwd4").val();
 		    enteredPwd += $("#payPwd5").val();
 		    enteredPwd += $("#payPwd6").val();
-
+	        
 		    if (!enteredPwd) {
 	            alert('PAY비밀번호를 입력해주세요.');
 	        } else if (enteredPwd === dtoPwd) {
 	            $("#modal").css("display", "none");
-	            var price = [[${#numbers.formatDecimal(dto.productsPrice * 0.97, 0, 0)}]];
-	            var postId = [[${dto.postId}]];
-	            var url = "/payMoney?price=" + price + "&postId=" + postId;
-	            window.location.href = url;
+	            $.ajax({
+			        type: "POST",
+			        url: "/payMoney",
+			        data: JSON.stringify(data),
+			        contentType: "application/json; charset=utf-8",
+			        success: function(response) {
+			            alert("결제 방법이 저장되었습니다.");
+			            document.getElementById("popup2").style.display = "none";
+			            popup.style.display = 'none';
+			            window.location.href = "/detail?postId=" + postId;
+			        },
+			        error: function(error) {
+			            alert("오류 발생: " + error.responseText);
+			        }
+		        });
 	        } else {
 	            if (!dtoPwd) {
 	                alert('먼저 PAY비밀번호를 등록해주세요.');
@@ -458,7 +504,6 @@
 		    }
 		});
 	  });
-
 
    </script>
 	

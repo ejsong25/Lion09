@@ -15,13 +15,13 @@
 
     <!-- 공구 참여 추가 -->
     <insert id="insertOrder1" parameterType="com.lion09.order.Order">
-        insert into orders (userId,postId,orderDate,orderPrice,count,status,title)
-        values (#{userId},#{postId},sysdate,#{orderPrice},1,#{status},#{title})
+        insert into orders (userId,postId,orderDate,orderPrice,count,status,title,type)
+        values (#{userId},#{postId},sysdate,#{orderPrice},1,#{status},#{title},#{type})
     </insert>
-
+    
     <!-- 공구 참여 취소2 -->
     <delete id="deleteOrder1" parameterType="com.lion09.order.Order">
-        delete from orders where postId=#{postId}
+        delete from orders where postId=#{postId} and userId=#{userId}
     </delete>
 
     <!-- post에서  참여 취소3 -->
@@ -78,6 +78,10 @@
 
 <select id="deleteOrders" parameterType="int">
 	delete orders where postId=#{postId}
+</select>
+
+<select id="getReadType" resultType="String">
+	select type from orders where postId=#{postId} and userId=#{userId}
 </select>
 
 </mapper>

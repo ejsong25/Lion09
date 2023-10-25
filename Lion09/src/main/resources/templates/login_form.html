@@ -62,23 +62,28 @@
 					        <div class="form-group">
 					          <input type="password" th:field="*{userPwd}" class="form-control" placeholder="Password" required="" />
 					        </div>
-					       
+					        
+					       	<div th:if="${#fields.hasGlobalErrors()}">
+					        	<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text=${err}>
+					        		글로벌 오류 메세지</p>
+					        </div>
+					        
 					        <div class="form-group tm-d-flex">
-					        <div align="center">
-					          <button type="submit" class="tm-btn tm-btn-success tm-btn-right">
-					            로그인
-					          </button>
-					       	</div>
-				             <!-- 회원가입과 아이디/비밀번호 찾기 영역 -->
-							<div style="padding-top: 20px; display: flex; justify-content: space-between;">
-								<div align="left">
-									<a href="/user/signup">회원가입</a>
-								</div>
-								<div align="right">
-									<a href="#">아이디/비밀번호 찾기</a>
+						        <div align="center">
+						          <button type="submit" class="tm-btn tm-btn-success tm-btn-right">
+						            로그인
+						          </button>
+						       	</div>
+					            <!-- 회원가입과 아이디/비밀번호 찾기 영역 -->
+								<div style="padding-top: 20px; display: flex; justify-content: space-between;">
+									<div align="left">
+										<a href="/user/signup">회원가입</a>
+									</div>
+									<div align="right">
+										<a href="#">아이디/비밀번호 찾기</a>
+									</div>
 								</div>
 							</div>
-						</div>
 						</form>
 					</div>
 			</div>

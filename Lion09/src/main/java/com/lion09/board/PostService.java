@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.lion09.board.Post;
 import com.lion09.order.Order;
 
 public interface PostService {
@@ -90,6 +89,8 @@ public interface PostService {
 	public void deleteOrders(int postId) throws Exception;
 	
 	public String getReadType(String userId, int postId) throws Exception;
+
+	public void updateReview(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
 	
 	
 }

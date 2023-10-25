@@ -225,11 +225,9 @@ public class PostServiceImpl implements PostService{
 		return orderMapper.getReadType(userId,postId);
 	}
 
-
-
-
-	
-	
-	
+	@Override
+	public void updateReview(String userId, int postId) throws Exception {
+		orderMapper.updateReview(userId, postId);
+	}
 
 }

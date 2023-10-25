@@ -54,4 +54,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update member set userPwd=#{userPwd} where userId=#{userId}
 </update>
 
+<update id="updateEnergy" parameterType="String">
+	update member set energy=energy+1 where userId=#{userId}
+</update>
+
+<update id="updateEnergy2" parameterType="String">
+	update member set energy=energy-1 where userId=#{userId}
+</update>
+
 </mapper>

@@ -291,7 +291,7 @@
                 <h3>[[${dto.productsPrice}]]원<br/>
                 <span class="blue-text">[[${#numbers.formatDecimal(dto.productsPrice * 0.97, 0, 0)}]]원 (LIONPAY 3% 할인가)</span></h3>
               </div>
-              <p th:text="${dto.contents}">내용</p>
+              <p th:utext="${dto.contents}">내용</p>
               
               <div class="location-views-box flex-box between">
                   <span style="font-size: 15px;">조회수 : [[${dto.hitCount}]]</span>
@@ -315,9 +315,12 @@
     </div>
     <div class="productProgress">
         <progress class="progress1"  value="30" min="0" max="100"></progress>
+        		<p style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 65%;">마감 시간: <span id="countdown"></span></p>
 		<div style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 80%;">					
 				참여자 : [[${dto.participant}]] / 모집인원 : [[${dto.recruitment}]]</div>
 	</div>
+	
+	
 	<!-- 참여인원  -->        
     <div class="submitButtons">
 		<form action="" method="get" name="orderForm">
@@ -504,6 +507,37 @@
 		    }
 		});
 	  });
+
+	   var deadlineString = [[${dto.deadLine}]]; // Thymeleaf로부터 날짜와 시간을 문자열로 가져옵니다.
+
+	    // 날짜 형식을 파싱 가능한 ISO 8601 형식으로 변환 (yyyy-MM-ddTHH:mm:ss)
+	    var isoDeadlineString = deadlineString.replace(" ", "T");
+
+	    // 문자열로부터 JavaScript Date 객체를 만듭니다.
+	    var deadlineDate = new Date(isoDeadlineString);
+
+	    function updateCountdown() {
+	        var now = new Date(); // 현재 시간
+	        var timeLeft = deadlineDate - now; // 마감 시간까지 남은 밀리초단위 시간
+
+	        if (timeLeft <= 0) {
+	            document.getElementById("countdown").innerHTML = "마감되었습니다."; // 마감 시간이 지났을 때
+	        } else {
+	            var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+	            var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	            var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+	            var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+	            // 화면에 표시
+	            document.getElementById("countdown").innerHTML = days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 남았습니다.";
+	        }
+	    }
+
+	    // 초기 로딩 시 업데이트
+	    updateCountdown();
+
+	    // 1초마다 업데이트
+	    setInterval(updateCountdown, 1000);
 
    </script>
 	

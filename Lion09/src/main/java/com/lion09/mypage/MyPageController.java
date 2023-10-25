@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
+import com.lion09.board.Post;
+import com.lion09.board.PostService;
 import com.lion09.member.Member;
 import com.lion09.member.MemberService;
 import com.lion09.member.MemberUpdateForm;
+import com.lion09.pay.LionPayService;
 
 @Controller
 public class MyPageController {
@@ -249,20 +253,61 @@ public class MyPageController {
 		return mav;
 	}
 	
+	@Autowired
+	@Qualifier("postServiceImpl")
+	private PostService postService;
+	
+	@Autowired
+	@Qualifier("lionPayServiceImpl")
+	private LionPayService lionPayService;
+	
 	//리뷰
 	@GetMapping(value = "/review")
-	public ModelAndView review(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+	public ModelAndView review(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+			@Param("postId") int postId) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("review");
 
-		Member mdto = mypageService.selectData(sessionInfo.getUserId());
-
+		Post dto = postService.getReadData(postId);
+		Member odto = mypageService.selectData(dto.getUserId());//게시물주인
+		
+		Member mdto = mypageService.selectData(sessionInfo.getUserId());//로그인한사람
+		
 		mav.addObject("mdto",mdto);
+		mav.addObject("odto",odto);
+		mav.addObject("postId",postId);
 
 		return mav;
 	}
 	
-	
+	@PostMapping(value="/updateEnergy.action")
+	public ModelAndView updateEnergy(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, 
+			@Param("selectedRating") int selectedRating,@Param("userId") String userId,
+			@Param("postId") int postId) 
+			throws Exception {
+		
+		if(selectedRating==1) {
+			mypageService.updateEnergy2(userId);
+			mypageService.updateEnergy2(userId);
+		}else if(selectedRating==2) {
+			mypageService.updateEnergy2(userId);
+		}else if(selectedRating==4) {
+			mypageService.updateEnergy(userId);
+		}else if(selectedRating==5) {
+			mypageService.updateEnergy(userId);
+			mypageService.updateEnergy(userId);
+		}
+		
+		userId = sessionInfo.getUserId();
+		
+		postService.updateReview(userId,postId);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("redirect:/orderHistory");
+		
+		return mav;
+	}
 	
 }

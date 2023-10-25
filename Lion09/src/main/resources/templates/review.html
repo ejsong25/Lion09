@@ -27,10 +27,17 @@
 	    if(selectedRating==0) {
 	    	alert('만족도를 선택해주세요.');
 	    }
+	    
+		var f = document.review;
+		
+		f.action = "/updateEnergy.action";
+		f.submit();
 
-	    alert('선택한 별의 개수: ' + selectedRating);
-        
+		alert('후기작성이 완료되었습니다.')
+		
 	}
+	
+	
 
 </script>
 
@@ -119,8 +126,8 @@
 	<div align="center" style="margin-top: 200px; margin-bottom: 200px;">
 	
 
-		<h1 style="font-family: 'omyu_pretty';">[[${mdto.nickName}]]님,</h2>
-		<h1 style="font-family: 'omyu_pretty';">ㅇㅇㅇ과의 거래는 어떠셨나요?</h2>
+		<h1 style="font-family: 'omyu_pretty';">[[${mdto.nickName}]] 님,</h2>
+		<h1 style="font-family: 'omyu_pretty';">[[${odto.nickName}]] 님과의 거래는 어떠셨나요?</h2>
 		<br/>
 	
 		<form action="" method="post" name="review">
@@ -139,7 +146,9 @@
 			</div>
 			<br/><br/><br/><br/>
 		
-			<input type="text" id="selectedRating">
+			<input type="hidden" id="selectedRating" name="selectedRating">
+			<input type="hidden" id="userId" name="userId" th:value="${odto.userId}">
+			<input type="hidden" id="postId" name="postId" th:value="${postId}">
 			<input type="button" class="profileBtn" style="width: 200px;"
 				value="후기작성완료" onclick="updateEnergy()">
 			

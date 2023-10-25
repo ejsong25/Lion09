@@ -69,18 +69,24 @@ public class ChatController {
     @MessageMapping("/chat/sendMessage")
     public void sendMessage(@Payload ChatDTO chat) throws Exception {
         log.info("CHAT {}", chat);
+        
         chat.setMessage(chat.getMessage());
-        Member findMember = memberService.getUserByNickName(chat.getNickName());
         ChatDTO msg = new ChatDTO();
-        msg.setPostId(chat.getPostId());
+        
+        Member findMember = memberService.getUserByNickName(chat.getNickName());
         msg.setUserId(findMember.getUserId());
+        msg.setPostId(chat.getPostId());
         msg.setNickName(chat.getNickName());
         msg.setType(MessageType.TALK);
         msg.setMessage(chat.getMessage());
+        System.out.println(chat.getFileName());
+        //파일 경로, 이름 db 저장
+        if(chat.getFileName() != null) {
+        	msg.setFileDir(chat.getFileDir()); //s3 파일 경로
+        	msg.setFileName(chat.getFileName()); //파일 이름
+        }
         msgChatService.addMsg(msg);
-        
         template.convertAndSend("/sub/chat/room/" + chat.getPostId(), chat);
-
     }
 
     // 채팅에 참여한 유저 리스트 반환

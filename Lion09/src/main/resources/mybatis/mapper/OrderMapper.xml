@@ -84,4 +84,8 @@
 	select type from orders where postId=#{postId} and userId=#{userId}
 </select>
 
+<update id="updateReview" parameterType="hashMap">
+	update orders set status='후기작성완료' where postId=#{postId} and userId=#{userId}
+</update>
+
 </mapper>

@@ -18,7 +18,7 @@ public class FileUploadDTO {
 
     private String transaction; // UUID 를 활용한 랜덤한 파일 위치
 
-    private String chatRoom; // 파일이 올라간 채팅방 ID
+    private int chatRoom; // 파일이 올라간 채팅방 ID
 
     private String s3DataUrl; // 파일 링크
 

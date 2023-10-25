@@ -20,9 +20,9 @@ public class FileController {
     // 프론트에서 ajax 를 통해 /upload 로 MultipartFile 형태로 파일과 roomId 를 전달받는다.
     // 전달받은 file 를 uploadFile 메서드를 통해 업로드한다.
     @PostMapping("/upload")
-    public FileUploadDTO uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("roomId")String roomId){
+    public FileUploadDTO uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("postId")int postId){
 
-    	FileUploadDTO fileReq = fileService.uploadFile(file, UUID.randomUUID().toString(), roomId);
+    	FileUploadDTO fileReq = fileService.uploadFile(file, UUID.randomUUID().toString(), postId);
         log.info("최종 upload Data {}", fileReq);
 
         // fileReq 객체 리턴

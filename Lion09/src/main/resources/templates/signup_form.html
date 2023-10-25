@@ -62,47 +62,44 @@
 				
 					<form action="/user/signup"  method="POST" class="tm-contact-form"
 					th:object = "${memberForm}">
-					
+						<div th:if="${#fields.hasGlobalErrors()}">
+				        	<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text=${err}>
+				        		글로벌 오류 메세지</p>
+				        </div>
 						<div class="form-group">
 							<input type="text" th:field="*{userId}" class="form-control"
 								placeholder="아이디" required="" />
-							<p th:if="${#fields.hasErrors('userId')}"
-								th:errors="*{userId}">Incorrect</p>
+							<p class="field-error" th:errors="*{userId}">Incorrect</p>
 						</div>
 							
 						<div class="form-group">	
 							<input type="password" th:field="*{userPwd1}" class="form-control"
 								placeholder="비밀번호" required="" />
-							<p th:if="${#fields.hasErrors('userPwd1')}"
-								th:errors="*{userPwd1}">Incorrect</p>
+							<p class="field-error" th:errors="*{userPwd1}">Incorrect</p>
 						</div>
 							
 						<div class="form-group">	
 							<input type="password" th:field="*{userPwd2}" class="form-control"
 								placeholder="비밀번호 확인" required="" />
-							<p th:if="${#fields.hasErrors('userPwd2')}"
-								th:errors="*{userPwd2}">Incorrect</p>
+							<p class="field-error" th:errors="*{userPwd2}">Incorrect</p>
 						</div>
 							
 						<div class="form-group">
 							<input type="text" th:field="*{userName}" class="form-control"
 								placeholder="사용자 이름" required="" />
-							<p th:if="${#fields.hasErrors('userName')}"
-								th:errors="*{userName}">Incorrect</p>
+							<p class="field-error" th:errors="*{userName}">Incorrect</p>
 						</div>
 							
 						<div class="form-group">	
 							<input type="email" th:field="*{email}" class="form-control"
 								placeholder="이메일" required="" />
-							<p th:if="${#fields.hasErrors('email')}"
-								th:errors="*{email}">Incorrect</p>
+							<p class="field-error" th:errors="*{email}">Incorrect</p>
 						</div>
 							
 						<div class="form-group">	
 							<input type="text" th:field="*{nickName}" class="form-control"
 								placeholder="닉네임" required="" />
-							<p th:if="${#fields.hasErrors('nickName')}"
-								th:errors="*{nickName}">Incorrect</p>
+							<p class="field-error" th:errors="*{nickName}">Incorrect</p>
 						</div>
 
 						<div class="form-group tm-d-flex">

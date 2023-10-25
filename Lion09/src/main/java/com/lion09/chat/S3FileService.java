@@ -42,11 +42,11 @@ public class S3FileService implements FileService{
     // MultipartFile 과 transcation, roomId 를 전달받는다.
     // 이때 transcation 는 파일 이름 중복 방지를 위한 UUID 를 의미한다.
     @Override
-    public FileUploadDTO uploadFile(MultipartFile file, String transaction, String roomId) {
+    public FileUploadDTO uploadFile(MultipartFile file, String transaction, int postId) {
         try{
 
             String filename = file.getOriginalFilename(); // 파일원본 이름
-            String key = roomId+"/"+transaction+"/"+filename; // S3 파일 경로
+            String key = Integer.toString(postId)+"/"+transaction+"/"+filename; // S3 파일 경로
 
             // 매개변수로 넘어온 multipartFile 을 File 객체로 변환 시켜서 저장하기 위한 메서드
             File convertedFile = convertMultipartFileToFile(file, transaction + filename);
@@ -67,7 +67,7 @@ public class S3FileService implements FileService{
             // uploadDTO 객체 빌드
             FileUploadDTO uploadReq = FileUploadDTO.builder()
                     .transaction(transaction)
-                    .chatRoom(roomId)
+                    .chatRoom(postId)
                     .originFileName(filename)
                     .fileDir(key)
                     .s3DataUrl(baseUrl+"/"+key)

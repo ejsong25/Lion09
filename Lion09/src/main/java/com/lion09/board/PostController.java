@@ -67,7 +67,9 @@ public class PostController {
 	public ModelAndView index(Post dto) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
-	
+		
+	    int currentPage = 1;
+		
 		List<Post> lists = postService.deadlineProduct();
 			
 		List<Post> lists1 = postService.hitProduct();
@@ -726,23 +728,22 @@ public class PostController {
 	public ModelAndView deleted_ok(HttpServletRequest request) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
-
 		Post dto = new Post();
 
 		int postId = Integer.parseInt(request.getParameter("postId"));
-		String pageNum = request.getParameter("pageNum");
 
+	    int currentPage = 1;
 
 		postService.deleteData(postId);
 		postService.deleteData(postId);
 
-		String param = "pageNum=" + pageNum;
+
 
 		// 데이터 업데이트 후 데이터 다시 읽기
 		Post updatedPost = postService.getReadData(dto.getPostId());
 
 
-		mav.setViewName("redirect:/list1?" + param);
+		mav.setViewName("redirect:/list1");
 
 		return mav;
 
@@ -825,6 +826,7 @@ public class PostController {
 	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
+		
 		String userId = sessionInfo.getUserId();
 		int postId = dto.getPostId();
 
@@ -888,13 +890,9 @@ public class PostController {
 		end = currentPage * numPerPage;			
 		member = mypageService.selectData(sessionInfo.getUserId());
 		
-		
-
-		
 		Odto.setUserId(sessionInfo.getUserId());; //userId
 
 
-		    
 	    List<Order> lists = postService.orderHistory(Odto.getUserId(),start,end);
 		String param = "";
 		int dataCount = postService.orderDataCount(sessionInfo.getUserId());
@@ -918,7 +916,6 @@ public class PostController {
 	  	   	System.out.println(lists);
 
 	    mav.setViewName("orderHistory"); 
-
 	    
 	    mav.addObject("Odto", Odto);
 	    mav.addObject("lists", lists);

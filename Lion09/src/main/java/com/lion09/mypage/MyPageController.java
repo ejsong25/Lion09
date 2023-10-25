@@ -284,7 +284,7 @@ public class MyPageController {
 	@PostMapping(value="/updateEnergy.action")
 	public ModelAndView updateEnergy(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo, 
 			@Param("selectedRating") int selectedRating,@Param("userId") String userId,
-			ReviewDTO rdto,@Param("postId") int postId) 
+			@Param("postId") int postId) 
 			throws Exception {
 		
 		if(selectedRating==1) {

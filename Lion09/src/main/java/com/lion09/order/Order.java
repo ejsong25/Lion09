@@ -38,7 +38,9 @@ public class Order {
 	private String title;
 	
 	@Enumerated(EnumType.STRING)
-	private OrderStatus status; //주문 상태[Complete, Canceled, Reserved]	
+	private OrderStatus status; //주문 상태[Complete, Canceled, Reserved]
+	
+	private String type; // 페이결제는 L, 직거래는 M
 	
 	
 }

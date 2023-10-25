@@ -9,7 +9,6 @@
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link href="css/all.min.css" rel="stylesheet" />
 <link href="css/list.css" rel="stylesheet" />
-<link href="/css/myPage.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
@@ -50,7 +49,14 @@
 	font-weight: normal;
 	font-style: normal;
 }
+
+button.profileBtn1{
+	position: relative;
+	left: 60%;
+}
 </style>
+
+
 
 
 
@@ -90,10 +96,11 @@
 				<a href="/update" class="w3-bar-item w3-button">계정/정보</a>
 				<a href="/qna_list" class="w3-bar-item w3-button">문의내역</a>
 			</div>
-			<div style="display: grid;">
-				<button class="profileBtn" onclick="javascript:location.href='/qna';">문의하기</button>
-			</div>
-			<table style="margin-top: 100px;">
+
+		 	<button class="profileBtn1" style="margin-top: 50px;" onclick="javascript:location.href='/qna';">문의하기</button>
+
+			
+			<table style="margin-top: 100px; margin: 10% 12% 10% auto; width: 60%;">
 				<thead>
 					<tr>
 						<th class="num">번호</th>
@@ -121,8 +128,8 @@
 							<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
 						</td>
 					</tr>
-					<tr th:if="${#lists.size(dataCount)}<=0" style="height: 50px;">
-						<td colspan="5">등록된 게시물이 없습니다.</td>
+					<tr th:if="${#lists.size(lists)}<=0" style="height: 50px;">
+						<td colspan="5" align="center">등록된 게시물이 없습니다.</td>
 					</tr>
 				</tbody>
 			</table>

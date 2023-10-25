@@ -92,3 +92,41 @@ text-decoration-line : none;}
 	color: #ffffff;
     background: #eec94f;
 }
+
+.profileBtn1 {
+    padding: 7px 15px; /* 패딩을 수정하여 버튼 크기를 조절합니다 */
+    color: #eec94f;
+    background-color: #ffffff;
+    border: 3px solid #eec94f;
+    display: inline-block;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+    font-family: 'omyu_pretty';
+    font-size: 17pt;
+    margin: auto;
+    text-align: right; /* 텍스트를 가로로 정렬합니다 */
+    white-space: nowrap; /* 텍스트가 한 줄에 나타나도록 합니다 */
+}
+
+
+.profileBtn1:hover {
+	color: #ffffff;
+    background: #eec94f;
+}
+
+
+.sidebar {
+	font-family:'omyu_pretty';
+	font-size: 1.3rem;
+	width: 180px;
+	padding-left: 2%;
+	background-color: #F1F1F1;
+}
+
+.sidebar h3{
+	font-family:'omyu_pretty';
+	font-size: 1.8rem;
+	font-weight: bold;
+}

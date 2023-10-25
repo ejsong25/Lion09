@@ -48,6 +48,11 @@
 	font-weight: normal;
 	font-style: normal;
 }
+
+button.profileBtn1{
+	position: relative;
+	left: 60%;
+}
 </style>
 
 <script type="text/javascript">
@@ -107,7 +112,9 @@
 	
 			</div>
 
-			<table>
+<button class="profileBtn1" style="margin-top: 50px;" onclick="javascript:location.href='/list1';">공구하러 가기</button>
+
+			<table style="margin-top: 100px; margin: 10% 12% 10% auto; width: 60%;">
 				<thead>
 					<tr>
 					<th class="title">공구 상품명</th>
@@ -140,10 +147,7 @@
 						</form>
 					</tr>
 					<tr th:if="${#lists.size(lists)}<=0">
-						<td colspan="5" align="center">등록된 게시물이 없습니다.
-						<button class="profileBtn" 
-							onclick="javascript:location.href='/list1';">공구하러 가기</button>
-						</td>
+						<td colspan="5" align="center">등록된 게시물이 없습니다.</td>
 					</tr>
 				</tbody>
 			</table>

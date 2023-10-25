@@ -14,7 +14,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
     created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile,deadLine,status,participant)
     values (#{userId},#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, 
     #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile},
-    #{deadLine},'모집중',0)
+    #{deadLine},'모집중',1)
 </insert>
 
 <select id="getLists" parameterType="hashMap"
@@ -120,6 +120,8 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	 resultType="java.lang.String">
 	select status from post where postId=#{postId}	
 </select>
+
+
 
 
 

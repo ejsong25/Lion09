@@ -5,24 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>나만의 문의함</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link href="css/all.min.css" rel="stylesheet" />
 <link href="css/list.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<link href="/css/myPage.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <link href="css/templatemo-style.css" rel="stylesheet" />
 <link href="css/qna.css" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-
 	function sendIt() {
-		
+
 		var f = document.searchForm;
-		
+
 		f.action = "/qna_list.action";
 		f.submit();
 	}
-
 </script>
 
 </head>
@@ -75,118 +78,122 @@
 				</div>
 			</div>
 		</div>
-
-
-
-		<div>
-					<br/>
-					<br/>
-					<button class="profileBtn" onclick="javascript:location.href='/qna';">문의하기</button>
-					<br/>
-					
-				</div>
-
-		<table>
-    <tr>
-        <th class="num">번호</th>
-        <th class="subject">제목</th>
-        <th class="userId">아이디</th>
-        <th class="created">일시</th>
-        <th class="hitCount">조회수</th>
-    </tr>
-    
-    <tbody id="lists">
-    <tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}">
-    
-        <td class="center" th:text="${dto.num}">번호</td>
-        <td class="left" >  <a th:href="@{${detailUrl}} + 
-						'&num=' + @{${dto.num}}" th:text="${dto.subject}"> 제목</a></td> 
-        <td class="center" th:text="${session.loginMember.userId}">아이디</td>
-        <td class="center" th:text="${dto.created }">일시</td>
-        <td class="center" th:text="${dto.hitCount }">조회수</td> 
-    </tr>
-
-		<tr th:if="${#lists.size(dataCount)}>0"
-			th:each="dataCount:${dataCount}">
-			
-			<td colspan="5" id="footer">
-				<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
-			</td>
-			</tr>	
-				<tr th:if="${#lists.size(dataCount)}<0">					
-					<td colspan="5" >
-							등록된 게시물이 없습니다.		
-					</td>
-				</tr>
-	</tbody>
-</table>
-	
-
-	<br/><Br/><br/>
-	<hr class="hr-solid" />
-	<br/><br/>
-
-	<footer class="tm-footer text-center">
-		<div style="float: left;">
-			<p>
-				<b>사자고</b>
-			</p>
-			<br />
-			<p>
-				<b>사업자등록번호</b> 202-30-92017
-			</p>
-			<p>
-				<b>이메일</b> help@liongg.co.kr
-			</p>
-			<p>
-				<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
-			</p>
-			<p>
-				Copyright &copy; 2020 Simple House | Design: TemplateMo
-			</p>
-		</div>
-		<div style="float: right;">
-			<div>
-				<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+		
+		<div style="display: flex;">
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<h3 class="w3-bar-item">Menu</h3>
+				<a href="/LionPay" class="w3-bar-item w3-button">LionPay</a> 
+				<a href="/myList" class="w3-bar-item w3-button">내가쓴글</a> 
+				<a href="/wishList" class="w3-bar-item w3-button">관심상품</a> 
+				<a href="orderHistory" class="w3-bar-item w3-button">구매이력</a> 
+				<a href="/update" class="w3-bar-item w3-button">계정/정보</a>
+				<a href="/qna_list" class="w3-bar-item w3-button">문의내역</a>
 			</div>
+			<div style="display: grid;">
+				<button class="profileBtn" onclick="javascript:location.href='/qna';">문의하기</button>
+			</div>
+			<table style="margin-top: 100px;">
+				<thead>
+					<tr>
+						<th class="num">번호</th>
+						<th class="subject">제목</th>
+						<th class="userId">아이디</th>
+						<th class="created">일시</th>
+						<th class="hitCount">조회수</th>
+					</tr>
+				</thead>
+
+				<tbody id="lists">
+					<tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}" style="height: 50px;">
+
+						<td class="center" th:text="${dto.num}">번호</td>
+						<td class="left">
+						<a th:href="@{${detailUrl}} + '&num=' + @{${dto.num}}"
+								th:text="${dto.subject}"> 제목</a></td>
+						<td class="center" th:text="${session.loginMember.userId}">아이디</td>
+						<td class="center" th:text="${dto.created }">일시</td>
+						<td class="center" th:text="${dto.hitCount }">조회수</td>
+					</tr>
+
+					<tr th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
+						<td colspan="5" id="footer" style="border-bottom: none;">
+							<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
+						</td>
+					</tr>
+					<tr th:if="${#lists.size(dataCount)}<=0" style="height: 50px;">
+						<td colspan="5">등록된 게시물이 없습니다.</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+			<br />
+			<Br />
+			<br />
+			</div>
+			<hr class="hr-solid" />
+			<br />
+			<br />
+
+			<footer class="tm-footer text-center">
+				<div style="float: left;">
+					<p>
+						<b>사자고</b>
+					</p>
+					<br />
+					<p>
+						<b>사업자등록번호</b> 202-30-92017
+					</p>
+					<p>
+						<b>이메일</b> help@liongg.co.kr
+					</p>
+					<p>
+						<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+					</p>
+					<p>Copyright &copy; 2020 Simple House | Design: TemplateMo</p>
+				</div>
+				<div style="float: right;">
+					<div>
+						<div id="map" style="width: 400px; height: 200px; margin: auto;"></div>
+					</div>
+				</div>
+			</footer>
+
 		</div>
-	</footer>
 
-	</div>
-	
 		<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
-	<script>
-		var container = document.getElementById('map');
-		var options = {
-			center : new kakao.maps.LatLng(37.49886, 127.03170),
-			level : 2
-		};
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
+		<script>
+			var container = document.getElementById('map');
+			var options = {
+				center : new kakao.maps.LatLng(37.49886, 127.03170),
+				level : 2
+			};
 
-		var map = new kakao.maps.Map(container, options);
-	</script>		
-	
-
+			var map = new kakao.maps.Map(container, options);
+		</script>
 
 
 
-	<script src="js/list.js"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/parallax.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			// Handle click on paging links
-			$('.tm-paging-link').click(function(e){
-				e.preventDefault();
-				
-				var page = $(this).text().toLowerCase();
-				$('.tm-gallery-page').addClass('hidden');
-				$('#tm-gallery-page-' + page).removeClass('hidden');
-				$('.tm-paging-link').removeClass('active');
-				$(this).addClass("active");
+
+
+		<script src="js/list.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/parallax.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				// Handle click on paging links
+				$('.tm-paging-link').click(function(e) {
+					e.preventDefault();
+
+					var page = $(this).text().toLowerCase();
+					$('.tm-gallery-page').addClass('hidden');
+					$('#tm-gallery-page-' + page).removeClass('hidden');
+					$('.tm-paging-link').removeClass('active');
+					$(this).addClass("active");
+				});
 			});
-		});
-	</script>
-
+		</script>
 </body>
 </html>

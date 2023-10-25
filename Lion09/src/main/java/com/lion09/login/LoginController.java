@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,8 +41,7 @@ public class LoginController {
 				loginService.login(form.getUserId(), form.getUserPwd());
 		
 		if(loginMember == null) {
-			result.reject("loginFail",
-					"아이디 또는 비밀번호가 맞지 않습니다.");
+			result.addError(new ObjectError("form", "아이디 또는 비밀번호가 맞지 않습니다."));
 			return "login_form"; 
 		}
 		

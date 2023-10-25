@@ -63,7 +63,7 @@
 					<form action="/user/signup"  method="POST" class="tm-contact-form"
 					th:object = "${memberForm}">
 						<div th:if="${#fields.hasGlobalErrors()}">
-				        	<p th:each="err : ${#fields.globalErrors()}" th:text=${err}>
+				        	<p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text=${err}>
 				        		글로벌 오류 메세지</p>
 				        </div>
 						<div class="form-group">

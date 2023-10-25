@@ -89,11 +89,11 @@
 		}
 		f.contents.value = str;
 	
-		 alert('게시물 수정이 완료되었습니다.')
 		
 		f.action = "/writeUpdated_ok";
 		f.submit();
 		
+		alert('게시물 수정이 완료되었습니다.')
 	}
 
 
@@ -247,7 +247,7 @@
         	<div>
         		<label style="font-size: 18px; color: #747474; margin-right: 30px;" >&nbsp;&nbsp;&nbsp;마감일을 입력해주세요.
                 <input type="datetime-local" class="form-control" name="deadLine" id="deadLine"
-                style="border-radius:5px;width:99%;" value="" onchange="deadLineChange();"/>
+                style="border-radius:5px;width:99%;" th:value="${dto.deadLine}" onchange="deadLineChange();"/>
           		</label>
           		  <button type="button" id="closeDateButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 5px;">선택 완료</button>
             </div>

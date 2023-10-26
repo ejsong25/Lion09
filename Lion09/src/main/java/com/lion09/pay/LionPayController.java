@@ -270,13 +270,20 @@ public class LionPayController {
 		newDto.setBalance(newBalance);
 		lionPayService.updateBalData(newDto);
 		
+		String authorId = dto.getUserId();
+		int authorBalance = lionPayService.getReadData(authorId).getBalance() + price;
+		
+		LionPayDTO authorDto = new LionPayDTO();
+		authorDto.setUserId(authorId);
+		authorDto.setBalance(authorBalance);
+		lionPayService.updateBalData(authorDto);
+		
 		listDto.setNum(lionPayService.maxNum(userId) + 1);
     	listDto.setUserId(userId);
     	listDto.setPostId(postId);
     	listDto.setUsage(price);
     	listDto.setAccountName(lionPayService.getReadData(userId).getAccountName());
 		lionPayService.insertUsage(listDto, userId);
-		
 		
 		mav.setViewName("redirect:/detail?postId=" + postId);
 		mav.addObject("lists",listDto);

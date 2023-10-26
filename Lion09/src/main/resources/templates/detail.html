@@ -22,6 +22,7 @@
     var price;
     var postId;
     var data;
+    var icons;
     
     <!-- 위시 하트 스크립트 -->
     function postLike1() {
@@ -97,14 +98,24 @@
 	    });
 	    
 	 	// 결제방법 "취소" 버튼 클릭 시
-	    function modalClose(){
-	  	    $("#popup").fadeOut();
-	  	}
+		$("#close").click(function(){
+			popup.style.display = 'none';
+			
+		});
+		
+		$("#close2").click(function(){
+			popup2.style.display = 'none';
+			resetIcons();
+		});
+	}
+   
+   function resetIcons() {
+	    icons = document.querySelectorAll('.fa-regular.fa-circle-check');
 
-		function modalClose2() {
-		    $("#popup2").fadeOut();
-		}
-  	  
+	    icons.forEach(function(icon) {
+	        icon.classList.remove('fa-regular', 'fa-circle-check');
+	        icon.classList.add('fa-regular', 'fa-circle');
+	    });
 	}
    
     function order2() {
@@ -143,7 +154,7 @@
     
     
     function toggle() {
-    	 var icons = document.querySelectorAll('.fa-regular.fa-circle');
+    	 icons = document.querySelectorAll('.fa-regular.fa-circle');
 
     	    icons.forEach(function(icon) {
     	        icon.addEventListener('click', function() {

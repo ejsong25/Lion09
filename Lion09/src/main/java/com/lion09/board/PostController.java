@@ -756,11 +756,12 @@ public class PostController {
 	// 페이 결제 참여취소
 	@GetMapping(value = "/refund")
 	public ModelAndView refund(Order Odto,Post dto,Member member,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+			@RequestParam(name = "postId") int postId) throws Exception {
 
 		
 		String userId = sessionInfo.getUserId();
-		int postId = dto.getPostId();
+		// int postId = dto.getPostId();
 
 		member = mypageService.selectData(sessionInfo.getUserId());
 	    dto = postService.getReadData(postId);
@@ -781,6 +782,15 @@ public class PostController {
 	        payDto.setBalance(newBalance);
 	        lionPayService.updateBalData(payDto);
 	    }
+	    
+	    String authorId = dto.getUserId();
+	    int authorBalance = lionPayService.getReadData(authorId).getBalance() - refund;
+	    System.out.println(refund);
+	    System.out.println(authorBalance);
+	    LionPayDTO authorDto = new LionPayDTO();
+	    authorDto.setUserId(authorId);
+	    authorDto.setBalance(authorBalance);
+	    lionPayService.updateBalData(authorDto);
 
 	    ListDTO listDto = new ListDTO();
 	    listDto.setNum(lionPayService.maxNum(userId) + 1);
@@ -788,8 +798,15 @@ public class PostController {
 	    listDto.setPostId(postId);
 	    listDto.setAccountName(payDto.getAccountName());
 	    listDto.setRechargeAmount(refund);
-
 	    lionPayService.insertData(listDto, userId);
+	    
+	    ListDTO listDto2 = new ListDTO();
+		listDto2.setNum(lionPayService.maxNum(userId) + 1);
+		listDto2.setUserId(userId);
+		listDto2.setPostId(postId);
+		listDto2.setUsage(refund);
+		listDto2.setAccountName(lionPayService.getReadData(authorId).getAccountName());
+		lionPayService.insertUsage(listDto2, authorId);
 
 		ModelAndView mav = new ModelAndView();
 

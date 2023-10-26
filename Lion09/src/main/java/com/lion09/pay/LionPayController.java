@@ -212,6 +212,7 @@ public class LionPayController {
 		return mav;
 	}
 	
+	// 페이 결제 시
 	@RequestMapping(value = "/payMoney", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView payMoney(ListDTO listDto, Order Odto, Post dto,Member member,
 			@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
@@ -270,6 +271,14 @@ public class LionPayController {
 		newDto.setBalance(newBalance);
 		lionPayService.updateBalData(newDto);
 		
+		String authorId = dto.getUserId();
+		int authorBalance = lionPayService.getReadData(authorId).getBalance() + price;
+		
+		LionPayDTO authorDto = new LionPayDTO();
+		authorDto.setUserId(authorId);
+		authorDto.setBalance(authorBalance);
+		lionPayService.updateBalData(authorDto);
+		
 		listDto.setNum(lionPayService.maxNum(userId) + 1);
     	listDto.setUserId(userId);
     	listDto.setPostId(postId);
@@ -277,9 +286,15 @@ public class LionPayController {
     	listDto.setAccountName(lionPayService.getReadData(userId).getAccountName());
 		lionPayService.insertUsage(listDto, userId);
 		
+		ListDTO listDto2 = new ListDTO();
+		listDto2.setNum(lionPayService.maxNum(userId) + 1);
+		listDto2.setUserId(userId);
+		listDto2.setPostId(postId);
+		listDto2.setRechargeAmount(price);
+		listDto2.setAccountName(lionPayService.getReadData(authorId).getAccountName());
+		lionPayService.insertData(listDto2, authorId);
 		
 		mav.setViewName("redirect:/detail?postId=" + postId);
-		mav.addObject("lists",listDto);
 		mav.addObject("selectedValue", selectedValue);
 		
 		return mav;

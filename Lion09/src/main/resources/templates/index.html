@@ -74,10 +74,9 @@
                         <p class="tm-gallery-price" th:text="${dto.productsPrice}" align="center">가격</p>
                         <p class="tm-gallery-description" th:text="${dto.myAddr}" align="center">주소</p>
                         <div class="like_chating" style="display: flex; margin-left:0%; align-items: center; justify-content: center;">
-                         <i class="bi-heart" style="font-size:1rem; color: red; cursor: pointer;"></i>
-                         <span style="color: red; font-size: 15px;">관심</span>
+                         <span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
                             <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-                            <span class="chat">채팅 48</span>
+                            <span class="chat">조회수 [[${dto.hitCount}]]</span>
                         </div>
                     </figcaption>
                 </figure>
@@ -114,10 +113,9 @@
                         <p class="tm-gallery-price" th:text="${dto.productsPrice}" align="center">가격</p>
                         <p class="tm-gallery-description" th:text="${dto.myAddr}" align="center">주소</p>
                         <div class="like_chating" style="display: flex; margin-left:0%; align-items: center; justify-content: center;">
-                         <i class="bi-heart" style="font-size:1rem; color: red; cursor: pointer;"></i>
-                         <span style="color: red; font-size: 15px;">관심</span>
+                         <span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
                             <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-                            <span class="chat">채팅 48</span>
+                            <span class="chat">조회수 [[${dto.hitCount}]]</span>
                         </div>
                     </figcaption>
                 </figure>

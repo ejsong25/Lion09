@@ -23,7 +23,7 @@ public interface OrderMapper {
 	public String findOrderState(Order Odto) throws Exception;
 	
 	public int maxId() throws Exception;
-	
+	 
 	public int findOrderCount(Order Odto) throws Exception;
 	
 	public List<Order> orderHistory(@Param("start") Integer start,@Param("end") Integer end, @Param("userId") String userId) throws Exception;

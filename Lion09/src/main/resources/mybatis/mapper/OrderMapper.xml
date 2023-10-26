@@ -9,7 +9,7 @@
     </select>
     
     <!-- 거래내역 수 -->
-    <select id="orderMaxId" resultType="int">
+    <select id="orderMaxId" resultType="int"> 
         select nvl(max(orderId),0) from orders
     </select>
 

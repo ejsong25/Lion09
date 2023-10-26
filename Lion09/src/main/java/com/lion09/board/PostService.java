@@ -19,7 +19,7 @@ public interface PostService {
 	public List<Post> getLists(int start,int end, String searchKey,String searchValue) throws Exception;
 
 	public List<Post> mygetLists(int start,int end,String userId) throws Exception;
-
+ 
 	public void updateHitCount(int postId) throws Exception;
 
 	public Post getReadData(int postId) throws Exception;

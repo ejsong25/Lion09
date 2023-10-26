@@ -236,7 +236,7 @@ public class PostServiceImpl implements PostService{
 		
 	}
 
-	@Override
+	@Override 
 	public String getReadOrder1(String userId, int postId) throws Exception {
 		return orderMapper.getReadOrder1(userId, postId);
 	}

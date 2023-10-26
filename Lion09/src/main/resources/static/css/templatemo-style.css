@@ -6,7 +6,7 @@ https://templatemo.com/tm-539-simple-house
 
 */
 
-ul, nav, body, h1, h2, h4, h6, p, figure {
+ul, nav, h1, h2, h4, h6, p, figure {
   margin: 0;
   padding: 0;
 }
@@ -272,7 +272,19 @@ th{
     background: #eec94f;
 }
 
+.like_chating{
+	font-family: 'omyu_pretty';
+	display: flex;
+	flex-direction: row;
+	color: #868e96;
+	margin-top: 10px;
+}
 
+.bottom-text {
+    vertical-align: bottom;
+    display: inline-block;
+    line-height: normal;
+}
 
 *,
 *::before,
@@ -830,6 +842,13 @@ font-size:1.3rem;
   font-size: 1.2rem;
   padding: 20px 120px;
   height: 200px;
+}
+
+.tm-footer1 {
+  font-family: 'omyu_pretty';
+  font-size: 1.2rem;
+  padding: 20px 120px;
+  margin-top: 100px;
 }
 
 .tm-footer a {

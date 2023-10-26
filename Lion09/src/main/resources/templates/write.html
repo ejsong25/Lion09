@@ -146,6 +146,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 </style>
 
 <body>
@@ -208,7 +209,7 @@
 				<br/><br/>
 			
 				<!-- 제목~주소 -->
-	            <select class="form-control" name="categoryId" id="categoryId"  style="border-radius:5px; width:100%; padding:5px;">
+	            <select class="form-control" name="categoryId" id="categoryId"  style="border-radius:5px; width:100%; padding:5px; padding-left: 15px;">
 	                <option value="0">카테고리 선택</option>
 	                <option value="1">신선식품</option>
 	                <option value="2">가공식품</option>
@@ -221,7 +222,7 @@
 	            </select>
    				<div class="form-group form-price"></div>
 	              
-				<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요" style="border-radius:5px; width:100%; padding:5px;"/>
+				<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요." style="border-radius:5px; width:100%; padding:5px; padding-left: 15px;"/>
 				<br/>	
 			
 		        <div class="form-group form-price">
@@ -278,7 +279,7 @@
 				<!-- 게시글 작성 -->
 	            <script>
 	                $('#summernote').summernote({
-	                  placeholder: '게시글 내용을 작성해 주세요. (판매금지 물품은 게시가 제한 될 수 있습니다.)<br/><br/> 신뢰할 수 있는 거래를 위해 자세히 적어주세요. <br/><br/> 구매 후 공구하는 경우는 영수증 사진을 필수로 첨부해주세요',
+	                  placeholder: '게시글 내용을 작성해 주세요. (판매금지 물품은 게시가 제한될 수 있습니다.)<br/><br/> 신뢰할 수 있는 거래를 위해 자세히 적어주세요. <br/><br/> 구매 후 공구하는 경우는 영수증 사진을 필수로 첨부해주세요.',
 	                  tabsize: 2,
 	                  height: 400
 	                });
@@ -288,7 +289,7 @@
 	            <div class="pt-1 text-right" style="padding-bottom: 50px;">
 	                <input type="button" class="qnaBtn" style="width:10%; padding:5px;"  
 	                	onclick="javascript:location.href='list1';" value="작성취소">
-	                <input type="button" class="qnaBtn" style="width:10%; padding:5px;" 
+	                <input type="button" class="qnaBtn" style="width:10%; padding:5px; margin-right: 10px;" 
 	                	onclick="sendIt();" value="작성완료">
 	                <br/><br/>
 	            </div>    

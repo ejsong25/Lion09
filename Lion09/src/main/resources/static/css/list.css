@@ -1,5 +1,23 @@
 @charset "UTF-8";
 
+@font-face {
+	font-family: 'ONE-Mobile-POP';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'omyu_pretty';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .container-sm {
   max-width: 680px; }
   
@@ -299,21 +317,24 @@
 }
  
 .item_name{
+	font-family: 'omyu_pretty';
 	margin-top: 10px;
 	font-weight: 400;
-	font-size: 1.3rem;
+	font-size: 1.55rem;
 }
  
 .item_cost{
+	font-family: 'omyu_pretty';
 	margin-top: 10px;
 	font-weight: 700;
-	font-size: 1.2rem;
+	font-size: 1.4rem;
 }
 .item_place{
+	font-family: 'omyu_pretty';
 	font-weight: 400;
 	font-size: smaller;
 	margin-top: 10px;
-	font-size: 1rem;
+	font-size: 1.2rem;
 }
  
 .like_chating{
@@ -322,7 +343,7 @@
 	color: #868e96;
 	margin-top: 10px;
 }
- 
+
 .like{
 	font-size: smaller;
 }
@@ -431,6 +452,8 @@ body {
 }
 
 .tag_container{
+	margin-left: 40px;
+	margin-bottom:  20px;
 	font-family: 'omyu_pretty';
 	font-size:1.1rem;
     max-width: 1120px;

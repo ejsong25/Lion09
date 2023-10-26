@@ -122,19 +122,29 @@
     	
     	var type = [[${type}]];
     	var postId = [[${dto.postId}]];
-    	// 만약 마감기한 전날일 땐 취소 불가
-    	//"${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"
     	
-    	if (type === 'L') {
-    		alert('참여 취소 및 환불이 완료되었습니다.')
-		    var url = "/refund?postId=" + postId;
-		    window.location.href = url;
-	
-    	} else if(type === 'M'){
-    		alert('참여가 취소되었습니다.')
-		    var url = "/deleteOrder?postId=" + postId;
-		    window.location.href = url;
-	
+    	var deadLineISO = [[${dto.deadLine}]];
+    	var deadline = new Date(deadLineISO);
+    	deadline.setDate(deadline.getDate() - 1);
+    	var oneDayBefore = deadline.toISOString().split('T')[0];
+    	var currentDate = new Date();
+    	
+    	if(oneDayBefore <= currentDate){
+    		alert('모집 마감 하루 전날은 취소가 불가능합니다.')
+    		return;
+    		
+    	} else{
+    		if (type === 'L') {
+        		alert('참여 취소 및 환불이 완료되었습니다.')
+    		    var url = "/refund?postId=" + postId;
+    		    window.location.href = url;
+    	
+        	} else if(type === 'M'){
+        		alert('참여가 취소되었습니다.')
+    		    var url = "/deleteOrder?postId=" + postId;
+    		    window.location.href = url;
+    	
+        	}
     	}
     		
 	}

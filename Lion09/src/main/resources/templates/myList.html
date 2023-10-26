@@ -67,6 +67,7 @@
 
 </head>
 <body>
+	
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
 	<div class="container">
@@ -103,19 +104,15 @@
 
 			<!-- Page Content -->
 			<div style="width: 100%;" align="center">
-				<header>
-					<div align="center">
-						<br/><br/>
-						<h2 class="col-12 text-center tm-section-title">내가 쓴 글</h2>
-
-					</div>
-				</header>
+				<div align="center">
+					<br/><br/>
+					<h1 style="font-family:'omyu_pretty';">내가 쓴 글</h1>
+					<br/><br/>
+				</div>
 				
-			
 			<div class="content_4_wrap">
             
-            
- 			 <div id="lists">
+ 				<div id="lists">
       				<div th:if="${#lists.size(lists)}>0">
       					<div class="item_row">
           					<div th:each="dto, index:${lists}">
@@ -124,25 +121,33 @@
 			                        <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px;"/>
 			                    </a>
 			                   
-                        <h2 class="item_name" th:text="${dto.title}">제목</h2> 
-                        <h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
-                        <h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
-                        <div class="like_chating" style="display: flex; align-items: center; justify-content: center;">
-                         <span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
-                            <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-                            <span class="chat">조회수 [[${dto.hitCount}]]</span>
-                        </div>
-                    </div>
-			   </div>
-			</div>
-		 </div>
-                    
-                    	<div th:if="${#lists.size(dataCount)}>0"
+		                        <h2 class="item_name" th:text="${dto.title}">제목</h2> 
+		                        <h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
+		                        <h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
+		                        <div class="like_chating" style="display: flex; align-items: center; justify-content: center;">
+			                        <span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
+	                          		<span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+	                           		<span class="chat">조회수 [[${dto.hitCount}]]</span>
+                        		</div>
+                   			 </div>
+			 			  </div>
+						</div>
+	                   	<div th:if="${#lists.size(dataCount)}>0"
 							th:each="dataCount:${dataCount}">
 							<div colspan="5" id="footer">
 								<a style="margin-left: 0%;" th:utext="${pageIndexList }"></a>
 							</div>
 						</div>
+		 			</div>
+		 			<div th:if="${dataCount}==0">
+		                <div align="center">
+		                	<a href="/list1" class="w3-bar-item w3-button" 
+		                		style="font-family: 'omyu_pretty'; font-size: 18pt;">
+		                		<h2 style="font-family: 'omyu_pretty';">아직 내가 쓴 글이 없습니다.</h2>
+		                		글쓰러 가기</a> 
+		                </div>
+					</div>  
+                    
                 </div>
              </div>
 		</div>

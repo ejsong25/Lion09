@@ -22,6 +22,7 @@
     var price;
     var postId;
     var data;
+    var icons;
     
     <!-- 위시 하트 스크립트 -->
     function postLike1() {
@@ -97,14 +98,24 @@
 	    });
 	    
 	 	// 결제방법 "취소" 버튼 클릭 시
-	    function modalClose(){
-	  	    $("#popup").fadeOut();
-	  	}
+		$("#close").click(function(){
+			popup.style.display = 'none';
+			
+		});
+		
+		$("#close2").click(function(){
+			popup2.style.display = 'none';
+			resetIcons();
+		});
+	}
+   
+   function resetIcons() {
+	    icons = document.querySelectorAll('.fa-regular.fa-circle-check');
 
-		function modalClose2() {
-		    $("#popup2").fadeOut();
-		}
-  	  
+	    icons.forEach(function(icon) {
+	        icon.classList.remove('fa-regular', 'fa-circle-check');
+	        icon.classList.add('fa-regular', 'fa-circle');
+	    });
 	}
    
     function order2() {
@@ -112,29 +123,39 @@
     	var type = [[${type}]];
     	var postId = [[${dto.postId}]];
     	
-    	if (type === 'L') {
-    		alert('참여가 취소되었습니다.')
-		    var url = "/refund?postId=" + postId;
-		    window.location.href = url;
-	
-    	} else if(type === 'M'){
-    		alert('참여가 취소되었습니다.')
-		    var url = "/deleteOrder?postId=" + postId;
-		    window.location.href = url;
-	
+    	var deadLineISO = [[${dto.deadLine}]];
+    	var deadline = new Date(deadLineISO);
+    	deadline.setDate(deadline.getDate() - 1);
+    	var oneDayBefore = deadline.toISOString().split('T')[0];
+    	var currentDate = new Date();
+    	
+    	if(oneDayBefore <= currentDate){
+    		alert('모집 마감 하루 전날은 취소가 불가능합니다.')
+    		return;
+    		
+    	} else{
+    		if (type === 'L') {
+        		alert('참여 취소 및 환불이 완료되었습니다.')
+    		    var url = "/refund?postId=" + postId;
+    		    window.location.href = url;
+    	
+        	} else if(type === 'M'){
+        		alert('참여가 취소되었습니다.')
+    		    var url = "/deleteOrder?postId=" + postId;
+    		    window.location.href = url;
+    	
+        	}
     	}
     		
 	}
     
     function order3() {
-
     	f = document.orderForm;
     	var currentClass = $(this).attr('class');
         
     	$(this).attr('class', 'joinButton2');
         alert('재 참여 불가합니다.')
     }
-    
     
   function order4() {
         
@@ -153,7 +174,7 @@
     
     
     function toggle() {
-    	 var icons = document.querySelectorAll('.fa-regular.fa-circle');
+    	 icons = document.querySelectorAll('.fa-regular.fa-circle');
 
     	    icons.forEach(function(icon) {
     	        icon.addEventListener('click', function() {
@@ -221,7 +242,7 @@
 						th:src="@{'/img/mypage/' + ${mdto.profileImgName}}" >
 		</div>						
         <div style=" margin-left: 30%;white-space: nowrap;">
-         	<p style="font-size: 20px;" th:text="${dto.nickName}">&nbsp;&nbsp;${dto.nickName}</p>
+         	<p style="font-size: 20px;" th:text="${mdto.nickName}">&nbsp;&nbsp;${mdto.nickName}</p>
             <p th:text="${dto.myAddr}">&nbsp;&nbsp;${dto.myAddr}</p></div>
             
 
@@ -245,7 +266,7 @@
 	   
 	    <!-- 에너지 게이지 프로세스바 -->        
 	  	<div style="margin-left: 58%; margin-top: 5px;white-space: nowrap;">
-	       	<h4 style="font-family: 'omyu_pretty'; font-size: 20pt;">[[${dto.nickName}]]님의 에너지 게이지: [[${mdto.energy}]]%</h4>
+	       	<h4 style="font-family: 'omyu_pretty'; font-size: 20pt;">[[${mdto.nickName}]]님의 에너지 게이지: [[${mdto.energy}]]%</h4>
 	        <b style="font-family: 'omyu_pretty'; font-size: 15pt;">&nbsp;&nbsp;</b>    		
 	      <div class="progress" style="margin-top: 20px;">
 			  <div class="progress-number" aria-valuenow="첫에너지 40%"></div>
@@ -372,7 +393,7 @@
 				      </div>
 				    </div>
 				</div>
-            <input type="button"  th:if="${Odto.count==1 and dto.participant != dto.recruitment}"  onclick="order2();" id="cancelButton" class="joinButton2" value="취소하기">
+			<input type="button"  th:if="${Odto.count==1 and dto.participant != dto.recruitment}"  onclick="order2();" id="cancelButton" class="joinButton2" value="취소하기">
             <input type="button"  th:if="${Odto.status.name=='Canceled'}"  onclick="order3();" id="joinButton3" class="joinButton2" value="재참여불가">
             <input type="button" style="background-color: grey;" th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order4();" value="정원마감">
         	<input type="hidden" th:value="${dto.postId}" name="postId">
@@ -430,15 +451,10 @@
 			<input class="profileImgBtn" type='button' id='btnCheck' value='확인'/><br/>
 		</div>
 	</div>
+	
         	
-   	</form>
-    </div>
-	<br/><br/>
-
-	<footer class="tm-footer text-center">
-		<p>Copyright &copy; 2020 Simple House 
-           
-           | Design: <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
+	<footer class="tm-footer1 text-center">
+		<p>Copyright &copy; 2020 Simple House | Design: TemplateMo</p>
 	</footer>
 </div>
 	
@@ -510,7 +526,7 @@
 			            window.location.href = "/detail?postId=" + postId;
 			        },
 			        error: function(error) {
-			        	alert("페이머니를 충전하고 다시 이용해주세요" );
+			            alert("페이머니를 충전하고 다시 이용해주세요" );
 			        }
 		        });
 	        } else {
@@ -546,18 +562,18 @@
 	        var now = new Date(); // 현재 시간
 	        var timeLeft = deadlineDate - now; // 마감 시간까지 남은 밀리초단위 시간
 	        var joinButton = document.getElementById("modal-open2");
-
+	       
 
 	        if (timeLeft <= 0) {
 	            document.getElementById("countdown").innerHTML = "마감되었습니다."; // 마감 시간이 지났을 때
 	            joinButton.style.display = "block"; // "마감" 버튼을 표시합니다.
 	            joinButton.disabled = true; // 버튼을 비활성화합니다.
 	            joinButton.value = "마감"; // 버튼 텍스트를 "마감"으로 변경합니다.
-	         	// 버튼의 배경색을 회색으로 변경
+	        	// 버튼의 배경색을 회색으로 변경
 	            joinButton.style.backgroundColor = "gray";
-            
 	            
-	        } else {  	
+	            
+	        } else {
 	            var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
 	            var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	            var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
@@ -596,19 +612,14 @@
 
     // 이 함수를 호출하여 프로그레스 바 업데이트
     updateProgressBar(participant, recruitment);
-    
-    
-    </script>
+  </script>
     
 	<script type="text/javascript">
     
-
-
     function updateReJoinButton() {
     	
         var joinButton3 = document.getElementById("joinButton3");
     var status = [[${Odto.status}]]; 
-
         if (status === "Canceled") {
             // status가 "Canceled"일 때 재참여 버튼을 나타냅니다.
             joinButton3.style.display = "block";
@@ -620,7 +631,6 @@
     
     updateReJoinButton();
     
-
 	</script>
 	
 		<script type="text/javascript">
@@ -628,11 +638,9 @@
     var count = [[${Odto.count}]]; 
     var participant = [[${dto.participant}]]; 
     var recruitment = [[${dto.recruitment}]]; 
-
     function canceledButton() {
     	
         var cancelButton = document.getElementById("cancelButton");
-
         if (count == 1 && participant != recruitment) {
            //버튼 활성화
             cancelButton.style.display = "block";
@@ -644,7 +652,6 @@
     
     canceledButton();
     
-
 	</script>
 	
 	

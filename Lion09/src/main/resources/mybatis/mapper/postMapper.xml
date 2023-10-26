@@ -122,6 +122,11 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	select status from post where postId=#{postId}	
 </select>
 
+<update id="updateStatus" parameterType="com.lion09.board.Post">
+	update post set status=#{status} where postId=#{postId}
+</update>
+
+
 
 </mapper>
 

@@ -46,5 +46,8 @@ public interface PostMapper {
 	
 	public List<Post> getPostList() throws Exception;
 	
+	//정원마감
+	public void updateStatus(Post dto) throws Exception;
+	
 
 }

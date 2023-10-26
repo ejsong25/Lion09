@@ -101,5 +101,11 @@ public interface PostService {
 
 	public void updateReview(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
 	
+	//정원마감
+	public void updateStatus(Post dto) throws Exception;
+	
+	public void updateOderStatus(@Param("postId") int postId) throws Exception;
+
+	
 	
 }

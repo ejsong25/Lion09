@@ -251,6 +251,18 @@ public class PostServiceImpl implements PostService{
 		return orderMapper.getOrderList(userId, postId);
 	}
 
+	@Override
+	public void updateStatus(Post dto) throws Exception {
+		postMapper.updateStatus(dto);
+				
+	}
+
+	@Override
+	public void updateOderStatus(int postId) throws Exception {
+		orderMapper.updateOderStatus(postId);
+		
+	}
+
 
 
 }

@@ -46,7 +46,7 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 
 	@Override
-	public List<Member> findLocationsNearby(Member dto) throws Exception {
+	public List<String> findLocationsNearby(Member dto) throws Exception {
 		return mypageMapper.findLocationsNearby(dto);
 	}
 

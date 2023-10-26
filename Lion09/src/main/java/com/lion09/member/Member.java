@@ -46,7 +46,6 @@ public class Member {
 	private String profileImgName;
 	
 	//주소 반경
-	private int findLocationsNearby;
 	private int myRange;
 	
 	//주문 내역

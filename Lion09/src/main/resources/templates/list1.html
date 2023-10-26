@@ -226,9 +226,9 @@
 		        
 		    </script>
 			
-			<tr th:each="mdto:${findList}">
+			<tr th:each="item:${findList}">
 			
-				<td th:text="${mdto.myAddress}"></td>
+				<td th:text="${item}"></td>
 				
 			</tr>
 			<!-- 동네 범위설정 -->

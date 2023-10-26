@@ -240,33 +240,53 @@ public class PostController {
 		}
 
 		//반경조회해서 가져오기
-		List<Member> findList = mypageService.findLocationsNearby(mdto);
+		List<String> findList = mypageService.findLocationsNearby(mdto);
 		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
 		List<Post> lists = new ArrayList<>();
 
 		int myCategoryId = (categoryId != null) ? Integer.parseInt(categoryId) : 0;
 		
 		if(myCategoryId == 0) {
-			for (Member member : findList) {
-				String myAddress = member.getMyAddress();
-				
-				for (Post post : allLists) {
-					String myAddr = post.getMyAddr();
-					if (myAddr.equals(myAddress)) {
-						lists.add(post);
-					} 
-				}
+//			for (Member member : findList) {
+//				String myAddress = member.getMyAddress();
+//				
+//				for (Post post : allLists) {
+//					String myAddr = post.getMyAddr();
+//					if (myAddr.equals(myAddress)) {
+//						lists.add(post);
+//					} 
+//				}
+//			}
+			for (String myAddress : findList) {
+			    for (Post post : allLists) {
+			        String myAddr = post.getMyAddr();
+
+			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
+			        if (myAddr.equals(myAddress)) {
+			            lists.add(post);
+			        }
+			    }
 			}
 		}else {
-			for (Member member : findList) {
-				String myAddress = member.getMyAddress();
-				for (Post post : allLists) {
-					String myAddr = post.getMyAddr();
-					
-					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
-						lists.add(post);
-					} 
-				}
+//			for (Member member : findList) {
+//				String myAddress = member.getMyAddress();
+//				for (Post post : allLists) {
+//					String myAddr = post.getMyAddr();
+//					
+//					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+//						lists.add(post);
+//					} 
+//				}
+//			}
+			for (String myAddress : findList) {
+			    for (Post post : allLists) {
+			        String myAddr = post.getMyAddr();
+
+			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
+			        if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+			            lists.add(post);
+			        }
+			    }
 			}
 		}
 		

@@ -11,10 +11,11 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 
 <insert id="insertData" parameterType="com.lion09.board.Post">
     insert into post (userId,postId,title, productsPrice, hitCount, contents,
-    created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile,deadLine,status,participant)
+    created, postLikeCount, recruitment, categoryId, myAddr,nickName,chooseFile,deadLine,
+    status,participant,myLatitude,myLongitude)
     values (#{userId},#{postId}, #{title}, #{productsPrice}, 0, #{contents}, current_timestamp, 0, 
     #{recruitment}, #{categoryId}, #{myAddr},#{nickName},#{chooseFile},
-    #{deadLine},'모집중',1)
+    #{deadLine},'모집중',1,#{myLatitude},#{myLongitude})
 </insert>
 
 <select id="getLists" parameterType="hashMap"
@@ -63,8 +64,8 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 <select id="getReadData" parameterType="int"
 	resultType="com.lion09.board.Post">
 	select postId,nickName,title,status,productsPrice,hitCount,contents,
-	created,deadLine,chooseFile,postLikeCount,recruitment,categoryId,myAddr,participant,
-	likeDate,userId from post where postId=#{postId}	
+	created,deadLine,chooseFile,postLikeCount,recruitment,categoryId,myAddr,myLatitude,myLongitude,
+	participant,likeDate,userId from post where postId=#{postId}	
 </select>
 
 <update id="updateHitCount" parameterType="int">

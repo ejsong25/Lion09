@@ -33,9 +33,32 @@
     font-weight: normal;
     font-style: normal;
 }
+
+.rangeBtn {
+	width: 30px;
+    padding: 5px 7px;
+    color: #0E64B0;
+    position: relative;
+    background-color: #ffffff;
+   	border: 2px solid #0E64B0;
+    display: inline-block;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+	font-family: 'omyu_pretty';
+	font-size: 13pt;
+	margin-left: 10px;
+}
+
+.rangeBtn:hover {
+	color: #ffffff;
+    background: #0E64B0;
+}
+
+
+
 </style>
-
-
 
 
 <body> 
@@ -119,7 +142,8 @@
 			</div>
 	        <div align="right">
 				<ul>
-					<li><a href="/write.action" class="writeButton">글쓰기</a></li>
+					<li><a href="/write.action" class="writeButton" 
+							style="font-family: 'omyu_pretty'; font-size: 18pt;">글쓰기</a></li>
 				</ul>
 			</div>
 			</div>
@@ -175,8 +199,9 @@
 			<div class="slidecontainer">
 			    <input type="range" min="1" max="5" th:value="${mdto.myRange}" 
 			    class="slider" id="myRange" name="myRange">
+				<input type="button" value="조회" onclick="findAddress();" 
+					class="rangeBtn" style="font-family: 'omyu_pretty';">
 			    <p><span id="sliderValue"></span>km</p>
-				<input type="button" value="조회" onclick="findAddress();">
 			</div>
 			</form>
 			 <script>

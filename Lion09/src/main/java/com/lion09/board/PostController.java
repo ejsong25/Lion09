@@ -240,33 +240,53 @@ public class PostController {
 		}
 
 		//반경조회해서 가져오기
-		List<Member> findList = mypageService.findLocationsNearby(mdto);
+		List<String> findList = mypageService.findLocationsNearby(mdto);
 		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
 		List<Post> lists = new ArrayList<>();
 
 		int myCategoryId = (categoryId != null) ? Integer.parseInt(categoryId) : 0;
 		
 		if(myCategoryId == 0) {
-			for (Member member : findList) {
-				String myAddress = member.getMyAddress();
-				
-				for (Post post : allLists) {
-					String myAddr = post.getMyAddr();
-					if (myAddr.equals(myAddress)) {
-						lists.add(post);
-					} 
-				}
+//			for (Member member : findList) {
+//				String myAddress = member.getMyAddress();
+//				
+//				for (Post post : allLists) {
+//					String myAddr = post.getMyAddr();
+//					if (myAddr.equals(myAddress)) {
+//						lists.add(post);
+//					} 
+//				}
+//			}
+			for (String myAddress : findList) {
+			    for (Post post : allLists) {
+			        String myAddr = post.getMyAddr();
+
+			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
+			        if (myAddr.equals(myAddress)) {
+			            lists.add(post);
+			        }
+			    }
 			}
 		}else {
-			for (Member member : findList) {
-				String myAddress = member.getMyAddress();
-				for (Post post : allLists) {
-					String myAddr = post.getMyAddr();
-					
-					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
-						lists.add(post);
-					} 
-				}
+//			for (Member member : findList) {
+//				String myAddress = member.getMyAddress();
+//				for (Post post : allLists) {
+//					String myAddr = post.getMyAddr();
+//					
+//					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+//						lists.add(post);
+//					} 
+//				}
+//			}
+			for (String myAddress : findList) {
+			    for (Post post : allLists) {
+			        String myAddr = post.getMyAddr();
+
+			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
+			        if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+			            lists.add(post);
+			        }
+			    }
 			}
 		}
 		
@@ -284,7 +304,7 @@ public class PostController {
 	}
 	
 	@GetMapping("/detail")
-	public ModelAndView detail(HttpServletRequest request,Order Odto,
+	public ModelAndView detail(HttpServletRequest request, 
 			@SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo) throws Exception {
 
 	    int postId = Integer.parseInt(request.getParameter("postId"));
@@ -297,15 +317,12 @@ public class PostController {
 	    Post post = new Post(); // Post 엔티티의 인스턴스 생성
 
 	    // 참여하기
+	    Order Odto = new Order();
 	    
 	    member = mypageService.selectData(userId);
 	    post = postService.getReadData(postId);	  
 	    String status = postService.getReadStatus(postId);
 	   
-
-	    
-	    System.out.println(Odto + "전");
-	    
 	    Odto.setUserId(userId);
 	    Odto.setPostId(postId);
 
@@ -326,7 +343,10 @@ public class PostController {
 
 	    Odto.setStatus(orderStatus);
 	    
-	    System.out.println(Odto);
+	    PostLikeDTO likedto = new PostLikeDTO();
+	    likedto.setUserId(userId);
+	    likedto.setPostId(postId);
+	    
 	    
 	    if(!Odto.getStatus().equals("Canceled") && Odto.getCount()!=0) {
 	    	
@@ -334,12 +354,7 @@ public class PostController {
 	    	 
 	    }
 	    
-
-
 	    
-	    PostLikeDTO likedto = new PostLikeDTO();
-	    likedto.setUserId(userId);
-	    likedto.setPostId(postId);
 
 	    int likeState = postService.findPostlikeState(likedto);
 	    likedto.setLikeState(likeState);
@@ -353,8 +368,6 @@ public class PostController {
 	    postService.updateHitCount(postId);
 
 	    Post dto = postService.getReadData(postId);
-	    
-	    	
 
 	    if (dto == null) {
 	        ModelAndView mav = new ModelAndView();
@@ -372,7 +385,6 @@ public class PostController {
 
 	    ModelAndView mav = new ModelAndView();
 
-
 	    // 좋아요 부분
 	    mav.addObject("likedto", likedto);
 
@@ -384,17 +396,14 @@ public class PostController {
 	    mav.addObject("pageNum", pageNum);
 	    mav.addObject("payPwd",payPwd);
 	    mav.addObject("type", type);
-	   
+
 	    mav.setViewName("/detail");
-	    
+
 	    System.out.println(mav);
 	    
 	    return mav;
 	}
 
-	
-	
-	
 	//좋아요 관심목록에 추가
 	@PostMapping(value = "/insertLike.action")
 	public ModelAndView insertLike(PostLikeDTO likedto,
@@ -700,6 +709,7 @@ public class PostController {
 	    int currentPage = 1;
 
 		postService.deleteData(postId);
+		postService.deleteData(postId);
 
 		// 데이터 업데이트 후 데이터 다시 읽기
 		Post updatedPost = postService.getReadData(dto.getPostId());
@@ -775,11 +785,12 @@ public class PostController {
 	// 페이 결제 참여취소
 	@GetMapping(value = "/refund")
 	public ModelAndView refund(Order Odto,Post dto,Member member,
-			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+			@RequestParam(name = "postId") int postId) throws Exception {
 
 		
 		String userId = sessionInfo.getUserId();
-		int postId = dto.getPostId();
+		// int postId = dto.getPostId();
 
 		member = mypageService.selectData(sessionInfo.getUserId());
 	    dto = postService.getReadData(postId);
@@ -800,6 +811,15 @@ public class PostController {
 	        payDto.setBalance(newBalance);
 	        lionPayService.updateBalData(payDto);
 	    }
+	    
+	    String authorId = dto.getUserId();
+	    int authorBalance = lionPayService.getReadData(authorId).getBalance() - refund;
+	    System.out.println(refund);
+	    System.out.println(authorBalance);
+	    LionPayDTO authorDto = new LionPayDTO();
+	    authorDto.setUserId(authorId);
+	    authorDto.setBalance(authorBalance);
+	    lionPayService.updateBalData(authorDto);
 
 	    ListDTO listDto = new ListDTO();
 	    listDto.setNum(lionPayService.maxNum(userId) + 1);
@@ -807,8 +827,15 @@ public class PostController {
 	    listDto.setPostId(postId);
 	    listDto.setAccountName(payDto.getAccountName());
 	    listDto.setRechargeAmount(refund);
-
 	    lionPayService.insertData(listDto, userId);
+	    
+	    ListDTO listDto2 = new ListDTO();
+		listDto2.setNum(lionPayService.maxNum(userId) + 1);
+		listDto2.setUserId(userId);
+		listDto2.setPostId(postId);
+		listDto2.setUsage(refund);
+		listDto2.setAccountName(lionPayService.getReadData(authorId).getAccountName());
+		lionPayService.insertUsage(listDto2, authorId);
 
 		ModelAndView mav = new ModelAndView();
 

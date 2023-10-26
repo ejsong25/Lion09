@@ -67,7 +67,7 @@
             <article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
                 <figure>
 					<a th:href="@{|${deadLineUrl}${dto.postId}|}">
-                        <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px;"/>
+                        <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px; margin-bottom: 10px;"/>
                     </a>
                     <figcaption>
                         <h4 class="tm-gallery-title" th:text="${dto.title}" align="center">제목</h4>
@@ -83,6 +83,7 @@
             </article>
         </div>
     </div>
+</div>
 </div>
 
 				<div style="text-align: right; padding-right: 40px; margin-top: 40px;">
@@ -106,13 +107,13 @@
             <article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
                 <figure>
 					<a th:href="@{|${deadLineUrl}${dto.postId}|}">
-                        <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px;"/>
+                        <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px; margin-bottom: 10px;"/>
                     </a>
                     <figcaption>
                         <h4 class="tm-gallery-title" th:text="${dto.title}" align="center">제목</h4>
                         <p class="tm-gallery-price" th:text="${dto.productsPrice}" align="center">가격</p>
                         <p class="tm-gallery-description" th:text="${dto.myAddr}" align="center">주소</p>
-                        <div class="like_chating" style="display: flex; margin-left:0%; align-items: center; justify-content: center;">
+                        <div class="like_chating" style="display: flex; margin-left:0%; font-family:'omyu_pretty'; align-items: center; justify-content: center;">
                          <span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
                             <span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
                             <span class="chat">조회수 [[${dto.hitCount}]]</span>
@@ -123,14 +124,13 @@
         </div>
     </div>
 </div>
-
+</div>
 
 
 			<div style="text-align: right; padding-right: 40px;">
       			<a href="/list1" data-url="/hot_articles" id="hot-articles-more"
       				style="font-family: omyu_pretty; font-size: 14pt; color: black; text-decoration: none;"><b>인기상품 더 보기▶</b></a>
     		</div>
-		</main>
 		
 		<br/><br/>
 		<hr class="hr-solid" />

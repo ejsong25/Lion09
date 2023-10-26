@@ -58,7 +58,7 @@ public class PostUtil {
 		while(page <= totalPage && page <= (currentPageSetup+numPerBlock)) {
 			
 			if(page==currentPage) {
-				sb.append("<font color=\"Fuchsia\">" + page + "</font>&nbsp;");
+				sb.append("<font color=\"#eec94f\">" + page + "</font>&nbsp;");
 				
 			}else {
 				sb.append("<a href=\"" + listUrl + "pageNum=" + page +

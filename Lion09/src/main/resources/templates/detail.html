@@ -138,6 +138,16 @@
 	}
     
     function order3() {
+        var button = document.getElementById("joinButton");
+        
+        if (!button.disabled) {
+            button.disabled = true;
+            button.value = "마감되었습니다.";
+        }
+    }
+    
+    
+  function order4() {
         
     	f = document.orderForm;
     	var currentClass = $(this).attr('class');
@@ -325,17 +335,16 @@
       </div>
     </div>
     <div class="productProgress">
-        <progress class="progress1"  value="30" min="0" max="100"></progress>
+        <progress class="progress1" id="updateProgressBar"  value="" min="0" max="100"></progress>
         		<p style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 65%;">마감 시간: <span id="countdown"></span></p>
 		<div style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 80%;">					
 				참여자 : [[${dto.participant}]] / 모집인원 : [[${dto.recruitment}]]</div>
 	</div>
 	
-	
 	<!-- 참여인원  -->        
     <div class="submitButtons">
 		<form action="" method="get" name="orderForm">
-			<input type="button" th:if="${Odto.count == 0}" onclick="order1();" class="joinButton1" id="modal-open2" value="참여하기">
+			<input type="button" th:if="${Odto.count == 0}" onclick="order1();" class="joinButton2" id="modal-open2" value="참여하기">
 			<div class="popup-wrap" id="popup2">
 				    <div class="popup">
 				      <div class="popup-head">
@@ -361,7 +370,7 @@
 				    </div>
 				</div>
             <input type="button"  th:if="${Odto.count==1 && dto.participant  != dto.recruitment}"  onclick="order2();"  class="joinButton2" value="취소하기">
-            <input type="button"  th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order3();" value="참여하기">
+            <input type="button" style="background-color: grey;" th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order4();" value="정원마감">
         	<input type="hidden" th:value="${dto.postId}" name="postId">
         	<div class="modal-container">
 		        <div class="popup-wrap" id="popup">
@@ -519,6 +528,8 @@
 		});
 	  });
 
+	  
+	  
 	   var deadlineString = [[${dto.deadLine}]]; // Thymeleaf로부터 날짜와 시간을 문자열로 가져옵니다.
 
 	    // 날짜 형식을 파싱 가능한 ISO 8601 형식으로 변환 (yyyy-MM-ddTHH:mm:ss)
@@ -526,13 +537,22 @@
 
 	    // 문자열로부터 JavaScript Date 객체를 만듭니다.
 	    var deadlineDate = new Date(isoDeadlineString);
-
+	    
 	    function updateCountdown() {
 	        var now = new Date(); // 현재 시간
 	        var timeLeft = deadlineDate - now; // 마감 시간까지 남은 밀리초단위 시간
+	        var joinButton = document.getElementById("modal-open2");
+	       
 
 	        if (timeLeft <= 0) {
 	            document.getElementById("countdown").innerHTML = "마감되었습니다."; // 마감 시간이 지났을 때
+	            joinButton.style.display = "block"; // "마감" 버튼을 표시합니다.
+	            joinButton.disabled = true; // 버튼을 비활성화합니다.
+	            joinButton.value = "마감"; // 버튼 텍스트를 "마감"으로 변경합니다.
+	        	// 버튼의 배경색을 회색으로 변경
+	            joinButton.style.backgroundColor = "gray";
+	            
+	            
 	        } else {
 	            var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
 	            var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -551,6 +571,28 @@
 	    setInterval(updateCountdown, 1000);
 
    </script>
+   
+   	<script type="text/javascript">
+	
+	 // 참여자 및 모집인원 값을 가져옵니다.
+    var participant = [[${dto.participant}]];
+    var recruitment = [[${dto.recruitment}]];
+
+    // 프로그레스 바를 업데이트하는 함수
+    function updateProgressBar(participant, recruitment) {
+        if (participant > 0 && recruitment > 0) {
+            // 참여자 수에 따라 value 값을 업데이트
+            var newValue = (participant / recruitment) * 100;
+
+            // value 값을 업데이트한 후 "progress1" 클래스를 가진 요소에 설정
+            var progressBar = document.querySelector(".progress1");
+            progressBar.value = newValue;
+        }
+    }
+
+    // 이 함수를 호출하여 프로그레스 바 업데이트
+    updateProgressBar(participant, recruitment);
+	</script>
 	
 </body>
 </html>

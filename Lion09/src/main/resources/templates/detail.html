@@ -359,7 +359,7 @@
 				    </div>
 				</div>
             <input type="button"  th:if="${Odto.count==1 && dto.participant  != dto.recruitment}"  onclick="order2();"  class="joinButton2" value="취소하기">
-            <input type="button"  th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order4();" value="참여하기">
+            <input type="button" style="background-color: grey;" th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order4();" value="정원마감">
         	<input type="hidden" th:value="${dto.postId}" name="postId">
         	<div class="modal-container">
 		        <div class="popup-wrap" id="popup">
@@ -538,6 +538,8 @@
 	            joinButton.style.display = "block"; // "마감" 버튼을 표시합니다.
 	            joinButton.disabled = true; // 버튼을 비활성화합니다.
 	            joinButton.value = "마감"; // 버튼 텍스트를 "마감"으로 변경합니다.
+	        	// 버튼의 배경색을 회색으로 변경
+	            joinButton.style.backgroundColor = "gray";
 	            
 	            
 	        } else {

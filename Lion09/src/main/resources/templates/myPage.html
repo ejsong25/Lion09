@@ -282,7 +282,7 @@
 				
 				
 				
-				<div style="margin-top: 20px; width: 400px;"align="left">
+				<div style="margin-top: 20px; width: 400px;margin-left: 80px;"align="left">
 					
 					<div class="header__title" style="display: flex; align-items: center;" th:if="${dto.energy < 30}">
 					    <h4 style="font-family: 'omyu_pretty'; font-size: 20pt; margin-right: 10px;">에너지 게이지</h4>
@@ -298,7 +298,7 @@
 					</div>
 					
 					<b style="font-family: 'omyu_pretty'; font-size: 15pt;">[[${dto.energy}]]%</b>
-					<div class="progress" style="margin-top: 20px;">
+					<div class="progress" style="margin-top: 20px; width: 17%;">
 						<div class="progress-number" aria-valuenow="첫 에너지 40%"></div>
 						<progress class="progressBar" th:value="${dto.energy}" min="0" max="100"></progress>
 

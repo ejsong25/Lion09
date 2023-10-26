@@ -32,6 +32,12 @@ public interface PostService {
 	
 	public void imgDefault(Post dto) throws Exception;
 	
+	public String getReadOrder1(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public int getReadOrder2(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public Order getOrderList(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+
 	
 	//좋아요 기능
 	public void insertPostlike(PostLikeDTO likedto) throws Exception;
@@ -63,6 +69,9 @@ public interface PostService {
 	public void updateOrder(int postId) throws Exception;
 
 	public void deleteOrder1(Order Odto) throws Exception;
+	
+	public void cancelOrder(int postId,String userId) throws Exception;
+
 	
 	public void deleteOrder2(int postId) throws Exception;
 	

@@ -127,12 +127,12 @@
 	}
     
     function order3() {
-        var button = document.getElementById("joinButton");
+
+    	f = document.orderForm;
+    	var currentClass = $(this).attr('class');
         
-        if (!button.disabled) {
-            button.disabled = true;
-            button.value = "마감되었습니다.";
-        }
+    	$(this).attr('class', 'joinButton2');
+        alert('재 참여 불가합니다.')
     }
     
     
@@ -333,7 +333,7 @@
 	<!-- 참여인원  -->        
     <div class="submitButtons">
 		<form action="" method="get" name="orderForm">
-			<input type="button" th:if="${Odto.count == 0}" onclick="order1();" class="joinButton2" id="modal-open2" value="참여하기">
+			<input type="button" th:if="${Odto.count == 0 and Odto.status.name!='Canceled' and Odto.userId !=dto.userId}" onclick="order1();" class="joinButton2" id="modal-open2" value="참여하기">
 			<div class="popup-wrap" id="popup2">
 				    <div class="popup">
 				      <div class="popup-head">
@@ -358,8 +358,9 @@
 				      </div>
 				    </div>
 				</div>
-            <input type="button"  th:if="${Odto.count==1 && dto.participant  != dto.recruitment}"  onclick="order2();"  class="joinButton2" value="취소하기">
-            <input type="button"  th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order4();" value="참여하기">
+            <input type="button"  th:if="${Odto.count==1 and dto.participant != dto.recruitment}"  onclick="order2();" id="cancelButton" class="joinButton2" value="취소하기">
+            <input type="button"  th:if="${Odto.status.name=='Canceled'}"  onclick="order3();" id="joinButton3" class="joinButton2" value="재참여불가">
+            <input type="button"  th:if="${Odto.count==0 and dto.participant == dto.recruitment}" class="joinButton2" onclick="order4();" value="참여">
         	<input type="hidden" th:value="${dto.postId}" name="postId">
         	<div class="modal-container">
 		        <div class="popup-wrap" id="popup">
@@ -531,16 +532,16 @@
 	        var now = new Date(); // 현재 시간
 	        var timeLeft = deadlineDate - now; // 마감 시간까지 남은 밀리초단위 시간
 	        var joinButton = document.getElementById("modal-open2");
-	       
+
 
 	        if (timeLeft <= 0) {
 	            document.getElementById("countdown").innerHTML = "마감되었습니다."; // 마감 시간이 지났을 때
 	            joinButton.style.display = "block"; // "마감" 버튼을 표시합니다.
 	            joinButton.disabled = true; // 버튼을 비활성화합니다.
 	            joinButton.value = "마감"; // 버튼 텍스트를 "마감"으로 변경합니다.
+            
 	            
-	            
-	        } else {
+	        } else {  	
 	            var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
 	            var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	            var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
@@ -579,7 +580,58 @@
 
     // 이 함수를 호출하여 프로그레스 바 업데이트
     updateProgressBar(participant, recruitment);
+    
+    
+    </script>
+    
+	<script type="text/javascript">
+    
+
+
+    function updateReJoinButton() {
+    	
+        var joinButton3 = document.getElementById("joinButton3");
+    var status = [[${Odto.status}]]; 
+
+        if (status === "Canceled") {
+            // status가 "Canceled"일 때 재참여 버튼을 나타냅니다.
+            joinButton3.style.display = "block";
+        } else {
+            // 그 외의 경우에는 버튼을 숨깁니다.
+            joinButton3.style.display = "none";
+        }
+    }
+    
+    updateReJoinButton();
+    
+
 	</script>
+	
+		<script type="text/javascript">
+    
+    var count = [[${Odto.count}]]; 
+    var participant = [[${dto.participant}]]; 
+    var recruitment = [[${dto.recruitment}]]; 
+
+    function canceledButton() {
+    	
+        var cancelButton = document.getElementById("cancelButton");
+
+        if (count == 1 && participant != recruitment) {
+           //버튼 활성화
+            cancelButton.style.display = "block";
+        } else {
+            // 그 외의 경우에는 버튼을 숨깁니다.
+            cancelButton.style.display = "none";
+        }
+    }
+    
+    canceledButton();
+    
+
+	</script>
+	
+	
 	
 </body>
 </html>

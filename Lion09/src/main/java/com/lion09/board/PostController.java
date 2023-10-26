@@ -284,7 +284,7 @@ public class PostController {
 	}
 	
 	@GetMapping("/detail")
-	public ModelAndView detail(HttpServletRequest request, 
+	public ModelAndView detail(HttpServletRequest request,Order Odto,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER) SessionInfo sessionInfo) throws Exception {
 
 	    int postId = Integer.parseInt(request.getParameter("postId"));
@@ -297,12 +297,15 @@ public class PostController {
 	    Post post = new Post(); // Post 엔티티의 인스턴스 생성
 
 	    // 참여하기
-	    Order Odto = new Order();
 	    
 	    member = mypageService.selectData(userId);
 	    post = postService.getReadData(postId);	  
 	    String status = postService.getReadStatus(postId);
 	   
+
+	    
+	    System.out.println(Odto + "전");
+	    
 	    Odto.setUserId(userId);
 	    Odto.setPostId(postId);
 
@@ -323,6 +326,17 @@ public class PostController {
 
 	    Odto.setStatus(orderStatus);
 	    
+	    System.out.println(Odto);
+	    
+	    if(!Odto.getStatus().equals("Canceled") && Odto.getCount()!=0) {
+	    	
+	    	 Odto = postService.getOrderList(userId, postId);
+	    	 
+	    }
+	    
+
+
+	    
 	    PostLikeDTO likedto = new PostLikeDTO();
 	    likedto.setUserId(userId);
 	    likedto.setPostId(postId);
@@ -339,6 +353,8 @@ public class PostController {
 	    postService.updateHitCount(postId);
 
 	    Post dto = postService.getReadData(postId);
+	    
+	    	
 
 	    if (dto == null) {
 	        ModelAndView mav = new ModelAndView();
@@ -356,6 +372,7 @@ public class PostController {
 
 	    ModelAndView mav = new ModelAndView();
 
+
 	    // 좋아요 부분
 	    mav.addObject("likedto", likedto);
 
@@ -367,14 +384,17 @@ public class PostController {
 	    mav.addObject("pageNum", pageNum);
 	    mav.addObject("payPwd",payPwd);
 	    mav.addObject("type", type);
-
+	   
 	    mav.setViewName("/detail");
-
+	    
 	    System.out.println(mav);
 	    
 	    return mav;
 	}
 
+	
+	
+	
 	//좋아요 관심목록에 추가
 	@PostMapping(value = "/insertLike.action")
 	public ModelAndView insertLike(PostLikeDTO likedto,
@@ -680,7 +700,6 @@ public class PostController {
 	    int currentPage = 1;
 
 		postService.deleteData(postId);
-		postService.deleteData(postId);
 
 		// 데이터 업데이트 후 데이터 다시 읽기
 		Post updatedPost = postService.getReadData(dto.getPostId());
@@ -801,20 +820,22 @@ public class PostController {
 	
 	// 만나서 거래 참여취소
 	@GetMapping(value = "/deleteOrder")
-	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
+	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,@Param("postId") Integer postId,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
-		int postId = dto.getPostId();
 
 		member = mypageService.selectData(sessionInfo.getUserId());
 	    dto = postService.getReadData(postId);
 
+	    postId = dto.getPostId();
+
 	    //참여하기
 	    Odto.setUserId(sessionInfo.getUserId()); //userId
 	    Odto.setPostId(dto.getPostId()); //postId
-
-	    postService.deleteOrder1(Odto);
+	    
+	    postService.cancelOrder(postId, sessionInfo.getUserId());
 	    postService.deleteOrder2(postId);
+
 	    
 	    ModelAndView mav = new ModelAndView();
 

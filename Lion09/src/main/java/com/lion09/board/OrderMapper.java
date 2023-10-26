@@ -42,4 +42,15 @@ public interface OrderMapper {
 	
 	public void updateReview(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
 	
+	public void cancelOrder(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public String getReadOrder1(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public int getReadOrder2(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public Order getOrderList(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	
+	
+	
 }

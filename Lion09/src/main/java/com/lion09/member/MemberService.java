@@ -40,23 +40,11 @@ public class MemberService {
 	
 	
 	public Member getUser(String userId) throws Exception {
-		Member findMember = memberRepository.findOne(userId);
-		
-		if(findMember != null) {
-			return findMember;
-		}else {
-			throw new Exception("User Not Found");
-		}
+		return memberRepository.findOne(userId);
 		
 	}
 	
 	public Member getUserByNickName(String nickName) throws Exception {
-		Member findMember = memberRepository.findByNickName(nickName);
-		
-		if(findMember != null) {
-			return findMember;
-		}else {
-			throw new Exception("User Not Found");
-		}
+		return memberRepository.findByNickName(nickName);
 	}
 }

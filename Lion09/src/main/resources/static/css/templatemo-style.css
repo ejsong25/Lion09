@@ -6,7 +6,7 @@ https://templatemo.com/tm-539-simple-house
 
 */
 
-ul, nav, body, h1, h2, h4, h6, p, figure {
+ul, nav, h1, h2, h4, h6, p, figure {
   margin: 0;
   padding: 0;
 }
@@ -62,7 +62,7 @@ th{
 	position: relative;
 	background-color:#fff;
 	height: 200px;
-    overflow-y: auto; /* 내용이 모달보다 길 경우 스크롤 표시 */
+    overflow-y: auto; /* �궡�슜�씠 紐⑤떖蹂대떎 湲� 寃쎌슦 �뒪�겕濡� �몴�떆 */
     border-radius: 0.5rem;
 }
 
@@ -85,7 +85,7 @@ th{
 	position: relative;
 	background-color:#fff;
 	height: 200px;
-    overflow-y: auto; /* 내용이 모달보다 길 경우 스크롤 표시 */
+    overflow-y: auto; /* �궡�슜�씠 紐⑤떖蹂대떎 湲� 寃쎌슦 �뒪�겕濡� �몴�떆 */
     border-radius: 0.5rem;
 }
 
@@ -109,7 +109,7 @@ th{
 	position: relative;
 	background-color:#fff;
 	height: 200px;
-    overflow-y: auto; /* 내용이 모달보다 길 경우 스크롤 표시 */
+    overflow-y: auto; /* �궡�슜�씠 紐⑤떖蹂대떎 湲� 寃쎌슦 �뒪�겕濡� �몴�떆 */
     border-radius: 0.5rem;
 }
 
@@ -149,7 +149,7 @@ th{
 
 #preModal #content label {
 	color : #000;
-    display: block; /* label 요소를 블록 요소로 표시하도록 설정 */
+    display: block; /* label �슂�냼瑜� 釉붾줉 �슂�냼濡� �몴�떆�븯�룄濡� �꽕�젙 */
     margin-bottom: 10px;
     padding-top: 40px;
 }
@@ -174,7 +174,7 @@ th{
 
 #modal #content label {
 	color : #000;
-    display: block; /* label 요소를 블록 요소로 표시하도록 설정 */
+    display: block; /* label �슂�냼瑜� 釉붾줉 �슂�냼濡� �몴�떆�븯�룄濡� �꽕�젙 */
     margin-bottom: 10px;
     padding-top: 40px;
 }
@@ -199,7 +199,7 @@ th{
 
 #nextModal #content label {
 	color : #000;
-    display: block; /* label 요소를 블록 요소로 표시하도록 설정 */
+    display: block; /* label �슂�냼瑜� 釉붾줉 �슂�냼濡� �몴�떆�븯�룄濡� �꽕�젙 */
     margin-bottom: 10px;
     padding-top: 40px;
 }
@@ -272,7 +272,19 @@ th{
     background: #eec94f;
 }
 
+.like_chating{
+	font-family: 'omyu_pretty';
+	display: flex;
+	flex-direction: row;
+	color: #868e96;
+	margin-top: 10px;
+}
 
+.bottom-text {
+    vertical-align: bottom;
+    display: inline-block;
+    line-height: normal;
+}
 
 *,
 *::before,
@@ -465,7 +477,7 @@ table{
 body {
   font-family:'Open Sans', Arial, sans-serif;
   font-size: 17px;
-  background-color: #ccc;
+  background-color: rgba(255, 138, 61, 0.15);
   overflow-x: hidden;
 }
 
@@ -832,6 +844,13 @@ font-size:1.3rem;
   height: 200px;
 }
 
+.tm-footer1 {
+  font-family: 'omyu_pretty';
+  font-size: 1.2rem;
+  padding: 20px 120px;
+  margin-top: 100px;
+}
+
 .tm-footer a {
   color: #626364;
   text-decoration: none;
@@ -1141,7 +1160,7 @@ address {
 }
 
 .tm-accordion {
-	justify-content: center; /* 수평 가운데 정렬 */
+	justify-content: center; /* �닔�룊 媛��슫�뜲 �젙�젹 */
   align-items: center;
 }
 

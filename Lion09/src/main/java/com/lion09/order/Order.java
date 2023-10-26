@@ -1,6 +1,6 @@
 package com.lion09.order;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ public class Order {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderId")
 	private Long id;
-	private LocalDateTime orderDate; //주문 시간
+	private LocalDate orderDate; //주문 시간
 	
 	private String userId;
 	

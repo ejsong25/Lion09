@@ -33,9 +33,32 @@
     font-weight: normal;
     font-style: normal;
 }
+
+.rangeBtn {
+	width: 30px;
+    padding: 5px 7px;
+    color: #0E64B0;
+    position: relative;
+    background-color: #ffffff;
+   	border: 2px solid #0E64B0;
+    display: inline-block;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+	font-family: 'omyu_pretty';
+	font-size: 13pt;
+	margin-left: 10px;
+}
+
+.rangeBtn:hover {
+	color: #ffffff;
+    background: #0E64B0;
+}
+
+
+
 </style>
-
-
 
 
 <body> 
@@ -48,7 +71,7 @@
 		    <ul id="slider">
 		         <li>
 		           <div style="position: relative;">
-				        <img src="/img/balancefit.jpg" style="max-width: 100%; height: auto;">
+				        <img src="/img/balancefit.jpg" style="max-width: 100%; height: auto; margin-left: -35px;">
 				        <iframe width="500" height="300" src="https://www.youtube.com/embed/ZoEccAEROHM?list=TLGGLgOBlWtwoSsyMzEwMjAyMw" title="미주가 소개하는 쫀쫀이 발란스핏💗" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top: 50; left: 0;"></iframe>
 				    </div>
 		        </li>
@@ -119,7 +142,8 @@
 			</div>
 	        <div align="right">
 				<ul>
-					<li><a href="/write.action" class="writeButton">글쓰기</a></li>
+					<li><a href="/write.action" class="writeButton" 
+							style="font-family: 'omyu_pretty'; font-size: 18pt;">글쓰기</a></li>
 				</ul>
 			</div>
 			</div>
@@ -175,8 +199,9 @@
 			<div class="slidecontainer">
 			    <input type="range" min="1" max="5" th:value="${mdto.myRange}" 
 			    class="slider" id="myRange" name="myRange">
+				<input type="button" value="조회" onclick="findAddress();" 
+					class="rangeBtn" style="font-family: 'omyu_pretty';">
 			    <p><span id="sliderValue"></span>km</p>
-				<input type="button" value="조회" onclick="findAddress();">
 			</div>
 			</form>
 			 <script>
@@ -201,9 +226,9 @@
 		        
 		    </script>
 			
-			<tr th:each="mdto:${findList}">
+			<tr th:each="item:${findList}">
 			
-				<td th:text="${mdto.myAddress}"></td>
+				<td th:text="${item}"></td>
 				
 			</tr>
 			<!-- 동네 범위설정 -->

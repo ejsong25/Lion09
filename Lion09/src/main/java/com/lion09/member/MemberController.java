@@ -33,8 +33,14 @@ public class MemberController {
 	}
 
 	@PostMapping("/signup") //넘어온 데이터 검증
-	public String signup(@Valid MemberForm form, BindingResult result) {
+	public String signup(@Valid MemberForm form, BindingResult result) throws Exception {
 		if(result.hasErrors()) {
+			return "signup_form";
+		}
+		
+		//아이디 중복 체크
+		if(memberService.getUser(form.getUserId()) != null) {
+			result.addError(new FieldError("form", "userId", "아이디 중복입니다."));
 			return "signup_form";
 		}
 		
@@ -50,16 +56,17 @@ public class MemberController {
 			member.setUserPwd(form.getUserPwd1());
 			member.setUserName(form.getUserName());
 			member.setEnergy(40);
+			member.setMyRange(3);
 			member.setEmail(form.getEmail());
 			member.setNickName(form.getNickName());
 			member.setProfileImgName("lion.png");
 			
 			memberService.join(member);
 			
-		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
-			result.addError(new ObjectError("form", "이미 등록된 사용자입니다"));
-			return "signup_form";
+//		} catch (DataIntegrityViolationException e) {
+//			e.printStackTrace();
+//			result.addError(new ObjectError("form", "이미 등록된 사용자입니다"));
+//			return "signup_form";
 			
 		}catch (Exception e) {
 			e.printStackTrace();

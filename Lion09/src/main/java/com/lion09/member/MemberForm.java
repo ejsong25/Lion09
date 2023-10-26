@@ -1,6 +1,7 @@
 package com.lion09.member;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class MemberForm {
 	@NotEmpty(message = "이름은 필수 항목입니다.")
 	private String userName;
 	
+	@Size(max=6, message = "닉네임은 최대 6자까지 가능합니다.")
 	private String nickName;
 	private String email;
 }

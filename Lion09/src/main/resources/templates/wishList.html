@@ -30,6 +30,7 @@
 
 
 <style>
+
 @font-face {
 	font-family: 'ONE-Mobile-POP';
 	src:
@@ -54,38 +55,10 @@
 	animation: carrot-logo-dance 2s ease-in-out infinite;
 }
 
-@
-keyframes carrot-logo-dance { 0% {
-	transform: rotateY(0);
-}
-
-50
-
-
-%
-{
-opacity
-
-
-:
-
-
-0
-.5
-;
-
-
-}
-to {
-	transform: rotateY(180deg);
-}
-}
 </style>
 
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164&libraries=services"></script>
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164&libraries=services"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
 <body>
@@ -125,14 +98,11 @@ to {
 
 			<!-- Page Content -->
 			<div style="width: 100%;" align="center">
-				<header>
 				<div align="center">
-					<br /> <br />
-					<h2 class="col-12 text-center tm-section-title">관심상품</h2>
-
+					<br/><br/>
+					<h1 style="font-family:'omyu_pretty';">관심상품</h1>
+					<br/><br/>
 				</div>
-				</header>
-
 
 				<div class="content_4_wrap">
 
@@ -151,76 +121,74 @@ to {
 										<h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
 										<div class="like_chating"
 											style="display: flex; align-items: center; justify-content: center;">
-										<span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
-										<span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
-                        				<span class="chat">조회수 [[${dto.hitCount}]]</span>
+											<span style="color: red; font-size: 15px;">관심 [[${dto.postLikeCount}]]</span>
+											<span>&nbsp;&nbsp;・&nbsp;&nbsp;</span>
+	                        				<span class="chat">조회수 [[${dto.hitCount}]]</span>
 										</div>
-					                    </div>
-								   </div>
-								</div>
-							 <div th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
+					                </div>
+								 </div>
+							</div>
+							<div th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
 								<div colspan="5" id="footer">
 									<a th:utext="${pageIndexList }"></a>
 								</div>
 							</div>
-							<div th:if="${dataCount}==0">
-			                	<div align="center">
-									
-				                	<a href="/list1" class="w3-bar-item w3-button" 
-				                		style="font-family: 'omyu_pretty'; font-size: 18pt;">
-				                		<h3 style="font-size: 20pt;">아직 관심상품이 없습니다.</h3>
-				                		관심상품 추가하러가기</a> 
-			                	</div>
-							</div>  
-							 </div>
-							 
+						</div>
+						<div th:if="${dataCount}==0">
+			                <div align="center">
+			                	<a href="/list1" class="w3-bar-item w3-button" 
+			                		style="font-family: 'omyu_pretty'; font-size: 18pt;">
+			                		<h2 style="font-family: 'omyu_pretty';">아직 관심상품이 없습니다.</h2>
+			                		관심상품 추가하러가기</a> 
+			                </div>
+						</div>  
 
-										</div>
-									</div>
+					</div>
+				</div>
 
-								</div>
-							</div>
-								<hr class="hr-solid" />
-								<!-- footer 자리 -->
-								<footer class="tm-footer text-center">
-								<div style="float: left;">
+			</div>
+		</div>
+		<hr class="hr-solid" />
+		<!-- footer 자리 -->
+		<footer class="tm-footer text-center">
+		<div style="float: left;">
 
-									<p>
-										<b>사자고</b>
-									</p>
-									<br />
-									<p>
-										<b>사업자등록번호</b> 202-30-92017
-									</p>
-									<p>
-										<b>이메일</b> help@liongg.co.kr
-									</p>
-									<p>
-										<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
-									</p>
-									<p>
-										Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
-											href="https://templatemo.com">TemplateMo</a>
-									</p>
-								</div>
-								<div style="float: right;">
-									<div>
-										<div id="map"
-											style="width: 400px; height: 200px; margin: auto;"></div>
-									</div>
-								</div>
-								</footer>
-							</div>
+			<p>
+				<b>사자고</b>
+			</p>
+			<br />
+			<p>
+				<b>사업자등록번호</b> 202-30-92017
+			</p>
+			<p>
+				<b>이메일</b> help@liongg.co.kr
+			</p>
+			<p>
+				<b>주소</b> 서울 강남구 테헤란로 124 삼원타워
+			</p>
+			<p>
+				Copyright &copy; 2020 Simple House | Design: <a rel="nofollow"
+					href="https://templatemo.com">TemplateMo</a>
+			</p>
+		</div>
+		<div style="float: right;">
+			<div>
+				<div id="map"
+					style="width: 400px; height: 200px; margin: auto;"></div>
+			</div>
+		</div>
+		</footer>
+	</div>
 
-						<script>
-							var container = document.getElementById('map');
-							var options = {
-								center : new kakao.maps.LatLng(37.49886,
-										127.03170),
-								level : 2
-							};
+<script>
+	var container = document.getElementById('map');
+	var options = {
+		center : new kakao.maps.LatLng(37.49886,
+				127.03170),
+		level : 2
+	};
 
-							var map = new kakao.maps.Map(container, options);
-						</script>
+	var map = new kakao.maps.Map(container, options);
+</script>
 </body>
 </html>

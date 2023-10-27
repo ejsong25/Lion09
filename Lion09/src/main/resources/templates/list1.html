@@ -148,8 +148,6 @@
 			</div>
 			</div>
             
-			
-			
 
 		<form action="" name="categoryForm" method="get">
 		<div class="tm-paging-links1" align="center">
@@ -236,37 +234,45 @@
 			
             <div class="content_4_wrap">
            
-	            <form method="post" name="postStatus"> 
-		            <fieldset>
-		                <span style="font-family: 'omyu_pretty';">전체 게시물</span> <input type="radio" id="allPost" name="statusPost" value="allPost"  
-		                	th:checked="${postStatus == 'allPost' or postStatus==null}"/>
-		                <span style="font-family: 'omyu_pretty';">모집중 게시물</span> <input type="radio" id="ingPost" name="statusPost" value="ingPost" 
-		                	th:checked="${postStatus == 'ingPost'}"/>
-		            </fieldset>
-		            <input type="hidden" name="postStatus" id="postStatus">
+	           <form method="post" name="postForm">
+				    <fieldset>
+				        <span style="font-family: 'omyu_pretty';">전체 게시물</span> 
+				        <input type="radio" id="allPost" name="statusPost" value="allPost"  
+				            th:checked="${postStatus == 'allPost' or postStatus==null}"/>
+				        <span style="font-family: 'omyu_pretty';">모집중 게시물</span> 
+				        <input type="radio" id="ingPost" name="statusPost" value="ingPost" 
+				            th:checked="${postStatus == 'ingPost'}"/>
+				    </fieldset>
+				    
+				    <fieldset>
+				        <span style="font-family: 'omyu_pretty';">날짜순</span> 
+				        <input type="radio" id="postIdList" name="listPost" value="postIdList"  
+				            th:checked="${postList==null or postList=='postIdList'}"/>
+				        <span style="font-family: 'omyu_pretty';">인기순</span> 
+				        <input type="radio" id="hitCountList" name="listPost" value="hitCountList" 
+				            th:checked="${postList == 'hitCountList'}"/>
+				    </fieldset>
+				    
+				    <input type="hidden" name="postStatus" id="postStatus">
+				    <input type="hidden" name="postList" id="postList">
 				</form>
 				
 				<script>
-					document.addEventListener("DOMContentLoaded", function() {
-					    // 라디오 버튼 선택 상태가 변경될 때 이벤트 리스너를 등록
-					    var radioButtons = document.querySelectorAll('input[name="statusPost"]');
-					    var statusPostInput = document.getElementById('postStatus');
-					
-					    radioButtons.forEach(function(radioButton) {
-					        radioButton.addEventListener("change", function() {
-					            if (this.checked) {
-					                statusPostInput.value = this.value;
-					                
-					                f = document.postStatus;
-					                
-					                f.submit();
-					            }
-					        });
-					    });
-					});
-				</script>
+				    document.addEventListener("DOMContentLoaded", function() {
+				        var radioButtons = document.querySelectorAll('input[type="radio"]');
+				        var postStatusInput = document.getElementById('postStatus');
+				        var postListInput = document.getElementById('postList');
+				        var postForm = document.forms['postForm'];
 				
-			
+				        radioButtons.forEach(function(radioButton) {
+				            radioButton.addEventListener("change", function() {
+				                postStatusInput.value = document.querySelector('input[name="statusPost"]:checked').value;
+				                postListInput.value = document.querySelector('input[name="listPost"]:checked').value;
+				                postForm.submit(); // 폼 전송
+				            });
+				        });
+				    });
+				</script>
 	            
  			 <div id="lists">
       				<div th:if="${#lists.size(lists)}>0">

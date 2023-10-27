@@ -87,12 +87,12 @@ public class PostController {
 
 		ModelAndView mav = new ModelAndView();
 
-		Member dto = mypageService.selectData(sessionInfo.getUserId());
-
+		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
+		
 		mav.addObject("dto",dto);
 
-		if(dto.getMyAddress()==null) {
-			mav.setViewName("/addressInsert");
+		if(dto.getAccountName()==null) {
+			mav.setViewName("/accountInsert");
 		}else {
 			mav.setViewName("/write"); 
 		}
@@ -285,9 +285,6 @@ public class PostController {
 			    }
 			}
 		}
-		
-		System.out.println(postStatus);
-		System.out.println(postList);
 		
 		if("hitCountList".equals(postList)) {
 			Collections.sort(lists, (post1, post2) -> {

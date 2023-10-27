@@ -327,8 +327,14 @@ public class PostController {
 	    int postId = Integer.parseInt(request.getParameter("postId"));
 	    String pageNum = request.getParameter("pageNum");
 	    
-	    Member mdto = mypageService.selectData(sessionInfo.getUserId());
-	    String userId = mdto.getUserId();
+	    Post pdto = postService.getReadData(postId);
+	    
+	    Member mdto = mypageService.selectData(pdto.getUserId());
+	    
+	    String userId = sessionInfo.getUserId();
+	    
+//	    Member mdto = mypageService.selectData(sessionInfo.getUserId());
+//	    String userId = mdto.getUserId();
 
 	    Member member = new Member(); // Member 엔티티의 인스턴스 생성
 	    Post post = new Post(); // Post 엔티티의 인스턴스 생성

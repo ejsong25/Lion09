@@ -2,6 +2,8 @@ package com.lion09.member;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
+import com.lion09.board.PostService;
+import com.lion09.pay.LionPayService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +28,16 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class MemberController {
+	
 	private final MemberService memberService;
+	
+	@Autowired
+	@Qualifier("lionPayServiceImpl")
+	private LionPayService lionPayService;
+	
+	@Autowired
+	@Qualifier("postServiceImpl")
+	private PostService postService;
 	
 	//회원가입
 	@GetMapping("/signup")
@@ -73,7 +86,34 @@ public class MemberController {
 			result.rejectValue("signupFailed", e.getMessage());
 			return "signup_form";
 		}
-		
 		return "redirect:/login";
+	}
+	
+	@GetMapping("/delMem")
+	public String delMem(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+				Model model) throws Exception {
+		String userId = sessionInfo.getUserId();
+		//라이온페이 계좌 삭제
+		if(lionPayService.getReadData(userId).getBalance() > 0) {
+			//잔액이 남아 있을 경우 탈퇴 불가
+			model.addAttribute("err1", "잔액이 남아있습니다");
+			return "redirect:/LionPay";
+		}
+		if(postService.cannotRemovePosts(userId)>0) {
+			//모집중인 게시글에 참여자가 있는 경우 탈퇴 불가
+			model.addAttribute("err2", "<탈퇴 불가> 모집 중인 게시글이 존재합니다.");
+			return "redirect:/myList";
+		}
+		//계좌 삭제
+		lionPayService.deleteLionPay(userId);
+		//라이온페이 이용내역 삭제
+		lionPayService.deleteLionPayLists(userId);
+		//게시글 삭제
+		postService.deleteAllPosts(userId);
+		//회원 탈퇴
+		memberService.delUser(userId);
+		
+		model.addAttribute("err3", "탈퇴 처리 완료되었습니다.");
+		return "redirect:/logout";
 	}
 }

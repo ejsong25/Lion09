@@ -16,7 +16,6 @@ public class LionPayServiceImpl implements LionPayService {
 	@Override
 	public void insertLionPay(LionPayDTO dto) throws Exception {
 		lionPayMapper.insertLionPay(dto);
-		
 	}
 	
 	@Override
@@ -27,7 +26,6 @@ public class LionPayServiceImpl implements LionPayService {
 	@Override
 	public void updateRechargeAmt(LionPayDTO dto) throws Exception {
 		lionPayMapper.updateRechargeAmt(dto);
-		
 	}
 	
 	@Override
@@ -48,7 +46,6 @@ public class LionPayServiceImpl implements LionPayService {
 	@Override
 	public void resetAccData(LionPayDTO dto) throws Exception {
 		lionPayMapper.resetAccData(dto);
-		
 	}
 	
 	@Override
@@ -59,13 +56,11 @@ public class LionPayServiceImpl implements LionPayService {
 	@Override
 	public LionPayDTO getReadData(String userId) throws Exception {
 		return lionPayMapper.getReadData(userId);
-		
 	}
 	
 	@Override
 	public void insertData(ListDTO listDto,String userId) throws Exception {
 		lionPayMapper.insertData(listDto,userId);
-		
 	}
 	
 	@Override
@@ -80,7 +75,6 @@ public class LionPayServiceImpl implements LionPayService {
 	
 	@Override
 	public Integer maxNum(String userId) throws Exception {
-		
 		return lionPayMapper.maxNum(userId);
 	}
 	
@@ -99,6 +93,16 @@ public class LionPayServiceImpl implements LionPayService {
         List<String> bankList = Arrays.asList("국민은행", "기업은행", "농협은행", "신한은행", "우리은행", "하나은행", "새마을금고", "케이뱅크", "토스뱅크", "우체국");
         return bankList;
     }
+
+	@Override
+	public void deleteLionPay(String userId) throws Exception {
+		lionPayMapper.deleteLionPay(userId);
+	}
+
+	@Override
+	public void deleteLionPayLists(String userId) throws Exception {
+		lionPayMapper.deleteLionPayLists(userId);
+	}
 
 
 }

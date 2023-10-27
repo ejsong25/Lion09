@@ -121,7 +121,16 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
 	select status from post where postId=#{postId}	
 </select>
 
+<select id="cannotRemovePosts" resultType="int">
+	select nvl(count(*),0) from (
+		select * from post where userId = #{userId} 
+		and participant > 1 and status = '모집중')
+</select>
 
+<delete id="deleteAllPosts">
+	delete from post
+	where userId = #{userId} and participant = 1
+</delete>
 </mapper>
 
 

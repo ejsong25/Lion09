@@ -10,7 +10,6 @@ import com.lion09.order.Order;
 
 @Service
 public class PostServiceImpl implements PostService{
-
 	
 	@Autowired
 	private PostMapper postMapper; //의존성 주입
@@ -228,6 +227,16 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public void updateReview(String userId, int postId) throws Exception {
 		orderMapper.updateReview(userId, postId);
+	}
+	
+	@Override
+	public int cannotRemovePosts(String userId) throws Exception {
+		return postMapper.cannotRemovePosts(userId);
+	}
+
+	@Override
+	public void deleteAllPosts(String userId) throws Exception {
+		postMapper.deleteAllPosts(userId);
 	}
 
 }

@@ -69,6 +69,17 @@ function addAmount(amount) {
 }
 
 function cash() {
+	
+	var btnOpen = document.getElementById('btnOpen');
+	  var btnRefund = document.getElementById('btnRefund');
+	  var btnCheck = document.getElementById('btnCheck');
+	  var btnClose = document.getElementById('btnClose');
+	  var preModal = document.getElementById('preModal');
+	  var modal = document.getElementById('modal');
+	  var nextModal = document.getElementById('nextModal');
+
+	  btnCheck.disabled = true;
+	  
     const rechargeAmount = totalAmount;
     const accountName = document.getElementById('accountName').value;
     
@@ -91,16 +102,44 @@ function cash() {
         	
         	if (response.canCharge) {
             
-	            // totalAmount 초기화
-	            totalAmount = 0;
+        		$("#modal").css("display", "block");
+        		$("#btnCheck").click(function() {
+	        		var dtoPwd = $("#payPwd").val();
+	        		var enteredPwd = "";
 	
-	            // 결과 업데이트
-	            document.getElementById('result').textContent = currentBalance.toLocaleString() + '원';
-	            
-	            window.location.href = '/LionPay';
-	         	
-	         	alert('충전이 완료되었습니다.');
-	         	
+	        		enteredPwd += $("#payPwd1").val();
+	        		enteredPwd += $("#payPwd2").val();
+	        		enteredPwd += $("#payPwd3").val();
+	        		enteredPwd += $("#payPwd4").val();
+	        		enteredPwd += $("#payPwd5").val();
+	        		enteredPwd += $("#payPwd6").val();
+	
+	        		if (!enteredPwd) {
+	        	    	alert('PAY비밀번호를 입력해주세요.');
+	        	    } else if (enteredPwd === dtoPwd) {
+	        		    $("#modal").css("display", "none");
+	        		 	// totalAmount 초기화
+	    	            totalAmount = 0;
+	    	
+	    	            // 결과 업데이트
+	    	            document.getElementById('result').textContent = currentBalance.toLocaleString() + '원';
+	    	            
+	    	            window.location.href = '/LionPay';
+	    	         	
+	    	         	alert('충전이 완료되었습니다.');
+	        		        
+	        		} else {
+	        		    alert('비밀번호가 일치하지 않습니다.');
+	        		        
+	        		    document.getElementById('payPwd1').value = '';
+	        			document.getElementById('payPwd2').value = '';
+	        			document.getElementById('payPwd3').value = '';
+	        			document.getElementById('payPwd4').value = '';
+	        			document.getElementById('payPwd5').value = '';
+	        			document.getElementById('payPwd6').value = '';
+	        		}
+                
+        		});
         	} else {
         		totalAmount = 0;
                 document.getElementById('result').textContent = totalAmount.toLocaleString();

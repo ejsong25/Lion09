@@ -101,7 +101,8 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
         chooseFile, postLikeCount, recruitment, categoryId, myAddr, status
     FROM post
     <![CDATA[
-    WHERE deadLine <= DATEADD('DAY', 7, CURRENT_TIMESTAMP())
+    WHERE deadLine <= DATEADD('DAY', 7, CURRENT_TIMESTAMP()) 
+    and status='모집중'
     ]]>
     ORDER BY deadLine DESC
     LIMIT 5;

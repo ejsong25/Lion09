@@ -92,12 +92,12 @@ public class PostController {
 
 		ModelAndView mav = new ModelAndView();
 
-		Member dto = mypageService.selectData(sessionInfo.getUserId());
-
+		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
+		
 		mav.addObject("dto",dto);
 
-		if(dto.getMyAddress()==null) {
-			mav.setViewName("/addressInsert");
+		if(dto.getAccountName()==null) {
+			mav.setViewName("/accountInsert");
 		}else {
 			mav.setViewName("/write"); 
 		}
@@ -178,6 +178,7 @@ public class PostController {
 	public ModelAndView list1(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
 			@Param("searchKey") String searchKey,@Param("searchValue") String searchValue,
+			@Param("postList") String postList,
 			@Param("categoryId") String categoryId,Post dto,@Param("postStatus") String postStatus,
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
@@ -290,21 +291,24 @@ public class PostController {
 			}
 		}
 		
-		Collections.sort(lists, (post1, post2) -> {
-		    if (post1.getCreated() == null && post2.getCreated() == null) {
-		        return 0;
-		    } else if (post1.getCreated() == null) {
-		        return 1; //post1을 post2보다 최근으로 간주
-		    } else if (post2.getCreated() == null) {
-		        return -1; //post2를 post1보다 최근으로 간주
-		    } else {
-		        return post1.getCreated().compareTo(post2.getCreated());
-		    }
-		});
+		if("hitCountList".equals(postList)) {
+			Collections.sort(lists, (post1, post2) -> {
+			    int hitCount1 = post1.getHitCount();
+			    int hitCount2 = post2.getHitCount();
+			    return Integer.compare(hitCount2, hitCount1);
+			});
+		}else if ("postIdList".equals(postList)||postList==null){
+			Collections.sort(lists, (post1, post2) -> {
+				int postId1 = post1.getPostId();
+				int postId2 = post2.getPostId();
+				return Integer.compare(postId2, postId1); //postId2와 postId1을 바꿔 내림차순으로 정렬
+			});
+		}
 		
 		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);
 		mav.addObject("postStatus",postStatus);
+		mav.addObject("postList",postList);
 
 		mav.setViewName("/list1"); 
 		mav.addObject("lists", lists);
@@ -589,7 +593,7 @@ public class PostController {
 //		String pageNum = request.getParameter("pageNum");
 //		String param = "pageNum=" + pageNum;
 
-		mav.setViewName("redirect:/list1?");
+		mav.setViewName("redirect:/list1");
 
 		return mav;
 

@@ -81,6 +81,11 @@
 </delete>
 
 <delete id="deleteLionPayLists">
-	delete from recharge where userID = #{userId}
+	delete from recharge where userId = #{userId}
 </delete>
+
+<update id="resetBalance">
+	update lionpay set balance = 0 where userId = #{userId}
+</update>
+
 </mapper>

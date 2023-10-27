@@ -11,11 +11,6 @@ import com.lion09.member.Member;
 @Controller
 public class LionController {
 	
-//	@GetMapping("/")
-//	public String home() {
-//		return "index";
-//	}
-//	
 	@GetMapping("/faqs")
 	public String faqs() {
 		return "faqs";

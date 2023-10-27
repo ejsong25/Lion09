@@ -173,6 +173,7 @@ public class PostController {
 	public ModelAndView list1(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
 			@Param("searchKey") String searchKey,@Param("searchValue") String searchValue,
+			@Param("postList") String postList,
 			@Param("categoryId") String categoryId,Post dto,@Param("postStatus") String postStatus,
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
@@ -285,15 +286,27 @@ public class PostController {
 			}
 		}
 		
-		Collections.sort(lists, (post1, post2) -> {
-		    int postId1 = post1.getPostId();
-		    int postId2 = post2.getPostId();
-		    return Integer.compare(postId2, postId1); //postId2와 postId1을 바꿔 내림차순으로 정렬
-		});
+		System.out.println(postStatus);
+		System.out.println(postList);
+		
+		if("hitCountList".equals(postList)) {
+			Collections.sort(lists, (post1, post2) -> {
+			    int hitCount1 = post1.getHitCount();
+			    int hitCount2 = post2.getHitCount();
+			    return Integer.compare(hitCount2, hitCount1);
+			});
+		}else if ("postIdList".equals(postList)||postList==null){
+			Collections.sort(lists, (post1, post2) -> {
+				int postId1 = post1.getPostId();
+				int postId2 = post2.getPostId();
+				return Integer.compare(postId2, postId1); //postId2와 postId1을 바꿔 내림차순으로 정렬
+			});
+		}
 		
 		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);
 		mav.addObject("postStatus",postStatus);
+		mav.addObject("postList",postList);
 
 		mav.setViewName("/list1"); 
 		mav.addObject("lists", lists);

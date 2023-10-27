@@ -75,8 +75,8 @@
         <ul id="messageArea">
         	<li th:class="${msg.type.name() == 'TALK'} ? chat-message : event-message" th:each="msg:${msgs}">
 				<i><img th:if="${msg.type.name() == 'TALK'}" th:src="@{'/img/mypage/' + ${msg.profileImgName}}" style="width: 45px; height: 45px;"></img></i>
-				<span th:if="${msg.type.name() == 'TALK'}" th:text="${msg.nickName}"></span>
-				<p th:if="${msg.fileName == null}" th:text="${msg.message}"></p>
+				<span th:if="${msg.type.name() == 'TALK'}" th:text="${msg.nickName}">닉네임</span>
+				<p th:if="${msg.fileName == null}" th:text="${msg.message}">사진이 없으면</p>
 				<p th:if="${msg.fileName != null}">
 					<img th:src="@{'https://lion09bucket.s3.ap-northeast-2.amazonaws.com/'+${msg.fileDir}}" width="300">
 					<button class="btn fa fa-download" id="downBtn" th:name="${msg.fileName}"

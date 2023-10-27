@@ -224,11 +224,11 @@
 		        
 		    </script>
 			
-			<tr th:each="item:${findList}">
+			<!-- <tr th:each="item:${findList}">
 			
 				<td th:text="${item}"></td>
 				
-			</tr>
+			</tr> -->
 			<!-- 동네 범위설정 -->
 			
 			
@@ -236,21 +236,23 @@
            
 	           <form method="post" name="postForm">
 				    <fieldset>
-				        <span style="font-family: 'omyu_pretty';">전체 게시물</span> 
 				        <input type="radio" id="allPost" name="statusPost" value="allPost"  
 				            th:checked="${postStatus == 'allPost' or postStatus==null}"/>
-				        <span style="font-family: 'omyu_pretty';">모집중 게시물</span> 
+				        <span style="font-family: 'omyu_pretty';">전체 게시물</span> 
+				        &nbsp;
 				        <input type="radio" id="ingPost" name="statusPost" value="ingPost" 
 				            th:checked="${postStatus == 'ingPost'}"/>
+				        <span style="font-family: 'omyu_pretty';">모집중 게시물</span> 
 				    </fieldset>
 				    
 				    <fieldset>
-				        <span style="font-family: 'omyu_pretty';">날짜순</span> 
 				        <input type="radio" id="postIdList" name="listPost" value="postIdList"  
 				            th:checked="${postList==null or postList=='postIdList'}"/>
-				        <span style="font-family: 'omyu_pretty';">인기순</span> 
+				        <span style="font-family: 'omyu_pretty';">날짜순</span> 
+				            &nbsp;
 				        <input type="radio" id="hitCountList" name="listPost" value="hitCountList" 
 				            th:checked="${postList == 'hitCountList'}"/>
+				        <span style="font-family: 'omyu_pretty';">인기순</span> 
 				    </fieldset>
 				    
 				    <input type="hidden" name="postStatus" id="postStatus">

@@ -235,8 +235,39 @@
 			
 			
             <div class="content_4_wrap">
-            
-            
+           
+	            <form method="post" name="postStatus"> 
+		            <fieldset>
+		                <span style="font-family: 'omyu_pretty';">전체 게시물</span> <input type="radio" id="allPost" name="statusPost" value="allPost"  
+		                	th:checked="${postStatus == 'allPost' or postStatus==null}"/>
+		                <span style="font-family: 'omyu_pretty';">모집중 게시물</span> <input type="radio" id="ingPost" name="statusPost" value="ingPost" 
+		                	th:checked="${postStatus == 'ingPost'}"/>
+		            </fieldset>
+		            <input type="hidden" name="postStatus" id="postStatus">
+				</form>
+				
+				<script>
+					document.addEventListener("DOMContentLoaded", function() {
+					    // 라디오 버튼 선택 상태가 변경될 때 이벤트 리스너를 등록
+					    var radioButtons = document.querySelectorAll('input[name="statusPost"]');
+					    var statusPostInput = document.getElementById('postStatus');
+					
+					    radioButtons.forEach(function(radioButton) {
+					        radioButton.addEventListener("change", function() {
+					            if (this.checked) {
+					                statusPostInput.value = this.value;
+					                
+					                f = document.postStatus;
+					                
+					                f.submit();
+					            }
+					        });
+					    });
+					});
+				</script>
+				
+			
+	            
  			 <div id="lists">
       				<div th:if="${#lists.size(lists)}>0">
       					<div class="item_row">

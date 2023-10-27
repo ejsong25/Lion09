@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -172,7 +173,7 @@ public class PostController {
 	public ModelAndView list1(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
 			@Param("searchKey") String searchKey,@Param("searchValue") String searchValue,
-			@Param("categoryId") String categoryId,Post dto,
+			@Param("categoryId") String categoryId,Post dto,@Param("postStatus") String postStatus,
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
@@ -243,55 +244,62 @@ public class PostController {
 		List<String> findList = mypageService.findLocationsNearby(mdto);
 		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
 		List<Post> lists = new ArrayList<>();
-
+		
 		int myCategoryId = (categoryId != null) ? Integer.parseInt(categoryId) : 0;
 		
 		if(myCategoryId == 0) {
-//			for (Member member : findList) {
-//				String myAddress = member.getMyAddress();
-//				
-//				for (Post post : allLists) {
-//					String myAddr = post.getMyAddr();
-//					if (myAddr.equals(myAddress)) {
-//						lists.add(post);
-//					} 
-//				}
-//			}
 			for (String myAddress : findList) {
 			    for (Post post : allLists) {
 			        String myAddr = post.getMyAddr();
+			        String myStatus = post.getStatus();
 
-			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
-			        if (myAddr.equals(myAddress)) {
-			            lists.add(post);
+			        if("ingPost".equals(postStatus)) {
+			        	if (myAddr.equals(myAddress)&&"모집중".equals(myStatus)) {
+			        		lists.add(post);
+			        	}
+			        }else if ("allPost".equals(postStatus)||postStatus==null) {
+			        	if (myAddr.equals(myAddress)) {
+			        		lists.add(post);
+			        	}
 			        }
+			        
 			    }
 			}
 		}else {
-//			for (Member member : findList) {
-//				String myAddress = member.getMyAddress();
-//				for (Post post : allLists) {
-//					String myAddr = post.getMyAddr();
-//					
-//					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
-//						lists.add(post);
-//					} 
-//				}
-//			}
 			for (String myAddress : findList) {
 			    for (Post post : allLists) {
 			        String myAddr = post.getMyAddr();
-
-			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
-			        if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
-			            lists.add(post);
+			        String myStatus = post.getStatus();
+			        
+			        if("ingPost".equals(postStatus)) {
+			        	if (myAddr.equals(myAddress)&&"모집중".equals(myStatus)&&myCategoryId==post.getCategoryId()) {
+			        		lists.add(post);
+			        	}
+			        }else if ("allPost".equals(postStatus)||postStatus==null) {
+			        	if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+			        		lists.add(post);
+			        	}
 			        }
+			        
 			    }
 			}
 		}
 		
+		Collections.sort(lists, (post1, post2) -> {
+		    if (post1.getCreated() == null && post2.getCreated() == null) {
+		        return 0;
+		    } else if (post1.getCreated() == null) {
+		        return 1; //post1을 post2보다 최근으로 간주
+		    } else if (post2.getCreated() == null) {
+		        return -1; //post2를 post1보다 최근으로 간주
+		    } else {
+		        return post1.getCreated().compareTo(post2.getCreated());
+		    }
+		});
+		
 		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);
+		mav.addObject("postStatus",postStatus);
 
 		mav.setViewName("/list1"); 
 		mav.addObject("lists", lists);

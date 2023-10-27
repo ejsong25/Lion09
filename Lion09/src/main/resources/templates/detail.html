@@ -243,6 +243,16 @@
 	font-weight: normal;
 	font-style: normal;
 }
+
+.textcancel{
+
+	font-size: 25px;
+	position: absolute; right: 15%;
+	color: red;
+
+}
+
+
 </style>
 
 <body>
@@ -312,12 +322,7 @@
 
 						</ul>
 
-						<div class="slider-btns" id="next">
-							<span>▶</span>
-						</div>
-						<div class="slider-btns" id="previous">
-							<span>◀</span>
-						</div>
+						
 
 						<div id="slider-pagination-wrap">
 							<ul></ul>
@@ -431,7 +436,12 @@
 				<input type="button"
 					th:if="${Odto.count==1 and dto.participant != dto.recruitment}"
 					onclick="order2();" id="cancelButton" class="joinButton2"
-					value="취소하기"> <input type="button"
+					value="취소하기">
+					<div>
+					<span class="textcancel"
+					th:if="${Odto.count==1 and dto.participant != dto.recruitment}">※취소 시 재참여 불가합니다.</span>
+					</div>
+					<input type="button"
 					th:if="${Odto.status.name=='Canceled'}" onclick="order3();"
 					id="joinButton3" class="joinButton2" value="재참여불가"> <input
 					type="button" style="background-color: grey;"

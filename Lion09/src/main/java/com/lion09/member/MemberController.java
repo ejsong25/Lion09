@@ -1,5 +1,6 @@
 package com.lion09.member;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +93,7 @@ public class MemberController {
 	
 	@GetMapping("/delMem")
 	public String delMem(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
-			RedirectAttributes redirectAttributes, Model model) throws Exception {
+			RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) throws Exception {
 		String userId = sessionInfo.getUserId();
 
 		//라이온페이 계좌 삭제
@@ -119,6 +120,7 @@ public class MemberController {
 		//채팅내역 삭제
 		
 		redirectAttributes.addFlashAttribute("err", "탈퇴 처리 완료되었습니다.");
-		return "redirect:/logout";
+		
+		return "redirect:/";
 	}
 }

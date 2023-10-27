@@ -12,13 +12,16 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,11 +56,9 @@ public class PostController {
 	@Autowired
 	PostUtil postUtil;
 
-	@RequestMapping(value = "/" , method = {RequestMethod.GET})
-	public ModelAndView index(Post dto) throws Exception {
+	@GetMapping("/")
+	public String index(Post dto, Model model, HttpServletRequest request) throws Exception {
 
-		ModelAndView mav = new ModelAndView();
-		
 	    int currentPage = 1;
 		
 		List<Post> lists = postService.deadlineProduct();
@@ -66,15 +67,19 @@ public class PostController {
 		
 		String deadLineUrl = "/detail?postId=";	
 		
-		mav.addObject("lists", lists);
-		mav.addObject("lists1", lists1);
-		mav.addObject("deadLineUrl",deadLineUrl);
-		mav.addObject("dto",dto);
-
-		mav.setViewName("index");
-
-		return mav;
-
+		model.addAttribute("lists", lists);
+		model.addAttribute("lists1", lists1);
+		model.addAttribute("deadLineUrl",deadLineUrl);
+		model.addAttribute("dto",dto);
+		
+		//탈퇴 메세지
+		if(model.getAttribute("err") != null) {
+			//로그아웃
+			HttpSession session = request.getSession(false);
+			if(session != null)
+				session.invalidate();
+		}
+		return "index";
 	}
 
 	@Autowired
@@ -121,7 +126,7 @@ public class PostController {
 
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
-			String uploadDir = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String uploadDir = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			// 업로드한 파일의 원래 파일 이름 가져오기
 			String originalFilename = cFile.getOriginalFilename();
@@ -588,7 +593,7 @@ public class PostController {
 //		String pageNum = request.getParameter("pageNum");
 //		String param = "pageNum=" + pageNum;
 
-		mav.setViewName("redirect:/list1?");
+		mav.setViewName("redirect:/list1");
 
 		return mav;
 
@@ -614,7 +619,7 @@ public class PostController {
 			postId = Integer.parseInt(postIdString);
 
 			//이미지 사진들 모아두는 폴더
-			String upload_path = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
+			String upload_path = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
 
 			Post dto = postService.getReadData(postId);
@@ -623,7 +628,7 @@ public class PostController {
 			String beforeFilename = dto.getChooseFile();
 
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//게시글 이미지가 기존의 이미지가 아닐 경우 삭제
 			if(!beforeFilename.equals("lion.png")) {
@@ -698,7 +703,7 @@ public class PostController {
 
 
 		//삭제할 파일 경로
-		String delete_pate = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+		String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 
 		//기본 사진 이미지가 아닐 경우 삭제		

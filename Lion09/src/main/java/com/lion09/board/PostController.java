@@ -92,11 +92,12 @@ public class PostController {
 
 		ModelAndView mav = new ModelAndView();
 
-		LionPayDTO dto = lionPayService.getReadData(sessionInfo.getUserId());
+		Member dto = mypageService.selectData(sessionInfo.getUserId());
+		LionPayDTO ldto = lionPayService.getReadData(sessionInfo.getUserId());
 		
 		mav.addObject("dto",dto);
 
-		if(dto.getAccountName()==null) {
+		if(ldto.getAccountName()==null) {
 			mav.setViewName("/accountInsert");
 		}else {
 			mav.setViewName("/write"); 

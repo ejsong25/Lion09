@@ -733,8 +733,8 @@ public class PostController {
 
 	@GetMapping("/myList")
 	public ModelAndView myList(@Param("start") Integer start, @Param("end") Integer end,
-			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
-			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum, 
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 		Post dto = new Post();
 
@@ -788,7 +788,6 @@ public class PostController {
 		mav.addObject("dataCount", dataCount);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("mydetailUrl", mydetailUrl);
-
 
 		return mav;
 

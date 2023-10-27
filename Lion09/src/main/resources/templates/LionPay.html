@@ -33,9 +33,6 @@
 }
 </style>
 
-
-</head>
-<body>
 <script type="text/javascript" th:inline="javascript">
 
 let totalAmount = 0;
@@ -261,8 +258,17 @@ window.addEventListener('load', function() {
 	  }
 
 });
+
+function err(){
+	var err = [[${err}]];
+	if (err) {
+	    alert(err);
+	}
+};
 </script>
 
+</head>
+<body onload="err()">
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
 
@@ -275,8 +281,8 @@ window.addEventListener('load', function() {
 					<div class="row tm-header-inner">
 						<div class="col-md-6 col-12">
 							<div class="tm-site-text-box">
-								<h1 class="tm-site-title">사자고</h1>
-								<h6 class="tm-site-description">믿을만한 이웃 간 공동구매</h6>
+								<h1 class="tm-site-title">라이온 페이</h1>
+								<h6 class="tm-site-description">3% 할인 혜택</h6>
 							</div>
 						</div>
 
@@ -296,6 +302,7 @@ window.addEventListener('load', function() {
 				<a href="orderHistory" class="w3-bar-item w3-button">구매이력</a> 
 				<a href="/update" class="w3-bar-item w3-button">계정/정보</a>
 				<a href="/qna_list" class="w3-bar-item w3-button">문의내역</a>
+				<a href="/user/delMem" class="w3-bar-item w3-button">탈퇴하기</a>
 			</div>
 
 			<!-- Page Content -->
@@ -510,12 +517,7 @@ window.addEventListener('load', function() {
 			</div>
 		</footer>
 	</div>
-	<script type="text/javascript">
-		var err1 = th:text="${err1}";
-		if (err1) {
-		    alert(err1);
-		}
-	</script>
+	
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
 	<script>

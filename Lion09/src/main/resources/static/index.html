@@ -26,9 +26,18 @@
 		font-style: normal;
 	}
 </style>
+
+<script type="text/javascript" th:inline="javascript">
+function err(){
+	var err = [[${err}]];
+	if (err) {
+	    alert(err);
+	}
+};
+</script>
 </head>
 
-<body>
+<body onload="err();">
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
 	

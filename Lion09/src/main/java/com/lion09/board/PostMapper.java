@@ -46,5 +46,9 @@ public interface PostMapper {
 	
 	public List<Post> getPostList() throws Exception;
 	
-
+	public int cannotRemovePosts(String userId) throws Exception;
+	
+	public void deleteAllPosts(String userId) throws Exception;
+	//정원마감
+	public void updateStatus(Post dto) throws Exception;
 }

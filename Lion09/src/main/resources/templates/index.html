@@ -69,7 +69,7 @@
 					<a th:href="@{|${deadLineUrl}${dto.postId}|}">
                         <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px; margin-bottom: 10px;"/>
                     </a>
-                    <figcaption>
+                    <figcaption style="margin-left: -30px;">
                         <h4 class="tm-gallery-title" th:text="${dto.title}" align="center">제목</h4>
                         <p class="tm-gallery-price" th:text="${dto.productsPrice}" align="center">가격</p>
                         <p class="tm-gallery-description" th:text="${dto.myAddr}" align="center">주소</p>
@@ -109,7 +109,7 @@
 					<a th:href="@{|${deadLineUrl}${dto.postId}|}">
                         <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px; margin-bottom: 10px;"/>
                     </a>
-                    <figcaption>
+                    <figcaption style="margin-left: -30px;">
                         <h4 class="tm-gallery-title" th:text="${dto.title}" align="center">제목</h4>
                         <p class="tm-gallery-price" th:text="${dto.productsPrice}" align="center">가격</p>
                         <p class="tm-gallery-description" th:text="${dto.myAddr}" align="center">주소</p>
@@ -176,6 +176,12 @@
 	</script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/parallax.min.js"></script>
+	<script type="text/javascript">
+		var err3 = th:text="${err3}";
+		if (err3) {
+		    alert(err3);
+		}
+	</script>
 	<script>
 		$(document).ready(function() {
 			// Handle click on paging links

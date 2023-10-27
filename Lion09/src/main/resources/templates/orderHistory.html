@@ -53,6 +53,14 @@ button.profileBtn1{
 	position: relative;
 	left: 60%;
 }
+
+#review-button:hover {
+     background-color: blue;
+     cursor: pointer;
+}
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -137,7 +145,7 @@ button.profileBtn1{
 								[[${dto.status}]]</td>
 							<td th:if="${dto.status.name == '거래완료'}" class="center">
 								[[${dto.status}]]
-								<span onclick="review();" style="color: red;">후기작성</span> 
+								<span id="review-button" onclick="review();" style="color: red;">후기작성</span> 
 								<input type="hidden" th:value="${dto.postId}" name="postId" id="postId">
 							</td>
 							<td th:if="${dto.status.name == '후기작성완료'}" class="center">

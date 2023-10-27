@@ -38,4 +38,7 @@ public interface LionPayService {
 	
 	List<String> getBankList();
 	
+	public void deleteLionPay(String userId) throws Exception;
+	
+	public void deleteLionPayLists(String userId) throws Exception;
 }

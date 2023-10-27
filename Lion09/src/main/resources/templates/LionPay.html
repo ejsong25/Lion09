@@ -261,8 +261,6 @@ window.addEventListener('load', function() {
 	  }
 
 });
-
-
 </script>
 
 	<!-- 네비바 자리 -->
@@ -512,6 +510,12 @@ window.addEventListener('load', function() {
 			</div>
 		</footer>
 	</div>
+	<script type="text/javascript">
+		var err1 = th:text="${err1}";
+		if (err1) {
+		    alert(err1);
+		}
+	</script>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164"></script>
 	<script>

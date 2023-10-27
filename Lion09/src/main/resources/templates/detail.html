@@ -130,10 +130,9 @@
     	var deadLineISO = [[${dto.deadLine}]];
     	var deadline = new Date(deadLineISO);
     	deadline.setDate(deadline.getDate() - 1);
-    	var oneDayBefore = deadline.toISOString().split('T')[0];
     	var currentDate = new Date();
     	
-    	if(oneDayBefore <= currentDate){
+    	if(deadline <= currentDate){
     		alert('모집 마감 하루 전날은 취소가 불가능합니다.')
     		return;
     		
@@ -154,14 +153,12 @@
 	}
     
     function order3() {
-        var button = document.getElementById("joinButton");
+    	f = document.orderForm;
+    	var currentClass = $(this).attr('class');
         
-        if (!button.disabled) {
-            button.disabled = true;
-            button.value = "마감되었습니다.";
-        }
+    	$(this).attr('class', 'joinButton2');
+        alert('재참여가 불가합니다.')
     }
-    
     
   function order4() {
         
@@ -199,29 +196,6 @@
       }
 
       toggle();
-      
-      function deletePost() {
-          if (confirm('정말로 삭제하시겠습니까?')) {
-              // 확인 버튼을 클릭했을 때 서버로 삭제 요청을 보내는 부분
-              var postId = [[${dto.postId}]];
-              
-              // 서버로 삭제 요청을 보내는 AJAX 호출
-              $.ajax({
-                  type: "POST",  // 요청 메서드 (GET 또는 POST)
-                  url: "/deleted_ok.action",  // 삭제 엔드포인트 URL
-                  data: { postId: postId },  // 게시물 ID를 전송
-                  success: function (response) {
-                      alert('삭제가 완료되었습니다.');
-                      window.location.href = '/list1';  // 삭제가 성공하면 다른 페이지로 리디렉션
-                  },
-                  error: function (error) {
-                      alert('삭제 중 오류가 발생했습니다: ' + error.responseText);
-                  }
-              });
-          } else {
-              return;
-          }
-      }
     
     </script>
 
@@ -266,37 +240,37 @@
 				<div class="header__title" style="float: left;">
 					<h1>&nbsp;[[${dto.title }]]</h1>
 				</div>
-				<div style="float: right;">
-					<div style="margin-right: 33%; margin-top: -20px;">
-						<div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
-							<!-- 에너지 게이지 프로세스바 부분 -->
-							<div style="margin-left: 10px; white-space: nowrap;">
-								<h4 style="font-family: 'omyu_pretty'; font-size: 17pt; margin-left: 30px;">에너지
-									게이지 [[${mdto.energy}]]%</h4>
-								<b style="font-family: 'omyu_pretty'; font-size: 15pt;">&nbsp;&nbsp;</b>
-								<div class="progress" style="margin-top: 20px;">
-									<div class="progress-number" aria-valuenow="첫에너지 40%"></div>
-									<progress class="progressBar" th:value="${mdto.energy}" min="0"
-										max="100"></progress>
-								</div>
+			</div>
+			<div style="float: right;">
+				<div style="margin-right: 33%; margin-top: -20px;">
+					<div
+						style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+						<!-- 에너지 게이지 프로세스바 부분 -->
+						<div style="margin-left: 10px; white-space: nowrap;">
+							<h4
+								style="font-family: 'omyu_pretty'; font-size: 17pt; margin-left: 30px;">에너지
+								게이지 [[${mdto.energy}]]%</h4>
+							<b style="font-family: 'omyu_pretty'; font-size: 15pt;">&nbsp;&nbsp;</b>
+							<div class="progress" style="margin-top: 20px;">
+								<div class="progress-number" aria-valuenow="첫에너지 40%"></div>
+								<progress class="progressBar" th:value="${mdto.energy}" min="0"
+									max="100"></progress>
 							</div>
-							<!-- 이미지 부분 -->
-							<div class="header__title" th:if="${mdto.energy <= 30}">
-								<img src="img/babylion.png">
-							</div>
-							<div class="header__title"
-								th:if="${mdto.energy > 30 and mdto.energy < 90}">
-								<img src="img/lion.png">
-							</div>
-							<div class="header__title" th:if="${mdto.energy >= 90}">
-								<img src="img/lionking.png">
-							</div>
+						</div>
+						<!-- 이미지 부분 -->
+						<div class="header__title" th:if="${mdto.energy <= 30}">
+							<img src="img/babylion.png">
+						</div>
+						<div class="header__title"
+							th:if="${mdto.energy > 30 and mdto.energy < 90}">
+							<img src="img/lion.png">
+						</div>
+						<div class="header__title" th:if="${mdto.energy >= 90}">
+							<img src="img/lionking.png">
 						</div>
 					</div>
 				</div>
 			</div>
-			<br />
-
 			<div class="container1 column">
 				<div class="post-box">
 					<div id="slider-wrap">
@@ -332,7 +306,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="flex-box button-box" th:if="${mdto.userId == dto.userId && dto.participant == 1}">
+						<div class="flex-box button-box"
+							th:if="${mdto.userId == dto.userId && dto.participant == 1}">
 							<button class="orange"
 								th:onclick="@{|location.href='/writeUpdated?postId=${dto.postId}&${params}'|}">수정하기</button>
 							<!-- <input type="button" class="grey" onclick="alertBeforeDelete();" value="삭제하기"> -->
@@ -342,35 +317,24 @@
 								th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}">채팅보기</button>
 						</div>
 
-						<div class="flex-box button-box" style="margin-left: 80%;"
-							th:if="${mdto.userId == dto.userId && dto.participant > 1}">
+						<div class="flex-box button-box" th:if="${mdto.userId == dto.userId && dto.participant > 1}">
 							<button class="orange"
 								th:onclick="@{|location.href='/writeUpdated?postId=${dto.postId}&${params}'|}">수정하기</button>
 							<button class="orange"
 								th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}">채팅보기</button>
 						</div>
-
-
-
-
-						<div class="button-box" style="margin-left: 88%;"
-							th:if="${mdto.userId != dto.userId}">
+						<div class="button-box" th:if="${mdto.userId != dto.userId}">
 							<input type="button" class="orange"
 								th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}"
 								value="채팅하기">
 						</div>
-
-
 					</div>
-
 					<hr class="line">
-
 					<div class="post-info-box">
-
 						<div class="flex-box between">
-							<p style="font-size: 17pt;"><b>
-								[[${dto.productsPrice}]]원<br /> <span class="blue-text">[[${#numbers.formatDecimal(dto.productsPrice
-									* 0.97, 0, 0)}]]원 (LIONPAY 3% 할인가)</span></b>
+							<p style="font-size: 17pt;">
+								<b> [[${dto.productsPrice}]]원<br /> <span class="blue-text">[[${#numbers.formatDecimal(dto.productsPrice
+										* 0.97, 0, 0)}]]원 (LIONPAY 3% 할인가)</span></b>
 							</p>
 						</div>
 						<p style="font-size: 14pt;" th:utext="${dto.contents}">내용</p>
@@ -390,31 +354,19 @@
 									onclick="postLike2();"></i> <input type="hidden"
 									th:value="${dto.postId}" name="postId">
 							</form>
-
 						</div>
-
 					</div>
-
 				</div>
 			</div>
-		</div>
-		<div class="productProgress">
-			<progress class="progress1" id="updateProgressBar" value="" min="0"
-				max="100"></progress>
-			<p
-				style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 65%;">
-				마감 시간: <span id="countdown"></span>
-			</p>
-			<div
-				style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 80%;">
-				참여자 : [[${dto.participant}]] / 모집인원 : [[${dto.recruitment}]]</div>
 		</div>
 
 		<!-- 참여인원  -->
 		<div class="submitButtons">
 			<form action="" method="get" name="orderForm">
-				<input type="button" th:if="${Odto.count == 0}" onclick="order1();"
-					class="joinButton2" id="modal-open2" value="참여하기">
+				<input type="button"
+					th:if="${Odto.count == 0 and Odto.status.name!='Canceled' and Odto.userId !=dto.userId and dto.recruitment != dto.participant}"
+					onclick="order1();" class="joinButton2" id="modal-open2"
+					value="참여하기">
 				<div class="popup-wrap" id="popup2">
 					<div class="popup">
 						<div class="popup-head">
@@ -445,8 +397,11 @@
 					</div>
 				</div>
 				<input type="button"
-					th:if="${Odto.count==1 && dto.participant  != dto.recruitment}"
-					onclick="order2();" class="joinButton2" value="취소하기"> <input
+					th:if="${Odto.count==1 and dto.participant != dto.recruitment}"
+					onclick="order2();" id="cancelButton" class="joinButton2"
+					value="취소하기"> <input type="button"
+					th:if="${Odto.status.name=='Canceled'}" onclick="order3();"
+					id="joinButton3" class="joinButton2" value="재참여불가"> <input
 					type="button" style="background-color: grey;"
 					th:if="${dto.participant == dto.recruitment}" class="joinButton2"
 					onclick="order4();" value="정원마감"> <input type="hidden"
@@ -489,6 +444,18 @@
 				</div>
 			</form>
 		</div>
+		<br />
+		<div class="productProgress">
+			<progress class="progress1" id="updateProgressBar" value="" min="0"
+				max="100"></progress>
+			<p
+				style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 65%;">
+				마감 시간: <span id="countdown"></span>
+			</p>
+			<div
+				style="font-family: 'omyu_pretty'; font-size: 20pt; margin-left: 80%;">
+				참여자 : [[${dto.participant}]] / 모집인원 : [[${dto.recruitment}]]</div>
+		</div>
 		<br /> <br />
 		<div id="modal" style="display: none;">
 			<div id='content'>
@@ -514,7 +481,6 @@
 			<p>Copyright &copy; 2020 Simple House | Design: TemplateMo</p>
 		</footer>
 	</div>
-
 	<script src="js/detail.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/parallax.min.js"></script>
@@ -604,8 +570,6 @@
 		    }
 		});
 	  });
-
-	  
 	  
 	   var deadlineString = [[${dto.deadLine}]]; // Thymeleaf로부터 날짜와 시간을 문자열로 가져옵니다.
 
@@ -669,7 +633,27 @@
 
     // 이 함수를 호출하여 프로그레스 바 업데이트
     updateProgressBar(participant, recruitment);
-	</script>
+  </script>
 
+	<script type="text/javascript">
+    
+    var count = [[${Odto.count}]]; 
+    var participant = [[${dto.participant}]]; 
+    var recruitment = [[${dto.recruitment}]]; 
+    function canceledButton() {
+    	
+        var cancelButton = document.getElementById("cancelButton");
+        if (count == 1 && participant != recruitment) {
+           //버튼 활성화
+            cancelButton.style.display = "block";
+        } else {
+            // 그 외의 경우에는 버튼을 숨깁니다.
+            cancelButton.style.display = "none";
+        }
+    }
+    
+    canceledButton();
+    
+	</script>
 </body>
 </html>

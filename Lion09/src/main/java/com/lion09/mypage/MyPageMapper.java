@@ -22,7 +22,7 @@ public interface MyPageMapper {
 
 	public void imgDefault(String userId) throws Exception;
 	
-	public List<Member> findLocationsNearby(Member dto) throws Exception;
+	public List<String> findLocationsNearby(Member dto) throws Exception;
 	
 	public void updateRange(Member dto) throws Exception;
 

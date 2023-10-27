@@ -23,7 +23,7 @@ public interface OrderMapper {
 	public String findOrderState(Order Odto) throws Exception;
 	
 	public int maxId() throws Exception;
-	
+	 
 	public int findOrderCount(Order Odto) throws Exception;
 	
 	public List<Order> orderHistory(@Param("start") Integer start,@Param("end") Integer end, @Param("userId") String userId) throws Exception;
@@ -41,5 +41,17 @@ public interface OrderMapper {
 	public String getReadType(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
 	
 	public void updateReview(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public void cancelOrder(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public String getReadOrder1(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public int getReadOrder2(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public Order getOrderList(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
+	
+	public void updateOderStatus(@Param("postId") int postId) throws Exception;
+
+	
 	
 }

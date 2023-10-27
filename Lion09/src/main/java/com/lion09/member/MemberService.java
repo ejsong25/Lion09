@@ -47,4 +47,8 @@ public class MemberService {
 	public Member getUserByNickName(String nickName) throws Exception {
 		return memberRepository.findByNickName(nickName);
 	}
+	
+	public void delUser(String userId) throws Exception{
+		memberRepository.delete(userId);
+	}
 }

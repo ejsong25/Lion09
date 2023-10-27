@@ -9,7 +9,7 @@
     </select>
     
     <!-- 거래내역 수 -->
-    <select id="orderMaxId" resultType="int">
+    <select id="orderMaxId" resultType="int"> 
         select nvl(max(orderId),0) from orders
     </select>
 
@@ -19,11 +19,17 @@
         values (#{userId},#{postId},sysdate,#{orderPrice},1,#{status},#{title},#{type})
     </insert>
     
-    <!-- 공구 참여 취소2 -->
+    <!-- 공구 참여 취소2 삭제할까말까 -->
     <delete id="deleteOrder1" parameterType="com.lion09.order.Order">
         delete from orders where postId=#{postId} and userId=#{userId}
     </delete>
-
+    
+     <!-- 공구 참여 취소후 status: cancel -->
+    <update id="cancelOrder" parameterType="com.lion09.order.Order">
+        update orders set status='Canceled', count=count-1 where postId=#{postId} and userId=#{userId}
+    </update>   
+    
+    
     <!-- post에서  참여 취소3 -->
     <update id="deleteOrder2" parameterType="int">
         update post set participant=participant-1 where postId=#{postId}
@@ -56,7 +62,7 @@
     <select id="findOrderCount" parameterType="com.lion09.order.Order"
 	resultType="int">
 	select count(*) from orders where userId=#{userId} and postId=#{postId}
-</select>
+	</select>
 
 
 <select id="orderDataCount" parameterType="map" resultType="int">
@@ -87,5 +93,26 @@
 <update id="updateReview" parameterType="hashMap">
 	update orders set status='후기작성완료' where postId=#{postId} and userId=#{userId}
 </update>
+
+
+<select id="getReadOrder1" parameterType="com.lion09.order.Order" resultType="String" >
+	select status from orders where postId=#{postId} and userId=#{userId}
+</select>
+
+<select id="getReadOrder2" parameterType="com.lion09.order.Order" resultType="int" >
+	select count from orders where postId=#{postId} and userId=#{userId}
+</select>
+
+
+<select id="getOrderList" parameterType="com.lion09.order.Order"
+	resultType="com.lion09.order.Order">
+	select userId,postId,orderId,count,orderPrice,status,title,type from orders 
+	where postId=#{postId} and userId=#{userId}
+</select>
+
+<update id="updateOderStatus" parameterType="hashMap">
+	update orders set status='모집완료' where postId=#{postId}
+</update>
+
 
 </mapper>

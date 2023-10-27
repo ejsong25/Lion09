@@ -31,10 +31,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update member set profileImgName='lion.png' where userId=#{userId}
 </update>
 
-<select id="findLocationsNearby" parameterType="com.lion09.member.Member" resultType="com.lion09.member.Member">
+<select id="findLocationsNearby" parameterType="com.lion09.member.Member" resultType="String">
     <![CDATA[
-  	select distinct myAddress
-	from member
+  	select distinct myAddr
+	from post
 	where
 	6371*2*asin(
 	    sqrt(

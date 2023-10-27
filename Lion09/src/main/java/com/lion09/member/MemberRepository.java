@@ -29,4 +29,10 @@ public class MemberRepository {
 				.setParameter("nickName", nickName)
 				.getSingleResult();
 	}
+	
+	public void delete(String userId) {
+		em.createQuery("delete from Member m where m.userId = :userId")
+				.setParameter("userId", userId)
+				.executeUpdate();
+	}
 }

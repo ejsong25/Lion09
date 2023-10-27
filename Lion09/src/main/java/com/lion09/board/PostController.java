@@ -588,7 +588,7 @@ public class PostController {
 //		String pageNum = request.getParameter("pageNum");
 //		String param = "pageNum=" + pageNum;
 
-		mav.setViewName("redirect:/list1?");
+		mav.setViewName("redirect:/list1");
 
 		return mav;
 

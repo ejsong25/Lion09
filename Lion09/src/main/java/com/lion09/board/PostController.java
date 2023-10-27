@@ -391,6 +391,7 @@ public class PostController {
 	    
 	    // 라이언페이
 	 	String payPwd = lionPayService.getReadData(userId).getPayPwd();
+	 	LionPayDTO payDto = lionPayService.getReadData(userId);
 	 	
 	 	// 결제방법 타입 불러오기
 	 	String type = postService.getReadType(userId, postId);
@@ -404,6 +405,7 @@ public class PostController {
 	    mav.addObject("Odto", Odto);
 	    mav.addObject("mdto", mdto);
 	    mav.addObject("dto", dto);
+	    mav.addObject("payDto", payDto);
 	    mav.addObject("params", param);
 	    mav.addObject("pageNum", pageNum);
 	    mav.addObject("payPwd",payPwd);

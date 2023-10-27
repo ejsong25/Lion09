@@ -64,9 +64,16 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f39e25a32280347ba1e28185a1577164&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+<script type="text/javascript" th:inline="javascript">
+function err(){
+	var err = [[${err}]];
+	if (err) {
+	    alert(err);
+	}
+};
+</script>
 </head>
-<body>
+<body onload="err();">
 	
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
@@ -100,6 +107,7 @@
 				<a href="orderHistory" class="w3-bar-item w3-button">구매이력</a> 
 				<a href="/update" class="w3-bar-item w3-button">계정/정보</a>
 				<a href="/qna_list" class="w3-bar-item w3-button">문의내역</a>
+				<a href="/user/delMem" class="w3-bar-item w3-button">탈퇴하기</a>
 			</div>
 
 			<!-- Page Content -->
@@ -153,8 +161,6 @@
 		</div>
 			
 			
-			
-			
 			</div>
 		
 		<hr class="hr-solid" />
@@ -190,12 +196,6 @@
 		
 	</div>
 	
-	<script type="text/javascript">
-		var err2 = th:text="${err2}";
-		if (err2) {
-		    alert(err2);
-		}
-	</script>
 	<script>
 			var container = document.getElementById('map');
 			var options = {

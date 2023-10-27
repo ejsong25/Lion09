@@ -399,6 +399,7 @@ public class PostController {
 	    
 	    // 라이언페이
 	 	String payPwd = lionPayService.getReadData(userId).getPayPwd();
+	 	LionPayDTO payDto = lionPayService.getReadData(userId);
 	 	
 	 	// 결제방법 타입 불러오기
 	 	String type = postService.getReadType(userId, postId);
@@ -412,6 +413,7 @@ public class PostController {
 	    mav.addObject("Odto", Odto);
 	    mav.addObject("mdto", mdto);
 	    mav.addObject("dto", dto);
+	    mav.addObject("payDto", payDto);
 	    mav.addObject("params", param);
 	    mav.addObject("pageNum", pageNum);
 	    mav.addObject("payPwd",payPwd);
@@ -741,8 +743,8 @@ public class PostController {
 
 	@GetMapping("/myList")
 	public ModelAndView myList(@Param("start") Integer start, @Param("end") Integer end,
-			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
-			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
+			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum, 
+			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 		Post dto = new Post();
 
@@ -796,7 +798,6 @@ public class PostController {
 		mav.addObject("dataCount", dataCount);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("mydetailUrl", mydetailUrl);
-
 
 		return mav;
 

@@ -27,9 +27,17 @@
 		font-style: normal;
 	}
 </style>
+<script type="text/javascript" th:inline="javascript">
+function err(){
+	var err = [[${err}]];
+	if (err) {
+	    alert(err);
+	}
+};
+</script>
 </head>
 
-<body>
+<body onload="err();">
 	<!-- 네비바 자리 -->
 	<div th:replace="layout :: navbar"></div>
 	
@@ -182,15 +190,10 @@
 			};
 	
 			var map = new kakao.maps.Map(container, options);
+			
 	</script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/parallax.min.js"></script>
-	<script type="text/javascript">
-		var err3 = th:text="${err3}";
-		if (err3) {
-		    alert(err3);
-		}
-	</script>
 	<script>
 		$(document).ready(function() {
 			// Handle click on paging links

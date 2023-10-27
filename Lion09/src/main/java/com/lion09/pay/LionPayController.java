@@ -216,7 +216,7 @@ public class LionPayController {
 	@RequestMapping(value = "/payMoney", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView payMoney(ListDTO listDto, Order Odto, Post dto,Member member,
 			@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
-			@RequestBody Map<String, String> payload,RedirectAttributes redirectAttributes,
+			@RequestBody Map<String, String> payload, RedirectAttributes redirectAttributes,
 			HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		

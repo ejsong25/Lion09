@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lion09.SessionConst;
 import com.lion09.SessionInfo;
@@ -91,19 +92,22 @@ public class MemberController {
 	
 	@GetMapping("/delMem")
 	public String delMem(@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
-				Model model) throws Exception {
+			RedirectAttributes redirectAttributes, Model model) throws Exception {
 		String userId = sessionInfo.getUserId();
+
 		//라이온페이 계좌 삭제
 		if(lionPayService.getReadData(userId).getBalance() > 0) {
 			//잔액이 남아 있을 경우 탈퇴 불가
-			model.addAttribute("err1", "잔액이 남아있습니다");
+			redirectAttributes.addFlashAttribute("err", "잔액이 남아있습니다");
 			return "redirect:/LionPay";
 		}
 		if(postService.cannotRemovePosts(userId)>0) {
 			//모집중인 게시글에 참여자가 있는 경우 탈퇴 불가
-			model.addAttribute("err2", "<탈퇴 불가> 모집 중인 게시글이 존재합니다.");
+			redirectAttributes.addFlashAttribute("err", "[탈퇴 불가] 모집 중인 게시글이 존재합니다.");
 			return "redirect:/myList";
 		}
+		//참여 중인 게시글이 있을 경우 탈퇴 불가
+		
 		//계좌 삭제
 		lionPayService.deleteLionPay(userId);
 		//라이온페이 이용내역 삭제
@@ -112,8 +116,9 @@ public class MemberController {
 		postService.deleteAllPosts(userId);
 		//회원 탈퇴
 		memberService.delUser(userId);
+		//채팅내역 삭제
 		
-		model.addAttribute("err3", "탈퇴 처리 완료되었습니다.");
+		redirectAttributes.addFlashAttribute("err", "탈퇴 처리 완료되었습니다.");
 		return "redirect:/logout";
 	}
 }

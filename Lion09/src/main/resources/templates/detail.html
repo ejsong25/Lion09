@@ -58,9 +58,18 @@
    <!-- 참여하기 스크립트 -->
    function order1() {
 	   
+	   var balance = [[${payDto.balance}]];
+	   price = [[${#numbers.formatDecimal(dto.productsPrice * 0.97, 0, 0)}]];
+	   
 	   // 결제진행여부 "예" 모달창
 	   $("#confirm").click(function(){
- 		  $("#modal").show();
+		   if(balance < price){
+			  alert("페이머니 잔액이 부족합니다. \n잔액 충전 후 이용바랍니다.")
+			  popup.style.display = 'none';
+			  return;
+		   } else{
+	 		  $("#modal").show();
+		   }
  	   });
 	   
 	   $("#popup2").css('display', 'flex').hide().fadeIn();

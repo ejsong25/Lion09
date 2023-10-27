@@ -215,7 +215,7 @@ public class LionPayController {
 	@RequestMapping(value = "/payMoney", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView payMoney(ListDTO listDto, Order Odto, Post dto,Member member,
 			@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
-			@RequestBody Map<String, String> payload,
+			@RequestBody Map<String, String> payload,RedirectAttributes redirectAttributes,
 			HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
@@ -234,7 +234,8 @@ public class LionPayController {
 		if(payDto.getBalance() < price) {
 //			mav.addObject("balanceError", true);
 //			mav.addObject("errorMessage", "페이머니 충전 후 결제해주세요.");
-			mav.setViewName("redirect:/LionPay");
+			mav.setViewName("redirect:/detail");
+			redirectAttributes.addFlashAttribute("errorMessage", "페이머니 잔액이 부족합니다. 충전 후 결제해주세요.");
 			
 			return mav;
 		}

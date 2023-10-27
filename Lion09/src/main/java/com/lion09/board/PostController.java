@@ -120,7 +120,7 @@ public class PostController {
 
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
-			String uploadDir = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String uploadDir = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			// 업로드한 파일의 원래 파일 이름 가져오기
 			String originalFilename = cFile.getOriginalFilename();
@@ -172,7 +172,7 @@ public class PostController {
 	public ModelAndView list1(@Param("start") Integer start, @Param("end") Integer end,
 			@RequestParam(name = "pageNum", defaultValue = "1") String pageNum,
 			@Param("searchKey") String searchKey,@Param("searchValue") String searchValue,
-			@Param("categoryId") String categoryId,Post dto,
+			@Param("categoryId") String categoryId,Post dto,@Param("postStatus") String postStatus,
 			HttpServletRequest request,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
 		ModelAndView mav = new ModelAndView();
@@ -243,55 +243,50 @@ public class PostController {
 		List<String> findList = mypageService.findLocationsNearby(mdto);
 		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
 		List<Post> lists = new ArrayList<>();
-
+		
 		int myCategoryId = (categoryId != null) ? Integer.parseInt(categoryId) : 0;
 		
 		if(myCategoryId == 0) {
-//			for (Member member : findList) {
-//				String myAddress = member.getMyAddress();
-//				
-//				for (Post post : allLists) {
-//					String myAddr = post.getMyAddr();
-//					if (myAddr.equals(myAddress)) {
-//						lists.add(post);
-//					} 
-//				}
-//			}
 			for (String myAddress : findList) {
 			    for (Post post : allLists) {
 			        String myAddr = post.getMyAddr();
+			        String myStatus = post.getStatus();
 
-			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
-			        if (myAddr.equals(myAddress)) {
-			            lists.add(post);
+			        if("ingPost".equals(postStatus)) {
+			        	if (myAddr.equals(myAddress)&&"모집중".equals(myStatus)) {
+			        		lists.add(post);
+			        	}
+			        }else if ("allPost".equals(postStatus)||postStatus==null) {
+			        	if (myAddr.equals(myAddress)) {
+			        		lists.add(post);
+			        	}
 			        }
+			        
 			    }
 			}
 		}else {
-//			for (Member member : findList) {
-//				String myAddress = member.getMyAddress();
-//				for (Post post : allLists) {
-//					String myAddr = post.getMyAddr();
-//					
-//					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
-//						lists.add(post);
-//					} 
-//				}
-//			}
 			for (String myAddress : findList) {
 			    for (Post post : allLists) {
 			        String myAddr = post.getMyAddr();
-
-			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
-			        if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
-			            lists.add(post);
+			        String myStatus = post.getStatus();
+			        
+			        if("ingPost".equals(postStatus)) {
+			        	if (myAddr.equals(myAddress)&&"모집중".equals(myStatus)&&myCategoryId==post.getCategoryId()) {
+			        		lists.add(post);
+			        	}
+			        }else if ("allPost".equals(postStatus)||postStatus==null) {
+			        	if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+			        		lists.add(post);
+			        	}
 			        }
+			        
 			    }
 			}
 		}
 		
 		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);
+		mav.addObject("postStatus",postStatus);
 
 		mav.setViewName("/list1"); 
 		mav.addObject("lists", lists);
@@ -600,7 +595,7 @@ public class PostController {
 			postId = Integer.parseInt(postIdString);
 
 			//이미지 사진들 모아두는 폴더
-			String upload_path = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
+			String upload_path = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
 
 			Post dto = postService.getReadData(postId);
@@ -609,7 +604,7 @@ public class PostController {
 			String beforeFilename = dto.getChooseFile();
 
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//게시글 이미지가 기존의 이미지가 아닐 경우 삭제
 			if(!beforeFilename.equals("lion.png")) {
@@ -684,7 +679,7 @@ public class PostController {
 
 
 		//삭제할 파일 경로
-		String delete_pate = "C:\\Users\\user\\git\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+		String delete_pate = "C:\\Users\\septw\\git\\gitLion\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 
 		//기본 사진 이미지가 아닐 경우 삭제		

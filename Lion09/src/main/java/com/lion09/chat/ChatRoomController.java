@@ -84,7 +84,6 @@ public class ChatRoomController {
         	room = chatService.findRoomByPostId(postId);
         	
 //        	글 작성자 chatMessages에 넣어놓기
-        	
         	ChatDTO writerIntput = new ChatDTO();
         	writerIntput.setPostId(postId);
         	writerIntput.setUserId(post.getUserId());
@@ -92,7 +91,7 @@ public class ChatRoomController {
         	writerIntput.setType(MessageType.MASTER);
         	msgChatService.addMsg(writerIntput);
         }
-        //대화기록
+        //사용자 입장시간 이후 대화기록
         List<ChatDTO> msg = msgChatService.getMsg(postId, sessionInfo.getUserId());
         //프로필 사진
         String profileImgName =

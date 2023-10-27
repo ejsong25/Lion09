@@ -37,7 +37,7 @@
 	FROM chatMessages AS cm
 	INNER JOIN member AS m ON cm.userId = m.userId
 	WHERE cm.postId = #{postId} 
-	AND cm.time >= (
+	AND cm.time > (
 	    SELECT cm_inner.time
 	    FROM chatMessages AS cm_inner
 	    WHERE cm_inner.userId = #{userId} 
@@ -46,7 +46,6 @@
 	    ORDER BY cm_inner.time ASC
 	    LIMIT 1
 	)
-	AND cm.userId = #{userId} 
 	ORDER BY cm.time ASC;
 </select>
 

@@ -125,10 +125,10 @@ function onMessageReceived(payload) {
         chat.content = chat.nickName + chat.message;
 //        getUserList();
 
-    //} else if (chat.type === 'LEAVE') { // chatType 가 leave 라면 아래 내용
-        //messageElement.classList.add('event-message');
-        //chat.content = chat.nickName + chat.message;
-        //getUserList();
+    } else if (chat.type === 'LEAVE') { // chatType 가 leave 라면 아래 내용
+        messageElement.classList.add('event-message');
+        chat.content = chat.nickName + chat.message;
+        getUserList();
 
     } else { // chatType 이 talk 라면 아래 내용
         messageElement.classList.add('chat-message');

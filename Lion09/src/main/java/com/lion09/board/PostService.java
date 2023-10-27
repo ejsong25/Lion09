@@ -38,7 +38,6 @@ public interface PostService {
 	
 	public Order getOrderList(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
 
-	
 	//좋아요 기능
 	public void insertPostlike(PostLikeDTO likedto) throws Exception;
 	
@@ -101,5 +100,11 @@ public interface PostService {
 
 	public void updateReview(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
 	
+	public int cannotRemovePosts(String userId) throws Exception;
+	//정원마감
+	public void updateStatus(Post dto) throws Exception;
 	
+	public void updateOderStatus(@Param("postId") int postId) throws Exception;
+
+	public void deleteAllPosts(String userId) throws Exception;
 }

@@ -343,6 +343,9 @@ public class LionPayController {
 
 	  	postService.insertOrder1(Odto);
 	  	postService.updateOrder(postId);
+	  	
+
+
 
 	  	mav.setViewName("redirect:/detail?postId=" + postId);
 	  	mav.addObject("selectedValue", selectedValue);

@@ -110,5 +110,9 @@
 	where postId=#{postId} and userId=#{userId}
 </select>
 
+<update id="updateOderStatus" parameterType="hashMap">
+	update orders set status='모집완료' where postId=#{postId}
+</update>
+
 
 </mapper>

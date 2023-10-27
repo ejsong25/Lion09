@@ -5,7 +5,7 @@
 <mapper namespace="com.lion09.pay.LionPayMapper">
 
 <insert id="insertLionPay" parameterType="com.lion09.pay.LionPayDTO">
-    INSERT INTO lionPay (userId) VALUES (#{userId})
+    INSERT INTO lionPay (userId, balance) VALUES (#{userId}, 0)
 </insert>
 
 <insert id="insertRecharge">
@@ -76,4 +76,11 @@
 	select usage from recharge where userId = #{userId} and postId = #{postId}
 </select>
 
+<delete id="deleteLionPay">
+	delete from lionPay where userId = #{userId}
+</delete>
+
+<delete id="deleteLionPayLists">
+	delete from recharge where userID = #{userId}
+</delete>
 </mapper>

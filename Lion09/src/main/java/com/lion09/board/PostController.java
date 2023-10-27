@@ -322,7 +322,18 @@ public class PostController {
 	    member = mypageService.selectData(userId);
 	    post = postService.getReadData(postId);	  
 	    String status = postService.getReadStatus(postId);
-	   
+	    
+	    
+	    //정원마감
+	    if(post.getRecruitment() == post.getParticipant()) {
+		   
+		   post.setStatus("모집완료");
+		  postService.updateStatus(post);
+		  postService.updateOderStatus(postId);
+		  
+	   }
+	    
+
 	    Odto.setUserId(userId);
 	    Odto.setPostId(postId);
 
@@ -353,6 +364,7 @@ public class PostController {
 	    	 Odto = postService.getOrderList(userId, postId);
 	    	 
 	    }
+	    
 	    
 	    
 
@@ -799,7 +811,7 @@ public class PostController {
 	    Odto.setUserId(sessionInfo.getUserId()); //userId
 	    Odto.setPostId(dto.getPostId()); //postId
 
-	    postService.deleteOrder1(Odto);
+	    postService.cancelOrder(postId, sessionInfo.getUserId());
 	    postService.deleteOrder2(postId);
 
 	    // 참여 취소 잔액 환불
@@ -862,11 +874,14 @@ public class PostController {
 	    
 	    postService.cancelOrder(postId, sessionInfo.getUserId());
 	    postService.deleteOrder2(postId);
+	    
+
 
 	    
 	    ModelAndView mav = new ModelAndView();
 
 		mav.setViewName("redirect:/detail?postId=" + postId);
+		
 		
 		return mav;
 		
@@ -889,7 +904,7 @@ public class PostController {
 
 		}
 
-		int numPerPage = 5;
+		int numPerPage = 20;
 		start = (currentPage - 1) * numPerPage + 1;
 		end = currentPage * numPerPage;			
 		member = mypageService.selectData(sessionInfo.getUserId());

@@ -78,6 +78,9 @@ public class Post {
 	
 	@Column(length = 100)
 	private String myAddr;
+	
+	private String myLatitude; //위도
+	private String myLongitude; //경도
 
 	private LocalDateTime likeDate;
 	

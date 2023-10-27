@@ -150,14 +150,12 @@
 	}
     
     function order3() {
-        var button = document.getElementById("joinButton");
+    	f = document.orderForm;
+    	var currentClass = $(this).attr('class');
         
-        if (!button.disabled) {
-            button.disabled = true;
-            button.value = "마감되었습니다.";
-        }
+    	$(this).attr('class', 'joinButton2');
+        alert('재 참여 불가합니다.')
     }
-    
     
   function order4() {
         
@@ -195,29 +193,6 @@
       }
 
       toggle();
-      
-      function deletePost() {
-          if (confirm('정말로 삭제하시겠습니까?')) {
-              // 확인 버튼을 클릭했을 때 서버로 삭제 요청을 보내는 부분
-              var postId = [[${dto.postId}]];
-              
-              // 서버로 삭제 요청을 보내는 AJAX 호출
-              $.ajax({
-                  type: "POST",  // 요청 메서드 (GET 또는 POST)
-                  url: "/deleted_ok.action",  // 삭제 엔드포인트 URL
-                  data: { postId: postId },  // 게시물 ID를 전송
-                  success: function (response) {
-                      alert('삭제가 완료되었습니다.');
-                      window.location.href = '/list1';  // 삭제가 성공하면 다른 페이지로 리디렉션
-                  },
-                  error: function (error) {
-                      alert('삭제 중 오류가 발생했습니다: ' + error.responseText);
-                  }
-              });
-          } else {
-              return;
-          }
-      }
     
     </script>
     
@@ -267,7 +242,7 @@
 						th:src="@{'/img/mypage/' + ${mdto.profileImgName}}" >
 		</div>						
         <div style=" margin-left: 30%;white-space: nowrap;">
-         	<p style="font-size: 20px;" th:text="${mdto.nickName}">&nbsp;&nbsp;${dto.nickName}</p>
+         	<p style="font-size: 20px;" th:text="${mdto.nickName}">&nbsp;&nbsp;${mdto.nickName}</p>
             <p th:text="${dto.myAddr}">&nbsp;&nbsp;${dto.myAddr}</p></div>
             
 
@@ -329,9 +304,8 @@
 				<div class="flex-box button-box" style="margin-left: 66%;" 
 					th:if="${mdto.userId == dto.userId && dto.participant == 1}">
                     <button class="orange" th:onclick="@{|location.href='/writeUpdated?postId=${dto.postId}&${params}'|}">수정하기</button>
-                 	<!-- <input type="button" class="grey" onclick="alertBeforeDelete();" value="삭제하기"> -->
-					<button class="grey" onclick="deletePost();">삭제하기</button>
-		                 
+                    <button class="grey" th:onclick="@{|location.href='/deleted_ok.action?postId=${dto.postId}&${params}'|}">삭제하기</button>
+                 
                   <button class="orange" th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}">채팅보기</button>
                 </div>
                 
@@ -394,7 +368,7 @@
 	<!-- 참여인원  -->        
     <div class="submitButtons">
 		<form action="" method="get" name="orderForm">
-			<input type="button" th:if="${Odto.count == 0}" onclick="order1();" class="joinButton2" id="modal-open2" value="참여하기">
+			<input type="button" th:if="${Odto.count == 0 and Odto.status.name!='Canceled' and Odto.userId !=dto.userId and dto.recruitment != dto.participant}" onclick="order1();" class="joinButton2" id="modal-open2" value="참여하기">
 			<div class="popup-wrap" id="popup2">
 				    <div class="popup">
 				      <div class="popup-head">
@@ -419,7 +393,8 @@
 				      </div>
 				    </div>
 				</div>
-            <input type="button"  th:if="${Odto.count==1 && dto.participant  != dto.recruitment}"  onclick="order2();"  class="joinButton2" value="취소하기">
+			<input type="button"  th:if="${Odto.count==1 and dto.participant != dto.recruitment}"  onclick="order2();" id="cancelButton" class="joinButton2" value="취소하기">
+            <input type="button"  th:if="${Odto.status.name=='Canceled'}"  onclick="order3();" id="joinButton3" class="joinButton2" value="재참여불가">
             <input type="button" style="background-color: grey;" th:if="${dto.participant == dto.recruitment}" class="joinButton2" onclick="order4();" value="정원마감">
         	<input type="hidden" th:value="${dto.postId}" name="postId">
         	<div class="modal-container">
@@ -476,15 +451,10 @@
 			<input class="profileImgBtn" type='button' id='btnCheck' value='확인'/><br/>
 		</div>
 	</div>
+	
         	
-   	</form>
-    </div>
-	<br/><br/>
-
-	<footer class="tm-footer text-center">
-		<p>Copyright &copy; 2020 Simple House 
-           
-           | Design: <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
+	<footer class="tm-footer1 text-center">
+		<p>Copyright &copy; 2020 Simple House | Design: TemplateMo</p>
 	</footer>
 </div>
 	
@@ -642,7 +612,49 @@
 
     // 이 함수를 호출하여 프로그레스 바 업데이트
     updateProgressBar(participant, recruitment);
+  </script>
+    
+	<script type="text/javascript">
+    
+    function updateReJoinButton() {
+    	
+        var joinButton3 = document.getElementById("joinButton3");
+    var status = [[${Odto.status}]]; 
+        if (status === "Canceled") {
+            // status가 "Canceled"일 때 재참여 버튼을 나타냅니다.
+            joinButton3.style.display = "block";
+        } else {
+            // 그 외의 경우에는 버튼을 숨깁니다.
+            joinButton3.style.display = "none";
+        }
+    }
+    
+    updateReJoinButton();
+    
 	</script>
+	
+		<script type="text/javascript">
+    
+    var count = [[${Odto.count}]]; 
+    var participant = [[${dto.participant}]]; 
+    var recruitment = [[${dto.recruitment}]]; 
+    function canceledButton() {
+    	
+        var cancelButton = document.getElementById("cancelButton");
+        if (count == 1 && participant != recruitment) {
+           //버튼 활성화
+            cancelButton.style.display = "block";
+        } else {
+            // 그 외의 경우에는 버튼을 숨깁니다.
+            cancelButton.style.display = "none";
+        }
+    }
+    
+    canceledButton();
+    
+	</script>
+	
+	
 	
 </body>
 </html>

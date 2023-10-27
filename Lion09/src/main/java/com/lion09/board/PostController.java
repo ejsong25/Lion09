@@ -240,33 +240,53 @@ public class PostController {
 		}
 
 		//반경조회해서 가져오기
-		List<Member> findList = mypageService.findLocationsNearby(mdto);
+		List<String> findList = mypageService.findLocationsNearby(mdto);
 		List<Post> allLists = postService.getLists(start, end, searchKey, searchValue);
 		List<Post> lists = new ArrayList<>();
 
 		int myCategoryId = (categoryId != null) ? Integer.parseInt(categoryId) : 0;
 		
 		if(myCategoryId == 0) {
-			for (Member member : findList) {
-				String myAddress = member.getMyAddress();
-				
-				for (Post post : allLists) {
-					String myAddr = post.getMyAddr();
-					if (myAddr.equals(myAddress)) {
-						lists.add(post);
-					} 
-				}
+//			for (Member member : findList) {
+//				String myAddress = member.getMyAddress();
+//				
+//				for (Post post : allLists) {
+//					String myAddr = post.getMyAddr();
+//					if (myAddr.equals(myAddress)) {
+//						lists.add(post);
+//					} 
+//				}
+//			}
+			for (String myAddress : findList) {
+			    for (Post post : allLists) {
+			        String myAddr = post.getMyAddr();
+
+			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
+			        if (myAddr.equals(myAddress)) {
+			            lists.add(post);
+			        }
+			    }
 			}
 		}else {
-			for (Member member : findList) {
-				String myAddress = member.getMyAddress();
-				for (Post post : allLists) {
-					String myAddr = post.getMyAddr();
-					
-					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
-						lists.add(post);
-					} 
-				}
+//			for (Member member : findList) {
+//				String myAddress = member.getMyAddress();
+//				for (Post post : allLists) {
+//					String myAddr = post.getMyAddr();
+//					
+//					if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+//						lists.add(post);
+//					} 
+//				}
+//			}
+			for (String myAddress : findList) {
+			    for (Post post : allLists) {
+			        String myAddr = post.getMyAddr();
+
+			        //findList의 문자열과 myAddr 값이 같으면 리스트에 추가
+			        if (myAddr.equals(myAddress)&&myCategoryId==post.getCategoryId()) {
+			            lists.add(post);
+			        }
+			    }
 			}
 		}
 		
@@ -302,7 +322,18 @@ public class PostController {
 	    member = mypageService.selectData(userId);
 	    post = postService.getReadData(postId);	  
 	    String status = postService.getReadStatus(postId);
-	   
+	    
+	    
+	    //정원마감
+	    if(post.getRecruitment() == post.getParticipant()) {
+		   
+		   post.setStatus("모집완료");
+		  postService.updateStatus(post);
+		  postService.updateOderStatus(postId);
+		  
+	   }
+	    
+
 	    Odto.setUserId(userId);
 	    Odto.setPostId(postId);
 
@@ -326,6 +357,16 @@ public class PostController {
 	    PostLikeDTO likedto = new PostLikeDTO();
 	    likedto.setUserId(userId);
 	    likedto.setPostId(postId);
+	    
+	    
+	    if(!Odto.getStatus().equals("Canceled") && Odto.getCount()!=0) {
+	    	
+	    	 Odto = postService.getOrderList(userId, postId);
+	    	 
+	    }
+	    
+	    
+	    
 
 	    int likeState = postService.findPostlikeState(likedto);
 	    likedto.setLikeState(likeState);
@@ -770,7 +811,7 @@ public class PostController {
 	    Odto.setUserId(sessionInfo.getUserId()); //userId
 	    Odto.setPostId(dto.getPostId()); //postId
 
-	    postService.deleteOrder1(Odto);
+	    postService.cancelOrder(postId, sessionInfo.getUserId());
 	    postService.deleteOrder2(postId);
 
 	    // 참여 취소 잔액 환불
@@ -818,24 +859,29 @@ public class PostController {
 	
 	// 만나서 거래 참여취소
 	@GetMapping(value = "/deleteOrder")
-	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,
+	public ModelAndView deleteOrder(Order Odto,Post dto,Member member,@Param("postId") Integer postId,
 			@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception {
 
-		int postId = dto.getPostId();
 
 		member = mypageService.selectData(sessionInfo.getUserId());
 	    dto = postService.getReadData(postId);
 
+	    postId = dto.getPostId();
+
 	    //참여하기
 	    Odto.setUserId(sessionInfo.getUserId()); //userId
 	    Odto.setPostId(dto.getPostId()); //postId
-
-	    postService.deleteOrder1(Odto);
+	    
+	    postService.cancelOrder(postId, sessionInfo.getUserId());
 	    postService.deleteOrder2(postId);
+	    
+
+
 	    
 	    ModelAndView mav = new ModelAndView();
 
 		mav.setViewName("redirect:/detail?postId=" + postId);
+		
 		
 		return mav;
 		
@@ -858,7 +904,7 @@ public class PostController {
 
 		}
 
-		int numPerPage = 5;
+		int numPerPage = 20;
 		start = (currentPage - 1) * numPerPage + 1;
 		end = currentPage * numPerPage;			
 		member = mypageService.selectData(sessionInfo.getUserId());

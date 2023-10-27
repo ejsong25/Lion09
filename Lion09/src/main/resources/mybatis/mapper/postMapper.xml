@@ -98,7 +98,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
  <!-- 마감 일주일 남은 게시글 목록 가져오기 -->
 <select id="deadlineProduct" resultType="com.lion09.board.Post">
     SELECT postId, title, productsPrice, hitCount, userId, created, deadLine,
-        chooseFile, postLikeCount, recruitment, categoryId, myAddr
+        chooseFile, postLikeCount, recruitment, categoryId, myAddr, status
     FROM post
     <![CDATA[
     WHERE deadLine <= DATEADD('DAY', 7, CURRENT_TIMESTAMP())
@@ -110,7 +110,7 @@ PUBLIC "-///mybatis.org//DTD Mapper 3.0//EN"
  <!-- 인기글 목록 가져오기 -->
 <select id="hitProduct" resultType="com.lion09.board.Post">
     SELECT postId, title, productsPrice, hitCount, userId, created, deadLine,
-        chooseFile, postLikeCount, recruitment, categoryId, myAddr
+        chooseFile, postLikeCount, recruitment, categoryId, myAddr, status
     FROM post
     ORDER BY hitCount DESC
     LIMIT 5;

@@ -111,6 +111,15 @@
                     </a>
                     <figcaption style="margin-left: -30px;">
                         <h4 class="tm-gallery-title" th:text="${dto.title}" align="center">제목</h4>
+                        <div th:if="${dto.status == '모집중'}" style="width: 40px; background-color: #EB9D4B; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
+							border-radius: 5px; padding: 2px; font-family: 'omyu_pretty';">[[${dto.status}]]</div>
+						<div th:if="${dto.status == '모집완료'}" style="width: 52px; background-color: #EBC249; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
+							border-radius: 5px; padding: 2px; font-family: 'omyu_pretty';">[[${dto.status}]]</div>
+						<div th:if="${dto.status == '거래완료'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
+							border-radius: 5px; padding: 2px; font-family: 'omyu_pretty';">[[${dto.status}]]</div>
                         <p class="tm-gallery-price" th:text="${dto.productsPrice}" align="center">가격</p>
                         <p class="tm-gallery-description" th:text="${dto.myAddr}" align="center">주소</p>
                         <div class="like_chating" style="display: flex; margin-left:0%; font-family:'omyu_pretty'; align-items: center; justify-content: center;">

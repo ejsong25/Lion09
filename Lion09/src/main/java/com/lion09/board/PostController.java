@@ -286,15 +286,9 @@ public class PostController {
 		}
 		
 		Collections.sort(lists, (post1, post2) -> {
-		    if (post1.getCreated() == null && post2.getCreated() == null) {
-		        return 0;
-		    } else if (post1.getCreated() == null) {
-		        return 1; //post1을 post2보다 최근으로 간주
-		    } else if (post2.getCreated() == null) {
-		        return -1; //post2를 post1보다 최근으로 간주
-		    } else {
-		        return post1.getCreated().compareTo(post2.getCreated());
-		    }
+		    int postId1 = post1.getPostId();
+		    int postId2 = post2.getPostId();
+		    return Integer.compare(postId1, postId2);
 		});
 		
 		mav.addObject("mdto",mdto);

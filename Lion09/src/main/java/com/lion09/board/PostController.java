@@ -288,7 +288,7 @@ public class PostController {
 		Collections.sort(lists, (post1, post2) -> {
 		    int postId1 = post1.getPostId();
 		    int postId2 = post2.getPostId();
-		    return Integer.compare(postId1, postId2);
+		    return Integer.compare(postId2, postId1); //postId2와 postId1을 바꿔 내림차순으로 정렬
 		});
 		
 		mav.addObject("mdto",mdto);

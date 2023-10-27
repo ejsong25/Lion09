@@ -104,5 +104,10 @@ public class LionPayServiceImpl implements LionPayService {
 		lionPayMapper.deleteLionPayLists(userId);
 	}
 
+	@Override
+	public void resetBalance(String userId) throws Exception {
+		lionPayMapper.resetBalance(userId);
+	}
+
 
 }

@@ -354,4 +354,18 @@ public class LionPayController {
 		
 	}
 	
+	@RequestMapping(value = "/resetRefund", method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView resetRefund(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception{
+		
+		String userId = sessionInfo.getUserId();
+	    LionPayDTO dto = lionPayService.getReadData(userId);
+	    lionPayService.resetBalance(dto.getUserId());
+
+	    ModelAndView mav = new ModelAndView();
+	    mav.setViewName("LionPay");
+	    mav.addObject("dto", dto);
+
+	    return mav;
+	}
+	
 }

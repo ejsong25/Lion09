@@ -45,4 +45,6 @@ public interface LionPayMapper {
 	public void deleteLionPay(String userId) throws Exception;
 
 	public void deleteLionPayLists(String userId) throws Exception;
+	
+	public void resetBalance(@Param("userId") String userId) throws Exception;
 }

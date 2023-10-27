@@ -7,6 +7,7 @@
 <title>LionPay</title>
 <link href="css/myPage.css" rel="stylesheet" />
 <link href="css/style_myPage.css" rel="stylesheet" />
+<link href="css/pay.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -259,12 +260,6 @@ window.addEventListener('load', function() {
 
 });
 
-function err(){
-	var err = [[${err}]];
-	if (err) {
-	    alert(err);
-	}
-};
 </script>
 
 </head>
@@ -394,10 +389,47 @@ function err(){
 									</form>
 								</div>
 								<div style="margin-top: 20px; padding-left: 30px;">[[${dto.balance}]]원</div>
+								<button class="profileImgBtn" id="btnRefund"
+											style="margin: 0px; width: 100px; float: right; margin-right: 30px;">환불</button>
 							</td>
 						</tr>
 					</table>
-
+					<div class="modal-container">
+					<div class="popup-wrap" id="refundPopup">
+						<div class="popup">
+							<div class="popup-head">
+								<span class="head-title">라이온페이머니 환불</span>
+							</div>
+							<div class="popup-body">
+								<div class="body-content">
+									<div class="body-titlebox"></div>
+									<div class="body-contentbox">
+										<dl>
+											<dt>환불 예정 금액</dt>
+											<dd>
+												<input type="text" class="modal-input"
+													th:value="${dto.balance} + '원'" readonly />
+											</dd>
+										</dl>
+										<dl>
+											<dt>환불 받을 계좌</dt>
+											<dd>
+												<input type="text" class="modal-input" id="refund_ant"
+													th:value="${dto.accountNum}"
+													readonly />
+											</dd>
+										</dl>
+										<h3>해당 계좌로 환불을 진행하시겠습니까?</h3>
+									</div>
+								</div>
+							</div>
+							<div class="popup-foot">
+								<span class="pop-btn confirm" id="confirm">예</span> <span
+									class="pop-btn close" id="close">아니오</span>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				</div>
 				
@@ -531,6 +563,7 @@ function err(){
 	</script>
 	<script type="text/javascript" th:inline="javascript">
 	  var btnOpen = document.getElementById('btnOpen');
+	  var btnRefund = document.getElementById('btnRefund');
 	  var btnCheck = document.getElementById('btnCheck');
 	  var btnClose = document.getElementById('btnClose');
 	  var preModal = document.getElementById('preModal');
@@ -551,6 +584,10 @@ function err(){
 		            modal.style.display = 'block';
 		        }
 		  }
+	  });
+	  
+	  btnRefund.addEventListener('click', function() {
+		  refundPopup.style.display = 'block';
 	  });
 	  
 
@@ -600,6 +637,31 @@ function err(){
 		    }
 		});
 	  });
+	  
+	  $("#confirm").click(function(){
+		  
+		  var userId = [[${dto.userId}]];
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/resetRefund?userId=" + userId,
+		        success: function(data) {
+		            alert("계좌로 환불이 완료되었습니다.");
+		            refundPopup.style.display = 'none';
+		            window.location.href = '/LionPay';
+		            
+		        },
+		        error: function() {
+		            alert("다시 시도해주세요.");
+		        }
+		    });
+		});
+	  
+	  $("#close").click(function(){
+			refundPopup.style.display = 'none';
+			
+		});
+
 	  
 	</script>
 	<script src="js/payPwd.js"></script>

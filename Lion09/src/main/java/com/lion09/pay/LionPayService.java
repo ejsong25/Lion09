@@ -41,4 +41,7 @@ public interface LionPayService {
 	public void deleteLionPay(String userId) throws Exception;
 	
 	public void deleteLionPayLists(String userId) throws Exception;
+	
+	public void resetBalance(String userId) throws Exception;
+	
 }

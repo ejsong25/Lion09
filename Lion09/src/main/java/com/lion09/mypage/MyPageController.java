@@ -72,6 +72,7 @@ public class MyPageController {
 		if(nickNameCheck==0) {
 			mypageService.updateData(dto);
 			mav.setViewName("redirect:/myPage");
+			 sessionInfo.setNickName(dto.getNickName());
 			redirectAttributes.addFlashAttribute("successMessage", "닉네임이 변경되었습니다");
 			
 			return mav;

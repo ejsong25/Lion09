@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -283,6 +284,18 @@ public class PostController {
 			    }
 			}
 		}
+		
+		Collections.sort(lists, (post1, post2) -> {
+		    if (post1.getCreated() == null && post2.getCreated() == null) {
+		        return 0;
+		    } else if (post1.getCreated() == null) {
+		        return 1; //post1을 post2보다 최근으로 간주
+		    } else if (post2.getCreated() == null) {
+		        return -1; //post2를 post1보다 최근으로 간주
+		    } else {
+		        return post1.getCreated().compareTo(post2.getCreated());
+		    }
+		});
 		
 		mav.addObject("mdto",mdto);
 		mav.addObject("findList",findList);

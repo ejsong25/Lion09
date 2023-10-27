@@ -248,14 +248,14 @@
                <div class="form-group form-price"></div>
                <select class="form-control" id="categoryId" name="categoryId"  style="border-radius:5px; width:100%; padding:5px;" th:value="${dto.categoryId}">
 	               <option value="">카테고리 선택</option>
-	               <option value="1" selected>신선식품</option>
-	               <option value="2">가공식품</option>
-	               <option value="3">의류/신발</option>
-	               <option value="4">뷰티/미용</option>
-	               <option value="5">생활/주방</option>
-	               <option value="6">스포츠/레저</option>
-	               <option value="7">도서</option>
-	               <option value="8">기타물품</option>
+	               <option value="1" th:selected="${dto.categoryId == 1}">신선식품</option>
+	               <option value="2" th:selected="${dto.categoryId == 2}">가공식품</option>
+	               <option value="3" th:selected="${dto.categoryId == 3}">의류/신발</option>
+	               <option value="4" th:selected="${dto.categoryId == 4}">뷰티/미용</option>
+	               <option value="5" th:selected="${dto.categoryId == 5}">생활/주방</option>
+	               <option value="6" th:selected="${dto.categoryId == 6}">스포츠/레저</option>
+	               <option value="7" th:selected="${dto.categoryId == 7}">도서</option>
+	               <option value="8" th:selected="${dto.categoryId == 8}">기타물품</option>
            	   </select><br/>
 	              
      		   <div class="form-group form-price">

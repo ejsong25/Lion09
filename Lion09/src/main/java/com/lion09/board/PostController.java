@@ -330,20 +330,20 @@ public class PostController {
 	    
 	    Post pdto = postService.getReadData(postId);
 	    
-	    Member mdto = mypageService.selectData(pdto.getUserId());
+//	    Member mdto = mypageService.selectData(pdto.getUserId());
 	    
 	    String userId = sessionInfo.getUserId();
 	    
-//	    Member mdto = mypageService.selectData(sessionInfo.getUserId());
+	    Member mdto = mypageService.selectData(sessionInfo.getUserId());
 //	    String userId = mdto.getUserId();
 
-	    Member member = new Member(); // Member 엔티티의 인스턴스 생성
+//	    Member member = new Member(); // Member 엔티티의 인스턴스 생성
 	    Post post = new Post(); // Post 엔티티의 인스턴스 생성
 
 	    // 참여하기
 	    Order Odto = new Order();
 	    
-	    member = mypageService.selectData(userId);
+//	    member = mypageService.selectData(userId);
 	    post = postService.getReadData(postId);	  
 	    String status = postService.getReadStatus(postId);
 	    
@@ -421,6 +421,8 @@ public class PostController {
 	 	String type = postService.getReadType(userId, postId);
 
 	    ModelAndView mav = new ModelAndView();
+	    
+	    System.out.println(mdto.getUserId());
 
 	    // 좋아요 부분
 	    mav.addObject("likedto", likedto);

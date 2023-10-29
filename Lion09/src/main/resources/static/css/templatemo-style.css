@@ -131,9 +131,9 @@ th{
 
 #preModal .close{
 	position:absolute;
-	top:7px;
-	right:7px;	
-	font-size:20px;
+	top:9px;
+	right:9px;	
+	font-size:25px;
 	border:0;
 	background-color: #fff;
 	z-index: 999;
@@ -149,16 +149,16 @@ th{
 
 #preModal #content label {
 	color : #000;
-    display: block; /* label �슂�냼瑜� 釉붾줉 �슂�냼濡� �몴�떆�븯�룄濡� �꽕�젙 */
+    display: block;
     margin-bottom: 10px;
     padding-top: 40px;
 }
 
 #modal .close{
 	position:absolute;
-	top:7px;
-	right:7px;	
-	font-size:20px;
+	top:9px;
+	right:9px;	
+	font-size:25px;
 	border:0;
 	background-color: #fff;
 	z-index: 999;
@@ -174,16 +174,16 @@ th{
 
 #modal #content label {
 	color : #000;
-    display: block; /* label �슂�냼瑜� 釉붾줉 �슂�냼濡� �몴�떆�븯�룄濡� �꽕�젙 */
+    display: block;
     margin-bottom: 10px;
     padding-top: 40px;
 }
 
 #nextModal .close{
 	position:absolute;
-	top:7px;
-	right:7px;	
-	font-size:20px;
+	top:9px;
+	right:9px;	
+	font-size:25px;
 	border:0;
 	background-color: #fff;
 	z-index: 999;
@@ -199,7 +199,7 @@ th{
 
 #nextModal #content label {
 	color : #000;
-    display: block; /* label �슂�냼瑜� 釉붾줉 �슂�냼濡� �몴�떆�븯�룄濡� �꽕�젙 */
+    display: block;
     margin-bottom: 10px;
     padding-top: 40px;
 }

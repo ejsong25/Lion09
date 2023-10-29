@@ -70,10 +70,9 @@ function addAmount(amount) {
 
 function cash() {
 	
-	var btnOpen = document.getElementById('btnOpen');
+	  var btnOpen = document.getElementById('btnOpen');
 	  var btnRefund = document.getElementById('btnRefund');
 	  var btnCheck = document.getElementById('btnCheck');
-	  var btnClose = document.getElementById('btnClose');
 	  var preModal = document.getElementById('preModal');
 	  var modal = document.getElementById('modal');
 	  var nextModal = document.getElementById('nextModal');
@@ -93,6 +92,14 @@ function cash() {
         return;
     }
     
+    
+    if (![[${dto.payPwd}]]) {
+	    alert('먼저 PAY 비밀번호를 등록해주세요.');
+	    rechargeAmount = 0;
+	    return;
+	    
+	}
+    
     $.ajax({
         type: 'POST',
         url: '/payCharge.action',
@@ -101,45 +108,49 @@ function cash() {
         success: function(response) {
         	
         	if (response.canCharge) {
+        		
+        			$("#modal").css("display", "block");
+            		$("#btnCheck").click(function() {
+            			
+    	        		var dtoPwd = $("#payPwd").val();
+    	        		var enteredPwd = "";
+    	        		
+    	        		enteredPwd += $("#payPwd1").val();
+    	        		enteredPwd += $("#payPwd2").val();
+    	        		enteredPwd += $("#payPwd3").val();
+    	        		enteredPwd += $("#payPwd4").val();
+    	        		enteredPwd += $("#payPwd5").val();
+    	        		enteredPwd += $("#payPwd6").val();
+    	
+    	        		if (!enteredPwd) {
+    	        	    	alert('PAY비밀번호를 입력해주세요.');
+    	        	    } else if (enteredPwd === dtoPwd) {
+    	        		    $("#modal").css("display", "none");
+    	        		 	// totalAmount 초기화
+    	    	            totalAmount = 0;
+    	    	
+    	    	            // 결과 업데이트
+    	    	            document.getElementById('result').textContent = currentBalance.toLocaleString() + '원';
+    	    	            window.location.href = '/LionPay';
+    	    	         	alert('충전이 완료되었습니다.');
+    	        		        
+    	        		} else {
+    	        		    alert('비밀번호가 일치하지 않습니다.');
+    	        		    totalAmount = 0;
+    	        		    $("#modal").css("display", "none");
+    	        		        
+    	        		    document.getElementById('payPwd1').value = '';
+    	        			document.getElementById('payPwd2').value = '';
+    	        			document.getElementById('payPwd3').value = '';
+    	        			document.getElementById('payPwd4').value = '';
+    	        			document.getElementById('payPwd5').value = '';
+    	        			document.getElementById('payPwd6').value = '';
+    	        			
+    	        		}
+    	        		
+            		});
+        			
             
-        		$("#modal").css("display", "block");
-        		$("#btnCheck").click(function() {
-	        		var dtoPwd = $("#payPwd").val();
-	        		var enteredPwd = "";
-	
-	        		enteredPwd += $("#payPwd1").val();
-	        		enteredPwd += $("#payPwd2").val();
-	        		enteredPwd += $("#payPwd3").val();
-	        		enteredPwd += $("#payPwd4").val();
-	        		enteredPwd += $("#payPwd5").val();
-	        		enteredPwd += $("#payPwd6").val();
-	
-	        		if (!enteredPwd) {
-	        	    	alert('PAY비밀번호를 입력해주세요.');
-	        	    } else if (enteredPwd === dtoPwd) {
-	        		    $("#modal").css("display", "none");
-	        		 	// totalAmount 초기화
-	    	            totalAmount = 0;
-	    	
-	    	            // 결과 업데이트
-	    	            document.getElementById('result').textContent = currentBalance.toLocaleString() + '원';
-	    	            
-	    	            window.location.href = '/LionPay';
-	    	         	
-	    	         	alert('충전이 완료되었습니다.');
-	        		        
-	        		} else {
-	        		    alert('비밀번호가 일치하지 않습니다.');
-	        		        
-	        		    document.getElementById('payPwd1').value = '';
-	        			document.getElementById('payPwd2').value = '';
-	        			document.getElementById('payPwd3').value = '';
-	        			document.getElementById('payPwd4').value = '';
-	        			document.getElementById('payPwd5').value = '';
-	        			document.getElementById('payPwd6').value = '';
-	        		}
-                
-        		});
         	} else {
         		totalAmount = 0;
                 document.getElementById('result').textContent = totalAmount.toLocaleString();
@@ -233,6 +244,10 @@ function registerPwd() {
             document.getElementById('pwd4').value = '';
             document.getElementById('pwd5').value = '';
             document.getElementById('pwd6').value = '';
+            
+            if (!pwd) {
+    	    	alert('PAY비밀번호를 입력해주세요.');
+    	    }
 
             alert('PAY비밀번호가 등록되었습니다.');
             
@@ -362,7 +377,7 @@ window.addEventListener('load', function() {
 									<input type="hidden" id="payPwd" th:value="${dto.payPwd}" />
 									<div id="preModal">
 										<div id='content'>
-											<input type='button' value='x' class="close" id='btnClose'/>
+											<input type='button' value='x' class="close" id='btnClose1'/>
 											<label>사용할 PAY비밀번호를 입력하세요.</label><br/>
 											<div class="certify">
 										        <input type="password" id="pwd1"
@@ -378,12 +393,12 @@ window.addEventListener('load', function() {
 										        <input type="password" id="pwd6"
 										        	maxlength="1" min="0" max="9" onlyNumber>
 										    </div>
-										    <input class="profileImgBtn" type='button' onclick='registerPwd();' value='등록'/><br/>
+										    <input class="profileImgBtn" type='button' onclick='registerPwd();' value='등록' id='btnRegister'/><br/>
 										</div>
 									</div>
 									<div id="modal" style="display: none;">
 										<div id='content'>
-											<input type='button' value='x' class="close" id='btnClose'/>
+											<input type='button' value='x' class="close" id='btnClose2'/>
 											<label>현재 PAY비밀번호를 입력하세요.</label><br/>
 											<div class="certify">
 										        <input type="password" id="payPwd1"
@@ -406,7 +421,7 @@ window.addEventListener('load', function() {
 									<input type="hidden" name="newPwd" id="newPwd" value="">
 									<div id='nextModal' style="display: none;">
 										<div id='content'>
-										<input type='button' value='x' class="close" id='btnClose'/>
+										<input type='button' value='x' class="close" id='btnClose3'/>
 											<label>새로 사용할 PAY비밀번호를 입력하세요.</label><br/>
 											<div class="certify">
 												<input type="password" id="newPwd1"
@@ -422,7 +437,7 @@ window.addEventListener('load', function() {
 												<input type="password" id="newPwd6"
 												  maxlength="1" min="0" max="9" onlyNumber>
 											</div>
-											<input class="profileImgBtn" type='button' onclick='changePwd();' value='변경' /><br/>
+											<input class="profileImgBtn" type='button' onclick='changePwd();' value='변경' id="btnChange"/><br/>
 										</div>
 									</div>
 									</form>
@@ -481,7 +496,7 @@ window.addEventListener('load', function() {
 						style="background-color: #ffffff; border-color: #444444; color: #444444; height: 20px;">
 						<tr>
 							<td>
-								<select style="width: 115px;" id="mySelect" name="accountName">
+								<select style="width: 115px; height: 30px;" id="mySelect" name="accountName" class="listbox">
 									<option value="" disabled selected>은행선택</option>
 									<option th:each="bank : ${bankList}" th:text="${bank}" 
 										th:value="${bank}" th:selected="${bank == dto.accountName}">
@@ -604,12 +619,16 @@ window.addEventListener('load', function() {
 	  var btnOpen = document.getElementById('btnOpen');
 	  var btnRefund = document.getElementById('btnRefund');
 	  var btnCheck = document.getElementById('btnCheck');
-	  var btnClose = document.getElementById('btnClose');
+	  var btnClose = document.getElementById('btnClose1');
+	  var btnClose = document.getElementById('btnClose2');
+	  var btnClose = document.getElementById('btnClose3');
 	  var preModal = document.getElementById('preModal');
 	  var modal = document.getElementById('modal');
 	  var nextModal = document.getElementById('nextModal');
 
 	  btnCheck.disabled = true;
+	  btnRegister.disabled = true;
+	  btnChange.disabled = true;
 	  
 	  // "pay비밀번호" 버튼 클릭 시 모달 창 열기
 	  btnOpen.addEventListener('click', function() {
@@ -629,22 +648,40 @@ window.addEventListener('load', function() {
 		  refundPopup.style.display = 'block';
 	  });
 	  
-
-	  // "x" 버튼 클릭 시 모달 창 닫기
-	  btnClose.addEventListener('click', function() {
-	    modal.style.display = 'none';
-	    preModal.style.display = 'none';
-	    nextModal.style.display ='none';
+	  //"x" 버튼 클릭 시 모달 창 닫기
+	  btnClose1.addEventListener('click', function() {
+	    $("#preModal").css("display", "none");
 	    
-	    document.getElementById('payPwd1').value = '';
-	    document.getElementById('payPwd2').value = '';
-	    document.getElementById('payPwd3').value = '';
-	    document.getElementById('payPwd4').value = '';
-	    document.getElementById('payPwd5').value = '';
-	    document.getElementById('payPwd6').value = '';
+	    document.getElementById('pwd1').value = '';
+	    document.getElementById('pwd2').value = '';
+	    document.getElementById('pwd3').value = '';
+	    document.getElementById('pwd4').value = '';
+	    document.getElementById('pwd5').value = '';
+	    document.getElementById('pwd6').value = '';
 	  });
 	  
-
+	  btnClose2.addEventListener('click', function() {
+		    $("#modal").css("display", "none");
+		    
+		    document.getElementById('payPwd1').value = '';
+		    document.getElementById('payPwd2').value = '';
+		    document.getElementById('payPwd3').value = '';
+		    document.getElementById('payPwd4').value = '';
+		    document.getElementById('payPwd5').value = '';
+		    document.getElementById('payPwd6').value = '';
+		  });
+	  
+	  btnClose3.addEventListener('click', function() {
+		    $("#nextModal").css("display", "none");
+		    
+		    document.getElementById('newPwd1').value = '';
+		    document.getElementById('newPwd2').value = '';
+		    document.getElementById('newPwd3').value = '';
+		    document.getElementById('newPwd4').value = '';
+		    document.getElementById('newPwd5').value = '';
+		    document.getElementById('newPwd6').value = '';
+		  });
+	  
 	  // 확인 버튼 클릭 시 모달 창
 	  $(document).ready(function() {
 	   $("#btnCheck").click(function() {

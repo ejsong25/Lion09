@@ -25,7 +25,6 @@
 				class="tm-nav-link">회원가입</a></li>
 			<li class="tm-nav-li-right" th:if="${session.loginMember == null}"><a href="/login"
 				class="tm-nav-link">로그인</a></li>
-				
 			<li class="tm-nav-li-right"><a href="/logout"
 				class="tm-nav-link" th:if="${session.loginMember != null}">로그아웃</a></li>
 			<li class="tm-nav-li-right"><a href="/myPage"

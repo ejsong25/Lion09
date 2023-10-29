@@ -25,8 +25,12 @@ $(function(){
         }, 0);
         if (totalLength === 6) {
             $("#btnCheck").prop("disabled", false);
+            $("#btnRegister").prop("disabled", false);
+            $("#btnChange").prop("disabled", false);
         } else {
             $("#btnCheck").prop("disabled", true);
+            $("#btnRegister").prop("disabled", true);
+            $("#btnChange").prop("disabled", true);
         }
     });
     

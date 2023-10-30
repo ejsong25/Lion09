@@ -75,6 +75,11 @@ public class LionPayController {
 		
 		String userId = sessionInfo.getUserId();
 		
+		 String selectedValue = (String) request.getSession().getAttribute("selectedValue");
+		    if (selectedValue == null) {
+		        selectedValue = "전체보기"; // 기본 값 설정
+		    }
+		
 		int currentPage = 1;
 		int numPerPage = 5;
 		
@@ -89,9 +94,10 @@ public class LionPayController {
 
 		if(currentPage > totalPage)
 			currentPage = totalPage;
-
-		String listUrl = "/LionPayList";
 		
+		request.getSession().setAttribute("selectedValue", selectedValue);
+		
+		String listUrl = "/LionPayList?selectedValue=" + selectedValue;
 		String pageIndexList = PayUtil.pageIndexList(pageNum, totalPage, listUrl);
 		
 		LionPayDTO dto = lionPayService.getReadData(userId);
@@ -101,6 +107,7 @@ public class LionPayController {
 		mav.addObject("lists",listDto);
 		mav.addObject("pageIndexList", pageIndexList);
 		mav.addObject("dataCount", dataCount);
+		mav.addObject("selectedValue", selectedValue);
 		
 		return mav;
 	}
@@ -355,11 +362,19 @@ public class LionPayController {
 	}
 	
 	@RequestMapping(value = "/resetRefund", method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView resetRefund(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) throws Exception{
+	public ModelAndView resetRefund(@SessionAttribute(name = SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo,
+			ListDTO listDto, HttpServletRequest request) throws Exception{
 		
 		String userId = sessionInfo.getUserId();
 	    LionPayDTO dto = lionPayService.getReadData(userId);
+	    int balance = Integer.parseInt(request.getParameter("balance"));
 	    lionPayService.resetBalance(dto.getUserId());
+	    
+	    listDto.setNum(lionPayService.maxNum(userId) + 1);
+    	listDto.setUserId(userId);
+    	listDto.setUsage(balance);
+    	listDto.setAccountName(lionPayService.getReadData(userId).getAccountName());
+		lionPayService.insertUsage(listDto, userId);
 
 	    ModelAndView mav = new ModelAndView();
 	    mav.setViewName("LionPay");

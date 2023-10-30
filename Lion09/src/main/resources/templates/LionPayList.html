@@ -38,6 +38,8 @@ function filter() {
     var selectedValue = selected.value;
     var table = document.getElementById("listTable");
     var rows = table.getElementsByTagName("tr");
+    
+    sessionStorage.setItem("selectedValue", selectedValue);
 
     for (var i = 0; i < rows.length; i++) {
         var cells = rows[i].getElementsByTagName("td");
@@ -54,8 +56,46 @@ function filter() {
             }
         }
     }
+
+    // URL 업데이트
+    var currentUrl = window.location.href;
+    var newUrl;
+    if (currentUrl.indexOf('?') > -1) {
+        // URL에 이미 파라미터가 있는 경우
+        newUrl = currentUrl.replace(/(\?|&)selectedValue=[^&]*/, '');
+        newUrl += (newUrl.indexOf('?') > -1 ? '&' : '?') + 'selectedValue=' + selectedValue;
+    } else {
+        // URL에 파라미터가 없는 경우
+        newUrl = currentUrl + '?selectedValue=' + selectedValue;
+    }
+    window.history.replaceState({path: newUrl}, '', newUrl);
 }
-	
+
+
+window.onload = function () {
+    var selected = document.getElementById("selected");
+    var urlParams = new URLSearchParams(window.location.search);
+    var urlSelectedValue = urlParams.get('selectedValue');
+
+    if (urlSelectedValue) {
+        selected.value = urlSelectedValue;
+    }
+
+    filter();
+}
+
+window.onpopstate = function(event) {
+    var selected = document.getElementById("selected");
+    var urlParams = new URLSearchParams(window.location.search);
+    var urlSelectedValue = urlParams.get('selectedValue');
+    
+    if (urlSelectedValue) {
+        selected.value = urlSelectedValue;
+        filter();
+    }
+}
+
+
 </script>
 
 <body>
@@ -95,9 +135,9 @@ function filter() {
 							<dl style="text-align: center;">
 								<dd>보유금액 [[${dto.balance}]]</dd>
 							<select id="selected" onchange="filter();">
-								<option value="전체보기" selected>전체보기</option>
-								<option value="충전">충전</option>
-								<option value="사용">사용</option>
+								<option value="전체보기" th:selected="${selectedValue == '전체보기'}">전체보기</option>
+								<option value="충전" th:selected="${selectedValue == '충전'}">충전</option>
+								<option value="사용" th:selected="${selectedValue == '사용'}">사용</option>
 							</select>
 							</dl>
 						</div>

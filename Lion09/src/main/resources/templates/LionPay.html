@@ -205,13 +205,20 @@ function resetAcc() {
 	var selectElement = document.getElementById("mySelect");
 	var selectedValue = selectElement.value;
 	var accountNum = document.getElementById("accountNum");
+	var balance = [[${dto.balance}]];
 	
-	alert('연결 계좌가 삭제되었습니다.');
-	
-	if(f) {
-		f.action= "/resetAcc_ok.action";
-		f.submit();
+	if(balance == 0 && balance == null){
+		
+		alert('연결 계좌가 삭제되었습니다.');
+		
+		if(f) {
+			f.action= "/resetAcc_ok.action";
+			f.submit();
+		}
+	} else{
+		alert('페이머니 잔액 환불 후 계좌 삭제가 가능합니다.');
 	}
+	
 }
 
 function registerPwd() {
@@ -717,10 +724,11 @@ function err(){
 	  $("#confirm").click(function(){
 		  
 		  var userId = [[${dto.userId}]];
+		  var balance = [[${dto.balance}]];
 		    
 		    $.ajax({
 		        type: "GET",
-		        url: "/resetRefund?userId=" + userId,
+		        url: "/resetRefund?userId=" + userId + "&balance=" + balance,
 		        success: function(data) {
 		            alert("계좌로 환불이 완료되었습니다.");
 		            refundPopup.style.display = 'none';

@@ -17,7 +17,6 @@ import lombok.Data;
 @Entity
 @Data
 public class PostLike implements Serializable{
-	@Id
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "postId")
 	private Post post;
@@ -26,6 +25,7 @@ public class PostLike implements Serializable{
 	@JoinColumn(name = "userId")
 	private Member member;
 	
+	@Id
 	private LocalDateTime likeDate;
 	
 	private int likeState;

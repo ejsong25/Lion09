@@ -136,7 +136,6 @@ button.profileBtn1{
 				<tbody id="lists">
 					<tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}" style="height: 50px;">
 	
-						<form action="" method="get" name="myForm">
 							<td class="center">
 								<a th:href="@{${detailUrl} + '&postId=' + ${dto.postId}}"
 								th:text="${dto.title}"></a></td>
@@ -147,13 +146,14 @@ button.profileBtn1{
 							<td th:if="${dto.status.name == '거래완료'}" class="center">
 								[[${dto.status}]]
 								<span id="review-button" onclick="review();" style="color: red;">후기작성</span> 
+						<form action="" method="get" name="myForm">
 								<input type="hidden" th:value="${dto.postId}" name="postId" id="postId">
+						</form>
 							</td>
 							<td th:if="${dto.status.name == '후기작성완료'}" class="center">
 								거래완료
 								<span style="color: red;">후기작성완료</span> 
 							</td>
-						</form>
 					</tr>
 					<tr th:if="${#lists.size(lists)}<=0">
 						<td colspan="5" align="center">등록된 게시물이 없습니다.</td>

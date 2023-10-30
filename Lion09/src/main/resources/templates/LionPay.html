@@ -39,9 +39,6 @@
 let totalAmount = 0;
 let currentBalance = 0;
 
-btnCheck.disabled = true;
-btnRegister.disabled = true;
-
 function count(type) {
 	
     const resultElement = document.getElementById('result');
@@ -253,7 +250,8 @@ function registerPwd() {
     });
 }
 
-document.getElementById("btnChange").onclick = function() {
+function changePwd() {
+	
     const newPwd1 = document.getElementById('newPwd1').value;
     const newPwd2 = document.getElementById('newPwd2').value;
     const newPwd3 = document.getElementById('newPwd3').value;
@@ -441,7 +439,7 @@ function err(){
 												<input type="password" id="newPwd6"
 												  maxlength="1" min="0" max="9" onlyNumber>
 											</div>
-											<input class="profileImgBtn" type='button' value='변경' id="btnChange"/><br/>
+											<input class="profileImgBtn" type='button' value='변경' onclick="changePwd();" id="btnAlter"/><br/>
 										</div>
 									</div>
 									</form>
@@ -620,10 +618,11 @@ function err(){
 		var map = new kakao.maps.Map(container, options);
 	</script>
 	<script type="text/javascript" th:inline="javascript">
+	
 	  var btnOpen = document.getElementById('btnOpen');
 	  var btnRefund = document.getElementById('btnRefund');
 	  var btnCheck = document.getElementById('btnCheck');
-	  var btnChange = document.getElementById('btnChange');
+	  var btnAlter = document.getElementById('btnAlter');
 	  var btnRegister = document.getElementById('btnRegister');
 	  var btnClose1 = document.getElementById('btnClose1');
 	  var btnClose2 = document.getElementById('btnClose2');
@@ -631,7 +630,7 @@ function err(){
 	  var preModal = document.getElementById('preModal');
 	  var modal = document.getElementById('modal');
 	  var nextModal = document.getElementById('nextModal');
-
+	  
 	  // "pay비밀번호" 버튼 클릭 시 모달 창 열기
 	  btnOpen.addEventListener('click', function() {
 		

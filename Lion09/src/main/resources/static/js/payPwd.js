@@ -24,9 +24,9 @@ $(function(){
             return sum + input.value.length;
         }, 0);
         if (totalLength === 6) {
-             $("#btnCheck, #btnChange, #btnRegister").prop("disabled", false);
+             $("#btnCheck, #btnRegister").prop("disabled", false);
         } else {
-            $("#btnCheck, #btnChange, #btnRegister").prop("disabled", true);
+            $("#btnCheck, #btnRegister").prop("disabled", true);
         }
         
     });

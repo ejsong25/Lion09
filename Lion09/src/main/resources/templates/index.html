@@ -134,6 +134,9 @@ function err(){
 						<div th:if="${dto.status == '거래완료'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
 							vertical-align: middle; margin-top: 8px; margin-left: 100px; color: #ffffff;
 							border-radius: 5px; padding: 2px; font-family: 'omyu_pretty';">[[${dto.status}]]</div>
+						<div th:if="${dto.status == '마감'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-left: 100px; color: #ffffff;
+							border-radius: 5px; padding: 2px; font-family: 'omyu_pretty';">[[${dto.status}]]</div>
 							
                         <p class="tm-gallery-price" th:text="${dto.productsPrice}" align="center">가격</p>
                         <p class="tm-gallery-description" th:text="${dto.myAddr}" align="center">주소</p>

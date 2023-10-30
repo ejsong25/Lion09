@@ -218,5 +218,25 @@ function err(){
 			});
 		});
 	</script>
+	
+	<script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+    var titles = document.querySelectorAll('.tm-gallery-title');
+
+    titles.forEach(function(title) {
+        var maxLength = 15; // 최대 길이 설정 (여기서는 30으로 가정)
+
+        if (title.textContent.length > maxLength) {
+            var truncatedText = title.textContent.substr(0, maxLength) + '...';
+            title.textContent = truncatedText;
+        }
+    });
+});
+
+
+
+
+</script>
 </body>
 </html>

@@ -312,7 +312,7 @@ public class LionPayController {
 		
 		String userId = sessionInfo.getUserId();
 		int id = postService.maxId();
-		int price = Integer.parseInt(payload.get("price"));
+		int mprice = Integer.parseInt(payload.get("mprice"));
 		String selectedValue = payload.get("selectedValue");
 		int postId = Integer.parseInt(payload.get("postId"));
 		
@@ -323,7 +323,7 @@ public class LionPayController {
 	    //참여하기
 	    Odto.setUserId(userId); //userId
 	  	Odto.setPostId(postId); //postId
-	  	Odto.setOrderPrice(price); //orderPrice
+	  	Odto.setOrderPrice(mprice); //orderPrice
 	  	Odto.setId((long) id + 1); //orderId 
 	  	Odto.setTitle(dto.getTitle());
 	  	Odto.setType(selectedValue); // 결제방법 M

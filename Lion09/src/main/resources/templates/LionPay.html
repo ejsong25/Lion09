@@ -69,15 +69,10 @@ function addAmount(amount) {
 }
 
 function cash() {
-	
-	  var btnOpen = document.getElementById('btnOpen');
-	  var btnRefund = document.getElementById('btnRefund');
-	  var btnCheck = document.getElementById('btnCheck');
-	  var preModal = document.getElementById('preModal');
-	  var modal = document.getElementById('modal');
-	  var nextModal = document.getElementById('nextModal');
 
-	  btnCheck.disabled = true;
+	btnCheck.disabled = true;
+	btnRegister.disabled = true;
+	btnChange.disabled = true;
 	  
     const rechargeAmount = totalAmount;
     const accountName = document.getElementById('accountName').value;
@@ -93,7 +88,7 @@ function cash() {
     }
     
     
-    if (![[${dto.payPwd}]]) {
+    if (![[${dto.payPwd}]] || [[${dto.payPwd}]] == 0) {
 	    alert('먼저 PAY 비밀번호를 등록해주세요.');
 	    rechargeAmount = 0;
 	    return;
@@ -492,8 +487,8 @@ window.addEventListener('load', function() {
 
 					<h3 style="font-family: 'omyu_pretty'; font-size: 30px;">연결 계좌</h3>
 
-					<table id="LionPayTable" border="1"
-						style="background-color: #ffffff; border-color: #444444; color: #444444; height: 20px;">
+					<table id="payTable" border="1"
+						style="background-color: #ffffff; border-color: #C4C4C4; color: #C4C4C4; height: 40px;">
 						<tr>
 							<td>
 								<select style="width: 115px; height: 30px;" id="mySelect" name="accountName" class="listbox">
@@ -509,11 +504,11 @@ window.addEventListener('load', function() {
 						</tr>
 					</table>
 					<input class="profileImgBtn" type="button" value="등록" onclick="registerAcc();" id="registerBtn"
-						style="margin-right: 20px; width: 80px; font-size: 27px;">
+						style="margin-right: 20px; width: 80px; font-size: 27px; border-color: #C4C4C4;">
 					<input class="profileImgBtn" type="button" value="변경"  id="changeBtn"
-						style="margin-right: 20px; width: 80px; font-size: 27px;" onclick="changeAcc();">
+						style="margin-right: 20px; width: 80px; font-size: 27px; border-color: #C4C4C4;" onclick="changeAcc();">
 					<input class="profileImgBtn" type="button" value="삭제" id="deleteBtn"
-						style="width: 80px; font-size: 27px;" onclick="resetAcc();">
+						style="width: 80px; font-size: 27px; border-color: #C4C4C4;" onclick="resetAcc();">
 				</div>
 				</form>
 
@@ -521,9 +516,9 @@ window.addEventListener('load', function() {
 					<h3 style="font-family: 'omyu_pretty'; font-size: 30px; margin-bottom: 50px;">충전 금액</h3>
 					<h5>LIONPAY머니 최대 보유금액 100만원</h5>
 					<table id="LionPayTable" border="1"
-						style="background-color: #ffffff; border-color: #444444; color: #444444; margin-top: 0;">
+						style="background-color: #ffffff; border-color: #C4C4C4; color: #C4C4C4; margin-top: 0; border-radius: 1.5rem;">
 						<tr>
-							<td id="result" colspan="4" style="padding-left: 20px;">0</td>
+							<td id="result" colspan="4" style="padding-left: 20px; height: 30px;"><font color="#000000;">0</font></td>
 						</tr>
 						<tr>
 							<td style="padding: 0px;"><button class="payBtn"
@@ -543,7 +538,7 @@ window.addEventListener('load', function() {
 					<input type="hidden" id="accountName" th:value="${dto.accountName}" />
 					
 					<input class="profileImgBtn" type="button" value="충전" 
-						style="width: 200px; font-size: 27px;" onclick="cash();">
+						style="width: 200px; font-size: 27px; border-color: #C4C4C4;" onclick="cash();">
 				</div>
 
 				<div style="margin-top: 60px; margin-left: 20%; margin-right: 20%">
@@ -619,9 +614,11 @@ window.addEventListener('load', function() {
 	  var btnOpen = document.getElementById('btnOpen');
 	  var btnRefund = document.getElementById('btnRefund');
 	  var btnCheck = document.getElementById('btnCheck');
-	  var btnClose = document.getElementById('btnClose1');
-	  var btnClose = document.getElementById('btnClose2');
-	  var btnClose = document.getElementById('btnClose3');
+	  var btnRegister = document.getElementById('btnRegister');
+	  var btnChange = document.getElementById('btnChange');
+	  var btnClose1 = document.getElementById('btnClose1');
+	  var btnClose2 = document.getElementById('btnClose2');
+	  var btnClose3 = document.getElementById('btnClose3');
 	  var preModal = document.getElementById('preModal');
 	  var modal = document.getElementById('modal');
 	  var nextModal = document.getElementById('nextModal');

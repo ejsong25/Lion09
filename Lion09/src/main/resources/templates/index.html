@@ -28,12 +28,18 @@
 	}
 </style>
 <script type="text/javascript" th:inline="javascript">
-function err(){
-	var err = [[${err}]];
-	if (err) {
-	    alert(err);
+	function err(){
+		var err = [[${err}]];
+		if (err) {
+		    alert(err);
+		}
+	};
+
+	function ok() {
+		alert('동네설정 후 글보기가 가능합니다.');
+		window.location.href = '/myPage';
 	}
-};
+
 </script>
 </head>
 
@@ -74,9 +80,21 @@ function err(){
         <div th:each="dto, index : ${lists}">
             <article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item">
                 <figure>
-					<a th:href="@{|${deadLineUrl}${dto.postId}|}">
+					
+					
+					<div th:if="${myAddr == null}">
+                        <img th:src="@{|/img/postimg/${dto.chooseFile}|}" 
+                        style="border-radius: 12px; width:200px; height: 180px; margin-bottom: 10px;"
+                        onclick="ok();"/>
+					</div>
+					<div th:if="${myAddr != null}">
+						<a th:href="@{|${deadLineUrl}${dto.postId}|}">
                         <img th:src="@{|/img/postimg/${dto.chooseFile}|}" style="border-radius: 12px; width:200px; height: 180px; margin-bottom: 10px;"/>
                     </a>
+					</div>
+				
+                    
+                    
                     <figcaption style="margin-left: -30px;">
                         <h4 class="tm-gallery-title" th:text="${dto.title}" align="center">제목</h4>
                         

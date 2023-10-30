@@ -123,14 +123,14 @@ button.profileBtn1{
 						<td class="center" th:text="${dto.created }">일시</td>
 						<td class="center" th:text="${dto.hitCount }">조회수</td>
 					</tr>
+					<tr th:if="${#lists.size(lists)}<=0" style="height: 50px;">
+						<td colspan="5" align="center">등록된 게시물이 없습니다.</td>
+					</tr>
 
 					<tr th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
 						<td colspan="5" id="footer" style="border-bottom: none;">
 							<a style="margin-left: 50%;" th:utext="${pageIndexList }"></a>
 						</td>
-					</tr>
-					<tr th:if="${#lists.size(lists)}<=0" style="height: 50px;">
-						<td colspan="5" align="center">등록된 게시물이 없습니다.</td>
 					</tr>
 				</tbody>
 			</table>

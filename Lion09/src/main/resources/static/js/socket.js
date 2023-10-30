@@ -24,7 +24,7 @@ const url = new URL(location.href).searchParams;
 const postId = url.get('postId');
 
 function connect(event) {
-
+alert('1');
     username = document.querySelector('#name').value.trim();
     profileImgName = document.querySelector('#profileImgName').value;
 
@@ -44,7 +44,7 @@ function connect(event) {
 }
 
 function onConnected() {
-
+alert('2');
     // sub 할 url => /sub/chat/room/postId 로 구독한다
     stompClient.subscribe('/sub/chat/room/' + postId, onMessageReceived);
 
@@ -66,7 +66,7 @@ function onConnected() {
 
 // ajax 로 유저리스트를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나왔을 때마다 실행된다.
 function getUserList() {
-
+alert('3');
     const $list = $("#list");
 
     $.ajax({
@@ -88,14 +88,14 @@ function getUserList() {
 
 
 function onError(error) {
-
+alert('4');
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
 
 // 메시지 전송때는 JSON 형식을 메시지를 전달한다.
 function sendMessage(event) {
-
+alert('5');
     var messageContent = messageInput.value.trim();
 
     if (messageContent && stompClient) {
@@ -115,7 +115,7 @@ function sendMessage(event) {
 // 메시지를 받을 때도 마찬가지로 JSON 타입으로 받으며,
 // 넘어온 JSON 형식의 메시지를 parse 해서 사용한다.
 function onMessageReceived(payload) {
-
+alert('6');
     var chat = JSON.parse(payload.body);
 
     var messageElement = document.createElement('li');
@@ -135,7 +135,7 @@ function onMessageReceived(payload) {
 
         var avatarElement = document.createElement('i');
         var avatarElement2 = document.createElement('img');
-        avatarElement2.src = '/img/mypage/' + profileImgName;
+        avatarElement2.src = '/img/mypage/' + chat.profileImgName;
         
         avatarElement2.style.width = '45px'; 
 		avatarElement2.style.height = '45px';
@@ -188,16 +188,16 @@ function onMessageReceived(payload) {
 }
 
 
-function getAvatarColor(messageSender) {
+//function getAvatarColor(messageSender) {
+//alert('7');
+//    var hash = 0;
+//    for (var i = 0; i < messageSender.length; i++) {
+//        hash = 31 * hash + messageSender.charCodeAt(i);
+//    }
 
-    var hash = 0;
-    for (var i = 0; i < messageSender.length; i++) {
-        hash = 31 * hash + messageSender.charCodeAt(i);
-    }
-
-    var index = Math.abs(hash % colors.length);
-    return colors[index];
-}
+//    var index = Math.abs(hash % colors.length);
+//    return colors[index];
+//}
 
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendMessage, true)

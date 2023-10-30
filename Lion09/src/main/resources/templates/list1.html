@@ -458,7 +458,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var titles = document.querySelectorAll('.item_name');
 
     titles.forEach(function(title) {
-        var maxLength = 15; // 최대 길이 설정 (여기서는 30으로 가정)
+        var maxLength = 10; // 최대 길이 설정 (여기서는 10으로 가정)
 
         if (title.textContent.length > maxLength) {
             var truncatedText = title.textContent.substr(0, maxLength) + '...';

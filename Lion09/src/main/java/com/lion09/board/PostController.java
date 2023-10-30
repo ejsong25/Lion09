@@ -330,20 +330,15 @@ public class PostController {
 	    
 	    Post pdto = postService.getReadData(postId);
 	    
-//	    Member mdto = mypageService.selectData(pdto.getUserId());
-	    
 	    String userId = sessionInfo.getUserId();
 	    
-	    Member mdto = mypageService.selectData(sessionInfo.getUserId());
-//	    String userId = mdto.getUserId();
+	    Member mdto = mypageService.selectData(pdto.getUserId());
 
-//	    Member member = new Member(); // Member 엔티티의 인스턴스 생성
 	    Post post = new Post(); // Post 엔티티의 인스턴스 생성
 
 	    // 참여하기
 	    Order Odto = new Order();
 	    
-//	    member = mypageService.selectData(userId);
 	    post = postService.getReadData(postId);	  
 	    String status = postService.getReadStatus(postId);
 	    
@@ -356,7 +351,6 @@ public class PostController {
 		  postService.updateOderStatus(postId);
 		  
 	   }
-	    
 
 
 	    LocalDateTime currentDateTime = LocalDateTime.now();
@@ -367,12 +361,7 @@ public class PostController {
 	        postService.updateOderStatus1(postId);
 	    }
 	    
-	    
 	    System.out.println(post + "후");
-	    
-	    
-	    
-	    
 
 	    Odto.setUserId(userId);
 	    Odto.setPostId(postId);
@@ -405,9 +394,6 @@ public class PostController {
 	    	 
 	    }
 	    
-	    
-	    
-
 	    int likeState = postService.findPostlikeState(likedto);
 	    likedto.setLikeState(likeState);
 

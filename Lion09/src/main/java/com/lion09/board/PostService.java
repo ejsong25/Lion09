@@ -105,6 +105,8 @@ public interface PostService {
 	public void updateStatus(Post dto) throws Exception;
 	
 	public void updateOderStatus(@Param("postId") int postId) throws Exception;
+	
+	public void updateOderStatus1(@Param("postId") int postId) throws Exception;
 
 	public void deleteAllPosts(String userId) throws Exception;
 }

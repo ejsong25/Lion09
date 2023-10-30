@@ -358,6 +358,22 @@ public class PostController {
 	   }
 	    
 
+
+	    LocalDateTime currentDateTime = LocalDateTime.now();
+
+	    if (post.getDeadLine().isBefore(currentDateTime)) {	    	
+	        post.setStatus("마감");
+	        postService.updateStatus(post);
+	        postService.updateOderStatus1(postId);
+	    }
+	    
+	    
+	    System.out.println(post + "후");
+	    
+	    
+	    
+	    
+
 	    Odto.setUserId(userId);
 	    Odto.setPostId(postId);
 

@@ -272,6 +272,12 @@ public class PostServiceImpl implements PostService{
 		
 	}
 
+	@Override
+	public void updateOderStatus1(int postId) throws Exception {
+		orderMapper.updateOderStatus1(postId);
+		
+	}
+
 
 
 }

@@ -36,6 +36,11 @@
 			f.title.focus();
 			return;
 		}
+		if(str.length > 40){
+	        alert("\n제목은 40자를 초과할 수 없습니다.");
+	        f.title.focus();
+	        return;
+	    }
 		f.title.value = str;
 
 		

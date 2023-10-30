@@ -113,12 +113,11 @@ public class MemberController {
 		lionPayService.deleteLionPay(userId);
 		//라이온페이 이용내역 삭제
 		lionPayService.deleteLionPayLists(userId);
-		//게시글 삭제
-		postService.deleteAllPosts(userId);
 		//회원 탈퇴
 		memberService.delUser(userId);
+		//주문내역 삭제
+
 		//채팅내역 삭제
-		
 		redirectAttributes.addFlashAttribute("err", "탈퇴 처리 완료되었습니다.");
 		
 		return "redirect:/";

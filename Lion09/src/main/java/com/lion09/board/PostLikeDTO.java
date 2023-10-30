@@ -18,11 +18,11 @@ import lombok.Data;
 @Data
 public class PostLikeDTO {
 
-	@Id
 	private int postId;
 
 	private String userId;
 	
+	@Id
 	private LocalDateTime likeDate;
 	
 	private int likeState;

@@ -75,10 +75,12 @@ public class ChatController {
         
         Member findMember = memberService.getUserByNickName(chat.getNickName());
         msg.setUserId(findMember.getUserId());
+        msg.setProfileImgName(findMember.getProfileImgName());
         msg.setPostId(chat.getPostId());
         msg.setNickName(chat.getNickName());
         msg.setType(MessageType.TALK);
         msg.setMessage(chat.getMessage());
+        
         System.out.println(chat.getFileName());
         //파일 경로, 이름 db 저장
         if(chat.getFileName() != null) {

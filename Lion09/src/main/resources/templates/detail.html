@@ -347,7 +347,7 @@
 							</div>
 						</div>
 						<div class="flex-box button-box"
-							th:if="${mdto.userId == dto.userId && dto.participant == 1}">
+							th:if="${userId == dto.userId && dto.participant == 1}">
 							<button class="orange"
 								th:onclick="@{|location.href='/writeUpdated?postId=${dto.postId}&${params}'|}">수정하기</button>
 							<!-- <input type="button" class="grey" onclick="alertBeforeDelete();" value="삭제하기"> -->
@@ -357,13 +357,13 @@
 								th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}">채팅보기</button>
 						</div>
 
-						<div class="flex-box button-box" th:if="${mdto.userId == dto.userId && dto.participant > 1}">
+						<div class="flex-box button-box" th:if="${userId == dto.userId && dto.participant > 1}">
 							<button class="orange"
 								th:onclick="@{|location.href='/writeUpdated?postId=${dto.postId}&${params}'|}">수정하기</button>
 							<button class="orange"
 								th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}">채팅보기</button>
 						</div>
-						<div class="button-box" th:if="${mdto.userId != dto.userId}">
+						<div class="button-box" th:if="${userId != dto.userId}">
 							<input type="button" class="orange"
 								th:onclick="@{|location.href='/chat/room?postId=${dto.postId}'|}"
 								value="채팅하기">

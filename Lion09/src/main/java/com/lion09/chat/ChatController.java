@@ -69,13 +69,16 @@ public class ChatController {
     @MessageMapping("/chat/sendMessage")
     public void sendMessage(@Payload ChatDTO chat) throws Exception {
         log.info("CHAT {}", chat);
+
+        Member findMember = memberService.getUserByNickName(chat.getNickName());
         
         chat.setMessage(chat.getMessage());
+        chat.setProfileImgName(findMember.getProfileImgName());
+        
+        //db 메세지 저장
         ChatDTO msg = new ChatDTO();
         
-        Member findMember = memberService.getUserByNickName(chat.getNickName());
         msg.setUserId(findMember.getUserId());
-        msg.setProfileImgName(findMember.getProfileImgName());
         msg.setPostId(chat.getPostId());
         msg.setNickName(chat.getNickName());
         msg.setType(MessageType.TALK);

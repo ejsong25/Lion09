@@ -138,7 +138,7 @@ public class PostController {
 
 		if (!cFile.isEmpty()) {
 			// 파일 업로드를 위한 경로 설정
-			String uploadDir = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String uploadDir = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			// 업로드한 파일의 원래 파일 이름 가져오기
 			String originalFilename = cFile.getOriginalFilename();
@@ -643,7 +643,7 @@ public class PostController {
 			postId = Integer.parseInt(postIdString);
 
 			//이미지 사진들 모아두는 폴더
-			String upload_path = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
+			String upload_path = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\"; 
 
 
 			Post dto = postService.getReadData(postId);
@@ -652,7 +652,7 @@ public class PostController {
 			String beforeFilename = dto.getChooseFile();
 
 			//삭제할 파일 경로
-			String delete_pate = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+			String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 			//게시글 이미지가 기존의 이미지가 아닐 경우 삭제
 			if(!beforeFilename.equals("lion.png")) {
@@ -727,7 +727,7 @@ public class PostController {
 
 
 		//삭제할 파일 경로
-		String delete_pate = "C:\\Users\\itwill\\git\\Lion09\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
+		String delete_pate = "C:\\Users\\itwill2\\git\\gitLion\\Lion09\\Lion09\\src\\main\\resources\\static\\img\\postimg\\";
 
 
 		//기본 사진 이미지가 아닐 경우 삭제		
@@ -763,7 +763,10 @@ public class PostController {
 
 	    int currentPage = 1;
 
-		postService.deleteData(postId);
+	    PostLikeDTO ldto = new PostLikeDTO();
+	    ldto.setPostId(postId);
+	    
+	    postService.deletePostlike(ldto);
 		postService.deleteData(postId);
 
 		// 데이터 업데이트 후 데이터 다시 읽기

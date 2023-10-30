@@ -687,35 +687,35 @@ function err(){
 	  
 	  // 확인 버튼 클릭 시 모달 창
 	  $(document).ready(function() {
-	   $("#btnCheck").click(function() {
-		    var dtoPwd = $("#payPwd").val();
-		    var enteredPwd = "";
+		   $("#btnCheck").click(function() {
+			    var dtoPwd = $("#payPwd").val();
+			    var enteredPwd = "";
 
-		    enteredPwd += $("#payPwd1").val();
-		    enteredPwd += $("#payPwd2").val();
-		    enteredPwd += $("#payPwd3").val();
-		    enteredPwd += $("#payPwd4").val();
-		    enteredPwd += $("#payPwd5").val();
-		    enteredPwd += $("#payPwd6").val();
+			    enteredPwd += $("#payPwd1").val();
+			    enteredPwd += $("#payPwd2").val();
+			    enteredPwd += $("#payPwd3").val();
+			    enteredPwd += $("#payPwd4").val();
+			    enteredPwd += $("#payPwd5").val();
+			    enteredPwd += $("#payPwd6").val();
 
-		    if (!enteredPwd) {
-	            alert('PAY비밀번호를 입력해주세요.');
-	        } else if (enteredPwd === dtoPwd) {
-		        $("#modal").css("display", "none");
-		        $("#nextModal").css("display", "block");
-		        
-		    } else {
-		        alert('비밀번호가 일치하지 않습니다.');
-		        
-		        document.getElementById('payPwd1').value = '';
-			    document.getElementById('payPwd2').value = '';
-			    document.getElementById('payPwd3').value = '';
-			    document.getElementById('payPwd4').value = '';
-			    document.getElementById('payPwd5').value = '';
-			    document.getElementById('payPwd6').value = '';
-		    }
-		});
-	  });
+			    if (!enteredPwd) {
+		            alert('PAY비밀번호를 입력해주세요.');
+		        } else if (enteredPwd === dtoPwd) {
+			        $("#modal").css("display", "none");
+			        $("#nextModal").css("display", "block");
+			        
+			    } else {
+			        alert('비밀번호가 일치하지 않습니다.');
+			        
+			        document.getElementById('payPwd1').value = '';
+				    document.getElementById('payPwd2').value = '';
+				    document.getElementById('payPwd3').value = '';
+				    document.getElementById('payPwd4').value = '';
+				    document.getElementById('payPwd5').value = '';
+				    document.getElementById('payPwd6').value = '';
+			    }
+			});
+		  });
 	  
 	  $("#confirm").click(function(){
 		  

@@ -114,5 +114,9 @@
 	update orders set status='모집완료' where postId=#{postId}
 </update>
 
+<update id="updateOderStatus1" parameterType="hashMap">
+	update orders set status='마감' where postId=#{postId}
+</update>
+
 
 </mapper>

@@ -302,6 +302,9 @@
 						<div th:if="${dto.status == '거래완료'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
 							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
 							border-radius: 5px; padding: 2px;">[[${dto.status}]]</div>
+						<div th:if="${dto.status == '마감'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-right: 4px; color: #ffffff;
+							border-radius: 5px; padding: 2px;">[[${dto.status}]]</div>
 							
                         <h2 class="item_cost" th:text="${dto.productsPrice}">가격</h2>
                         <h1 class="item_place" th:text="${dto.myAddr}">주소</h1>
@@ -446,6 +449,26 @@
 		f.action = "/list1.action";
 		f.submit();
 	}
+
+</script>
+
+<script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+    var titles = document.querySelectorAll('.item_name');
+
+    titles.forEach(function(title) {
+        var maxLength = 15; // 최대 길이 설정 (여기서는 30으로 가정)
+
+        if (title.textContent.length > maxLength) {
+            var truncatedText = title.textContent.substr(0, maxLength) + '...';
+            title.textContent = truncatedText;
+        }
+    });
+});
+
+
+
 
 </script>
 

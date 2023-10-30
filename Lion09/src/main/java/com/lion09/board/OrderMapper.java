@@ -51,6 +51,8 @@ public interface OrderMapper {
 	public Order getOrderList(@Param("userId") String userId, @Param("postId") int postId) throws Exception;
 	
 	public void updateOderStatus(@Param("postId") int postId) throws Exception;
+	
+	public void updateOderStatus1(@Param("postId") int postId) throws Exception;
 
 	
 	

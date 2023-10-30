@@ -134,6 +134,9 @@ function err(){
 						<div th:if="${dto.status == '거래완료'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
 							vertical-align: middle; margin-top: 8px; margin-left: 100px; color: #ffffff;
 							border-radius: 5px; padding: 2px; font-family: 'omyu_pretty';">[[${dto.status}]]</div>
+						<div th:if="${dto.status == '마감'}" style="width: 52px; background-color: #4D4D4D; display: inline-block; 
+							vertical-align: middle; margin-top: 8px; margin-left: 100px; color: #ffffff; text-align:center;
+							border-radius: 5px; padding: 2px; font-family: 'omyu_pretty';">[[${dto.status}]]</div>
 							
                         <p class="tm-gallery-price" th:text="${dto.productsPrice}" align="center">가격</p>
                         <p class="tm-gallery-description" th:text="${dto.myAddr}" align="center">주소</p>
@@ -152,7 +155,7 @@ function err(){
 
 
 			<div style="text-align: right; padding-right: 40px;">
-      			<a href="/list1" data-url="/hot_articles" id="hot-articles-more"
+      			<a href="/list1?postList=hitCountList" data-url="/hot_articles" id="hot-articles-more"
       				style="font-family: omyu_pretty; font-size: 14pt; color: black; text-decoration: none;"><b>인기상품 더 보기▶</b></a>
     		</div>
 		
@@ -215,5 +218,25 @@ function err(){
 			});
 		});
 	</script>
+	
+	<script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+    var titles = document.querySelectorAll('.tm-gallery-title');
+
+    titles.forEach(function(title) {
+        var maxLength = 15; // 최대 길이 설정 (여기서는 30으로 가정)
+
+        if (title.textContent.length > maxLength) {
+            var truncatedText = title.textContent.substr(0, maxLength) + '...';
+            title.textContent = truncatedText;
+        }
+    });
+});
+
+
+
+
+</script>
 </body>
 </html>

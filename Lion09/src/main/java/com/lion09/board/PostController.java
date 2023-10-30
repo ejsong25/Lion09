@@ -430,8 +430,10 @@ public class PostController {
 	    mav.addObject("likedto", likedto);
 
 	    // 참여하기 부분
+	    mav.addObject("userId", userId);
 	    mav.addObject("Odto", Odto);
 	    mav.addObject("mdto", mdto);
+	    mav.addObject("pdto", pdto);
 	    mav.addObject("dto", dto);
 	    mav.addObject("payDto", payDto);
 	    mav.addObject("params", param);

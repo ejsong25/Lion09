@@ -355,7 +355,7 @@ public class PostController {
 
 	    LocalDateTime currentDateTime = LocalDateTime.now();
 
-	    if (post.getDeadLine().isBefore(currentDateTime)) {	    	
+	    if (post.getDeadLine().isBefore(currentDateTime) && !post.getStatus().equals("거래완료")) {	    	
 	        post.setStatus("마감");
 	        postService.updateStatus(post);
 	        postService.updateOderStatus1(postId);

@@ -19,67 +19,48 @@ public class PayUtil {
 	}
 	
 	public String pageIndexList(int currentPage, int totalPage, String listUrl) {
-		
-		int numPerBlock = 5;
-		int currentPageSetup;
-		int page;
-		
-		StringBuffer sb = new StringBuffer();
-		
-		if(currentPage==0 || totalPage==0) {
-			return "";
-		}
-		
-		if(listUrl.indexOf("?")!=-1) {
-			listUrl = listUrl + "&"; 
-		} else {
-			listUrl += "?";
-		}
-		
-		currentPageSetup = (currentPage/numPerBlock)*numPerBlock;
-		
-		if(currentPage % numPerBlock == 0) {
-			
-			currentPageSetup = currentPageSetup - numPerBlock;
-		}
-		
-		if(totalPage > numPerBlock && currentPageSetup > 0) {
-			
-			sb.append("<a href=\"" + listUrl + "pageNum=" 
-					+ currentPageSetup + "\">◀</a>&nbsp;");
-			
-			// <a href="list.jsp?pageNum=5">◀이전</a>&nbsp;
-		}
-		
-		
-		page = currentPageSetup + 1;
-		
-		while(page <= totalPage && page <= (currentPageSetup + numPerBlock)) { // 10������ �ݺ�
-			
-			if(page==currentPage) {
-				
-				sb.append("<font color=\"#eec94f\">" + page + "</font>&nbsp;");
-			} else {
-				sb.append("<a href=\"" + listUrl + "pageNum=" + page + 
-						"\">" + page + "</a>&nbsp;");
-				
-			}
-			
-			page++;
-			
-		}
-		
-			
-		if(totalPage - currentPageSetup > numPerBlock) {
-			
-			sb.append("<a href=\"" + listUrl + "pageNum=" + page +
-					"\">▶</a>&nbsp;");
-			// <a href="list.jsp?pageNum=11">다음▶</a>&nbsp;
-			
-		}
-		
-		return sb.toString();
+	    int numPerBlock = 5;
+	    int currentPageSetup;
+	    int page;
+
+	    StringBuffer sb = new StringBuffer();
+
+	    if (currentPage == 0 || totalPage == 0) {
+	        return "";
+	    }
+
+	    if (listUrl.indexOf("?") != -1) {
+	        listUrl = listUrl + "&";
+	    } else {
+	        listUrl += "?";
+	    }
+
+	    currentPageSetup = (currentPage / numPerBlock) * numPerBlock;
+
+	    if (currentPage % numPerBlock == 0) {
+	        currentPageSetup = currentPageSetup - numPerBlock;
+	    }
+
+	    if (totalPage > numPerBlock && currentPageSetup > 0) {
+	        sb.append("<a href=\"" + listUrl + "pageNum=" + currentPageSetup + "\">◀</a>&nbsp;");
+	    }
+
+	    page = currentPageSetup + 1;
+
+	    while (page <= totalPage && page <= (currentPageSetup + numPerBlock)) {
+	        if (page == currentPage) {
+	            sb.append("<font color=\"#eec94f\">" + page + "</font>&nbsp;");
+	        } else {
+	            sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">" + page + "</a>&nbsp;");
+	        }
+	        page++;
+	    }
+
+	    if (totalPage - currentPageSetup > numPerBlock) {
+	        sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">▶</a>&nbsp;");
+	    }
+
+	    return sb.toString();
 	}
 	
-
 }

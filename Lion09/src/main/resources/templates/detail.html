@@ -189,26 +189,25 @@
     
     
     function toggle() {
-    	 icons = document.querySelectorAll('.fa-regular.fa-circle');
+   	 var icons = document.querySelectorAll('.fa-regular.fa-circle');
 
-    	    icons.forEach(function(icon) {
-    	        icon.addEventListener('click', function() {
-    	            // 모든 아이콘을 초기화 (선택 해제)
-    	            icons.forEach(function(otherIcon) {
-    	                otherIcon.classList.remove('fa-regular', 'fa-circle-check');
-    	                otherIcon.classList.add('fa-regular', 'fa-circle');
-    	            });
+   	    icons.forEach(function(icon) {
+   	        icon.addEventListener('click', function() {
+   	            // 모든 아이콘을 초기화 (선택 해제)
+   	            icons.forEach(function(otherIcon) {
+   	                otherIcon.classList.remove('fa-regular', 'fa-circle-check');
+   	                otherIcon.classList.add('fa-regular', 'fa-circle');
+   	            });
 
-    	            // 현재 클릭한 아이콘을 선택
-    	            this.classList.remove('fa-regular', 'fa-circle');
-    	            this.classList.add('fa-regular', 'fa-circle-check');
-    	            
-    	        });
-    	    });
-      }
+   	            // 현재 클릭한 아이콘을 선택
+   	            this.classList.remove('fa-regular', 'fa-circle');
+   	            this.classList.add('fa-regular', 'fa-circle-check');
+   	        });
+   	    });
+     }
 
-      toggle();
-      
+     toggle();
+
       function deletePost() {
           if (confirm('정말 삭제하시겠습니까?')) {
               // 확인 버튼을 클릭했을 때 서버로 삭제 요청을 보내는 부분

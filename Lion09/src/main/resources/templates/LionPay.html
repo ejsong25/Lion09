@@ -70,10 +70,6 @@ function addAmount(amount) {
 
 function cash() {
 
-	btnCheck.disabled = true;
-	btnRegister.disabled = true;
-	btnChange.disabled = true;
-	  
     const rechargeAmount = totalAmount;
     const accountName = document.getElementById('accountName').value;
     
@@ -209,13 +205,20 @@ function resetAcc() {
 	var selectElement = document.getElementById("mySelect");
 	var selectedValue = selectElement.value;
 	var accountNum = document.getElementById("accountNum");
+	var balance = [[${dto.balance}]];
 	
-	alert('연결 계좌가 삭제되었습니다.');
-	
-	if(f) {
-		f.action= "/resetAcc_ok.action";
-		f.submit();
+	if(balance == 0 && balance == null){
+		
+		alert('연결 계좌가 삭제되었습니다.');
+		
+		if(f) {
+			f.action= "/resetAcc_ok.action";
+			f.submit();
+		}
+	} else{
+		alert('페이머니 잔액 환불 후 계좌 삭제가 가능합니다.');
 	}
+	
 }
 
 function registerPwd() {
@@ -255,6 +258,7 @@ function registerPwd() {
 }
 
 function changePwd() {
+	
     const newPwd1 = document.getElementById('newPwd1').value;
     const newPwd2 = document.getElementById('newPwd2').value;
     const newPwd3 = document.getElementById('newPwd3').value;
@@ -275,6 +279,10 @@ function changePwd() {
             document.getElementById('newPwd4').value = '';
             document.getElementById('newPwd5').value = '';
             document.getElementById('newPwd6').value = '';
+            
+            if (!newPwd) {
+    	    	alert('PAY비밀번호를 입력해주세요.');
+    	    }
 
             alert('PAY비밀번호가 변경되었습니다.');
             
@@ -394,7 +402,7 @@ function err(){
 										        <input type="password" id="pwd6"
 										        	maxlength="1" min="0" max="9" onlyNumber>
 										    </div>
-										    <input class="profileImgBtn" type='button' onclick='registerPwd();' value='등록' id='btnRegister'/><br/>
+										    <input class="profileImgBtn" type='button' onclick='registerPwd()' value='등록' id='btnRegister'/><br/>
 										</div>
 									</div>
 									<div id="modal" style="display: none;">
@@ -438,7 +446,7 @@ function err(){
 												<input type="password" id="newPwd6"
 												  maxlength="1" min="0" max="9" onlyNumber>
 											</div>
-											<input class="profileImgBtn" type='button' onclick='changePwd();' value='변경' id="btnChange"/><br/>
+											<input class="profileImgBtn" type='button' value='변경' onclick="changePwd();" id="btnAlter"/><br/>
 										</div>
 									</div>
 									</form>
@@ -617,21 +625,18 @@ function err(){
 		var map = new kakao.maps.Map(container, options);
 	</script>
 	<script type="text/javascript" th:inline="javascript">
+	
 	  var btnOpen = document.getElementById('btnOpen');
 	  var btnRefund = document.getElementById('btnRefund');
 	  var btnCheck = document.getElementById('btnCheck');
+	  var btnAlter = document.getElementById('btnAlter');
 	  var btnRegister = document.getElementById('btnRegister');
-	  var btnChange = document.getElementById('btnChange');
 	  var btnClose1 = document.getElementById('btnClose1');
 	  var btnClose2 = document.getElementById('btnClose2');
 	  var btnClose3 = document.getElementById('btnClose3');
 	  var preModal = document.getElementById('preModal');
 	  var modal = document.getElementById('modal');
 	  var nextModal = document.getElementById('nextModal');
-
-	  btnCheck.disabled = true;
-	  btnRegister.disabled = true;
-	  btnChange.disabled = true;
 	  
 	  // "pay비밀번호" 버튼 클릭 시 모달 창 열기
 	  btnOpen.addEventListener('click', function() {
@@ -703,7 +708,6 @@ function err(){
 		        } else if (enteredPwd === dtoPwd) {
 			        $("#modal").css("display", "none");
 			        $("#nextModal").css("display", "block");
-			        
 			    } else {
 			        alert('비밀번호가 일치하지 않습니다.');
 			        
@@ -720,10 +724,11 @@ function err(){
 	  $("#confirm").click(function(){
 		  
 		  var userId = [[${dto.userId}]];
+		  var balance = [[${dto.balance}]];
 		    
 		    $.ajax({
 		        type: "GET",
-		        url: "/resetRefund?userId=" + userId,
+		        url: "/resetRefund?userId=" + userId + "&balance=" + balance,
 		        success: function(data) {
 		            alert("계좌로 환불이 완료되었습니다.");
 		            refundPopup.style.display = 'none';

@@ -10,7 +10,7 @@ public interface QuestionService {
 		
 	public int getDataCount() throws Exception;
 	
-	public List<QuestionDTO> getLists(int start, int end) throws Exception;
+	public List<QuestionDTO> getLists(int start, int end,String userId) throws Exception;
 	
 	public QuestionDTO getReadData(int num) throws Exception;
 	

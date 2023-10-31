@@ -14,7 +14,7 @@ public interface QuestionMapper {
 	
 	public int getDataCount() throws Exception;
 	
-	public List<QuestionDTO> getLists(@Param("start")Integer start,@Param("end")Integer end) throws Exception;
+	public List<QuestionDTO> getLists(@Param("start")Integer start,@Param("end")Integer end,@Param("userId")String userId) throws Exception;
 	
 	public QuestionDTO getReadData(int num) throws Exception;
 	

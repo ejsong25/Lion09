@@ -19,8 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 select * from (
 	 select rownum rnum, data.* from (
 	 select num,userId,subject,hitCount,
-	 to_char(created,'YYYY-MM-DD') created from qaboard 
-	 order by num desc) data)
+	 to_char(created,'YYYY-MM-DD') created from qaboard where userId=#{userId} 
+	 order by num desc) data) 
  <![CDATA[
  	where rnum>=#{start} and rnum<=#{end}
  ]]>

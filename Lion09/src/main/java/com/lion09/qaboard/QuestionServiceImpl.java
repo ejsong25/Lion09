@@ -36,9 +36,9 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public List<QuestionDTO> getLists(int start, int end) throws Exception {
+	public List<QuestionDTO> getLists(int start, int end,String userId) throws Exception {
 		
-		return questionMapper.getLists(start, end);
+		return questionMapper.getLists(start, end, userId);
 	}
 
 	@Override

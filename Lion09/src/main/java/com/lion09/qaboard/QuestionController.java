@@ -69,7 +69,8 @@ public class QuestionController {
 	//고객센터 글 리스트
 	@GetMapping(value = "/qna_list") 
 	public ModelAndView qna_list(@Param("start")Integer start,@Param("end")Integer end, QuestionDTO dto,
-	    @RequestParam(name = "pageNum", defaultValue = "1") int pageNum) throws Exception {
+	    @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,@SessionAttribute(SessionConst.LOGIN_MEMBER)SessionInfo sessionInfo) 
+	    		throws Exception {
     
 	    int currentPage = 1;
 	    	    
@@ -79,7 +80,7 @@ public class QuestionController {
 	    start = (pageNum - 1) * numPerPage + 1;
 	    end = pageNum * numPerPage;
 
-	    List<QuestionDTO> lists = questionService.getLists(start,end);
+	    List<QuestionDTO> lists = questionService.getLists(start,end,sessionInfo.getUserId());
 
 	    ModelAndView mav = new ModelAndView();
 	    

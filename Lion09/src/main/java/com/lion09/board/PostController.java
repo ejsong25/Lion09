@@ -73,7 +73,9 @@ public class PostController {
 		
 		if(sessionInfo != null) {
 			Member mdto = mypageService.selectData(sessionInfo.getUserId());
-			myAddr = mdto.getMyAddress();
+			if(mdto != null) {
+				myAddr = mdto.getMyAddress();
+			}
 		}
 
 		model.addAttribute("myAddr", myAddr);

@@ -1,4 +1,4 @@
-# 🛒 Location-Based Group Buying Service
+# 🛒 Local-Based Group Buying Service
 **ITWILL Training Institute: Project-Based Java Fintech Web Developer Course**
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)
@@ -6,60 +6,41 @@
 ![MyBatis](https://img.shields.io/badge/MyBatis-black.svg?style=for-the-badge&logo=apache)
 ![JavaScript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
 
-This project is a **Location-Based Group Buying Platform** developed as a final project during the "Project-Based Java Fintech Web Developer" course at **ITWILL**. It aims to connect local neighbors to purchase products in bulk, reducing individual costs and shipping fees.
+This project is a **Location-Based Group Buying Platform** developed during the "Project-Based Java Fintech Web Developer" course at **ITWILL**. It features a robust architecture integrating community boards, real-time chatting, and order/payment systems.
 
-## 📌 Key Features
-* **Location-Based Matching**: Browse and join group buying deals based on the user's current geographic location.
-* **Group Buying Management**: Users can create, join, and track the progress of bulk purchases.
-* **Fintech Integration**: Implementation of transaction handling and payment status management.
-* **User Interaction**: Real-time participation tracking and community-focused deal sharing.
+## 📌 Key Modules & Features
+* **Board & QA**: Community management for sharing local deal information and a dedicated Q&A system for user support.
+* **Chat System**: Real-time communication module to facilitate group buy coordination between neighbors.
+* **Order & Pay**: Fintech-focused order processing and payment status management system.
+* **Member & Login**: Secure user authentication with session-based login management (`SessionConst`, `InterceptorConfig`).
+* **MyPage**: Personalized dashboard for users to manage their profiles, orders, and activities.
 
 ## 🛠 Tech Stack
-
 ### Backend
 * **Java 11 / 17**
-* **Spring Boot**: Main framework for application development.
-* **Spring Data JPA**: For efficient database mapping and object-oriented data handling.
-* **MyBatis**: Used for complex SQL optimization and legacy query management.
+* **Spring Boot**: Application core and MVC framework.
+* **Spring Data JPA & MyBatis**: Hybrid ORM approach for flexible and optimized data access.
+* **Spring Security / Interceptor**: Secure session and access control management.
 
 ### Frontend
-* **HTML5 / CSS3**: Responsive UI design and layout.
-* **JavaScript (ES6+)**: Dynamic client-side logic and API interactions.
-* **Bootstrap**: For fast and consistent UI component styling.
+* **JavaScript (ES6+)**: Frontend logic and asynchronous API handling.
+* **Thymeleaf / HTML5**: Server-side rendering for dynamic web content.
+* **CSS3 & Bootstrap**: Responsive and user-friendly UI design.
 
-### Database & Tools
-* **MySQL**: Relational database for storing user, product, and location data.
-* **Gradle**: Dependency management and build automation.
+### Infrastructure
+* **MySQL**: Relational database for persistent data storage.
+* **Gradle**: Project automation and dependency management.
 
 ## 📂 Project Structure
 ```text
-src
- ├── main
- │    ├── java
- │    │    └── com.project.lion09
- │    │         ├── controller  # Web & API Controllers
- │    │         ├── service     # Business Logic & Transactions
- │    │         ├── repository  # JPA Repositories
- │    │         ├── mapper      # MyBatis XML/Interface Mappers
- │    │         └── dto/entity  # Data Transfer Objects & Entities
- │    └── resources
- │         ├── mapper           # MyBatis SQL XML files
- │         └── static/templates # CSS, JS, and HTML files
-
- 🚀 Installation & Setup
-Clone the repository
-
-Bash
-
-git clone [https://github.com/ejsong25/Lion09.git](https://github.com/ejsong25/Lion09.git)
-Configure Database Update src/main/resources/application.yml with your database credentials.
-
-Run the Application
-
-Bash
-
-./gradlew bootRun
-🎓 Education Background
-Institution: ITWILL Training Institute
-
-Course: Project-Based Java Fintech Web Developer Training Course
+src/main/java/com/lion09
+ ├── board        # Community post management
+ ├── chat         # Real-time messaging logic
+ ├── login        # Authentication & Session handling
+ ├── member       # User profile & registration
+ ├── mypage       # User dashboard
+ ├── order        # Group buy order processing
+ ├── pay          # Fintech & Payment integration
+ ├── qaboard      # Customer support system
+ ├── InterceptorConfig.java # Security Interceptor
+ └── Lion09Application.java # Application Entry Point

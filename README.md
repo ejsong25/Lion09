@@ -7,6 +7,12 @@
 [![JPA](https://img.shields.io/badge/JPA-Hibernate-blue.svg?style=for-the-badge&logo=hibernate)](https://spring.io/projects/spring-data-jpa)
 [![AWS S3](https://img.shields.io/badge/AWS%20S3-Cloud%20Storage-FF9900?style=for-the-badge&logo=amazons3&logoColor=white)](https://aws.amazon.com/s3/)
 
+👥 Team & Role
+
+This project was developed by a 5-member team.
+
+🧑‍💼 Project Leader – Song Eunjeong
+
 ## 📝 Overview
 This project is a **Location-Based Group Buying Platform** developed during the "Project-Based Java Fintech Web Developer" course at **ITWILL**. It facilitates community-driven commerce by allowing neighbors to coordinate group purchases, reducing costs and fostering local interaction.
 
@@ -77,4 +83,4 @@ src/main/java/com/lion09
     *   **H2 Console**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console) (JDBC URL: `jdbc:h2:tcp://localhost/~/lion`)
 
 ---
-© 2026 ITWILL Lion09 Project Team.
+© 2023 ITWILL Lion09 Project Team.

@@ -14,7 +14,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.lion09.Lion09Application;
 
-@SpringBootApplication
+import org.springframework.cloud.aws.autoconfigure.context.ContextInstanceDataAutoConfiguration;
+import org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration;
+import org.springframework.cloud.aws.autoconfigure.context.ContextCredentialsAutoConfiguration;
+import org.springframework.cloud.aws.autoconfigure.messaging.MessagingAutoConfiguration;
+
+@SpringBootApplication(exclude = {
+		ContextCredentialsAutoConfiguration.class,
+		ContextStackAutoConfiguration.class,
+		ContextInstanceDataAutoConfiguration.class,
+		MessagingAutoConfiguration.class
+})
 @EnableScheduling
 @MapperScan("com.lion09.mypage")
 @MapperScan("com.lion09.pay")
@@ -29,25 +39,23 @@ public class Lion09Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Lion09Application.class, args);
 	}
-	
+
 	@Bean
-	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
-		
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
-		
+
 		/*
-		Resource[] res = new PathMatchingResourcePatternResolver()
-				.getResources("classpath:mybatis/mapper/*.xml");
-		sessionFactory.setMapperLocations(res);
-		*/
-		
+		 * Resource[] res = new PathMatchingResourcePatternResolver()
+		 * .getResources("classpath:mybatis/mapper/*.xml");
+		 * sessionFactory.setMapperLocations(res);
+		 */
+
 		sessionFactory.setMapperLocations(applicationContext
 				.getResources("classpath:mybatis/mapper/*.xml")); // 이게 좀 더 고급
-		
+
 		return sessionFactory.getObject();
 	}
 
-
 }
-
